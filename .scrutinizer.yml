@@ -23,7 +23,6 @@ build:
         override:
           -
             command: phpcs-run
-            use_website_config: true
           -
             command: './vendor/bin/codecept run --coverage-xml'
             coverage:
