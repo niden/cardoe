@@ -1,0 +1,30 @@
+run.config:
+  engine: php
+  engine.config:
+    runtime: php-7.3
+    document_root: tests/testbed
+    extensions:
+      - apcu
+      - ctype
+      - curl
+      - dom
+      - fileinfo
+      - gd
+      - iconv
+      - json
+      - mbstring
+      - phar
+      - simplexml
+      - tokenizer
+      - yaml
+      - xml
+      - xmlwriter
+      - zip
+      - zlib
+    zend_extensions:
+      - opcache
+    dev_zend_extensions:
+      add:
+        - xdebug
+      rm:
+        - opcache
