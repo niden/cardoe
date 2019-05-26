@@ -6,7 +6,7 @@ build:
           - 'true'
       environment:
         php:
-          version: 7.3.0
+          version: 7.2.13
           ini:
             'date.timezone': 'UTC'
 
@@ -15,9 +15,9 @@ build:
           - cd /home/scrutinizer/build
           - composer install --no-interaction
           - ./vendor/bin/codecept build
-          - echo -e 'opcache.enable_cli=1' >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
-          - echo -e 'apc.enabled=1'        >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
-          - echo -e 'apc.enable_cli=1'     >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
+          - echo -e 'opcache.enable_cli=1' >> /home/scrutinizer/.phpenv/versions/7.2.13/etc/php.ini
+          - echo -e 'apc.enabled=1'        >> /home/scrutinizer/.phpenv/versions/7.2.13/etc/php.ini
+          - echo -e 'apc.enable_cli=1'     >> /home/scrutinizer/.phpenv/versions/7.2.13/etc/php.ini
 
       tests:
         override:
