@@ -24,7 +24,5 @@ run.config:
     zend_extensions:
       - opcache
     dev_zend_extensions:
-      add:
-        - xdebug
       rm:
         - opcache
