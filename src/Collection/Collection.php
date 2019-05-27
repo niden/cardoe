@@ -171,7 +171,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function init(array $data = []): void
     {
         foreach ($data as $key => $value) {
-            $this->set($key, $value);
+            $this->setData($key, $value);
         }
     }
 
@@ -273,7 +273,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function serialize(): string
     {
-        return serialize($this->data);
+        return serialize($this->toArray());
     }
 
     /**
@@ -284,9 +284,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function set(string $element, $value): void
     {
-        $key                   = mb_strtolower($element);
-        $this->data[$element]  = $value;
-        $this->lowerKeys[$key] = $element;
+        $this->setData($element, $value);
     }
 
     /**
@@ -313,7 +311,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function toJson(int $options = 79): string
     {
-        return json_encode($this->data, $options);
+        return json_encode($this->toArray(), $options);
     }
 
     /**
@@ -329,5 +327,18 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         $data       = unserialize($serialized);
 
         $this->init($data);
+    }
+
+    /**
+     * Internal method to set data
+     *
+     * @param string $element
+     * @param mixed  $value
+     */
+    protected function setData(string $element, $value): void
+    {
+        $key                   = mb_strtolower($element);
+        $this->data[$element]  = $value;
+        $this->lowerKeys[$key] = $element;
     }
 }

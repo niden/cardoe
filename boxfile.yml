@@ -1,7 +1,7 @@
 run.config:
   engine: php
   engine.config:
-    runtime: php-7.3
+    runtime: php-7.2
     document_root: tests/testbed
     extensions:
       - apcu
@@ -24,5 +24,7 @@ run.config:
     zend_extensions:
       - opcache
     dev_zend_extensions:
+      add:
+        - xdebug
       rm:
         - opcache
