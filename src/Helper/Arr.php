@@ -171,7 +171,7 @@ class Arr
         foreach ($collection as $element) {
             if (
                 true === is_callable($method) ||
-                (true !== is_string($method) && function_exists($method))
+                (true === is_string($method) && function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);
                 $filtered[$key][] = $element;
