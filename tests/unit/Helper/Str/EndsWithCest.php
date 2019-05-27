@@ -18,7 +18,6 @@ class EndsWithCest
     /**
      * Tests Cardoe\Helper\Str :: endsWith()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrEndsWith(UnitTester $I)
@@ -37,7 +36,6 @@ class EndsWithCest
     /**
      * Tests Cardoe\Helper\Str :: endsWith() - empty strings
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrEndsWithEmpty(UnitTester $I)
@@ -50,7 +48,6 @@ class EndsWithCest
     /**
      * Tests Cardoe\Helper\Str :: endsWith() - finding an empty string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrEndsWithEmptySearchString(UnitTester $I)
@@ -64,7 +61,6 @@ class EndsWithCest
     /**
      * Tests Cardoe\Helper\Str :: endsWith() - case insensitive flag
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrEndsWithCaseInsensitive(UnitTester $I)
@@ -83,7 +79,6 @@ class EndsWithCest
     /**
      * Tests Cardoe\Helper\Str :: endsWith() - case sensitive flag
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrEndsWithCaseSensitive(UnitTester $I)

@@ -18,7 +18,6 @@ class GetCest
     /**
      * Tests Cardoe\Helper\Arr :: get() - numeric
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-02-17
      */
     public function helperArrGetNumeric(UnitTester $I)
@@ -39,7 +38,6 @@ class GetCest
     /**
      * Tests Cardoe\Helper\Arr :: get() - string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-02-17
      */
     public function helperArrGetString(UnitTester $I)
@@ -60,7 +58,6 @@ class GetCest
     /**
      * Tests Cardoe\Helper\Arr :: get() - default
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-02-17
      */
     public function helperArrGetDefault(UnitTester $I)

@@ -18,7 +18,6 @@ class IsUpperCest
     /**
      * Tests Cardoe\Helper\Str :: isUpper()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIsUpper(UnitTester $I)

@@ -18,7 +18,6 @@ class ChunkCest
     /**
      * Tests Cardoe\Helper\Arr :: chunk()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrChunk(UnitTester $I)
@@ -49,7 +48,6 @@ class ChunkCest
     /**
      * Tests Cardoe\Helper\Arr :: chunk() - preserve
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrChunkPreserve(UnitTester $I)

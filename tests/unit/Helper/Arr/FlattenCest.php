@@ -18,7 +18,6 @@ class FlattenCest
     /**
      * Tests Cardoe\Helper\Arr :: flatten()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrFlatten(UnitTester $I)
@@ -36,7 +35,6 @@ class FlattenCest
     /**
      * Tests Cardoe\Helper\Arr :: flatten() - deep
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrFlattenDeep(UnitTester $I)

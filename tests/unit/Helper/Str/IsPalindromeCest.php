@@ -18,7 +18,6 @@ class IsPalindromeCest
     /**
      * Tests Cardoe\Helper\Str :: isPalindrome()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIsPalindrome(UnitTester $I)

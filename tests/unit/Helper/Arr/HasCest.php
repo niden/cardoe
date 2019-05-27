@@ -18,7 +18,6 @@ class HasCest
     /**
      * Tests Cardoe\Helper\Arr :: has()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function helperArrHas(UnitTester $I)

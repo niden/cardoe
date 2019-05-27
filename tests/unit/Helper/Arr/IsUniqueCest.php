@@ -18,7 +18,6 @@ class IsUniqueCest
     /**
      * Tests Cardoe\Helper\Arr :: isUnique()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrIsUnique(UnitTester $I)

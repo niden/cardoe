@@ -18,7 +18,6 @@ class LowerCest
     /**
      * Tests Cardoe\Helper\Str :: lower()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrLower(UnitTester $I)

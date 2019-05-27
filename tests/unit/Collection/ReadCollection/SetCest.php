@@ -36,7 +36,7 @@ class SetCest
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection = new ReadCollection();
+                $collection        = new ReadCollection();
                 $collection->three = 'Cardoe';
             }
         );
@@ -52,7 +52,7 @@ class SetCest
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection = new ReadCollection();
+                $collection          = new ReadCollection();
                 $collection['three'] = true;
             }
         );

@@ -18,7 +18,6 @@ class DirSeparatorCest
     /**
      * Tests Cardoe\Helper\Str :: dirSeparator()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-16
      */
     public function helperStrFolderSeparator(UnitTester $I)

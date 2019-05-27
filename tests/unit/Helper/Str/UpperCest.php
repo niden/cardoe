@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Helper\Str;
 
-use Codeception\Example;
 use Cardoe\Helper\Str;
+use Codeception\Example;
 use UnitTester;
 
 class UpperCest

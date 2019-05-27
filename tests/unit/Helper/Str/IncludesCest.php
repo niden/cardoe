@@ -18,7 +18,6 @@ class IncludesCest
     /**
      * Tests Cardoe\Helper\Str :: includes()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncludes(UnitTester $I)

@@ -10,7 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Helper\Str;
 
+use Cardoe\Helper\Exception;
 use Cardoe\Helper\Str;
+use RuntimeException;
 use UnitTester;
 
 class DynamicCest
@@ -33,6 +35,24 @@ class DynamicCest
         $I->assertRegExp(
             '/^(Hi|Hello), my name is a Bob!$/',
             $actual
+        );
+    }
+
+    /**
+     * Tests Cardoe\Helper\Str :: dynamic() - Exception
+     *
+     * @author Stanislav Kiryukhin <korsar.zn@gmail.com>
+     * @since  2015-07-01
+     */
+    public function helperStrDynamicException(UnitTester $I)
+    {
+        $I->wantToTest('Helper\Str - dynamic() - exception');
+
+        $I->expectThrowable(
+            new RuntimeException("Syntax error in string '{{Hi|Hello}'"),
+            function () {
+                $actual = Str::dynamic('{{Hi|Hello}');
+            }
         );
     }
 
@@ -61,13 +81,11 @@ class DynamicCest
      * Tests Cardoe\Helper\Str :: dynamic() - custom separator
      *
      * @issue  https://github.com/phalcon/cphalcon/issues/11215
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2016-06-27
      */
     public function helperStrDynamicCustomSeparator(UnitTester $I)
     {
         $I->wantToTest('Helper\Str - dynamic() - custom separator');
-
 
 
         $actual = Str::dynamic('{Hi=Hello}, my name is a Bob!', '{', '}', '=');
@@ -82,7 +100,6 @@ class DynamicCest
         );
 
 
-
         $actual = Str::dynamic("{Hi'Hello}, my name is a {Rob'Zyxep'Andres}!", '{', '}', "'");
 
         $I->assertNotContains('{', $actual);
@@ -93,7 +110,6 @@ class DynamicCest
             '/^(Hi|Hello), my name is a (Rob|Zyxep|Andres)!$/',
             $actual
         );
-
 
 
         $actual = Str::dynamic('{Hi/Hello}, my name is a {Stanislav/Nikos}!', '{', '}', '/');

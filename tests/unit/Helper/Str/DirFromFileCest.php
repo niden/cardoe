@@ -18,7 +18,6 @@ class DirFromFileCest
     /**
      * Tests Cardoe\Helper\Str :: dirFromFile()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-16
      */
     public function helperStrFolderFromFile(UnitTester $I)

@@ -18,7 +18,6 @@ class BetweenCest
     /**
      * Tests Cardoe\Helper\Number :: between()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-02-17
      */
     public function helperNumberBetween(UnitTester $I)

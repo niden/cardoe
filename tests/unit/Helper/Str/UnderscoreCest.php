@@ -18,7 +18,6 @@ class UnderscoreCest
     /**
      * Tests Cardoe\Helper\Str :: underscore()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrUnderscore(UnitTester $I)

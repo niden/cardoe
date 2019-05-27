@@ -18,7 +18,6 @@ class ValidateAnyCest
     /**
      * Tests Cardoe\Helper\Arr :: validateAny()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrValidateAny(UnitTester $I)

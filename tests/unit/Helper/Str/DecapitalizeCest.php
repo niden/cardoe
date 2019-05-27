@@ -18,7 +18,6 @@ class DecapitalizeCest
     /**
      * Tests Cardoe\Helper\Str :: decapitalize()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrDecapitalize(UnitTester $I)

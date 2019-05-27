@@ -18,7 +18,6 @@ class HumanizeCest
     /**
      * Tests Cardoe\Helper\Str :: humanize()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrHumanize(UnitTester $I)

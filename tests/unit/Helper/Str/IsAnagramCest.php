@@ -18,7 +18,6 @@ class IsAnagramCest
     /**
      * Tests Cardoe\Helper\Str :: isAnagram()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIsAnagram(UnitTester $I)

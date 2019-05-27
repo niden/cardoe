@@ -18,7 +18,6 @@ class LastKeyCest
     /**
      * Tests Cardoe\Helper\Arr :: last()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrLast(UnitTester $I)
@@ -39,7 +38,6 @@ class LastKeyCest
     /**
      * Tests Cardoe\Helper\Arr :: last() - function
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrLastFunction(UnitTester $I)

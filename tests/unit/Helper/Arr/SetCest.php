@@ -18,7 +18,6 @@ class SetCest
     /**
      * Tests Cardoe\Helper\Arr :: set() - numeric
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function helperArrSetNumeric(UnitTester $I)
@@ -40,7 +39,6 @@ class SetCest
     /**
      * Tests Cardoe\Helper\Arr :: set() - string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function helperArrSetString(UnitTester $I)
@@ -62,7 +60,6 @@ class SetCest
     /**
      * Tests Cardoe\Helper\Arr :: set() - no index
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function helperArrSetNoIndex(UnitTester $I)
@@ -84,7 +81,6 @@ class SetCest
     /**
      * Tests Cardoe\Helper\Arr :: set() - overwrite
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function helperArrSetOverwride(UnitTester $I)

@@ -18,7 +18,6 @@ class FirstKeyCest
     /**
      * Tests Cardoe\Helper\Arr :: firstKey()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrFirstKey(UnitTester $I)
@@ -37,7 +36,6 @@ class FirstKeyCest
     /**
      * Tests Cardoe\Helper\Arr :: firstKey() - function
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrFirstKeyFunction(UnitTester $I)

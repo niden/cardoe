@@ -18,7 +18,6 @@ class ReduceSlashesCest
     /**
      * Tests Cardoe\Helper\Str :: reduceSlashes()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrReduceSlashes(UnitTester $I)

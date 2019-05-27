@@ -11,6 +11,7 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Helper\Arr;
 
 use Cardoe\Helper\Arr;
+use Cardoe\Helper\Str;
 use UnitTester;
 
 class OrderCest
@@ -18,7 +19,6 @@ class OrderCest
     /**
      * Tests Cardoe\Helper\Arr :: order()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrOrder(UnitTester $I)
@@ -26,16 +26,16 @@ class OrderCest
         $I->wantToTest('Helper\Arr - order()');
 
         $collection = [
-            ['id' => 2, 'name' => 'Joy'],
-            ['id' => 3, 'name' => 'Khaja'],
-            ['id' => 1, 'name' => 'Raja'],
+            ['id' => 2, 'name' => 'Paul'],
+            ['id' => 3, 'name' => 'Peter'],
+            ['id' => 1, 'name' => 'John'],
         ];
 
 
         $expected = [
-            ['id' => 1, 'name' => 'Raja'],
-            ['id' => 2, 'name' => 'Joy'],
-            ['id' => 3, 'name' => 'Khaja'],
+            ['id' => 1, 'name' => 'John'],
+            ['id' => 2, 'name' => 'Paul'],
+            ['id' => 3, 'name' => 'Peter'],
         ];
 
         $I->assertEquals(
@@ -45,9 +45,49 @@ class OrderCest
 
 
         $expected = [
-            ['id' => 3, 'name' => 'Khaja'],
-            ['id' => 2, 'name' => 'Joy'],
-            ['id' => 1, 'name' => 'Raja'],
+            ['id' => 3, 'name' => 'Peter'],
+            ['id' => 2, 'name' => 'Paul'],
+            ['id' => 1, 'name' => 'John'],
+        ];
+
+        $I->assertEquals(
+            $expected,
+            Arr::order($collection, 'id', 'desc')
+        );
+    }
+
+    /**
+     * Tests Cardoe\Helper\Arr :: order() - object
+     *
+     * @since  2019-04-06
+     */
+    public function helperArrOrderObject(UnitTester $I)
+    {
+        $I->wantToTest('Helper\Arr - order()');
+
+        $collection = [
+            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
+            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
+            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
+        ];
+
+
+        $expected = [
+            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
+            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
+            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
+        ];
+
+        $I->assertEquals(
+            $expected,
+            Arr::order($collection, 'id')
+        );
+
+
+        $expected = [
+            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
+            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
+            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
         ];
 
         $I->assertEquals(

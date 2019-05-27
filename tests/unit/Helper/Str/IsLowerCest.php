@@ -18,7 +18,6 @@ class IsLowerCest
     /**
      * Tests Cardoe\Helper\Str :: isLower()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIsLower(UnitTester $I)

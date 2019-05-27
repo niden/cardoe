@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Helper\Str;
 
-use Codeception\Example;
 use Cardoe\Helper\Str;
+use Codeception\Example;
 use UnitTester;
 
 class RandomCest
@@ -19,7 +19,6 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - constants
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrRandomConstants(UnitTester $I)
@@ -37,8 +36,8 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - alnum
      *
-     * @author Cardoe Team <team@phalconphp.com>
-     * @since  2019-04-06
+     * @author       Cardoe Team <team@phalconphp.com>
+     * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
      */
@@ -72,8 +71,8 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - alpha
      *
-     * @author Cardoe Team <team@phalconphp.com>
-     * @since  2019-04-06
+     * @author       Cardoe Team <team@phalconphp.com>
+     * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
      */
@@ -107,8 +106,8 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - hexdec
      *
-     * @author Cardoe Team <team@phalconphp.com>
-     * @since  2019-04-06
+     * @author       Cardoe Team <team@phalconphp.com>
+     * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
      */
@@ -142,8 +141,8 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - numeric
      *
-     * @author Cardoe Team <team@phalconphp.com>
-     * @since  2019-04-06
+     * @author       Cardoe Team <team@phalconphp.com>
+     * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
      */
@@ -177,8 +176,8 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - non zero
      *
-     * @author Cardoe Team <team@phalconphp.com>
-     * @since  2019-04-06
+     * @author       Cardoe Team <team@phalconphp.com>
+     * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
      */
@@ -209,22 +208,6 @@ class RandomCest
         );
     }
 
-    private function oneToTenProvider(): array
-    {
-        return [
-            [1],
-            [2],
-            [3],
-            [4],
-            [5],
-            [6],
-            [7],
-            [8],
-            [9],
-            [10],
-        ];
-    }
-
     /**
      * Tests Cardoe\Helper\Str :: random() - distinct type
      *
@@ -251,6 +234,22 @@ class RandomCest
             $example[0],
             strlen($source)
         );
+    }
+
+    private function oneToTenProvider(): array
+    {
+        return [
+            [1],
+            [2],
+            [3],
+            [4],
+            [5],
+            [6],
+            [7],
+            [8],
+            [9],
+            [10],
+        ];
     }
 
     private function helperStrRandomDistinctProvider(): array

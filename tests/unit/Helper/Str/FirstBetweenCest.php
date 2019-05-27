@@ -18,7 +18,6 @@ class FirstBetweenCest
     /**
      * Tests Cardoe\Helper\Str :: firstBetween()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrFirstBetween(UnitTester $I)

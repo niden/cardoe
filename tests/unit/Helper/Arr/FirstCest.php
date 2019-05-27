@@ -18,7 +18,6 @@ class FirstCest
     /**
      * Tests Cardoe\Helper\Arr :: first()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrFirst(UnitTester $I)
@@ -39,7 +38,6 @@ class FirstCest
     /**
      * Tests Cardoe\Helper\Arr :: first() - function
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperArrFirstFunction(UnitTester $I)

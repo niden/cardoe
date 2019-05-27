@@ -18,7 +18,6 @@ class IncrementCest
     /**
      * Tests Cardoe\Helper\Str :: increment() - string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementSimpleString(UnitTester $I)
@@ -33,7 +32,6 @@ class IncrementCest
     /**
      * Tests Cardoe\Helper\Str :: increment() - already incremented string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementAlreadyIncremented(UnitTester $I)
@@ -49,7 +47,6 @@ class IncrementCest
      * Tests Cardoe\Helper\Str :: increment() - already incremented string
      * twice
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementAlreadyIncrementedTwice(UnitTester $I)
@@ -64,7 +61,6 @@ class IncrementCest
     /**
      * Tests Cardoe\Helper\Str :: increment() - string with underscore
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementStringWithUnderscore(UnitTester $I)
@@ -79,7 +75,6 @@ class IncrementCest
     /**
      * Tests Cardoe\Helper\Str :: increment() - string with a space at the end
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementStringWithSpace(UnitTester $I)
@@ -94,7 +89,6 @@ class IncrementCest
     /**
      * Tests Cardoe\Helper\Str :: increment() - different separator
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrIncrementStringWithDifferentSeparator(UnitTester $I)

@@ -18,7 +18,6 @@ class PluckCest
     /**
      * Tests Cardoe\Helper\Arr :: pluck()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrPluck(UnitTester $I)
@@ -27,6 +26,24 @@ class PluckCest
         $collection = [
             ['product_id' => 'prod-100', 'name' => 'Desk'],
             ['product_id' => 'prod-200', 'name' => 'Chair'],
+        ];
+
+        $expected = ['Desk', 'Chair'];
+        $actual   = Arr::pluck($collection, 'name');
+        $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Tests Cardoe\Helper\Arr :: pluck() - object
+     *
+     * @since  2019-04-07
+     */
+    public function helperArrPluckObject(UnitTester $I)
+    {
+        $I->wantToTest('Helper\Arr - pluck()');
+        $collection = [
+            Arr::arrayToObject(['product_id' => 'prod-100', 'name' => 'Desk']),
+            Arr::arrayToObject(['product_id' => 'prod-200', 'name' => 'Chair']),
         ];
 
         $expected = ['Desk', 'Chair'];

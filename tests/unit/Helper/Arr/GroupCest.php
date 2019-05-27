@@ -19,7 +19,6 @@ class GroupCest
     /**
      * Tests Cardoe\Helper\Arr :: group()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrGroup(UnitTester $I)
@@ -61,7 +60,6 @@ class GroupCest
     /**
      * Tests Cardoe\Helper\Arr :: group() - object
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrGroupObject(UnitTester $I)
@@ -96,7 +94,6 @@ class GroupCest
     /**
      * Tests Cardoe\Helper\Arr :: group() - function
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrGroupFunction(UnitTester $I)

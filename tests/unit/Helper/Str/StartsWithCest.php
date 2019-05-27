@@ -18,7 +18,6 @@ class StartsWithCest
     /**
      * Tests Cardoe\Helper\Str :: startsWith()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrStartsWith(UnitTester $I)
@@ -37,7 +36,6 @@ class StartsWithCest
     /**
      * Tests Cardoe\Helper\Str :: startsWith() - empty strings
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrStartsWithEmpty(UnitTester $I)
@@ -50,7 +48,6 @@ class StartsWithCest
     /**
      * Tests Cardoe\Helper\Str :: startsWith() - finding an empty string
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrStartsWithEmptySearchString(UnitTester $I)
@@ -64,7 +61,6 @@ class StartsWithCest
     /**
      * Tests Cardoe\Helper\Str :: startsWith() - case insensitive flag
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrStartsWithCaseInsensitive(UnitTester $I)
@@ -83,7 +79,6 @@ class StartsWithCest
     /**
      * Tests Cardoe\Helper\Str :: startsWith() - case sensitive flag
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-06
      */
     public function helperStrStartsWithCaseSensitive(UnitTester $I)

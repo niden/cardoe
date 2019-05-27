@@ -18,7 +18,6 @@ class SplitCest
     /**
      * Tests Cardoe\Helper\Arr :: split()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2019-04-07
      */
     public function helperArrSplit(UnitTester $I)
