@@ -84,22 +84,6 @@ class Arr
     }
 
     /**
-     * Returns the first element of the collection. If a callable is passed, the
-     * element returned is the first that validates true
-     *
-     * @param array    $collection
-     * @param callable $method
-     *
-     * @return mixed
-     */
-    final public static function first(array $collection, $method = null)
-    {
-        $filtered = self::filterCollection($collection, $method);
-
-        return reset($filtered);
-    }
-
-    /**
      * Helper method to filter the collection
      *
      * @param array    $collection
@@ -114,6 +98,22 @@ class Arr
         } else {
             return $collection;
         }
+    }
+
+    /**
+     * Returns the first element of the collection. If a callable is passed, the
+     * element returned is the first that validates true
+     *
+     * @param array    $collection
+     * @param callable $method
+     *
+     * @return mixed
+     */
+    final public static function first(array $collection, $method = null)
+    {
+        $filtered = self::filterCollection($collection, $method);
+
+        return reset($filtered);
     }
 
     /**
@@ -146,9 +146,9 @@ class Arr
     /**
      * Helper method to get an array element or a default
      *
-     * @param array $collection
-     * @param mixed $index
-     * @param null  $defaultValue
+     * @param array      $collection
+     * @param mixed      $index
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -170,8 +170,8 @@ class Arr
         $filtered = [];
         foreach ($collection as $element) {
             if (
-                (true !== is_string($method) && true === is_callable($method)) ||
-                function_exists($method)
+                true === is_callable($method) ||
+                (true !== is_string($method) && function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);
                 $filtered[$key][] = $element;

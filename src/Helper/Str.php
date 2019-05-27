@@ -69,11 +69,11 @@ class Str
             throw new Exception('concat needs at least three parameters');
         }
 
-        $first     = Arr::first($arguments);
-        $last      = Arr::last($arguments);
-        $prefix    = '';
-        $suffix    = '';
-        $data      = [];
+        $first  = Arr::first($arguments);
+        $last   = Arr::last($arguments);
+        $prefix = '';
+        $suffix = '';
+        $data   = [];
 
         if (true === self::startsWith($first, $separator)) {
             $prefix = $separator;
@@ -89,6 +89,60 @@ class Str
         }
 
         return $prefix . implode($separator, $data) . $suffix;
+    }
+
+    /**
+     * Check if a string starts with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function startsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return substr_compare(
+                $haystack,
+                $needle,
+                0,
+                strlen($needle),
+                $ignoreCase
+            ) === 0;
+    }
+
+    /**
+     * Check if a string ends with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function endsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return substr_compare(
+                $haystack,
+                $needle,
+                -strlen($needle),
+                strlen($needle),
+                $ignoreCase
+            ) === 0;
     }
 
     /**
@@ -214,33 +268,6 @@ class Str
     }
 
     /**
-     * Check if a string ends with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function endsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            -strlen($needle),
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
-    }
-
-    /**
      * Returns the first string there is between the strings from the
      * parameter start and end.
      *
@@ -353,8 +380,8 @@ class Str
     /**
      * Returns true if the given string is upper case, false otherwise.
      *
-     * @param string text
-     * @param string encoding
+     * @param string $text
+     * @param string $encoding
      *
      * @return bool
      */
@@ -366,10 +393,6 @@ class Str
     /**
      * Lowercases a string, this function makes use of the mbstring extension if
      * available
-     *
-     * <code>
-     * echo Cardoe\Helper\Str::lower('HELLO'); // hello
-     * </code>
      *
      * @param string $text
      * @param string $encoding
@@ -385,12 +408,6 @@ class Str
      * Generates a random string based on the given type. Type is one of the
      * RANDOM_* constants
      *
-     * <code>
-     * use Cardoe\Helper\Str;
-     *
-     * echo Str::random(Str::RANDOM_ALNUM); // 'aloiwkqz'
-     * </code>
-     *
      * @param int $type
      * @param int $length
      *
@@ -401,7 +418,6 @@ class Str
         $text = '';
 
         switch ($type) {
-
             case Str::RANDOM_ALPHA:
                 $pool = array_merge(range('a', 'z'), range('A', 'Z'));
                 break;
@@ -445,14 +461,6 @@ class Str
     /**
      * Reduces multiple slashes in a string to single slashes
      *
-     * <code>
-     * // foo/bar/baz
-     * echo Cardoe\Helper\Str::reduceSlashes('foo//bar/baz');
-     *
-     * // http://foo.bar/baz/buz
-     * echo Cardoe\Helper\Str::reduceSlashes('http://foo.bar///baz/buz');
-     * </code>
-     *
      * @param string $text
      *
      * @return string
@@ -463,41 +471,7 @@ class Str
     }
 
     /**
-     * Check if a string starts with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function startsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            0,
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
-    }
-
-    /**
      * Makes a phrase underscored instead of spaced
-     *
-     * <code>
-     * use Cardoe\Helper\Str;
-     *
-     * echo Str::underscore('look behind');     // 'look_behind'
-     * echo Str::underscore('Awesome Cardoe'); // 'Awesome_Cardoe'
-     * </code>
      *
      * @param string $text
      *
@@ -511,10 +485,6 @@ class Str
     /**
      * Uppercases a string, this function makes use of the mbstring extension if
      * available
-     *
-     * <code>
-     * echo Cardoe\Helper\Str::upper('hello'); // HELLO
-     * </code>
      *
      * @param string $text
      * @param string $encoding
