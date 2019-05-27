@@ -18,7 +18,6 @@ class InitCest
     /**
      * Tests Cardoe\Collection :: init()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionInit(UnitTester $I)

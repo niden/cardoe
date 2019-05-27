@@ -19,7 +19,6 @@ class RemoveCest
     /**
      * Tests Cardoe\Collection :: remove()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionRemove(UnitTester $I)

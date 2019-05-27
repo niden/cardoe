@@ -18,7 +18,6 @@ class GetIteratorCest
     /**
      * Tests Cardoe\Collection :: getIterator()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionGetIterator(UnitTester $I)

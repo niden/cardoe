@@ -18,7 +18,6 @@ class JsonSerializeCest
     /**
      * Tests Cardoe\Collection :: jsonSerialize()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionJsonSerialize(UnitTester $I)

@@ -18,7 +18,6 @@ class ToJsonCest
     /**
      * Tests Cardoe\Collection :: toJson()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionToJson(UnitTester $I)

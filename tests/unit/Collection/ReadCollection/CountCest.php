@@ -18,7 +18,6 @@ class CountCest
     /**
      * Tests Cardoe\Collection :: count()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionCount(UnitTester $I)

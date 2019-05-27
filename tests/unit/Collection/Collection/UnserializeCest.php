@@ -18,7 +18,6 @@ class UnserializeCest
     /**
      * Tests Cardoe\Collection :: serialize()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionSerialize(UnitTester $I)

@@ -18,7 +18,6 @@ class GetCest
     /**
      * Tests Cardoe\Collection :: get()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionGet(UnitTester $I)

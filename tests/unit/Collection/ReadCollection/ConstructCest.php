@@ -18,7 +18,6 @@ class ConstructCest
     /**
      * Tests Cardoe\Collection :: __construct()
      *
-     * @author Cardoe Team <team@phalconphp.com>
      * @since  2018-11-13
      */
     public function collectionConstruct(UnitTester $I)
