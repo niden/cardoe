@@ -29,6 +29,7 @@ use function preg_quote;
 use function preg_replace;
 use function range;
 use function rtrim;
+use function self;
 use function str_split;
 use function strlen;
 use function strrev;
@@ -366,46 +367,35 @@ class Str
      *
      * @return string
      */
-    final public static function random(int $type = 0, int $length = 8): string
-    {
+    final public static function random(
+        int $type = self::RANDOM_ALNUM,
+        int $length = 8
+    ): string {
         $text = '';
+        $type  = ($type < 0 || $type > 5) ? self::RANDOM_ALNUM : $type;
+        $pools = [
+            self::RANDOM_ALPHA    => array_merge(
+                range('a', 'z'),
+                range('A', 'Z')
+            ),
+            self::RANDOM_HEXDEC   => array_merge(
+                range(0, 9),
+                range('a', 'f')
+            ),
+            self::RANDOM_NUMERIC  => range(0, 9),
+            self::RANDOM_NOZERO   => range(1, 9),
+            self::RANDOM_DISTINCT => str_split('2345679ACDEFHJKLMNPRSTUVWXYZ'),
+            self::RANDOM_ALNUM    => array_merge(
+                range(0, 9),
+                range('a', 'z'),
+                range('A', 'Z')
+            ),
+        ];
 
-        switch ($type) {
-            case Str::RANDOM_ALPHA:
-                $pool = array_merge(range('a', 'z'), range('A', 'Z'));
-                break;
-
-            case Str::RANDOM_HEXDEC:
-                $pool = array_merge(range(0, 9), range('a', 'f'));
-                break;
-
-            case Str::RANDOM_NUMERIC:
-                $pool = range(0, 9);
-                break;
-
-            case Str::RANDOM_NOZERO:
-                $pool = range(1, 9);
-                break;
-
-            case Str::RANDOM_DISTINCT:
-                $pool = str_split('2345679ACDEFHJKLMNPRSTUVWXYZ');
-                break;
-
-            default:
-                // Default type \Cardoe\Text::RANDOM_ALNUM
-                $pool = array_merge(
-                    range(0, 9),
-                    range('a', 'z'),
-                    range('A', 'Z')
-                );
-
-                break;
-        }
-
-        $end = count($pool) - 1;
+        $end = count($pools[$type]) - 1;
 
         while (strlen($text) < $length) {
-            $text .= $pool[mt_rand(0, $end)];
+            $text .= $pools[$type][mt_rand(0, $end)];
         }
 
         return $text;
