@@ -117,9 +117,9 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     /**
      * Get the element from the collection
      *
-     * @param string $element
-     * @param null   $defaultValue
-     * @param bool   $insensitive
+     * @param string     $element
+     * @param mixed|null $defaultValue
+     * @param bool       $insensitive
      *
      * @return mixed
      */
@@ -143,7 +143,7 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      */
     public function getIterator(): Traversable
     {
-        return new \ArrayIterator($this);
+        return new \ArrayIterator($this->data);
     }
 
     /**
