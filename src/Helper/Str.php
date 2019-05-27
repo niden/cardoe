@@ -221,53 +221,6 @@ class Str
     }
 
     /**
-     * Generates random text in accordance with the template
-     *
-     * @param string $text
-     * @param string $leftDelimiter
-     * @param string $rightDelimiter
-     * @param string $separator
-     *
-     * @return string
-     */
-    final public static function dynamic(
-        string $text,
-        string $leftDelimiter = '{',
-        string $rightDelimiter = '}',
-        string $separator = '|'
-    ): string {
-        if (substr_count($text, $leftDelimiter) !== substr_count($text, $rightDelimiter)) {
-            throw new RuntimeException(
-                "Syntax error in string '" . $text . "'"
-            );
-        }
-
-        $ldS     = preg_quote($leftDelimiter);
-        $rdS     = preg_quote($rightDelimiter);
-        $pattern = '/' . $ldS . '([^' . $ldS . $rdS . ']+)' . $rdS . '/';
-        $matches = [];
-
-        if (!preg_match_all($pattern, $text, $matches, 2)) {
-            return $text;
-        }
-
-        if (true === is_array($matches)) {
-            foreach ($matches as $match) {
-                if (true !== isset($match[0]) || true !== isset($match[1])) {
-                    continue;
-                }
-
-                $words = explode($separator, $match[1]);
-                $word  = $words[array_rand($words)];
-                $sub   = preg_quote($match[0], $separator);
-                $text  = preg_replace('/' . $sub . '/', $word, $text, 1);
-            }
-        }
-
-        return $text;
-    }
-
-    /**
      * Returns the first string there is between the strings from the
      * parameter start and end.
      *
