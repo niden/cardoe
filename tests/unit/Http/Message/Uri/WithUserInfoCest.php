@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Uri;
 
+use Cardoe\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
-use Cardoe\Http\Message\Uri;
 use UnitTester;
 
 class WithUserInfoCest
@@ -67,8 +67,8 @@ class WithUserInfoCest
                 'Method requires a string argument instead of ' . $example[0]
             ),
             function () use ($example) {
-                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
-                $uri      = new Uri($query);
+                $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $uri   = new Uri($query);
 
                 $instance = $uri->withUserInfo($example[2]);
             }

@@ -18,14 +18,10 @@ use function ltrim;
 use function mb_strtolower;
 use function parse_url;
 use function preg_replace;
-use function preg_replace_callback;
 use function rawurlencode;
 use function strpos;
 use function strtolower;
 use function substr;
-use function urldecode;
-use function urlencode;
-use function var_dump;
 
 final class Uri implements UriInterface
 {

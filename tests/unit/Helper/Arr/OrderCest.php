@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Helper\Arr;
 
 use Cardoe\Helper\Arr;
-use Cardoe\Helper\Str;
 use UnitTester;
 
 class OrderCest

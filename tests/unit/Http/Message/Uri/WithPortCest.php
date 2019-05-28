@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Uri;
 
-use Codeception\Example;
 use Cardoe\Http\Message\Uri;
+use Codeception\Example;
 use UnitTester;
 
 class WithPortCest

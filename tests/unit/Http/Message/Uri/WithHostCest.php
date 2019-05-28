@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Uri;
 
+use Cardoe\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
-use Cardoe\Http\Message\Uri;
 use UnitTester;
 
 class WithHostCest
