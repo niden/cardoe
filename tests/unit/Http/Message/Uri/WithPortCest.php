@@ -100,10 +100,7 @@ class WithPortCest
      */
     private function getExceptions(): array
     {
-        $message = 'an integer, integer string or null argument instead of ';
         return [
-            ['object', new stdClass(), $message . 'stdClass'],
-            ['bool', true, $message . 'boolean'],
             ['port less than 1', -2, 'valid port (1-65535)'],
             ['port more than max', 70000, 'valid port (1-65535)'],
         ];

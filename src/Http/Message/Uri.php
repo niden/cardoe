@@ -350,25 +350,13 @@ final class Uri implements UriInterface
     public function withPort($port): Uri
     {
         if (null !== $port) {
-            if (true === is_integer($port) || true === is_string($port)) {
-                $port = $this->filterPort($port);
-            } else {
-                if (true === is_object($port)) {
-                    $type = get_class($port);
-                } else {
-                    $type = gettype($port);
-                }
+            $port = $this->filterPort($port);
 
+            if (null !== $port && ($port < 1 || $port > 65535)) {
                 throw new InvalidArgumentException(
-                    'Method expects an integer, integer string or null argument instead of ' . $type
+                    'Method expects valid port (1-65535)'
                 );
             }
-        }
-
-        if (null !== $port && ($port < 1 || $port > 65535)) {
-            throw new InvalidArgumentException(
-                'Method expects valid port (1-65535)'
-            );
         }
 
         return $this->cloneInstance($port, 'port');
