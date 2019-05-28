@@ -60,7 +60,7 @@ class WithHostCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Method requires a string argument instead of ' . $example[0]
+                'Method requires a string argument'
             ),
             function () use ($example) {
                 $uri = new Uri(

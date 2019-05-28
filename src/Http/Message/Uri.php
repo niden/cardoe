@@ -6,14 +6,12 @@ namespace Cardoe\Http\Message;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Helper\Str;
-use InvalidArgumentException;
+use Cardoe\Http\Message\Exception\InvalidArgumentException;
+use Cardoe\Http\Message\Traits\Common;
 use Psr\Http\Message\UriInterface;
 use function array_keys;
 use function explode;
-use function get_class;
 use function implode;
-use function is_object;
-use function is_string;
 use function ltrim;
 use function mb_strtolower;
 use function parse_url;
@@ -21,10 +19,16 @@ use function preg_replace;
 use function rawurlencode;
 use function strpos;
 use function strtolower;
-use function substr;
 
+/**
+ * PSR-7 Uri
+ *
+ * @package Cardoe\Http\Message
+ */
 final class Uri implements UriInterface
 {
+    use Common;
+
     /**
      * Retrieve the fragment component of the URI.
      *
@@ -119,20 +123,41 @@ final class Uri implements UriInterface
      * string is either a full URI or relative reference according to RFC 3986,
      * Section 4.1. The method concatenates the various components of the URI,
      * using the appropriate delimiters
+     *
+     * @return string
      */
     public function __toString(): string
     {
-        $uri = $this->calculateScheme()
-            . $this->calculateAuthority()
-            . $this->calculatePath()
-            . $this->calculateQuery()
-            . $this->calculateFragment();
+        $authority = $this->getAuthority();
+        $path      = $this->path;
+
+        /**
+         * The path can be concatenated without delimiters. But there are two
+         * cases where the path has to be adjusted to make the URI reference
+         * valid as PHP does not allow to throw an exception in __toString():
+         *   - If the path is rootless and an authority is present, the path
+         *     MUST be prefixed by "/".
+         *   - If the path is starting with more than one "/" and no authority
+         *     is present, the starting slashes MUST be reduced to one.
+         */
+        if ('' !== $path && true !== Str::startsWith($path, '/') && '' !== $authority) {
+            $path = '/' . $path;
+        }
+
+        $uri = ('' !== $this->scheme   ? $this->scheme . ':'   : '')
+             . ('' !== $authority      ? '//' . $authority     : '')
+             . $path
+             . ('' !== $this->query    ? '?' . $this->query    : '')
+             . ('' !== $this->fragment ? '#' . $this->fragment : '')
+        ;
 
         return $uri;
     }
 
     /**
      * Retrieve the authority component of the URI.
+     *
+     * @return string
      */
     public function getAuthority(): string
     {
@@ -167,6 +192,11 @@ final class Uri implements UriInterface
         return $authority;
     }
 
+    /**
+     * Returns the fragment of the URL
+     *
+     * @return string
+     */
     public function getFragment(): string
     {
         return $this->fragment;
@@ -189,6 +219,11 @@ final class Uri implements UriInterface
         return $this->host;
     }
 
+    /**
+     * Returns the path of the URL
+     *
+     * @return string
+     */
     public function getPath(): string
     {
         return $this->path;
@@ -214,6 +249,11 @@ final class Uri implements UriInterface
         return $this->port;
     }
 
+    /**
+     * Returns the query of the URL
+     *
+     * @return string
+     */
     public function getQuery(): string
     {
         return $this->query;
@@ -309,21 +349,15 @@ final class Uri implements UriInterface
      *
      * @return Uri
      * @throws InvalidArgumentException for invalid paths.
-     *
      */
     public function withPath($path): Uri
     {
         $this->checkStringParameter($path);
 
-        if (false !== strpos($path, '?')) {
+        if (false !== strpos($path, '?') ||
+            false !== strpos($path, '#')) {
             throw new InvalidArgumentException(
-                'Path cannot contain a query string'
-            );
-        }
-
-        if (false !== strpos($path, '#')) {
-            throw new InvalidArgumentException(
-                'Path cannot contain a query fragment'
+                'Path cannot contain a query string or fragment'
             );
         }
 
@@ -348,7 +382,6 @@ final class Uri implements UriInterface
      *
      * @return Uri
      * @throws InvalidArgumentException for invalid ports.
-     *
      */
     public function withPort($port): Uri
     {
@@ -380,7 +413,6 @@ final class Uri implements UriInterface
      *
      * @return Uri
      * @throws InvalidArgumentException for invalid query strings.
-     *
      */
     public function withQuery($query): Uri
     {
@@ -413,7 +445,6 @@ final class Uri implements UriInterface
      * @return Uri
      * @throws InvalidArgumentException for invalid schemes.
      * @throws InvalidArgumentException for unsupported schemes.
-     *
      */
     public function withScheme($scheme): Uri
     {
@@ -472,141 +503,6 @@ final class Uri implements UriInterface
     public function withHost($host): Uri
     {
         return $this->processWith($host, 'host');
-    }
-
-    /**
-     * Return the authority if passed
-     *
-     * @return string
-     */
-    private function calculateAuthority(): string
-    {
-        $authority = $this->getAuthority();
-
-        /**
-         * If an authority is present, it MUST be prefixed by "//".
-         */
-        if ('' !== $authority) {
-            $authority = '//' . $authority;
-        }
-
-        return $authority;
-    }
-
-    /**
-     * Return the fragment for the __toString()
-     *
-     * @return string
-     */
-    private function calculateFragment(): string
-    {
-        $fragment = $this->fragment;
-
-        if ('' !== $this->fragment) {
-            $fragment = '#' . $fragment;
-        }
-
-        return $fragment;
-    }
-
-    /**
-     * Return the path for the __toString()
-     *
-     * @return string
-     */
-    private function calculatePath(): string
-    {
-        $authority = $this->getAuthority();
-        $path      = $this->path;
-
-        /**
-         * The path can be concatenated without delimiters. But there are two
-         * cases where the path has to be adjusted to make the URI reference
-         * valid as PHP does not allow to throw an exception in __toString():
-         *   - If the path is rootless and an authority is present, the path
-         *     MUST be prefixed by "/".
-         *   - If the path is starting with more than one "/" and no authority
-         *     is present, the starting slashes MUST be reduced to one.
-         */
-        if ('' !== $path && true !== Str::startsWith($path, '/') && '' !== $authority) {
-            $path = '/' . $path;
-        }
-
-        return $path;
-    }
-
-    /**
-     * Return the query for the __toString()
-     *
-     * @return string
-     */
-    private function calculateQuery(): string
-    {
-        $query = $this->query;
-
-        /**
-         * If a query is present, it MUST be prefixed by "?".
-         */
-        if ('' !== $query) {
-            $query = '?' . $query;
-        }
-
-        return $query;
-    }
-
-    /**
-     * Return the schema for the __toString()
-     *
-     * @return string
-     */
-    private function calculateScheme(): string
-    {
-        $scheme = $this->scheme;
-
-        /**
-         * If a scheme is present, it MUST be suffixed by ":".
-         */
-        if ('' !== $scheme) {
-            $scheme = $scheme . ":";
-        }
-
-        return $scheme;
-    }
-
-    /**
-     * Checks the element passed if it is a string
-     *
-     * @param mixed $element
-     */
-    private function checkStringParameter($element): void
-    {
-        if (true === is_object($element)) {
-            $type = get_class($element);
-        } else {
-            $type = gettype($element);
-        }
-
-        if (true !== is_string($element)) {
-            throw new InvalidArgumentException(
-                'Method requires a string argument instead of ' . $type
-            );
-        }
-    }
-
-    /**
-     * Returns a new instance having set the parameter
-     *
-     * @param mixed  $element
-     * @param string $property
-     *
-     * @return Uri
-     */
-    private function cloneInstance($element, string $property)
-    {
-        $newInstance              = clone $this;
-        $newInstance->{$property} = $element;
-
-        return $newInstance;
     }
 
     /**
@@ -773,22 +669,6 @@ final class Uri implements UriInterface
         }
 
         return $scheme;
-    }
-
-    /**
-     * Checks the element passed; assigns it to the property and returns a
-     * clone of the object back
-     *
-     * @param mixed  $element
-     * @param string $property
-     *
-     * @return Uri
-     */
-    private function processWith($element, string $property): Uri
-    {
-        $this->checkStringParameter($element);
-
-        return $this->cloneInstance($element, $property);
     }
 
     /**

@@ -65,7 +65,7 @@ class WithPathCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Path cannot contain a query string'
+                'Path cannot contain a query string or fragment'
             ),
             function () {
                 $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
@@ -86,7 +86,7 @@ class WithPathCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Path cannot contain a query fragment'
+                'Path cannot contain a query string or fragment'
             ),
             function () {
                 $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
@@ -109,7 +109,7 @@ class WithPathCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Method requires a string argument instead of ' . $example[0]
+                'Method requires a string argument'
             ),
             function () use ($example) {
                 $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
