@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Helper;
 
+use function array_filter;
 use stdClass;
 use function array_chunk;
 use function array_keys;
@@ -81,23 +82,6 @@ class Arr
         reset($filtered);
 
         return key($filtered);
-    }
-
-    /**
-     * Helper method to filter the collection
-     *
-     * @param array    $collection
-     * @param callable $method
-     *
-     * @return array
-     */
-    final private static function filterCollection(array $collection, $method = null): array
-    {
-        if (null !== $method && is_callable($method)) {
-            return array_filter($collection, $method);
-        } else {
-            return $collection;
-        }
     }
 
     /**
@@ -387,5 +371,22 @@ class Arr
     final public static function validateAny(array $collection, $method): bool
     {
         return count(self::filterCollection($collection, $method)) > 0;
+    }
+
+    /**
+     * Helper method to filter the collection
+     *
+     * @param array    $collection
+     * @param callable $method
+     *
+     * @return array
+     */
+    final private static function filterCollection(array $collection, $method = null): array
+    {
+        if (null !== $method && is_callable($method)) {
+            return array_filter($collection, $method);
+        } else {
+            return $collection;
+        }
     }
 }

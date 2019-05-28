@@ -10,14 +10,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Helper;
 
-use RuntimeException;
 use function array_merge;
-use function array_rand;
 use function count;
 use function count_chars;
 use function explode;
 use function implode;
-use function is_array;
 use function ltrim;
 use function mb_strtolower;
 use function mb_strtoupper;
@@ -25,17 +22,14 @@ use function mb_substr;
 use function mt_rand;
 use function pathinfo;
 use function preg_match_all;
-use function preg_quote;
 use function preg_replace;
 use function range;
 use function rtrim;
-use function self;
 use function str_split;
 use function strlen;
 use function strrev;
 use function substr;
 use function substr_compare;
-use function substr_count;
 use function trim;
 use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
@@ -371,7 +365,7 @@ class Str
         int $type = self::RANDOM_ALNUM,
         int $length = 8
     ): string {
-        $text = '';
+        $text  = '';
         $type  = ($type < 0 || $type > 5) ? self::RANDOM_ALNUM : $type;
         $pools = [
             self::RANDOM_ALPHA    => array_merge(

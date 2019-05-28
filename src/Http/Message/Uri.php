@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
-use function array_keys;
 use Cardoe\Helper\Arr;
 use Cardoe\Helper\Str;
 use InvalidArgumentException;
-use function is_integer;
 use Psr\Http\Message\UriInterface;
+use function array_keys;
 use function explode;
 use function get_class;
 use function implode;
-use function is_int;
+use function is_integer;
 use function is_object;
 use function is_string;
 use function ltrim;
@@ -24,7 +23,6 @@ use function rawurlencode;
 use function strpos;
 use function strtolower;
 use function substr;
-use function var_dump;
 
 final class Uri implements UriInterface
 {
@@ -122,11 +120,10 @@ final class Uri implements UriInterface
     public function __toString(): string
     {
         $uri = $this->calculateScheme()
-             . $this->calculateAuthority()
-             . $this->calculatePath()
-             . $this->calculateQuery()
-             . $this->calculateFragment()
-        ;
+            . $this->calculateAuthority()
+            . $this->calculatePath()
+            . $this->calculateQuery()
+            . $this->calculateFragment();
 
         return $uri;
     }
@@ -166,7 +163,6 @@ final class Uri implements UriInterface
 
         return $authority;
     }
-
 
     public function getFragment(): string
     {
@@ -289,25 +285,6 @@ final class Uri implements UriInterface
     }
 
     /**
-     * Return an instance with the specified host.
-     *
-     * This method MUST retain the state of the current instance, and return
-     * an instance that contains the specified host.
-     *
-     * An empty host value is equivalent to removing the host.
-     *
-     * @param string $host
-     *
-     * @return Uri
-     * @throws InvalidArgumentException for invalid hostnames.
-     *
-     */
-    public function withHost($host): Uri
-    {
-        return $this->processWith($host, 'host');
-    }
-
-    /**
      * Return an instance with the specified path.
      *
      * This method MUST retain the state of the current instance, and return
@@ -386,7 +363,6 @@ final class Uri implements UriInterface
                     'Method expects an integer, integer string or null argument instead of ' . $type
                 );
             }
-
         }
 
         if (null !== $port && ($port < 1 || $port > 65535)) {
@@ -486,6 +462,25 @@ final class Uri implements UriInterface
         $newInstance->pass = $password;
 
         return $newInstance;
+    }
+
+    /**
+     * Return an instance with the specified host.
+     *
+     * This method MUST retain the state of the current instance, and return
+     * an instance that contains the specified host.
+     *
+     * An empty host value is equivalent to removing the host.
+     *
+     * @param string $host
+     *
+     * @return Uri
+     * @throws InvalidArgumentException for invalid hostnames.
+     *
+     */
+    public function withHost($host): Uri
+    {
+        return $this->processWith($host, 'host');
     }
 
     /**

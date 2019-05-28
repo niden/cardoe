@@ -13,9 +13,9 @@ namespace Cardoe\Test\Unit\Http\Message\Uri;
 use Cardoe\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
-use function sprintf;
 use stdClass;
 use UnitTester;
+use function sprintf;
 
 class WithPortCest
 {
@@ -24,7 +24,7 @@ class WithPortCest
      *
      * @dataProvider getExamples
      *
-     * @since  2019-02-09
+     * @since        2019-02-09
      */
     public function httpMessageUriWithPort(UnitTester $I, Example $example)
     {
