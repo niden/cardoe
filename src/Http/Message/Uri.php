@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
+use function array_keys;
 use Cardoe\Helper\Arr;
 use Cardoe\Helper\Str;
 use InvalidArgumentException;
@@ -23,6 +24,7 @@ use function rawurlencode;
 use function strpos;
 use function strtolower;
 use function substr;
+use function var_dump;
 
 final class Uri implements UriInterface
 {
@@ -279,7 +281,11 @@ final class Uri implements UriInterface
      */
     public function withFragment($fragment): Uri
     {
-        return $this->processWith($fragment, 'fragment');
+        $this->checkStringParameter($fragment);
+
+        $fragment = $this->filterFragment($fragment);
+
+        return $this->cloneInstance($fragment, 'fragment');
     }
 
     /**
@@ -367,7 +373,7 @@ final class Uri implements UriInterface
     public function withPort($port): Uri
     {
         if (null !== $port) {
-            if (true === is_integer($port)) {
+            if (true === is_integer($port) || true === is_string($port)) {
                 $port = $this->filterPort($port);
             } else {
                 if (true === is_object($port)) {
@@ -376,11 +382,9 @@ final class Uri implements UriInterface
                     $type = gettype($port);
                 }
 
-                if (true !== is_string($port)) {
-                    throw new InvalidArgumentException(
-                        'Method expects an integer, integer string or null argument instead of ' . $type
-                    );
-                }
+                throw new InvalidArgumentException(
+                    'Method expects an integer, integer string or null argument instead of ' . $type
+                );
             }
 
         }
@@ -475,11 +479,6 @@ final class Uri implements UriInterface
             $password = rawurlencode($password);
         }
 
-
-        if ($user === $this->user && $password === $this->pass) {
-            return $this;
-        }
-
         /**
          * Immutable - need to send a new object back
          */
@@ -543,12 +542,8 @@ final class Uri implements UriInterface
          *   - If the path is starting with more than one "/" and no authority
          *     is present, the starting slashes MUST be reduced to one.
          */
-        if ('' !== $path) {
-            if ('//' === substr($path, 0, 2) && '' === $authority) {
-                $path = ltrim($path, "/");
-            } elseif (true !== Str::startsWith($path, '/') && '' !== $authority) {
-                $path = '/' . $path;
-            }
+        if ('' !== $path && true !== Str::startsWith($path, '/') && '' !== $authority) {
+            $path = '/' . $path;
         }
 
         return $path;
@@ -647,10 +642,6 @@ final class Uri implements UriInterface
      */
     private function filterFragment(string $fragment): string
     {
-        if ('' !== $fragment && Str::startsWith($fragment, '#')) {
-            $fragment = '%23' . substr($fragment, 1);
-        }
-
         return rawurlencode($fragment);
     }
 
@@ -799,7 +790,8 @@ final class Uri implements UriInterface
         if (true !== isset($schemes[$filtered])) {
             throw new InvalidArgumentException(
                 "Unsupported scheme [" . $filtered . "]. " .
-                "Scheme must be one of [" . implode(", ", $schemes) . "]"
+                "Scheme must be one of [" .
+                implode(", ", array_keys($schemes)) . "]"
             );
         }
 

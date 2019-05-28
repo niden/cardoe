@@ -44,4 +44,20 @@ class ToStringCest
         $actual      = $newInstance->__toString();
         $I->assertEquals($expected, $actual);
     }
+
+    /**
+     * Tests Cardoe\Http\Message\Uri :: __toString() - path many slashes
+     *
+     * @since  2019-02-07
+     */
+    public function httpUriToStringPathManySlashes(UnitTester $I)
+    {
+        $I->wantToTest('Http\Uri - __toString() - path many slashes');
+        $uri = new Uri('https://dev.cardoe.ld');
+
+        $newInstance = $uri->withPath('///action/reaction');
+        $expected    = 'https://dev.cardoe.ld/action/reaction';
+        $actual      = $newInstance->__toString();
+        $I->assertEquals($expected, $actual);
+    }
 }

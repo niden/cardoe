@@ -22,7 +22,6 @@ class WithQueryCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-09
      */
     public function httpMessageUriWithQuery(UnitTester $I, Example $example)
@@ -52,7 +51,6 @@ class WithQueryCest
      *
      * @dataProvider getExceptions
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithQueryException(UnitTester $I, Example $example)
@@ -73,6 +71,29 @@ class WithQueryCest
         );
     }
 
+    /**
+     * Tests Cardoe\Http\Message\Uri :: withQuery() - exception with fragment
+     *
+     * @since        2019-02-07
+     */
+    public function httpUriWithQueryExceptionWithFragment(UnitTester $I)
+    {
+        $I->wantToTest('Http\Uri - withQuery() - exception - with fragment');
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Query cannot contain a query fragment'
+            ),
+            function () {
+                $uri = new Uri(
+                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                );
+
+                $instance = $uri->withQuery('/login#frag');
+            }
+        );
+    }
+
     private function getExamples(): array
     {
         return [
@@ -80,6 +101,7 @@ class WithQueryCest
             ['key and value', 'p^aram=valu`', 'p%5Earam=valu%60'],
             ['key as array', 'param[]', 'param%5B%5D'],
             ['key as array and value', 'param[]=valu`', 'param%5B%5D=valu%60'],
+            ['key with questionmark', '?param=valu', 'param=valu'],
             ['complex', 'p^aram&all[]=va lu`&f<>=`bar', 'p%5Earam&all%5B%5D=va%20lu%60&f%3C%3E=%60bar'],
         ];
     }

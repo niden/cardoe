@@ -21,7 +21,6 @@ class GetAuthorityCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-09
      */
     public function httpMessageUriGetAuthority(UnitTester $I, Example $example)
@@ -41,6 +40,12 @@ class GetAuthorityCest
     private function getExamples(): array
     {
         return [
+            [
+                'empty',
+                '',
+                '',
+            ],
+
             [
                 'default',
                 'https://dev.cardoe.ld',

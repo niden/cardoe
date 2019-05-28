@@ -22,7 +22,6 @@ class WithUserInfoCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-09
      */
     public function httpMessageUriWithUserInfo(UnitTester $I, Example $example)
@@ -55,7 +54,6 @@ class WithUserInfoCest
      *
      * @dataProvider getExceptions
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithUserInfoException(UnitTester $I, Example $example)

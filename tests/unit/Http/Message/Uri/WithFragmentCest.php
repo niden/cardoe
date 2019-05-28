@@ -33,7 +33,6 @@ class WithFragmentCest
         );
 
         $newInstance = $uri->withFragment('newspaper');
-
         $I->assertNotEquals($uri, $newInstance);
 
         $I->assertEquals(
@@ -45,6 +44,19 @@ class WithFragmentCest
             sprintf($query, 'newspaper'),
             (string) $newInstance
         );
+
+        $newInstance = $uri->withFragment('#newspaper');
+        $I->assertNotEquals($uri, $newInstance);
+
+        $I->assertEquals(
+            '%23newspaper',
+            $newInstance->getFragment()
+        );
+
+        $I->assertEquals(
+            sprintf($query, '%23newspaper'),
+            (string) $newInstance
+        );
     }
 
     /**
@@ -52,7 +64,6 @@ class WithFragmentCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithFragmentException(UnitTester $I, Example $example)

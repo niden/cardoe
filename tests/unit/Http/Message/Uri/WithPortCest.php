@@ -12,6 +12,9 @@ namespace Cardoe\Test\Unit\Http\Message\Uri;
 
 use Cardoe\Http\Message\Uri;
 use Codeception\Example;
+use InvalidArgumentException;
+use function sprintf;
+use stdClass;
 use UnitTester;
 
 class WithPortCest
@@ -19,46 +22,15 @@ class WithPortCest
     /**
      * Tests Cardoe\Http\Message\Uri :: withPort()
      *
-     * @since  2019-02-09
-     */
-    public function httpMessageUriWithPort(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\Uri - withPort()');
-
-        $query = 'https://cardoe:secret@dev.cardoe.ld:%s/action?param=value#frag';
-
-        $uri = new Uri(
-            sprintf($query, 3306)
-        );
-
-        $newInstance = $uri->withPort(11211);
-
-        $I->assertNotEquals($uri, $newInstance);
-
-        $I->assertEquals(
-            11211,
-            $newInstance->getPort()
-        );
-
-        $I->assertEquals(
-            sprintf($query, 11211),
-            (string) $newInstance
-        );
-    }
-
-    /**
-     * Tests Cardoe\Http\Message\Uri :: withPort() - exception no string
-     *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
-     * @since        2019-02-07
+     * @since  2019-02-09
      */
-    public function httpUriWithPortException(UnitTester $I, Example $example)
+    public function httpMessageUriWithPort(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Http\Uri - withPort() - ' . $example[0]);
+        $I->wantToTest('Http\Message\Uri - withPort() - ' . $example[0]);
 
-        $query = 'https://cardoe:secret@dev.cardoe.ld%s/action?param=value#frag';
+        $query = 'https://cardoe:secret@dev.cardoe.ld:%s/action?param=value#frag';
 
         $uri = new Uri(
             sprintf($query, ':4300')
@@ -82,6 +54,36 @@ class WithPortCest
         );
     }
 
+    /**
+     * Tests Cardoe\Http\Message\Uri :: withPort() - exception no string
+     *
+     * @dataProvider getExceptions
+     *
+     * @since        2019-02-07
+     */
+    public function httpUriWithPortException(UnitTester $I, Example $example)
+    {
+        $I->wantToTest('Http\Uri - withPort() - ' . $example[0]);
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Method expects ' . $example[2]
+            ),
+            function () use ($example) {
+                $query = 'https://cardoe:secret@dev.cardoe.ld%s/action?param=value#frag';
+
+                $uri = new Uri(
+                    sprintf($query, ':4300')
+                );
+
+                $newInstance = $uri->withPort($example[1]);
+            }
+        );
+    }
+
+    /**
+     * @return array
+     */
     private function getExamples(): array
     {
         return [
@@ -90,6 +92,20 @@ class WithPortCest
             ['string-int', '8080', 8080, ':8080'],
             ['http', 80, null, ''],
             ['https', 443, null, ''],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getExceptions(): array
+    {
+        $message = 'an integer, integer string or null argument instead of ';
+        return [
+            ['object', new stdClass(), $message . 'stdClass'],
+            ['bool', true, $message . 'boolean'],
+            ['port less than 1', -2, 'valid port (1-65535)'],
+            ['port more than max', 70000, 'valid port (1-65535)'],
         ];
     }
 }

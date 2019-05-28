@@ -52,7 +52,6 @@ class WithHostCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithHostException(UnitTester $I, Example $example)

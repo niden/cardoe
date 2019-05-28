@@ -22,7 +22,6 @@ class WithPathCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-09
      */
     public function httpMessageUriWithPath(UnitTester $I, Example $example)
@@ -56,11 +55,52 @@ class WithPathCest
     }
 
     /**
+     * Tests Cardoe\Http\Message\Uri :: withPath() - exception query string
+     *
+     * @since        2019-02-07
+     */
+    public function httpUriWithPathExceptionQueryString(UnitTester $I)
+    {
+        $I->wantToTest('Http\Uri - withPath() - exception - query string');
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Path cannot contain a query string'
+            ),
+            function () {
+                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $uri      = new Uri($query);
+                $instance = $uri->withPath('/login?param=value');
+            }
+        );
+    }
+
+    /**
+     * Tests Cardoe\Http\Message\Uri :: withPath() - exception query fragment
+     *
+     * @since        2019-02-07
+     */
+    public function httpUriWithPathExceptionQueryFragment(UnitTester $I)
+    {
+        $I->wantToTest('Http\Uri - withPath() - exception - query fragment');
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Path cannot contain a query fragment'
+            ),
+            function () {
+                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $uri      = new Uri($query);
+                $instance = $uri->withPath('/login#frag');
+            }
+        );
+    }
+
+    /**
      * Tests Cardoe\Http\Message\Uri :: withPath() - exception no string
      *
      * @dataProvider getExceptions
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithPathException(UnitTester $I, Example $example)

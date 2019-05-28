@@ -48,11 +48,33 @@ class WithSchemeCest
     }
 
     /**
+     * Tests Cardoe\Http\Message\Uri :: withScheme() - exception unsupported
+     *
+     * @since        2019-02-07
+     */
+    public function httpUriWithSchemeExceptionUnsupported(UnitTester $I)
+    {
+        $I->wantToTest('Http\Uri - withScheme() - exception - unsupported');
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Unsupported scheme [ftp]. Scheme must be one of [http, https]'
+            ),
+            function () {
+                $uri = new Uri(
+                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                );
+
+                $instance = $uri->withScheme('ftp');
+            }
+        );
+    }
+
+    /**
      * Tests Cardoe\Http\Message\Uri :: withScheme() - exception no string
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-07
      */
     public function httpUriWithSchemeException(UnitTester $I, Example $example)
