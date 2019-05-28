@@ -7,6 +7,7 @@ namespace Cardoe\Http\Message;
 use Cardoe\Helper\Arr;
 use Cardoe\Helper\Str;
 use InvalidArgumentException;
+use function is_integer;
 use Psr\Http\Message\UriInterface;
 use function explode;
 use function get_class;
@@ -118,56 +119,12 @@ final class Uri implements UriInterface
      */
     public function __toString(): string
     {
-        $authority = $this->getAuthority();
-        $path      = $this->path;
-        $uri       = "";
-
-        /**
-         * If a scheme is present, it MUST be suffixed by ":".
-         */
-        if ('' !== $this->scheme) {
-            $uri .= $this->scheme . ":";
-        }
-
-        /**
-         * If an authority is present, it MUST be prefixed by "//".
-         */
-        if ('' !== $authority) {
-            $uri .= '//' . $authority;
-        }
-
-        /**
-         * The path can be concatenated without delimiters. But there are two
-         * cases where the path has to be adjusted to make the URI reference
-         * valid as PHP does not allow to throw an exception in __toString():
-         *   - If the path is rootless and an authority is present, the path
-         *     MUST be prefixed by "/".
-         *   - If the path is starting with more than one "/" and no authority
-         *     is present, the starting slashes MUST be reduced to one.
-         */
-        if ('' !== $path) {
-            if ('//' === substr($path, 0, 2) && '' === $authority) {
-                $path = ltrim($path, "/");
-            } elseif (true !== Str::startsWith($path, '/') && '' !== $authority) {
-                $path = '/' . $path;
-            }
-
-            $uri .= $path;
-        }
-
-        /**
-         * If a query is present, it MUST be prefixed by "?".
-         */
-        if ('' !== $this->query) {
-            $uri .= '?' . $this->query;
-        }
-
-        /**
-         * If a fragment is present, it MUST be prefixed by "#".
-         */
-        if ('' !== $this->fragment) {
-            $uri .= '#' . $this->fragment;
-        }
+        $uri = $this->calculateScheme()
+             . $this->calculateAuthority()
+             . $this->calculatePath()
+             . $this->calculateQuery()
+             . $this->calculateFragment()
+        ;
 
         return $uri;
     }
@@ -410,7 +367,7 @@ final class Uri implements UriInterface
     public function withPort($port): Uri
     {
         if (null !== $port) {
-            if (true !== is_int($port)) {
+            if (true !== is_integer($port)) {
                 if (true === is_object($port)) {
                     $type = get_class($port);
                 } else {
@@ -529,6 +486,109 @@ final class Uri implements UriInterface
         $newInstance->pass = $password;
 
         return $newInstance;
+    }
+
+    /**
+     * Return the authority if passed
+     *
+     * @return string
+     */
+    private function calculateAuthority(): string
+    {
+        $authority = $this->getAuthority();
+
+        /**
+         * If an authority is present, it MUST be prefixed by "//".
+         */
+        if ('' !== $authority) {
+            $authority = '//' . $authority;
+        }
+
+        return $authority;
+    }
+
+    /**
+     * Return the fragment for the __toString()
+     *
+     * @return string
+     */
+    private function calculateFragment(): string
+    {
+        $fragment = $this->fragment;
+
+        if ('' !== $this->fragment) {
+            $fragment = '#' . $fragment;
+        }
+
+        return $fragment;
+    }
+
+    /**
+     * Return the path for the __toString()
+     *
+     * @return string
+     */
+    private function calculatePath(): string
+    {
+        $authority = $this->getAuthority();
+        $path      = $this->path;
+
+        /**
+         * The path can be concatenated without delimiters. But there are two
+         * cases where the path has to be adjusted to make the URI reference
+         * valid as PHP does not allow to throw an exception in __toString():
+         *   - If the path is rootless and an authority is present, the path
+         *     MUST be prefixed by "/".
+         *   - If the path is starting with more than one "/" and no authority
+         *     is present, the starting slashes MUST be reduced to one.
+         */
+        if ('' !== $path) {
+            if ('//' === substr($path, 0, 2) && '' === $authority) {
+                $path = ltrim($path, "/");
+            } elseif (true !== Str::startsWith($path, '/') && '' !== $authority) {
+                $path = '/' . $path;
+            }
+        }
+
+        return $path;
+    }
+
+    /**
+     * Return the query for the __toString()
+     *
+     * @return string
+     */
+    private function calculateQuery(): string
+    {
+        $query = $this->query;
+
+        /**
+         * If a query is present, it MUST be prefixed by "?".
+         */
+        if ('' !== $query) {
+            $query = '?' . $query;
+        }
+
+        return $query;
+    }
+
+    /**
+     * Return the schema for the __toString()
+     *
+     * @return string
+     */
+    private function calculateScheme(): string
+    {
+        $scheme = $this->scheme;
+
+        /**
+         * If a scheme is present, it MUST be suffixed by ":".
+         */
+        if ('' !== $scheme) {
+            $scheme = $scheme . ":";
+        }
+
+        return $scheme;
     }
 
     /**
