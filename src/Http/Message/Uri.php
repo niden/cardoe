@@ -12,7 +12,6 @@ use function array_keys;
 use function explode;
 use function get_class;
 use function implode;
-use function is_integer;
 use function is_object;
 use function is_string;
 use function ltrim;
@@ -86,26 +85,30 @@ final class Uri implements UriInterface
                 $urlParts = [];
             }
 
-            /**
-             * Assign the parsed uri to the properties
-             */
-            $scheme   = Arr::get($urlParts, 'scheme', '');
-            $host     = Arr::get($urlParts, 'host', '');
-            $port     = Arr::get($urlParts, 'port', null);
-            $user     = Arr::get($urlParts, 'user', '');
-            $pass     = Arr::get($urlParts, 'pass', '');
-            $path     = Arr::get($urlParts, 'path', '');
-            $query    = Arr::get($urlParts, 'query', '');
-            $fragment = Arr::get($urlParts, 'fragment', '');
-
-            $this->scheme   = $this->filterScheme($scheme);
-            $this->host     = strtolower($host);
-            $this->port     = $this->filterPort($port);
-            $this->user     = rawurlencode($user);
-            $this->pass     = rawurlencode($pass);
-            $this->path     = $this->filterPath($path);
-            $this->query    = $this->filterQuery($query);
-            $this->fragment = $this->filterFragment($fragment);
+            $this->fragment = $this->filterFragment(
+                Arr::get($urlParts, 'fragment', '')
+            );
+            $this->host     = strtolower(
+                Arr::get($urlParts, 'host', '')
+            );
+            $this->pass     = rawurlencode(
+                Arr::get($urlParts, 'pass', '')
+            );
+            $this->path     = $this->filterPath(
+                Arr::get($urlParts, 'path', '')
+            );
+            $this->port     = $this->filterPort(
+                Arr::get($urlParts, 'port', null)
+            );
+            $this->query    = $this->filterQuery(
+                Arr::get($urlParts, 'query', '')
+            );
+            $this->scheme   = $this->filterScheme(
+                Arr::get($urlParts, 'scheme', '')
+            );
+            $this->user     = rawurlencode(
+                Arr::get($urlParts, 'user', '')
+            );
         }
     }
 
@@ -728,20 +731,15 @@ final class Uri implements UriInterface
 
         $parts = explode("&", $query);
 
-        foreach ($parts as $key => $value) {
-            $split = explode("=", $value);
-
-            if (true !== isset($split[1])) {
-                $split[] = null;
-            }
-
-            if (null === $split[1]) {
-                $parts[$key] = rawurlencode($split[0]);
+        foreach ($parts as $index => $part) {
+            [$key, $value] = $this->splitQueryValue($part);
+            if (null === $value) {
+                $parts[$index] = rawurlencode($key);
 
                 continue;
             }
 
-            $parts[$key] = rawurlencode($split[0]) . '=' . rawurlencode($split[1]);
+            $parts[$key] = rawurlencode($key) . '=' . rawurlencode($value);
         }
 
         return implode('&', $parts);
@@ -795,5 +793,18 @@ final class Uri implements UriInterface
         $this->checkStringParameter($element);
 
         return $this->cloneInstance($element, $property);
+    }
+
+    /**
+     * @param string $element
+     *
+     * @return array
+     */
+    private function splitQueryValue(string $element): array
+    {
+        $data    = explode('=', $element, 2);
+        $data[1] = $data[1] ?? null;
+
+        return $data;
     }
 }
