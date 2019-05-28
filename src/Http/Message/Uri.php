@@ -367,7 +367,9 @@ final class Uri implements UriInterface
     public function withPort($port): Uri
     {
         if (null !== $port) {
-            if (true !== is_integer($port)) {
+            if (true === is_integer($port)) {
+                $port = $this->filterPort($port);
+            } else {
                 if (true === is_object($port)) {
                     $type = get_class($port);
                 } else {
@@ -381,7 +383,6 @@ final class Uri implements UriInterface
                 }
             }
 
-            $port = $this->filterPort($port);
         }
 
         if (null !== $port && ($port < 1 || $port > 65535)) {
