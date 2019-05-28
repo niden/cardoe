@@ -725,12 +725,8 @@ final class Uri implements UriInterface
             return '';
         }
 
-        if (true === Str::startsWith($query, '?')) {
-            $query = substr($query, 1);
-        }
-
+        $query = ltrim($query, '?');
         $parts = explode("&", $query);
-
         foreach ($parts as $index => $part) {
             [$key, $value] = $this->splitQueryValue($part);
             if (null === $value) {
@@ -739,7 +735,7 @@ final class Uri implements UriInterface
                 continue;
             }
 
-            $parts[$key] = rawurlencode($key) . '=' . rawurlencode($value);
+            $parts[$index] = rawurlencode($key) . '=' . rawurlencode($value);
         }
 
         return implode('&', $parts);
@@ -803,7 +799,9 @@ final class Uri implements UriInterface
     private function splitQueryValue(string $element): array
     {
         $data    = explode('=', $element, 2);
-        $data[1] = $data[1] ?? null;
+        if (true !== isset($data[1])) {
+            $data[] = null;
+        }
 
         return $data;
     }
