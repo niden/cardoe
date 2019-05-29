@@ -147,8 +147,7 @@ class Stream implements StreamInterface
         $this->checkReadable();
 
         $data = stream_get_contents($this->handle);
-var_dump('bernie');
-var_dump($data);
+
         if (false === $data) {
             throw new RuntimeException('Could not read from the file/stream');
         }
@@ -202,7 +201,7 @@ var_dump($data);
      */
     public function isReadable(): bool
     {
-        $mode = $this->getMetadata('mode');
+        $mode = (string) $this->getMetadata('mode');
 
         return (false !== strpbrk($mode, 'r+'));
     }
@@ -220,7 +219,7 @@ var_dump($data);
      */
     public function isWritable(): bool
     {
-        $mode = $this->getMetadata('mode');
+        $mode = (string) $this->getMetadata('mode');
 
         return (false !== strpbrk($mode, 'xwca+'));
     }
@@ -327,7 +326,7 @@ var_dump($data);
 
         $position = ftell($this->handle);
 
-        if (true !== is_int($position)) {
+        if (false === $position) {
             throw new RuntimeException(
                 'Could not retrieve the pointer position'
             );
