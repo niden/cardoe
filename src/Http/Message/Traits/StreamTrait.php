@@ -15,6 +15,21 @@ use RuntimeException;
 trait StreamTrait
 {
     /**
+     * @return bool
+     */
+    abstract public function isReadable(): bool;
+
+    /**
+     * @return bool
+     */
+    abstract public function isSeekable(): bool;
+
+    /**
+     * @return bool
+     */
+    abstract public function isWritable(): bool;
+
+    /**
      * Checks if a handle is available and throws an exception otherwise
      */
     private function checkHandle(): void
