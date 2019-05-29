@@ -17,100 +17,37 @@ define('APP_PATH', $root);
 
 unset($root);
 
-if (true !== function_exists('env')) {
-    function env($key, $default = null)
-    {
-        if (defined($key)) {
-            return constant($key);
-        }
-
-        return getenv($key) ?: $default;
+$folders = [
+    'logs',
+];
+foreach ($folders as $folder) {
+    $item = outputDir('tests/' . $folder);
+    if (true !== file_exists($item)) {
+        mkdir($item, 0777, true);
     }
 }
 
-/**
- * Returns the output folder
- */
-if (true !== function_exists('dataDir')) {
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    function dataDir(string $fileName = '')
-    {
-        return codecept_data_dir() . $fileName;
-    }
+function dataDir(string $fileName = ''): string
+{
+    return codecept_data_dir() . $fileName;
+}
+
+function fixturesDir(string $fileName = '')
+{
+    return codecept_data_dir('fixtures') . $fileName;
+}
+
+function logsDir(string $fileName = ''): string
+{
+    return codecept_output_dir() . 'tests/logs/' . $fileName;
 }
 
 /**
- * Returns the output folder
+ * @param string $fileName
+ *
+ * @return string
  */
-if (true !== function_exists('fixturesDir')) {
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    function fixturesDir(string $fileName = '')
-    {
-        return codecept_data_dir('fixtures') . $fileName;
-    }
-}
-
-/**
- * Returns the output folder
- */
-if (true !== function_exists('outputDir')) {
-    /**
-     * @param string $fileName
-     *
-     * @return string
-     */
-    function outputDir(string $fileName = '')
-    {
-        return codecept_output_dir() . $fileName;
-    }
-}
-
-/*******************************************************************************
- * Options
- *******************************************************************************/
-/**
- * Return the libmemcached options
- */
-if (true !== function_exists('getOptionsLibmemcached')) {
-    /**
-     * @return array
-     */
-    function getOptionsLibmemcached(): array
-    {
-        return [
-            'client'  => [],
-            'servers' => [
-                [
-                    'host'   => env('DATA_MEMCACHED_HOST', '127.0.0.1'),
-                    'port'   => env('DATA_MEMCACHED_PORT', 11211),
-                    'weight' => env('DATA_MEMCACHED_WEIGHT', 0),
-                ],
-            ],
-        ];
-    }
-}
-
-/**
- * Return the Redis options
- */
-if (true !== function_exists('getOptionsRedis')) {
-    /**
-     * @return array
-     */
-    function getOptionsRedis(): array
-    {
-        return [
-            'host'  => env('DATA_REDIS_HOST'),
-            'port'  => env('DATA_REDIS_PORT'),
-            'index' => env('DATA_REDIS_NAME'),
-        ];
-    }
+function outputDir(string $fileName = '')
+{
+    return codecept_output_dir() . $fileName;
 }
