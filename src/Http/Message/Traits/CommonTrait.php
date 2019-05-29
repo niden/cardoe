@@ -14,7 +14,7 @@ use function is_string;
  *
  * @package Cardoe\Http\Message
  */
-trait Common
+trait CommonTrait
 {
     /**
      * Checks the element passed if it is a string

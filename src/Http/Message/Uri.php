@@ -13,7 +13,7 @@ namespace Cardoe\Http\Message;
 use Cardoe\Helper\Arr;
 use Cardoe\Helper\Str;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Traits\Common;
+use Cardoe\Http\Message\Traits\CommonTrait;
 use Psr\Http\Message\UriInterface;
 use function array_keys;
 use function explode;
@@ -33,7 +33,7 @@ use function strtolower;
  */
 final class Uri implements UriInterface
 {
-    use Common;
+    use CommonTrait;
 
     /**
      * Retrieve the fragment component of the URI.
