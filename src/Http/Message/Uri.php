@@ -150,11 +150,11 @@ final class Uri implements UriInterface
             $path = '/' . $path;
         }
 
-        $uri = ('' !== $this->scheme   ? $this->scheme . ':'   : '')
-             . ('' !== $authority      ? '//' . $authority     : '')
+        $uri = $this->checkValue($this->scheme, '', ':')
+             . $this->checkValue($authority, '//')
              . $path
-             . ('' !== $this->query    ? '?' . $this->query    : '')
-             . ('' !== $this->fragment ? '#' . $this->fragment : '')
+             . $this->checkValue($this->query, '?')
+             . $this->checkValue($this->fragment, '#')
         ;
 
         return $uri;
