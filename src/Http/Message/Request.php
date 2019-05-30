@@ -98,6 +98,11 @@ class Request implements RequestInterface
         $this->body    = $this->processBody($body, 'w+b');
     }
 
+    /**
+     * Return the body of the request
+     *
+     * @return StreamInterface
+     */
     public function getBody(): StreamInterface
     {
         return $this->body;
@@ -458,24 +463,6 @@ class Request implements RequestInterface
         }
 
         return $valueData;
-    }
-
-    /**
-     * Return the host and if applicable the port
-     *
-     * @param UriInterface $uri
-     *
-     * @return string
-     */
-    private function getUriHost(UriInterface $uri): string
-    {
-        $host = $uri->getHost();
-
-        if (null !== $uri->getPort()) {
-            $host .= ':' . $uri->getPort();
-        }
-
-        return $host;
     }
 
     /**
