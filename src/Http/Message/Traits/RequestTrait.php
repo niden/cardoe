@@ -214,12 +214,8 @@ trait RequestTrait
         $newInstance      = clone $this;
         $newInstance->uri = $uri;
 
-        if (!(true === $preserveHost &&
-            true === $headers->has('Host') &&
-            '' !== $uri->getHost())) {
-            $host = $this->getUriHost($uri);
-
-            $headers->set('Host', [$host]);
+        if (true !== $preserveHost) {
+            $headers = $this->checkHeaderHost($headers);
 
             $newInstance->headers = $headers;
         }
@@ -228,6 +224,35 @@ trait RequestTrait
     }
 
     abstract protected function cloneInstance($element, string $property);
+
+    /**
+     * Ensure Host is the first header.
+     *
+     * @see: http://tools.ietf.org/html/rfc7230#section-5.4
+     *
+     * @param Collection $collection
+     *
+     * @return Collection
+     */
+    private function checkHeaderHost(Collection $collection): Collection
+    {
+        if (true === $collection->has('host') &&
+            true !== empty($this->uri) &&
+            '' !== $this->uri->getHost()) {
+            $host = $this->getUriHost($this->uri);
+
+            $collection->set('Host', [$host]);
+
+            $data   = $collection->toArray();
+            $header = $data['Host'];
+            unset($data['Host']);
+            $data = ['Host' => $header] + $data;
+            $collection->clear();
+            $collection->init($data);
+        }
+
+        return $collection;
+    }
 
     /**
      * Return the host and if applicable the port

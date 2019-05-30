@@ -107,7 +107,7 @@ class ConstructCest
 
         $request = new Request(
             'GET',
-            'https://dev.cardoe.ld/action',
+            'https://dev.cardoe.ld:8080/action',
             'php://memory',
             [
                 'Host'          => ['test.cardoe.ld'],
@@ -117,7 +117,7 @@ class ConstructCest
         );
 
         $expected = [
-            'Host'          => ['dev.cardoe.ld'],
+            'Host'          => ['dev.cardoe.ld:8080'],
             'Accept'        => ['text/html'],
             'Cache-Control' => ['max-age=0'],
         ];
