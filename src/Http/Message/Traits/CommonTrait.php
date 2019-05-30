@@ -33,25 +33,6 @@ trait CommonTrait
     }
 
     /**
-     * If the value passed is empty it returns it prefixed and suffixed with
-     * the passed parameters
-     *
-     * @param string $value
-     * @param string $prefix
-     * @param string $suffix
-     *
-     * @return string
-     */
-    private function checkValue(string $value, string $prefix = '', string $suffix = ''): string
-    {
-        if ('' !== $value) {
-            $value = $prefix . $value . $suffix;
-        }
-
-        return $value;
-    }
-
-    /**
      * Checks the element passed if it is a string
      *
      * @param mixed $element
