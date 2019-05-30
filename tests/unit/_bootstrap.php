@@ -19,6 +19,7 @@ unset($root);
 
 $folders = [
     'logs',
+    'stream',
 ];
 foreach ($folders as $folder) {
     $item = outputDir('tests/' . $folder);
