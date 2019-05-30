@@ -282,7 +282,7 @@ trait RequestTrait
     /**
      * Sets a valid Uri
      *
-     * @param UriInterface|string $uri
+     * @param UriInterface|string|null $uri
      *
      * @return UriInterface
      */
