@@ -406,6 +406,11 @@ class UploadedFile implements UploadedFileInterface
     private function storeFile(string $targetPath): void
     {
         $handle = fopen($targetPath, 'w+b');
+        if (false === $handle) {
+            throw new InvalidArgumentException(
+                'Cannot write to file.'
+            );
+        }
         $stream = $this->getStream();
 
         $stream->rewind();

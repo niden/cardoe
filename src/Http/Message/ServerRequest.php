@@ -194,8 +194,8 @@ class ServerRequest implements ServerRequestInterface
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
      *
-     * @param string $name
-     * @param null   $defaultValue
+     * @param string        $name
+     * @param mixed|null    $defaultValue
      *
      * @return mixed
      */
@@ -471,7 +471,6 @@ class ServerRequest implements ServerRequestInterface
                     );
                 }
             }
-
         }
     }
 }

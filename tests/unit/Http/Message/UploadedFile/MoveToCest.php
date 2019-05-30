@@ -10,12 +10,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
 
-use Cardoe\Http\Message\Exception;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Stream;
 use Cardoe\Http\Message\UploadedFile;
-use TypeError;
 use UnitTester;
+use function outputDir;
 
 class MoveToCest
 {
