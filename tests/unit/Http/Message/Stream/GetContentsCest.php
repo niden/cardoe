@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Stream;
 
-use Cardoe\Http\Message\Exception;
 use Cardoe\Http\Message\Stream;
 use RuntimeException;
 use UnitTester;
