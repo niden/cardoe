@@ -288,17 +288,16 @@ trait RequestTrait
      */
     private function processUri($uri): UriInterface
     {
-        $uri = (null === $uri) ? '' : $uri;
         if ($uri instanceof UriInterface) {
-            $localUri = $uri;
+            return $uri;
         } elseif (true === is_string($uri)) {
-            $localUri = new Uri($uri);
+            return new Uri($uri);
+        } elseif (null === $uri) {
+            return new Uri();
         } else {
             throw new InvalidArgumentException(
                 'Invalid uri passed as a parameter'
             );
         }
-
-        return $localUri;
     }
 }
