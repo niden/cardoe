@@ -32,12 +32,17 @@ final class StreamFactory implements StreamFactoryInterface
      */
     public function createStream(string $content = ''): StreamInterface
     {
-        $tempResource = fopen('php://temp', 'r+b');
+        $handle = fopen('php://temp', 'r+b');
+        if (false === $handle) {
+            throw new InvalidArgumentException(
+                'Cannot write to file.'
+            );
+        }
 
-        fwrite($tempResource, $content);
-        rewind($tempResource);
+        fwrite($handle, $content);
+        rewind($handle);
 
-        return $this->createStreamFromResource($tempResource);
+        return $this->createStreamFromResource($handle);
     }
 
     /**
