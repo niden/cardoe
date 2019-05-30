@@ -226,53 +226,6 @@ trait RequestTrait
     abstract protected function cloneInstance($element, string $property);
 
     /**
-     * Ensure Host is the first header.
-     *
-     * @see: http://tools.ietf.org/html/rfc7230#section-5.4
-     *
-     * @param Collection $collection
-     *
-     * @return Collection
-     */
-    private function checkHeaderHost(Collection $collection): Collection
-    {
-        if (true === $collection->has('host') &&
-            true !== empty($this->uri) &&
-            '' !== $this->uri->getHost()) {
-            $host = $this->getUriHost($this->uri);
-
-            $collection->set('Host', [$host]);
-
-            $data   = $collection->toArray();
-            $header = $data['Host'];
-            unset($data['Host']);
-            $data = ['Host' => $header] + $data;
-            $collection->clear();
-            $collection->init($data);
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Return the host and if applicable the port
-     *
-     * @param UriInterface $uri
-     *
-     * @return string
-     */
-    private function getUriHost(UriInterface $uri): string
-    {
-        $host = $uri->getHost();
-
-        if (null !== $uri->getPort()) {
-            $host .= ':' . $uri->getPort();
-        }
-
-        return $host;
-    }
-
-    /**
      * Check the method
      *
      * @param string $method
