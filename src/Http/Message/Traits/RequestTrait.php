@@ -269,14 +269,18 @@ trait RequestTrait
     {
         if ($uri instanceof UriInterface) {
             return $uri;
-        } elseif (true === is_string($uri)) {
-            return new Uri($uri);
-        } elseif (null === $uri) {
-            return new Uri();
-        } else {
-            throw new InvalidArgumentException(
-                'Invalid uri passed as a parameter'
-            );
         }
+
+        if (true === is_string($uri)) {
+            return new Uri($uri);
+        }
+
+        if (null === $uri) {
+            return new Uri();
+        }
+
+        throw new InvalidArgumentException(
+            'Invalid uri passed as a parameter'
+        );
     }
 }

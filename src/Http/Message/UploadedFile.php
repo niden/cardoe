@@ -126,14 +126,14 @@ class UploadedFile implements UploadedFileInterface
      * UploadedFile constructor.
      *
      * @param StreamInterface|string|null $stream
-     * @param int                         $size
+     * @param int|null                    $size
      * @param int                         $error
      * @param string|null                 $clientFilename
      * @param string|null                 $clientMediaType
      */
     public function __construct(
         $stream,
-        int $size,
+        int $size = null,
         int $error = 0,
         string $clientFilename = null,
         string $clientMediaType = null
