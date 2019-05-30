@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
+use Cardoe\Helper\Number;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Traits\CommonTrait;
 use Cardoe\Http\Message\Traits\MessageTrait;
@@ -238,9 +239,6 @@ final class Response implements ResponseInterface
     private function processCode($code, $phrase = ''): void
     {
         $phrases = $this->getPhrases();
-        $keys = array_keys($phrases);
-        $min  = min($keys);
-        $max  = max($keys);
 
         if (true !== is_int($code) && true !== is_string($code)) {
             throw new InvalidArgumentException(
@@ -249,10 +247,10 @@ final class Response implements ResponseInterface
         }
 
         $code = (int) $code;
-        if ($code < $min || $code > $max) {
+        if (true !== Number::between($code, 100, 599)) {
             throw new InvalidArgumentException(
                 "Invalid status code '" . $code .
-                "', (allowed values " . $min . '-' . $max . ')'
+                "', (allowed values 100-599)"
             );
         }
 

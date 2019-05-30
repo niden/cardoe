@@ -302,7 +302,7 @@ trait MessageTrait
      *
      * @return Collection
      */
-    private function checkHeaderHost(Collection $collection): Collection
+    protected function checkHeaderHost(Collection $collection): Collection
     {
         if (true === $collection->has('host') &&
             true !== empty($this->uri) &&

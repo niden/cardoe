@@ -223,6 +223,7 @@ trait RequestTrait
         return $newInstance;
     }
 
+    abstract protected function checkHeaderHost(Collection $collection): Collection;
     abstract protected function cloneInstance($element, string $property);
 
     /**
