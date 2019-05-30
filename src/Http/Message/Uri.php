@@ -25,6 +25,7 @@ use function preg_replace;
 use function rawurlencode;
 use function strpos;
 use function strtolower;
+use function var_dump;
 
 /**
  * PSR-7 Uri

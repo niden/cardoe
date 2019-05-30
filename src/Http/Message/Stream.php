@@ -12,6 +12,7 @@ namespace Cardoe\Http\Message;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Http\Message\Traits\StreamTrait;
+use Exception;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use function fclose;
@@ -23,7 +24,6 @@ use function fstat;
 use function ftell;
 use function fwrite;
 use function get_resource_type;
-use function is_int;
 use function is_resource;
 use function is_string;
 use function restore_error_handler;
@@ -94,7 +94,7 @@ class Stream implements StreamInterface
 
                 return $this->getContents();
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             unset($e);
         }
 
