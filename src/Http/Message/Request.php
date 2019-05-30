@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
-use function array_unshift;
 use Cardoe\Collection\Collection;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Stream\Input;
@@ -101,10 +100,10 @@ class Request implements RequestInterface
     /**
      * Request constructor.
      *
-     * @param string $method
-     * @param null   $uri
-     * @param string $body
-     * @param array  $headers
+     * @param string                          $method
+     * @param UriInterface|string|null        $uri
+     * @param StreamInterface|resource|string $body
+     * @param array                           $headers
      */
     public function __construct(
         string $method = 'GET',
@@ -621,8 +620,8 @@ class Request implements RequestInterface
     /**
      * Set a valid stream
      *
-     * @param string $body
-     * @param string $mode
+     * @param StreamInterface|resource|string $body
+     * @param string                          $mode
      *
      * @return StreamInterface
      */
