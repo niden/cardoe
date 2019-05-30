@@ -14,6 +14,7 @@ use Cardoe\Collection\Collection;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Stream\Input;
 use Cardoe\Http\Message\Traits\CommonTrait;
+use Cardoe\Http\Message\Traits\RequestTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -47,6 +48,7 @@ use function preg_match;
 class Request implements RequestInterface
 {
     use CommonTrait;
+    use RequestTrait;
 
     /**
      * Gets the body of the message.
@@ -61,13 +63,6 @@ class Request implements RequestInterface
     private $headers;
 
     /**
-     * Retrieves the HTTP method of the request.
-     *
-     * @var string
-     */
-    private $method = 'GET';
-
-    /**
      * Retrieves the HTTP protocol version as a string.
      *
      * The string MUST contain only the HTTP version number (e.g., '1.1',
@@ -78,24 +73,6 @@ class Request implements RequestInterface
      * @var string
      */
     private $protocolVersion = '1.1';
-
-    /**
-     * The request-target, if it has been provided or calculated.
-     *
-     * @var null|string
-     */
-    private $requestTarget;
-
-    /**
-     * Retrieves the URI instance.
-     *
-     * This method MUST return a UriInterface instance.
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.3
-     *
-     * @var UriInterface
-     */
-    private $uri;
 
     /**
      * Request constructor.
@@ -199,51 +176,14 @@ class Request implements RequestInterface
         return $this->headers->toArray();
     }
 
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
-
-    public function getProtocolVersion(): string
-    {
-        return $this->protocolVersion;
-    }
-
     /**
-     * Retrieves the message's request target.
-     *
-     * Retrieves the message's request-target either as it will appear (for
-     * clients), as it appeared at request (for servers), or as it was
-     * specified for the instance (see withRequestTarget()).
-     *
-     * In most cases, this will be the origin-form of the composed URI, unless a
-     * value was provided to the concrete implementation (see
-     * withRequestTarget() below).
+     * Return the protocol version
      *
      * @return string
      */
-    public function getRequestTarget(): string
+    public function getProtocolVersion(): string
     {
-        $requestTarget = $this->requestTarget;
-
-        if (null === $requestTarget) {
-            $requestTarget = $this->uri->getPath();
-
-            if (true !== empty($this->uri->getQuery())) {
-                $requestTarget .= '?' . $this->uri->getQuery();
-            }
-
-            if (true === empty($requestTarget)) {
-                $requestTarget = '/';
-            }
-        }
-
-        return $requestTarget;
-    }
-
-    public function getUri(): UriInterface
-    {
-        return $this->uri;
+        return $this->protocolVersion;
     }
 
     /**
@@ -342,30 +282,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * Return an instance with the provided HTTP method.
-     *
-     * While HTTP method names are typically all uppercase characters, HTTP
-     * method names are case-sensitive and thus implementations SHOULD NOT
-     * modify the given string.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request method.
-     *
-     * @param string $method
-     *
-     * @return Request
-     * @throws InvalidArgumentException for invalid HTTP methods.
-     *
-     */
-    public function withMethod($method): Request
-    {
-        $this->processMethod($method);
-
-        return $this->cloneInstance($method, 'method');
-    }
-
-    /**
      * Return an instance with the specified HTTP protocol version.
      *
      * The version string MUST contain only the HTTP version number (e.g.,
@@ -387,89 +303,6 @@ class Request implements RequestInterface
     }
 
     /**
-     * Return an instance with the specific request-target.
-     *
-     * If the request needs a non-origin-form request-target — e.g., for
-     * specifying an absolute-form, authority-form, or asterisk-form —
-     * this method may be used to create an instance with the specified
-     * request-target, verbatim.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * changed request target.
-     *
-     * @see http://tools.ietf.org/html/rfc7230#section-5.3 (for the various
-     *     request-target forms allowed in request messages)
-     *
-     * @param mixed $requestTarget
-     *
-     * @return Request
-     */
-    public function withRequestTarget($requestTarget): Request
-    {
-        if (preg_match('/\s/', $requestTarget)) {
-            throw new InvalidArgumentException(
-                'Invalid request target: cannot contain whitespace'
-            );
-        }
-
-        return $this->cloneInstance($requestTarget, 'requestTarget');
-    }
-
-    /**
-     * Returns an instance with the provided URI.
-     *
-     * This method MUST update the Host header of the returned request by
-     * default if the URI contains a host component. If the URI does not
-     * contain a host component, any pre-existing Host header MUST be carried
-     * over to the returned request.
-     *
-     * You can opt-in to preserving the original state of the Host header by
-     * setting `$preserveHost` to `true`. When `$preserveHost` is set to
-     * `true`, this method interacts with the Host header in the following
-     * ways:
-     *
-     * - If the Host header is missing or empty, and the new URI contains
-     *   a host component, this method MUST update the Host header in the
-     *   returned request.
-     * - If the Host header is missing or empty, and the new URI does not
-     * contain a host component, this method MUST NOT update the Host header in
-     * the returned request.
-     * - If a Host header is present and non-empty, this method MUST NOT update
-     *   the Host header in the returned request.
-     *
-     * This method MUST be implemented in such a way as to retain the
-     * immutability of the message, and MUST return an instance that has the
-     * new UriInterface instance.
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.3
-     *
-     * @param UriInterface $uri
-     * @param bool         $preserveHost
-     *
-     * @return Request
-     */
-    public function withUri(UriInterface $uri, $preserveHost = false): Request
-    {
-        $preserveHost     = (bool) $preserveHost;
-        $headers          = clone $this->headers;
-        $newInstance      = clone $this;
-        $newInstance->uri = $uri;
-
-        if (!(true === $preserveHost &&
-            true === $headers->has('Host') &&
-            '' !== $uri->getHost())) {
-            $host = $this->getUriHost($uri);
-
-            $headers->set('Host', [$host]);
-
-            $newInstance->headers = $headers;
-        }
-
-        return $newInstance;
-    }
-
-    /**
      * Return an instance without the specified header.
      *
      * Header resolution MUST be done without case-sensitivity.
@@ -488,6 +321,34 @@ class Request implements RequestInterface
         $headers->remove($name);
 
         return $this->cloneInstance($headers, 'headers');
+    }
+
+    /**
+     * Ensure Host is the first header.
+     *
+     * @see: http://tools.ietf.org/html/rfc7230#section-5.4
+     *
+     * @param Collection $collection
+     *
+     * @return Collection
+     */
+    private function checkHeaderHost(Collection $collection): Collection
+    {
+        if (true === $collection->has('host') &&
+            true !== empty($this->uri) &&
+            '' !== $this->uri->getHost()) {
+            $host = $this->getUriHost($this->uri);
+            $collection->set('Host', [$host]);
+
+            $data   = $collection->toArray();
+            $header = $data['Host'];
+            unset($data['Host']);
+            $data = ['Host' => $header] + $data;
+            $collection->clear();
+            $collection->init($data);
+        }
+
+        return $collection;
     }
 
     /**
@@ -618,6 +479,29 @@ class Request implements RequestInterface
     }
 
     /**
+     * Populates the header collection
+     *
+     * @param array $headers
+     *
+     * @return Collection
+     */
+    private function populateHeaderCollection(array $headers): Collection
+    {
+        $collection = new Collection();
+
+        foreach ($headers as $name => $value) {
+            $this->checkHeaderName($name);
+
+            $name  = (string) $name;
+            $value = $this->getHeaderValue($value);
+
+            $collection->set($name, $value);
+        }
+
+        return $collection;
+    }
+
+    /**
      * Set a valid stream
      *
      * @param StreamInterface|resource|string $body
@@ -650,34 +534,8 @@ class Request implements RequestInterface
     private function processHeaders($headers): Collection
     {
         if (true === is_array($headers)) {
-            $collection = new Collection();
-
-            foreach ($headers as $name => $value) {
-                $this->checkHeaderName($name);
-
-                $name  = (string) $name;
-                $value = $this->getHeaderValue($value);
-
-                $collection->set($name, $value);
-            }
-
-            /**
-             * Ensure Host is the first header.
-             * See: http://tools.ietf.org/html/rfc7230#section-5.4
-             */
-            if (true === $collection->has('host') &&
-                true !== empty($this->uri) &&
-                '' !== $this->uri->getHost()) {
-                $host = $this->getUriHost($this->uri);
-                $collection->set('Host', [$host]);
-
-                $data   = $collection->toArray();
-                $header = $data['Host'];
-                unset($data['Host']);
-                $data = ['Host' => $header] + $data;
-                $collection->clear();
-                $collection->init($data);
-            }
+            $collection = $this->populateHeaderCollection($headers);
+            $collection = $this->checkHeaderHost($collection);
         } else {
             if (!($headers instanceof Collection)) {
                 throw new InvalidArgumentException(
@@ -689,38 +547,6 @@ class Request implements RequestInterface
         }
 
         return $collection;
-    }
-
-    /**
-     * Check the method
-     *
-     * @param string $method
-     *
-     * @return string
-     */
-    private function processMethod($method = ''): string
-    {
-        $methods = [
-            'GET'     => 1,
-            'CONNECT' => 1,
-            'DELETE'  => 1,
-            'HEAD'    => 1,
-            'OPTIONS' => 1,
-            'PATCH'   => 1,
-            'POST'    => 1,
-            'PUT'     => 1,
-            'TRACE'   => 1,
-        ];
-
-        if (!(true !== empty($method) &&
-            true === is_string($method) &&
-            true === isset($methods[$method]))) {
-            throw new InvalidArgumentException(
-                'Invalid or unsupported method ' . $method
-            );
-        }
-
-        return $method;
     }
 
     /**
@@ -750,28 +576,5 @@ class Request implements RequestInterface
         }
 
         return $protocol;
-    }
-
-    /**
-     * Sets a valid Uri
-     *
-     * @param UriInterface|string $uri
-     *
-     * @return UriInterface
-     */
-    private function processUri($uri): UriInterface
-    {
-        $uri = (null === $uri) ? '' : $uri;
-        if ($uri instanceof UriInterface) {
-            $localUri = $uri;
-        } elseif (true === is_string($uri)) {
-            $localUri = new Uri($uri);
-        } else {
-            throw new InvalidArgumentException(
-                'Invalid uri passed as a parameter'
-            );
-        }
-
-        return $localUri;
     }
 }

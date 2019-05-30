@@ -17,6 +17,22 @@ use function is_string;
 trait CommonTrait
 {
     /**
+     * Returns a new instance having set the parameter
+     *
+     * @param mixed  $element
+     * @param string $property
+     *
+     * @return mixed
+     */
+    protected function cloneInstance($element, string $property)
+    {
+        $newInstance              = clone $this;
+        $newInstance->{$property} = $element;
+
+        return $newInstance;
+    }
+
+    /**
      * If the value passed is empty it returns it prefixed and suffixed with
      * the passed parameters
      *
@@ -47,22 +63,6 @@ trait CommonTrait
                 'Method requires a string argument'
             );
         }
-    }
-
-    /**
-     * Returns a new instance having set the parameter
-     *
-     * @param mixed  $element
-     * @param string $property
-     *
-     * @return mixed
-     */
-    private function cloneInstance($element, string $property)
-    {
-        $newInstance              = clone $this;
-        $newInstance->{$property} = $element;
-
-        return $newInstance;
     }
 
     /**
