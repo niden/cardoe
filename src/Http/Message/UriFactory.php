@@ -13,7 +13,7 @@ namespace Cardoe\Http\Message;
 use Psr\Http\Message\UriFactoryInterface;
 use Psr\Http\Message\UriInterface;
 
-class UriFactory implements UriFactoryInterface
+final class UriFactory implements UriFactoryInterface
 {
     /**
      * Returns a Locator object with all the helpers defined in anonymous

@@ -61,7 +61,7 @@ use function is_object;
  * be implemented such that they retain the internal state of the current
  * message and return an instance that contains the changed state.
  */
-class ServerRequest implements ServerRequestInterface
+final class ServerRequest implements ServerRequestInterface
 {
     use CommonTrait;
     use MessageTrait;

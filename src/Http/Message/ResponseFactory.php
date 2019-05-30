@@ -13,7 +13,7 @@ namespace Cardoe\Http\Message;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 
-class ResponseFactory implements ResponseFactoryInterface
+final class ResponseFactory implements ResponseFactoryInterface
 {
     /**
      * Create a new response.

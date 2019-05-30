@@ -19,7 +19,7 @@ use function get_resource_type;
 use function is_resource;
 use function rewind;
 
-class StreamFactory implements StreamFactoryInterface
+final class StreamFactory implements StreamFactoryInterface
 {
     /**
      * Create a new stream from a string.

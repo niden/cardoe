@@ -43,7 +43,7 @@ use const UPLOAD_ERR_PARTIAL;
  * state of the current instance and return an instance that contains the
  * changed state.
  */
-class UploadedFile implements UploadedFileInterface
+final class UploadedFile implements UploadedFileInterface
 {
     /**
      * If the file has already been moved, we hold that status here

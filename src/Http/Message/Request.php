@@ -37,7 +37,7 @@ use Psr\Http\Message\UriInterface;
  * be implemented such that they retain the internal state of the current
  * message and return an instance that contains the changed state.
  */
-class Request implements RequestInterface
+final class Request implements RequestInterface
 {
     use CommonTrait;
     use MessageTrait;

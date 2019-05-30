@@ -16,7 +16,7 @@ use Psr\Http\Message\UploadedFileFactoryInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use const UPLOAD_ERR_OK;
 
-class UploadedFileFactory implements UploadedFileFactoryInterface
+final class UploadedFileFactory implements UploadedFileFactoryInterface
 {
     /**
      * Create a new uploaded file.

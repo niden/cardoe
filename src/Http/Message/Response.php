@@ -15,11 +15,8 @@ use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Traits\CommonTrait;
 use Cardoe\Http\Message\Traits\MessageTrait;
 use Psr\Http\Message\ResponseInterface;
-use function array_keys;
 use function is_int;
 use function is_string;
-use function max;
-use function min;
 
 /**
  * Representation of an outgoing, server-side response.
