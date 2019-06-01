@@ -163,30 +163,6 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - server address
-     * prefixed
-     *
-     * @since  2019-02-09
-     */
-    public function httpMessageServerRequestFactoryLoadServerAddress(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - server address');
-
-        $server = [
-            'SERVER_ADDR' => '1fff:0:a88:85a3::ac1f',
-            'SERVER_NAME' => '[1fff:0:a88:85a3::ac1f]:8081',
-            'SERVER_PORT' => 8001,
-        ];
-
-        $factory = new ServerRequestFactory();
-        $request = $factory->load($server);
-        $uri     = $request->getUri();
-
-        $I->assertEquals('[1fff:0:a88:85a3::ac1f]', $uri->getHost());
-        $I->assertEquals(8001, $uri->getPort());
-    }
-
-    /**
      * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - server header
      *
      * @since        2019-02-09
