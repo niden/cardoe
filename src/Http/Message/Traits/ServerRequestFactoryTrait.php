@@ -19,13 +19,12 @@ use function explode;
 use function implode;
 use function is_array;
 use function ltrim;
-use function mb_strtolower;
 use function parse_str;
 use function preg_match;
 use function preg_replace;
+use function str_replace;
 use function strlen;
-use function strpos;
-use function strtolower;
+use function mb_strpos;
 use function substr;
 
 /**
@@ -255,26 +254,37 @@ trait ServerRequestFactoryTrait
     {
         $headers = new Collection();
         foreach ($server as $key => $value) {
-            if (strpos($key, 'REDIRECT_') === 0 ||
-                true === $server->has(substr($key, 9)) ||
-                '' === $value) {
-                continue;
-            }
+            if ('' !== $value) {
+                /**
+                 * Apache prefixes environment variables with REDIRECT_
+                 * if they are added by rewrite rules
+                 */
+                if (mb_strpos($key, 'REDIRECT_') === 0) {
+                    $key = substr($key, 9);
+                    /**
+                     * We will not overwrite existing variables with the
+                     * prefixed versions, though
+                     */
+                    if (true === $server->has($key)) {
+                        continue;
+                    }
+                }
 
-            if (strpos($key, 'HTTP_') === 0) {
-                $name = str_replace(
-                    '_',
-                    '-',
-                    mb_strtolower(substr($key, 5))
-                );
-                $headers->set($name, $value);
-                continue;
-            }
+                if (mb_strpos($key, 'HTTP_') === 0) {
+                    $name = str_replace(
+                        '_',
+                        '-',
+                        mb_strtolower(substr($key, 5))
+                    );
+                    $headers->set($name, $value);
+                    continue;
+                }
 
-            if (strpos($key, 'CONTENT_') === 0) {
-                $name = 'content-' . mb_strtolower(substr($key, 8));
-                $headers->set($name, $value);
-                continue;
+                if (mb_strpos($key, 'CONTENT_') === 0) {
+                    $name = 'content-' . mb_strtolower(substr($key, 8));
+                    $headers->set($name, $value);
+                    continue;
+                }
             }
         }
 
