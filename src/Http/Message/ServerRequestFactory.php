@@ -110,7 +110,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
     /**
      * Returns the apache_request_headers if it exists
      *
-     * @return array|bool
+     * @return array|false
      */
     protected function getHeaders()
     {

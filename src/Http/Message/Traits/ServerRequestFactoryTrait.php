@@ -19,6 +19,7 @@ use function explode;
 use function implode;
 use function is_array;
 use function ltrim;
+use function mb_strtolower;
 use function parse_str;
 use function preg_match;
 use function preg_replace;
@@ -37,7 +38,7 @@ trait ServerRequestFactoryTrait
     /**
      * Returns the apache_request_headers if it exists
      *
-     * @return array|bool
+     * @return array|false
      */
     abstract protected function getHeaders();
 
@@ -254,33 +255,24 @@ trait ServerRequestFactoryTrait
     {
         $headers = new Collection();
         foreach ($server as $key => $value) {
-            /**
-             * Apache prefixes environment variables with REDIRECT_
-             * if they are added by rewrite rules
-             */
-            if (strpos($key, 'REDIRECT_') === 0) {
-                $key = substr($key, 9);
-                /**
-                 * We will not overwrite existing variables with the
-                 * prefixed versions, though
-                 */
-                if (true === $server->has($key)) {
-                    continue;
-                }
-            }
-
-            if ($value === '') {
+            if (strpos($key, 'REDIRECT_') === 0 ||
+                true === $server->has(substr($key, 9)) ||
+                '' === $value) {
                 continue;
             }
 
             if (strpos($key, 'HTTP_') === 0) {
-                $name = strtr(strtolower(substr($key, 5)), '_', '-');
+                $name = str_replace(
+                    '_',
+                    '-',
+                    mb_strtolower(substr($key, 5))
+                );
                 $headers->set($name, $value);
                 continue;
             }
 
             if (strpos($key, 'CONTENT_') === 0) {
-                $name = 'content-' . strtolower(substr($key, 8));
+                $name = 'content-' . mb_strtolower(substr($key, 8));
                 $headers->set($name, $value);
                 continue;
             }
