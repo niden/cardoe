@@ -180,8 +180,8 @@ class LoadCest
         $headers = $request->getHeaders();
 
         $expected = [
-            'host'          => 'test.cardoe.ld',
-            'authorization' => 'Bearer',
+            'host'          => ['test.cardoe.ld'],
+            'authorization' => ['Bearer'],
         ];
 
         $I->assertEquals($expected, $headers);
@@ -237,8 +237,8 @@ class LoadCest
         ];
 
         $expected = [
-            'auth'           => 'letmein',
-            'content-length' => 'UNSPECIFIED',
+            'auth'           => ['letmein'],
+            'content-length' => ['UNSPECIFIED'],
         ];
 
         $factory = new ServerRequestFactory();

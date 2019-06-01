@@ -142,16 +142,16 @@ final class ServerRequest implements ServerRequestInterface
     /**
      * ServerRequest constructor.
      *
-     * @param string                      $method
-     * @param UriInterface|string|null    $uri
-     * @param array                       $serverParams
-     * @param StreamInterface|string      $body
-     * @param array                       $headers
-     * @param array                       $cookies
-     * @param array                       $queryParams
-     * @param array                       $uploadFiles
-     * @param StreamInterface|string|null $parsedBody
-     * @param string                      $protocol
+     * @param string                   $method
+     * @param UriInterface|string|null $uri
+     * @param array                    $serverParams
+     * @param StreamInterface|string   $body
+     * @param array                    $headers
+     * @param array                    $cookies
+     * @param array                    $queryParams
+     * @param array                    $uploadFiles
+     * @param null|array|object        $parsedBody
+     * @param string                   $protocol
      */
     public function __construct(
         string $method = 'GET',
@@ -165,7 +165,6 @@ final class ServerRequest implements ServerRequestInterface
         $parsedBody = null,
         string $protocol = '1.1'
     ) {
-
         if ('php://input' === $body) {
             $body = new Input();
         }

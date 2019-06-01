@@ -332,7 +332,7 @@ trait MessageTrait
     private function checkHeaderName($name): void
     {
         if (true !== is_string($name) ||
-            !preg_match("/^[a-zA-Z0-9\'`#$%&*+.^_|~!-]+$/", $name)) {
+            !preg_match("/^[a-zA-Z0-9'`#$%&*+.^_|~!-]+$/", $name)) {
             throw new InvalidArgumentException(
                 'Invalid header name ' . $name
             );
