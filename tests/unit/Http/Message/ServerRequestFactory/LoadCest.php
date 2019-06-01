@@ -362,53 +362,12 @@ class LoadCest
         $I->assertEquals('https', $uri->getScheme());
 
         $server = [
-            'HTTPS' => true,
-        ];
-
-        $request = $factory->load($server);
-        $uri     = $request->getUri();
-        $I->assertEquals('https', $uri->getScheme());
-
-        $server = [
             'HTTPS' => 'off',
         ];
 
         $request = $factory->load($server);
         $uri     = $request->getUri();
         $I->assertEquals('http', $uri->getScheme());
-
-        $server = [
-            'HTTPS' => false,
-        ];
-
-        $request = $factory->load($server);
-        $uri     = $request->getUri();
-        $I->assertEquals('http', $uri->getScheme());
-    }
-
-    /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - scheme
-     * exception prefixed
-     *
-     * @since  2019-02-09
-     */
-    public function httpMessageServerRequestFactoryLoadSchemeException(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - scheme exception');
-
-        $I->expectThrowable(
-            new InvalidArgumentException(
-                'HTTPS value must be a string or boolean'
-            ),
-            function () {
-                $server = [
-                    'HTTPS' => 1234,
-                ];
-
-                $factory = new ServerRequestFactory();
-                $request = $factory->load($server);
-            }
-        );
     }
 
     /**

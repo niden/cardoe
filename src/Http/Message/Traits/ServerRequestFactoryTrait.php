@@ -18,8 +18,6 @@ use Psr\Http\Message\UploadedFileInterface;
 use function explode;
 use function implode;
 use function is_array;
-use function is_bool;
-use function is_string;
 use function ltrim;
 use function parse_str;
 use function preg_match;
@@ -29,8 +27,20 @@ use function strpos;
 use function strtolower;
 use function substr;
 
+/**
+ * Trait ServerRequestFactoryTrait
+ *
+ * @package Cardoe\Http\Message\Traits
+ */
 trait ServerRequestFactoryTrait
 {
+    /**
+     * Returns the apache_request_headers if it exists
+     *
+     * @return array|bool
+     */
+    abstract protected function getHeaders();
+
     /**
      * Calculates the host and port from the headers or the server superglobal
      *
@@ -145,16 +155,8 @@ trait ServerRequestFactoryTrait
         $isHttps = true;
         if (true === $server->has('HTTPS')) {
             /** @var mixed $isHttps */
-            $isHttps = $server->get('HTTPS', 'on');
-            if (true !== is_string($isHttps) && true !== is_bool($isHttps)) {
-                throw new InvalidArgumentException(
-                    'HTTPS value must be a string or boolean'
-                );
-            }
-
-            if (true === is_string($isHttps)) {
-                $isHttps = 'off' !== mb_strtolower($isHttps);
-            }
+            $isHttps = (string) $server->get('HTTPS', 'on');
+            $isHttps = 'off' !== mb_strtolower($isHttps);
         }
 
         $header = $this->getHeader($headers, 'x-forwarded-proto', 'https');

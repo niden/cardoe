@@ -319,20 +319,16 @@ final class UploadedFile implements UploadedFileInterface
             );
         }
 
-        switch (true) {
-            case (true === empty(PHP_SAPI)):
-            case (true !== empty($this->fileName)):
-            case (true === Str::startsWith(PHP_SAPI, 'cli')):
-            case (true === Str::startsWith(PHP_SAPI, 'phpdbg')):
-                $this->storeFile($targetPath);
-                break;
-            default:
-                if (true !== move_uploaded_file($this->fileName, $targetPath)) {
-                    throw new InvalidArgumentException(
-                        'The file cannot be moved to the target folder'
-                    );
-                }
-                break;
+        if (true === empty(PHP_SAPI) ||
+            true !== empty($this->fileName) ||
+            true === Str::startsWith(PHP_SAPI, 'cli')) {
+            $this->storeFile($targetPath);
+        } else {
+            if (true !== move_uploaded_file($this->fileName, $targetPath)) {
+                throw new InvalidArgumentException(
+                    'The file cannot be moved to the target folder'
+                );
+            }
         }
 
         $this->alreadyMoved = true;
