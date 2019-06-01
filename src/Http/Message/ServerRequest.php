@@ -22,6 +22,7 @@ use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 use function is_array;
 use function is_object;
+use function var_dump;
 
 /**
  * Representation of an incoming, server-side HTTP request.

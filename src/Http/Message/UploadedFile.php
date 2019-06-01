@@ -321,7 +321,8 @@ final class UploadedFile implements UploadedFileInterface
 
         if (true === empty(PHP_SAPI) ||
             true === empty($this->fileName) ||
-            Str::startsWith(PHP_SAPI, 'cli')) {
+            Str::startsWith(PHP_SAPI, 'cli') ||
+            Str::startsWith(PHP_SAPI, 'phpdbg')) {
             $this->storeFile($targetPath);
         } else {
             if (true !== move_uploaded_file($this->fileName, $targetPath)) {
