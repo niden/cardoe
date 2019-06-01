@@ -30,7 +30,6 @@ use function preg_match;
 use function preg_replace;
 use function strlen;
 use function strpos;
-use function strrpos;
 use function strtolower;
 use function substr;
 
@@ -112,7 +111,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
             $this->parseUri($server, $headers),
             $server->toArray(),
             'php://input',
-            $headers,
+            $headers->toArray(),
             $cookies,
             $get,
             $files->toArray(),
@@ -248,6 +247,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $scheme  = 'https';
         $isHttps = true;
         if (true === $server->has('HTTPS')) {
+            /** @var mixed $isHttps */
             $isHttps = $server->get('HTTPS', 'on');
             if (true !== is_string($isHttps) && true !== is_bool($isHttps)) {
                 throw new InvalidArgumentException(
