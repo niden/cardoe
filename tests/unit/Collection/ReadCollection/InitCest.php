@@ -16,13 +16,13 @@ use UnitTester;
 class InitCest
 {
     /**
-     * Tests Cardoe\Collection :: init()
+     * Tests Cardoe\Collection\ReadCollection :: init()
      *
      * @since  2018-11-13
      */
     public function collectionInit(UnitTester $I)
     {
-        $I->wantToTest('Collection - init()');
+        $I->wantToTest('ReadCollection - init()');
 
         $data = [
             'one'   => 'two',

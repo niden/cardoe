@@ -16,7 +16,7 @@ use UnitTester;
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Collection :: __construct()
+     * Tests Cardoe\Collection\Collection :: __construct()
      *
      * @since  2018-11-13
      */

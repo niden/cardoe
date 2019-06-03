@@ -16,13 +16,13 @@ use UnitTester;
 class CountCest
 {
     /**
-     * Tests Cardoe\Collection :: count()
+     * Tests Cardoe\Collection\ReadCollection :: count()
      *
      * @since  2018-11-13
      */
     public function collectionCount(UnitTester $I)
     {
-        $I->wantToTest('Collection - count()');
+        $I->wantToTest('ReadCollection - count()');
 
         $data = [
             'one'   => 'two',

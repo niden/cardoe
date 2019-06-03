@@ -16,7 +16,7 @@ use UnitTester;
 class GetIteratorCest
 {
     /**
-     * Tests Cardoe\Collection :: getIterator()
+     * Tests Cardoe\Collection\Collection :: getIterator()
      *
      * @since  2018-11-13
      */

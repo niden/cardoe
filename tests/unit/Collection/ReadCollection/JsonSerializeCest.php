@@ -16,13 +16,13 @@ use UnitTester;
 class JsonSerializeCest
 {
     /**
-     * Tests Cardoe\Collection :: jsonSerialize()
+     * Tests Cardoe\Collection\ReadCollection :: jsonSerialize()
      *
      * @since  2018-11-13
      */
     public function collectionJsonSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection - jsonSerialize()');
+        $I->wantToTest('ReadCollection - jsonSerialize()');
 
         $data = [
             'one'   => 'two',

@@ -16,13 +16,13 @@ use UnitTester;
 class ToJsonCest
 {
     /**
-     * Tests Cardoe\Collection :: toJson()
+     * Tests Cardoe\Collection\ReadCollection :: toJson()
      *
      * @since  2018-11-13
      */
     public function collectionToJson(UnitTester $I)
     {
-        $I->wantToTest('Collection - toJson()');
+        $I->wantToTest('ReadCollection - toJson()');
 
         $data = [
             'one'   => 'two',

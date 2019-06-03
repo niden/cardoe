@@ -16,7 +16,7 @@ use UnitTester;
 class GetCest
 {
     /**
-     * Tests Cardoe\Collection :: get()
+     * Tests Cardoe\Collection\Collection :: get()
      *
      * @since  2018-11-13
      */

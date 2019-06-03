@@ -16,7 +16,7 @@ use UnitTester;
 class SetCest
 {
     /**
-     * Tests Cardoe\Collection :: set()
+     * Tests Cardoe\Collection\Collection :: set()
      *
      * @since  2018-11-13
      */

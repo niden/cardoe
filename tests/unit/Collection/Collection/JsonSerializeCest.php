@@ -16,7 +16,7 @@ use UnitTester;
 class JsonSerializeCest
 {
     /**
-     * Tests Cardoe\Collection :: jsonSerialize()
+     * Tests Cardoe\Collection\Collection :: jsonSerialize()
      *
      * @since  2018-11-13
      */

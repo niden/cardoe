@@ -16,7 +16,7 @@ use UnitTester;
 class UnserializeCest
 {
     /**
-     * Tests Cardoe\Collection :: serialize()
+     * Tests Cardoe\Collection\Collection :: serialize()
      *
      * @since  2018-11-13
      */

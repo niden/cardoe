@@ -16,13 +16,13 @@ use UnitTester;
 class ClearCest
 {
     /**
-     * Tests Cardoe\Collection :: clear()
+     * Tests Cardoe\Collection\ReadCollection :: clear()
      *
      * @since  2018-11-13
      */
     public function collectionClear(UnitTester $I)
     {
-        $I->wantToTest('Collection - clear()');
+        $I->wantToTest('ReadCollection - clear()');
 
         $data = [
             'one'   => 'two',

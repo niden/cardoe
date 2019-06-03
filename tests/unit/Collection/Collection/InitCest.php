@@ -16,7 +16,7 @@ use UnitTester;
 class InitCest
 {
     /**
-     * Tests Cardoe\Collection :: init()
+     * Tests Cardoe\Collection\Collection :: init()
      *
      * @since  2018-11-13
      */

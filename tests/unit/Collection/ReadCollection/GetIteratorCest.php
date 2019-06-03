@@ -16,13 +16,13 @@ use UnitTester;
 class GetIteratorCest
 {
     /**
-     * Tests Cardoe\Collection :: getIterator()
+     * Tests Cardoe\Collection\ReadCollection :: getIterator()
      *
      * @since  2018-11-13
      */
     public function collectionGetIterator(UnitTester $I)
     {
-        $I->wantToTest('Collection - getIterator()');
+        $I->wantToTest('ReadCollection - getIterator()');
 
         $data = [
             'one'   => 'two',

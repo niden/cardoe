@@ -17,13 +17,13 @@ use UnitTester;
 class SetCest
 {
     /**
-     * Tests Cardoe\Collection :: set()
+     * Tests Cardoe\Collection\ReadCollection :: set()
      *
      * @since  2018-11-13
      */
     public function collectionSet(UnitTester $I)
     {
-        $I->wantToTest('Collection - set()');
+        $I->wantToTest('ReadCollection - set()');
 
         $I->expectThrowable(
             new Exception('The object is read only'),

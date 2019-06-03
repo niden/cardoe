@@ -16,13 +16,13 @@ use UnitTester;
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Collection :: __construct()
+     * Tests Cardoe\Collection\ReadCollection :: __construct()
      *
      * @since  2018-11-13
      */
     public function collectionConstruct(UnitTester $I)
     {
-        $I->wantToTest('Collection - __construct()');
+        $I->wantToTest('ReadCollection - __construct()');
         $collection = new ReadCollection();
 
         $class = ReadCollection::class;

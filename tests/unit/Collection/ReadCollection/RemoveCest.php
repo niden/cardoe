@@ -17,13 +17,13 @@ use UnitTester;
 class RemoveCest
 {
     /**
-     * Tests Cardoe\Collection :: remove()
+     * Tests Cardoe\Collection\ReadCollection :: remove()
      *
      * @since  2018-11-13
      */
     public function collectionRemove(UnitTester $I)
     {
-        $I->wantToTest('Collection - remove()');
+        $I->wantToTest('ReadCollection - remove()');
 
         $data       = [
             'one'   => 'two',

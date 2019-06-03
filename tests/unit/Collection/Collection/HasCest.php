@@ -16,7 +16,7 @@ use UnitTester;
 class HasCest
 {
     /**
-     * Tests Cardoe\Collection :: has()
+     * Tests Cardoe\Collection\Collection :: has()
      *
      * @since  2018-11-13
      */
@@ -41,7 +41,53 @@ class HasCest
         );
 
         $I->assertFalse(
-            $collection->has('THREE', false)
+            $collection->has('unknown')
+        );
+
+        $I->assertTrue(
+            $collection->__isset('three')
+        );
+
+        $I->assertTrue(
+            isset($collection['three'])
+        );
+
+        $I->assertFalse(
+            isset($collection['unknown'])
+        );
+
+        $I->assertTrue(
+            $collection->offsetExists('three')
+        );
+
+        $I->assertFalse(
+            $collection->offsetExists('unknown')
+        );
+    }
+
+    /**
+     * Tests Cardoe\Collection\Collection :: has() - sensitive
+     *
+     * @since  2018-11-13
+     */
+    public function collectionHasSensitive(UnitTester $I)
+    {
+        $I->wantToTest('Collection - has()');
+
+        $data = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new Collection($data, false);
+
+        $I->assertTrue(
+            $collection->has('three')
+        );
+
+        $I->assertFalse(
+            $collection->has('THREE')
         );
 
         $I->assertFalse(

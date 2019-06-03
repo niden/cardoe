@@ -16,13 +16,13 @@ use UnitTester;
 class UnserializeCest
 {
     /**
-     * Tests Cardoe\Collection :: serialize()
+     * Tests Cardoe\Collection\ReadCollection :: serialize()
      *
      * @since  2018-11-13
      */
     public function collectionSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection - serialize()');
+        $I->wantToTest('ReadCollection - serialize()');
 
         $data = [
             'one'   => 'two',

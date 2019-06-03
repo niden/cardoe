@@ -29,12 +29,22 @@ use function mb_strtolower;
  * Such implementations are for instance accessing globals `$_GET`, `$_POST`
  * etc.
  */
-class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
+class Collection implements
+    ArrayAccess,
+    Countable,
+    IteratorAggregate,
+    JsonSerializable,
+    Serializable
 {
     /**
      * @var array
      */
     protected $data = [];
+
+    /**
+     * @var bool
+     */
+    protected $insensitive = true;
 
     /**
      * @var array
@@ -45,35 +55,12 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
      * Collection constructor.
      *
      * @param array $data
+     * @param bool  $insensitive
      */
-    public function __construct(array $data = [])
+    public function __construct(array $data = [], bool $insensitive = true)
     {
+        $this->insensitive = $insensitive;
         $this->init($data);
-    }
-
-    /**
-     * Initialize internal array
-     *
-     * @param array $data
-     */
-    public function init(array $data = []): void
-    {
-        foreach ($data as $key => $value) {
-            $this->setData($key, $value);
-        }
-    }
-
-    /**
-     * Internal method to set data
-     *
-     * @param string $element
-     * @param mixed  $value
-     */
-    protected function setData(string $element, $value): void
-    {
-        $key                   = mb_strtolower($element);
-        $this->data[$element]  = $value;
-        $this->lowerKeys[$key] = $element;
     }
 
     /**
@@ -89,52 +76,6 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Magic setter to assign values to an element
-     *
-     * @param string $element
-     * @param mixed  $value
-     */
-    public function __set(string $element, $value)
-    {
-        $this->set($element, $value);
-    }
-
-    /**
-     * Get the element from the collection
-     *
-     * @param string     $element
-     * @param mixed|null $defaultValue
-     * @param bool       $insensitive
-     *
-     * @return mixed
-     */
-    public function get(string $element, $defaultValue = null, bool $insensitive = true)
-    {
-        if (true === $insensitive) {
-            $element = mb_strtolower($element);
-        }
-
-        if (true === isset($this->lowerKeys[$element])) {
-            $key = $this->lowerKeys[$element];
-
-            return $this->data[$key];
-        }
-
-        return $defaultValue;
-    }
-
-    /**
-     * Set an element in the collection
-     *
-     * @param string $element
-     * @param        $value
-     */
-    public function set(string $element, $value): void
-    {
-        $this->setData($element, $value);
-    }
-
-    /**
      * Magic isset to check whether an element exists or not
      *
      * @param string $element
@@ -147,20 +88,14 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
-     * Get the element from the collection
+     * Magic setter to assign values to an element
      *
      * @param string $element
-     * @param bool   $insensitive
-     *
-     * @return bool
+     * @param mixed  $value
      */
-    public function has(string $element, bool $insensitive = true): bool
+    public function __set(string $element, $value)
     {
-        if (true === $insensitive) {
-            $element = mb_strtolower($element);
-        }
-
-        return isset($this->lowerKeys[$element]);
+        $this->set($element, $value);
     }
 
     /**
@@ -171,26 +106,6 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     public function __unset(string $element): void
     {
         $this->remove($element);
-    }
-
-    /**
-     * Delete the element from the collection
-     *
-     * @param string $element
-     * @param bool   $insensitive
-     */
-    public function remove(string $element, bool $insensitive = true): void
-    {
-        if ($this->has($element)) {
-            if (true === $insensitive) {
-                $element = mb_strtolower($element);
-            }
-
-            $value = $this->lowerKeys[$element];
-
-            unset($this->lowerKeys[$element]);
-            unset($this->data[$value]);
-        }
     }
 
     /**
@@ -213,11 +128,62 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Get the element from the collection
+     *
+     * @param string     $element
+     * @param mixed|null $defaultValue
+     *
+     * @return mixed
+     */
+    public function get(string $element, $defaultValue = null)
+    {
+        if (true === $this->insensitive) {
+            $element = mb_strtolower($element);
+        }
+
+        if (true === isset($this->lowerKeys[$element])) {
+            $key = $this->lowerKeys[$element];
+
+            return $this->data[$key];
+        }
+
+        return $defaultValue;
+    }
+
+    /**
      * Returns the iterator of the class
      */
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->data);
+    }
+
+    /**
+     * Get the element from the collection
+     *
+     * @param string $element
+     *
+     * @return bool
+     */
+    public function has(string $element): bool
+    {
+        if (true === $this->insensitive) {
+            $element = mb_strtolower($element);
+        }
+
+        return isset($this->lowerKeys[$element]);
+    }
+
+    /**
+     * Initialize internal array
+     *
+     * @param array $data
+     */
+    public function init(array $data = []): void
+    {
+        foreach ($data as $key => $value) {
+            $this->setData($key, $value);
+        }
     }
 
     /**
@@ -292,6 +258,36 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
     }
 
     /**
+     * Delete the element from the collection
+     *
+     * @param string $element
+     */
+    public function remove(string $element): void
+    {
+        if ($this->has($element)) {
+            if (true === $this->insensitive) {
+                $element = mb_strtolower($element);
+            }
+
+            $value = $this->lowerKeys[$element];
+
+            unset($this->lowerKeys[$element]);
+            unset($this->data[$value]);
+        }
+    }
+
+    /**
+     * Set an element in the collection
+     *
+     * @param string $element
+     * @param        $value
+     */
+    public function set(string $element, $value): void
+    {
+        $this->setData($element, $value);
+    }
+
+    /**
      * String representation of object
      *
      * @link https://php.net/manual/en/serializable.serialize.php
@@ -341,5 +337,19 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate, JsonSeria
         $data       = unserialize($serialized);
 
         $this->init($data);
+    }
+
+    /**
+     * Internal method to set data
+     *
+     * @param string $element
+     * @param mixed  $value
+     */
+    protected function setData(string $element, $value): void
+    {
+        $key = (true === $this->insensitive) ? mb_strtolower($element) : $element;
+
+        $this->data[$element]  = $value;
+        $this->lowerKeys[$key] = $element;
     }
 }

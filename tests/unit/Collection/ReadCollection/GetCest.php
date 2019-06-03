@@ -16,13 +16,13 @@ use UnitTester;
 class GetCest
 {
     /**
-     * Tests Cardoe\Collection :: get()
+     * Tests Cardoe\Collection\ReadCollection :: get()
      *
      * @since  2018-11-13
      */
     public function collectionGet(UnitTester $I)
     {
-        $I->wantToTest('Collection - get()');
+        $I->wantToTest('ReadCollection - get()');
 
         $data = [
             'one'   => 'two',

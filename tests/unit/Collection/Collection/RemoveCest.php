@@ -16,7 +16,7 @@ use UnitTester;
 class RemoveCest
 {
     /**
-     * Tests Cardoe\Collection :: remove()
+     * Tests Cardoe\Collection\Collection :: remove()
      *
      * @since  2018-11-13
      */

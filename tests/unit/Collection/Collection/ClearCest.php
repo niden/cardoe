@@ -16,7 +16,7 @@ use UnitTester;
 class ClearCest
 {
     /**
-     * Tests Cardoe\Collection :: clear()
+     * Tests Cardoe\Collection\Collection :: clear()
      *
      * @since  2018-11-13
      */

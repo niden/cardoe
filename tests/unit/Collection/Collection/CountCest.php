@@ -16,7 +16,7 @@ use UnitTester;
 class CountCest
 {
     /**
-     * Tests Cardoe\Collection :: count()
+     * Tests Cardoe\Collection\Collection :: count()
      *
      * @since  2018-11-13
      */

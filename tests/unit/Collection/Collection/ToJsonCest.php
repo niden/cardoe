@@ -16,7 +16,7 @@ use UnitTester;
 class ToJsonCest
 {
     /**
-     * Tests Cardoe\Collection :: toJson()
+     * Tests Cardoe\Collection\Collection :: toJson()
      *
      * @since  2018-11-13
      */

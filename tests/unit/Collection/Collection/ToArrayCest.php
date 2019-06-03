@@ -16,7 +16,7 @@ use UnitTester;
 class ToArrayCest
 {
     /**
-     * Tests Cardoe\Collection :: toArray()
+     * Tests Cardoe\Collection\Collection :: toArray()
      *
      * @since  2018-11-13
      */
