@@ -113,7 +113,7 @@ trait UriTrait
     /**
      * Checks the port. If it is a standard one (80,443) then it returns null
      *
-     * @param $port
+     * @param mixed $port
      *
      * @return int|null
      */

@@ -125,11 +125,11 @@ final class UploadedFile implements UploadedFileInterface
     /**
      * UploadedFile constructor.
      *
-     * @param StreamInterface|string|null $stream
-     * @param int|null                    $size
-     * @param int                         $error
-     * @param string|null                 $clientFilename
-     * @param string|null                 $clientMediaType
+     * @param StreamInterface|resource|string $stream
+     * @param int|null                        $size
+     * @param int                             $error
+     * @param string|null                     $clientFilename
+     * @param string|null                     $clientMediaType
      */
     public function __construct(
         $stream,

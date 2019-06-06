@@ -144,8 +144,8 @@ class Arr
     /**
      * Groups the elements of an array based on the passed callable
      *
-     * @param array    $collection
-     * @param callable $method
+     * @param array           $collection
+     * @param callable|string $method
      *
      * @return array
      */
@@ -154,7 +154,7 @@ class Arr
         $filtered = [];
         foreach ($collection as $element) {
             if (true === is_callable($method) ||
-                (true === is_string($method) && function_exists($method))
+                (true === is_string($method) && true === function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);
                 $filtered[$key][] = $element;

@@ -10,13 +10,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
-use Cardoe\Helper\Number;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Traits\CommonTrait;
 use Cardoe\Http\Message\Traits\MessageTrait;
 use Cardoe\Http\Message\Traits\ResponseTrait;
 use Psr\Http\Message\ResponseInterface;
-use function is_int;
 use function is_string;
 
 /**

@@ -327,7 +327,7 @@ trait MessageTrait
      *
      * @see http://tools.ietf.org/html/rfc7230#section-3.2
      *
-     * @param $name
+     * @param mixed $name
      */
     private function checkHeaderName($name): void
     {
@@ -384,7 +384,7 @@ trait MessageTrait
      *
      * @see https://tools.ietf.org/html/rfc7230#section-3.2.6
      *
-     * @param $value
+     * @param mixed $value
      */
     private function checkHeaderValue($value): void
     {
@@ -405,7 +405,7 @@ trait MessageTrait
     /**
      * Returns the header values checked for validity
      *
-     * @param $values
+     * @param mixed $values
      *
      * @return array
      */
@@ -500,7 +500,7 @@ trait MessageTrait
     /**
      * Sets the headers
      *
-     * @param $headers
+     * @param mixed $headers
      *
      * @return Collection
      */

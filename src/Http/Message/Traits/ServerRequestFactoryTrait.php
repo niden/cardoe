@@ -168,6 +168,40 @@ trait ServerRequestFactoryTrait
     }
 
     /**
+     * Checks if a header starts with CONTENT_ and adds it to the collection
+     *
+     * @param string     $key
+     * @param mixed      $value
+     * @param Collection $headers
+     */
+    private function checkContentHeader(string $key, $value, Collection $headers): void
+    {
+        if (mb_strpos($key, 'CONTENT_') === 0) {
+            $name = 'content-' . mb_strtolower(substr($key, 8));
+            $headers->set($name, $value);
+        }
+    }
+
+    /**
+     * Checks if a header starts with HTTP_ and adds it to the collection
+     *
+     * @param string     $key
+     * @param mixed      $value
+     * @param Collection $headers
+     */
+    private function checkHttpHeader(string $key, $value, Collection $headers): void
+    {
+        if (mb_strpos($key, 'HTTP_') === 0) {
+            $name = str_replace(
+                '_',
+                '-',
+                mb_strtolower(substr($key, 5))
+            );
+            $headers->set($name, $value);
+        }
+    }
+
+    /**
      * Create an UploadedFile object from an $_FILES array element
      *
      * @param array $file The $_FILES element
@@ -270,21 +304,8 @@ trait ServerRequestFactoryTrait
                     }
                 }
 
-                if (mb_strpos($key, 'HTTP_') === 0) {
-                    $name = str_replace(
-                        '_',
-                        '-',
-                        mb_strtolower(substr($key, 5))
-                    );
-                    $headers->set($name, $value);
-                    continue;
-                }
-
-                if (mb_strpos($key, 'CONTENT_') === 0) {
-                    $name = 'content-' . mb_strtolower(substr($key, 8));
-                    $headers->set($name, $value);
-                    continue;
-                }
+                $this->checkHttpHeader($key, $value, $headers);
+                $this->checkContentHeader($key, $value, $headers);
             }
         }
 
@@ -305,10 +326,14 @@ trait ServerRequestFactoryTrait
         $collection = new Collection($server);
         $headers    = $this->getHeaders();
 
-        if (true !== isset($server['HTTP_AUTHORIZATION']) && false !== $headers) {
-            $headers = new Collection($headers);
-            if (true === $headers->has('Authorization')) {
-                $collection->set('HTTP_AUTHORIZATION', $headers->get('Authorization'));
+        if (true !== $collection->has("HTTP_AUTHORIZATION") && false !== $headers) {
+            $headersCollection = new Collection($headers);
+
+            if (true === $headersCollection->has('Authorization')) {
+                $collection->set(
+                    'HTTP_AUTHORIZATION',
+                    $headersCollection->get('Authorization')
+                );
             }
         }
 

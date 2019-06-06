@@ -280,7 +280,7 @@ class Collection implements
      * Set an element in the collection
      *
      * @param string $element
-     * @param        $value
+     * @param mixed  $value
      */
     public function set(string $element, $value): void
     {
@@ -321,7 +321,9 @@ class Collection implements
      */
     public function toJson(int $options = 79): string
     {
-        return json_encode($this->toArray(), $options);
+        $results = json_encode($this->toArray(), $options);
+
+        return (false === $results) ? '' : $results;
     }
 
     /**
