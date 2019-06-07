@@ -488,7 +488,7 @@ trait MessageTrait
             return $body;
         }
 
-        if (true !== is_string($body) && true !== is_resource($body)) {
+        if (!is_string($body) && !is_resource($body)) {
             throw new InvalidArgumentException(
                 'Invalid stream passed as a parameter'
             );
@@ -538,7 +538,7 @@ trait MessageTrait
             '3.0' => 1,
         ];
 
-        if (true === empty($protocol) || true !== is_string($protocol)) {
+        if (!(!empty($protocol) && is_string($protocol))) {
             throw new InvalidArgumentException('Invalid protocol value');
         }
 

@@ -276,9 +276,9 @@ class Arr
     {
         $filtered = [];
         foreach ($collection as $item) {
-            if (true === is_object($item) && true === isset($item->{$element})) {
+            if (is_object($item) && isset($item->{$element})) {
                 $filtered[] = $item->{$element};
-            } elseif (true === is_array($item) && true === isset($item[$element])) {
+            } elseif (is_array($item) && isset($item[$element])) {
                 $filtered[] = $item[$element];
             }
         }

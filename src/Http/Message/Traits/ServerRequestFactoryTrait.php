@@ -114,7 +114,13 @@ trait ServerRequestFactoryTrait
         $requestUri = $server->get('REQUEST_URI', null);
 
         if (null !== $requestUri) {
-            return preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
+            $result = preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
+
+            if (true !== is_string($result)) {
+                $result = "";
+            }
+
+            return $result;
         }
 
         /**

@@ -31,6 +31,7 @@ use function set_error_handler;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strpbrk;
+use function var_dump;
 use const E_WARNING;
 
 class Stream implements StreamInterface
@@ -108,8 +109,9 @@ class Stream implements StreamInterface
     {
         if (null !== $this->handle) {
             $handle = $this->detach();
-
-            fclose($handle);
+            if (null !== $handle) {
+                fclose($handle);
+            }
         }
     }
 

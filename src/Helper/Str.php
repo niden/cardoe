@@ -230,14 +230,12 @@ class Str
         string $start,
         string $end
     ): string {
-        return trim(
-            mb_strstr(
-                mb_strstr($text, $start),
-                $end,
-                true
-            ),
-            $start . $end
-        );
+        $result = mb_strstr($text, $start);
+        $result = (false === $result) ? '' : $result;
+        $result = mb_strstr($result, $end, true);
+        $result = (false === $result) ? '' : $result;
+
+        return trim($result, $start . $end);
     }
 
     /**
@@ -249,7 +247,9 @@ class Str
      */
     final public static function humanize(string $text): string
     {
-        return preg_replace('#[_-]+#', ' ', trim($text));
+        $result = preg_replace('#[_-]+#', ' ', trim($text));
+
+        return (null === $result) ? '' : $result;
     }
 
     /**
@@ -404,7 +404,9 @@ class Str
      */
     final public static function reduceSlashes(string $text): string
     {
-        return preg_replace('#(?<!:)//+#', '/', $text);
+        $result = preg_replace('#(?<!:)//+#', '/', $text);
+
+        return (null === $result) ? '' : $result;
     }
 
     /**
@@ -416,7 +418,9 @@ class Str
      */
     final public static function underscore(string $text): string
     {
-        return preg_replace('#\s+#', '_', trim($text));
+        $result = preg_replace('#\s+#', '_', trim($text));
+
+        return (null === $result) ? '' : $result;
     }
 
     /**
