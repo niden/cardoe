@@ -344,12 +344,13 @@ class Collection implements
     /**
      * Internal method to set data
      *
-     * @param string $element
-     * @param mixed  $value
+     * @param mixed $element
+     * @param mixed $value
      */
-    protected function setData(string $element, $value): void
+    protected function setData($element, $value): void
     {
-        $key = (true === $this->insensitive) ? mb_strtolower($element) : $element;
+        $element = (string) $element;
+        $key     = (true === $this->insensitive) ? mb_strtolower($element) : $element;
 
         $this->data[$element]  = $value;
         $this->lowerKeys[$key] = $element;

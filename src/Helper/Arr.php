@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Helper;
 
-use function array_filter;
 use stdClass;
 use function array_chunk;
+use function array_filter;
 use function array_keys;
 use function array_merge;
 use function array_slice;
