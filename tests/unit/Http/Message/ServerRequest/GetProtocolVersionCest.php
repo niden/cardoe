@@ -18,7 +18,7 @@ class GetProtocolVersionCest
 //    /**
 //     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion()
 //     *
-//     * @author Cardoe Team <team@phalconphp.com>
+//     * @author Cardoe Team <team@cardoephp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
@@ -61,7 +61,7 @@ class GetProtocolVersionCest
 //     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() -
 //     * exception
 //     *
-//     * @author Cardoe Team <team@phalconphp.com>
+//     * @author Cardoe Team <team@cardoephp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)

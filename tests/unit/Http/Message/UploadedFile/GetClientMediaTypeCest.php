@@ -27,7 +27,7 @@ class GetClientMediaTypeCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'phalcon.txt',
+            'cardoe.txt',
             'some-media-type'
         );
 

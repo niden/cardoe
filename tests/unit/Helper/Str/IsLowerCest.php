@@ -24,7 +24,7 @@ class IsLowerCest
     {
         $I->wantToTest('Helper\Str - isLower()');
 
-        $actual = Str::isLower('phalcon framework');
+        $actual = Str::isLower('cardoe framework');
         $I->assertTrue($actual);
 
         $actual = Str::isLower('Cardoe Framework');

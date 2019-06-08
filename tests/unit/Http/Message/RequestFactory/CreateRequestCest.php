@@ -27,7 +27,7 @@ class CreateRequestCest
 
         $factory = new RequestFactory();
 
-        $request = $factory->createRequest('GET', 'https://dev.phalcon.ld');
+        $request = $factory->createRequest('GET', 'https://dev.cardoe.ld');
 
         $I->assertInstanceOf(
             RequestInterface::class,

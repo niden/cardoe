@@ -19,7 +19,7 @@ class UpperCest
     /**
      * Tests Cardoe\Helper\Str :: upper()
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider basicProvider

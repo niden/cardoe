@@ -36,7 +36,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - alnum
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -71,7 +71,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - alpha
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -106,7 +106,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - hexdec
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -141,7 +141,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - numeric
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -176,7 +176,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - non zero
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -211,7 +211,7 @@ class RandomCest
     /**
      * Tests Cardoe\Helper\Str :: random() - distinct type
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-04-06
      *
      * @dataProvider helperStrRandomDistinctProvider

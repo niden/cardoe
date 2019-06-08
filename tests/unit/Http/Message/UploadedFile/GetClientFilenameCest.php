@@ -27,10 +27,10 @@ class GetClientFilenameCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'phalcon.txt'
+            'cardoe.txt'
         );
 
-        $expected = 'phalcon.txt';
+        $expected = 'cardoe.txt';
         $actual   = $file->getClientFilename();
         $I->assertEquals($expected, $actual);
     }

@@ -33,7 +33,7 @@ class GetStreamCest
             $stream,
             0,
             UPLOAD_ERR_OK,
-            'phalcon.txt'
+            'cardoe.txt'
         );
 
         $expected = $stream;
@@ -53,7 +53,7 @@ class GetStreamCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'phalcon.txt'
+            'cardoe.txt'
         );
 
         $actual = $file->getStream();
@@ -79,7 +79,7 @@ class GetStreamCest
                     $stream,
                     0,
                     UPLOAD_ERR_CANT_WRITE,
-                    'phalcon.txt'
+                    'cardoe.txt'
                 );
 
                 $actual = $file->getStream();

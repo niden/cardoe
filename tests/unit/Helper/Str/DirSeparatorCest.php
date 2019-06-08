@@ -24,12 +24,12 @@ class DirSeparatorCest
     {
         $I->wantToTest('Helper\Str - dirSeparator()');
 
-        $expected = '/home/phalcon/';
-        $actual   = Str::dirSeparator('/home/phalcon');
+        $expected = '/home/cardoe/';
+        $actual   = Str::dirSeparator('/home/cardoe');
         $I->assertEquals($expected, $actual);
 
-        $expected = '/home/phalcon/';
-        $actual   = Str::dirSeparator('/home/phalcon//');
+        $expected = '/home/cardoe/';
+        $actual   = Str::dirSeparator('/home/cardoe//');
         $I->assertEquals($expected, $actual);
     }
 

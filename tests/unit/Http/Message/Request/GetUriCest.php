@@ -25,7 +25,7 @@ class GetUriCest
     {
         $I->wantToTest('Http\Message\Request - getUri()');
 
-        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
 
         $uri = new Uri($query);
 
