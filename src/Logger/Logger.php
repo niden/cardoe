@@ -48,7 +48,7 @@ class Logger implements LoggerInterface
     /**
      * The excluded adapters for this log process
      *
-     * @var AdapterInterface[]
+     * @var bool[]
      */
     protected $excluded = [];
 
@@ -184,7 +184,7 @@ class Logger implements LoggerInterface
     /**
      * Returns an adapter from the stack
      *
-     * @param string name The name of the adapter
+     * @param string $name The name of the adapter
      *
      * @return AdapterInterface
      * @throws Exception
@@ -234,7 +234,7 @@ class Logger implements LoggerInterface
     /**
      * Logs with an arbitrary level.
      *
-     * @param mixed  level
+     * @param mixed  $level
      * @param string $message
      * @param array  $context
      *
@@ -263,7 +263,7 @@ class Logger implements LoggerInterface
     /**
      * Removes an adapter from the stack
      *
-     * @param string name The name of the adapter
+     * @param string $name The name of the adapter
      *
      * @return Logger
      * @throws Exception
@@ -282,7 +282,7 @@ class Logger implements LoggerInterface
     /**
      * Sets the adapters stack overriding what is already there
      *
-     * @param array adapters An array of adapters
+     * @param array $adapters An array of adapters
      *
      * @return Logger
      */
@@ -368,7 +368,7 @@ class Logger implements LoggerInterface
     /**
      * Converts the level from string/word to an integer
      *
-     * @param string|int level
+     * @param string|int $level
      *
      * @return int
      */
@@ -385,7 +385,7 @@ class Logger implements LoggerInterface
             $levels = $this->getLevels();
 
             if (true === isset($levels[$level])) {
-                return $level;
+                return (int) $level;
             }
         }
 

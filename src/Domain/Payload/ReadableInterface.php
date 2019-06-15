@@ -37,7 +37,7 @@ interface ReadableInterface
     /**
      * Gets arbitrary extra values produced by the domain layer.
      *
-     * @param mixed
+     * @return mixed
      */
     public function getExtras();
 

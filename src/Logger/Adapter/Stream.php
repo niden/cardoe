@@ -107,9 +107,9 @@ class Stream extends AbstractAdapter
     public function process(Item $item): void
     {
         if (true !== is_resource($this->handler)) {
-            $this->handler = fopen($this->name, $this->mode);
+            $handler = fopen($this->name, $this->mode);
 
-            if (true !== is_resource($this->handler)) {
+            if (true !== is_resource($handler)) {
                 $this->handler = null;
 
                 throw new UnexpectedValueException(
@@ -120,6 +120,8 @@ class Stream extends AbstractAdapter
                     )
                 );
             }
+
+            $this->handler = $handler;
         }
 
         $formatter        = $this->getFormatter();

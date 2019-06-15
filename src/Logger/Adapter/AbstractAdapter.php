@@ -13,7 +13,6 @@ namespace Cardoe\Logger\Adapter;
 use Cardoe\Logger\Exception;
 use Cardoe\Logger\Formatter\FormatterInterface;
 use Cardoe\Logger\Item;
-use function is_object;
 
 /**
  * Class AbstractAdapter
@@ -34,7 +33,7 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @var FormatterInterface
      */
-    protected $formatter;
+    protected $formatter = null;
 
     /**
      * Tells if there is an active transaction or not
@@ -165,6 +164,11 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Sets the message formatter
+     */
+    /**
+     * @param FormatterInterface $formatter
+     *
+     * @return AdapterInterface
      */
     public function setFormatter(FormatterInterface $formatter): AdapterInterface
     {

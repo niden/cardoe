@@ -80,7 +80,9 @@ class Input extends Stream
             return $this->data;
         }
 
-        $data       = stream_get_contents($this->handle, $length);
+        $data = stream_get_contents($this->handle, $length);
+        $data = false !== $data ? $data : '';
+
         $this->data = $data;
 
         if (-1 === $length || true === $this->eof()) {

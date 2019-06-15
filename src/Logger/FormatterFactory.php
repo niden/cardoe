@@ -12,20 +12,20 @@ namespace Cardoe\Logger;
 
 use Cardoe\Factory\AbstractFactory;
 use Cardoe\Factory\Exception as FactoryException;
-use Cardoe\Logger\Adapter\AdapterInterface;
-use Cardoe\Logger\Adapter\Noop;
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Adapter\Syslog;
+use Cardoe\Logger\Formatter\FormatterInterface;
+use Cardoe\Logger\Formatter\Json;
+use Cardoe\Logger\Formatter\Line;
+use Cardoe\Logger\Formatter\Syslog;
 
 /**
  * Class AdapterFactory
  *
  * @package Cardoe\Logger
  */
-class AdapterFactory extends AbstractFactory
+class FormatterFactory extends AbstractFactory
 {
     /**
-     * AdapterFactory constructor.
+     * FormatterFactory constructor.
      *
      * @param array $services
      */
@@ -35,25 +35,23 @@ class AdapterFactory extends AbstractFactory
     }
 
     /**
-     * Create a new instance of the adapter
+     * Create a new instance of the formatter
      *
      * @param string $name
-     * @param string $fileName
      * @param array  $options
      *
-     * @return AdapterInterface
+     * @return FormatterInterface
      * @throws FactoryException
      */
     public function newInstance(
         string $name,
-        string $fileName,
         array $options = []
-    ): AdapterInterface {
+    ): FormatterInterface {
         $this->checkService($name);
 
         if (true !== isset($this->services[$name])) {
             $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition($fileName, $options);
+            $this->services[$name] = new $definition($name, $options);
         }
 
         return $this->services[$name];
@@ -65,8 +63,8 @@ class AdapterFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "noop"   => Noop::class,
-            "stream" => Stream::class,
+            "json"   => Json::class,
+            "line"   => Line::class,
             "syslog" => Syslog::class,
         ];
     }
