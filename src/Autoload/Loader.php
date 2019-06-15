@@ -119,18 +119,18 @@ class Loader
 
         $namespace = trim($namespace, $ns) . $ns;
 
-        if (true === is_string($directories)) {
+        if (is_string($directories)) {
             $directories = [$directories];
         }
 
-        if (true !== is_array($directories)) {
+        if (!is_array($directories)) {
             throw new Exception(
                 'The directories parameter is not a string or array'
             );
         }
 
         // initialize the namespace prefix array if needed
-        if (true !== isset($this->namespaces[$namespace])) {
+        if (!isset($this->namespaces[$namespace])) {
             $this->namespaces[$namespace] = [];
         }
 
@@ -138,21 +138,12 @@ class Loader
             $directories[$key] = rtrim($directory, $ds) . $ds;
         }
 
-        if (true === $prepend) {
-            $this->namespaces[$namespace] = array_unique(
-                array_merge(
-                    $directories,
-                    $this->namespaces[$namespace]
-                )
-            );
-        } else {
-            $this->namespaces[$namespace] = array_unique(
-                array_merge(
-                    $this->namespaces[$namespace],
-                    $directories
-                )
-            );
-        }
+        $source = ($prepend) ? $directories                  : $this->namespaces[$namespace];
+        $target = ($prepend) ? $this->namespaces[$namespace] : $directories;
+
+        $this->namespaces[$namespace] = array_unique(
+            array_merge($source, $target)
+        );
 
         return $this;
     }
@@ -176,10 +167,10 @@ class Loader
         /**
          * Classes
          */
-        if (true === isset($this->classes[$name])) {
+        if (isset($this->classes[$name])) {
             $file   = $this->classes[$name];
             $exists = $this->requireFile($file);
-            if (true === $exists) {
+            if ($exists) {
                 $this->debug[] = 'Class: load: ' . $file;
                 return $file;
             }
@@ -357,7 +348,7 @@ class Loader
      */
     public function register($prepend = false): void
     {
-        if (true !== $this->isRegistered) {
+        if (!$this->isRegistered) {
 
             /**
              * Include all files that are registered
@@ -379,7 +370,7 @@ class Loader
      */
     public function unregister(): void
     {
-        if (true === $this->isRegistered) {
+        if ($this->isRegistered) {
             spl_autoload_unregister([$this, 'autoload']);
             $this->isRegistered = false;
         }
@@ -398,7 +389,7 @@ class Loader
         $ns = '\\';
         $ds = DIRECTORY_SEPARATOR;
 
-        if (true !== isset($this->namespaces[$namespace])) {
+        if (!isset($this->namespaces[$namespace])) {
             $this->debug[] = 'Load: No folders registered: ' . $namespace;
 
             return false;
@@ -408,7 +399,7 @@ class Loader
             foreach ($this->extensions as $extension) {
                 $file = $directory . str_replace($ns, $ds, $class) . '.' . $extension;
 
-                if (true === $this->requireFile($file)) {
+                if ($this->requireFile($file)) {
                     return $file;
                 }
 
