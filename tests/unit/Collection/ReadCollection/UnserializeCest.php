@@ -22,7 +22,7 @@ class UnserializeCest
      */
     public function collectionSerialize(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - serialize()');
+        $I->wantToTest('Collection\ReadCollection - serialize()');
 
         $data = [
             'one'   => 'two',

@@ -375,7 +375,7 @@ class Logger implements LoggerInterface
     private function getLevelNumber($level): int
     {
         if (true === is_string($level)) {
-            $levelName = strtolower($level);
+            $levelName = mb_strtolower($level);
             $levels    = array_flip($this->getLevels());
 
             if (true === isset($levels[$levelName])) {

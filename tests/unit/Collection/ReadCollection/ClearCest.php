@@ -22,7 +22,7 @@ class ClearCest
      */
     public function collectionClear(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - clear()');
+        $I->wantToTest('Collection\ReadCollection - clear()');
 
         $data = [
             'one'   => 'two',

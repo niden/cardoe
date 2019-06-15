@@ -22,7 +22,7 @@ class InitCest
      */
     public function collectionInit(UnitTester $I)
     {
-        $I->wantToTest('Collection - init()');
+        $I->wantToTest('Collection\Collection - init()');
 
         $data = [
             'one'   => 'two',

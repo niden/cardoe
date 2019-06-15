@@ -22,7 +22,7 @@ class GetCest
      */
     public function collectionGet(UnitTester $I)
     {
-        $I->wantToTest('Collection - get()');
+        $I->wantToTest('Collection\Collection - get()');
 
         $data = [
             'one'   => 'two',

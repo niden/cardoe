@@ -22,7 +22,7 @@ class ToJsonCest
      */
     public function collectionToJson(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - toJson()');
+        $I->wantToTest('Collection\ReadCollection - toJson()');
 
         $data = [
             'one'   => 'two',

@@ -22,7 +22,7 @@ class GetIteratorCest
      */
     public function collectionGetIterator(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - getIterator()');
+        $I->wantToTest('Collection\ReadCollection - getIterator()');
 
         $data = [
             'one'   => 'two',

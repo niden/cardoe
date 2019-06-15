@@ -22,7 +22,7 @@ class HasCest
      */
     public function collectionHas(UnitTester $I)
     {
-        $I->wantToTest('Collection - has()');
+        $I->wantToTest('Collection\ReadCollection - has()');
 
         $data = [
             'one'   => 'two',
@@ -72,7 +72,7 @@ class HasCest
      */
     public function collectionHasSensitive(UnitTester $I)
     {
-        $I->wantToTest('Collection - has()');
+        $I->wantToTest('Collection\Collection - has()');
 
         $data = [
             'one'   => 'two',

@@ -23,7 +23,7 @@ class RemoveCest
      */
     public function collectionRemove(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - remove()');
+        $I->wantToTest('Collection\ReadCollection - remove()');
 
         $data       = [
             'one'   => 'two',

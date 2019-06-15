@@ -22,7 +22,7 @@ class ToArrayCest
      */
     public function collectionToArray(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - toArray()');
+        $I->wantToTest('Collection\ReadCollection - toArray()');
 
         $data = [
             'one'   => 'two',

@@ -22,7 +22,7 @@ class JsonSerializeCest
      */
     public function collectionJsonSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection - jsonSerialize()');
+        $I->wantToTest('Collection\Collection - jsonSerialize()');
 
         $data = [
             'one'   => 'two',

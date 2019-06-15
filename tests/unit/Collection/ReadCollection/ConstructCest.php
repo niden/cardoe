@@ -22,7 +22,7 @@ class ConstructCest
      */
     public function collectionConstruct(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - __construct()');
+        $I->wantToTest('Collection\ReadCollection - __construct()');
         $collection = new ReadCollection();
 
         $class = ReadCollection::class;

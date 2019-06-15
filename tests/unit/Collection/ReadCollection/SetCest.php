@@ -23,7 +23,7 @@ class SetCest
      */
     public function collectionSet(UnitTester $I)
     {
-        $I->wantToTest('ReadCollection - set()');
+        $I->wantToTest('Collection\ReadCollection - set()');
 
         $I->expectThrowable(
             new Exception('The object is read only'),
