@@ -10,17 +10,31 @@ run.config:
       - dom
       - fileinfo
       - gd
+      - gmp
+      - gettext
+      - imagick
       - iconv
+      - igbinary
       - json
       - mbstring
+      - memcached
       - phar
+      - pdo
+      - pdo_mysql
+      - pdo_pgsql
+      - pdo_sqlite
+      - session
       - simplexml
+      - sodium
       - tokenizer
       - yaml
+      - zephir_parser
       - xml
       - xmlwriter
       - zip
       - zlib
+      - mongodb
+      - redis
     zend_extensions:
       - opcache
     dev_zend_extensions:
@@ -30,25 +44,45 @@ run.config:
         - opcache
   extra_packages:
     - autoconf
+    - freefonts
+    - freetype2
+    - fontconfig
+    - mysql-client
+    #    - postgresql94-client
+    - re2c
+    - sqlite3
   extra_steps:
     #===========================================================================
-    # AST extension compilation
+    # Msgpack extension compilation
     - |
       (
         CURRENT_FOLDER=$(pwd)
-        rm -fR $CURRENT_FOLDER/php-ast
-        cd $CURRENT_FOLDER
-        git clone --depth=1 https://github.com/nikic/php-ast.git
-        cd php-ast
+        rm -fR $CURRENT_FOLDER/tests/_output/msgpack-php
+        cd $CURRENT_FOLDER/tests/_output
+        git clone --depth=1 https://github.com/msgpack/msgpack-php
+        cd msgpack-php
         set -e
         phpize
         ./configure --with-php-config=$(which php-config)
         make -j"$(getconf _NPROCESSORS_ONLN)"
         make install
         cd $CURRENT_FOLDER
-        rm -fR $CURRENT_FOLDER/php-ast
+        rm -fR $CURRENT_FOLDER/tests/_output/msgpack-php
         unset CURRENT_FOLDER
       )
-    - echo -e 'extension=ast.so' >> "/data/etc/php/dev_php.ini"
+    - echo -e 'extension=msgpack.so' >> "/data/etc/php/dev_php.ini"
     #===========================================================================
+    # Options for session, opcache and apcu
+    - echo -e 'session.save_path="/tmp"' >> "/data/etc/php/dev_php.ini"
+    - echo -e 'opcache.enable_cli=1' >> "/data/etc/php/dev_php.ini"
+    - echo -e 'apc.enabled=1' >> "/data/etc/php/dev_php.ini"
+    - echo -e 'apc.enable_cli=1' >> "/data/etc/php/dev_php.ini"
 
+data.memcached:
+  image: nanobox/memcached:1.4
+
+data.mongodb:
+  image: mongo:4.0
+
+data.redis :
+  image : nanobox/redis:3.2
