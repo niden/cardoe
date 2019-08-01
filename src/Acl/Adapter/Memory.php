@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -10,7 +11,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Acl\Adapter;
 
-use Cardoe\Acl\Adapter;
 use Cardoe\Acl\Component;
 use Cardoe\Acl\ComponentAware;
 use Cardoe\Acl\ComponentInterface;
@@ -25,9 +25,8 @@ use function array_push;
 use function is_array;
 use function is_object;
 use function is_string;
-use function var_dump;
 
-class Memory extends Adapter
+class Memory extends AbstractAdapter
 {
     /**
      * Access
@@ -139,7 +138,7 @@ class Memory extends Adapter
      */
     public function __construct()
     {
-        $this->componentsNames = ["*" => true];
+        $this->componentsNames = ["*"   => true];
         $this->accessList      = ["*!*" => true];
     }
 
@@ -517,7 +516,7 @@ class Memory extends Adapter
         $roleObject      = null;
         $hasComponent    = false;
         $hasRole         = false;
-        $parameters      = (null !== $parameters) ? $parameters : [];
+        $parameters      = $parameters ?? [];
 
         if (is_object($roleName)) {
             if ($roleName instanceof RoleAware) {
@@ -571,7 +570,7 @@ class Memory extends Adapter
          * Check if there is a direct combination for role-component-access
          */
         $accessKey = $this->canAccess($roleName, $componentName, $access);
-        if ($accessKey != false && isset($accessList[$accessKey])) {
+        if (false !== $accessKey && isset($accessList[$accessKey])) {
             $haveAccess = $accessList[$accessKey];
             $funcAccess = $funcList[$accessKey] ?? null;
         }

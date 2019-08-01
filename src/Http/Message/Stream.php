@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -31,7 +32,6 @@ use function set_error_handler;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strpbrk;
-use function var_dump;
 use const E_WARNING;
 
 class Stream implements StreamInterface
@@ -39,12 +39,12 @@ class Stream implements StreamInterface
     use StreamTrait;
 
     /**
-     * @var resource | null
+     * @var resource|null
      */
     protected $handle = null;
 
     /**
-     * @var resource | string
+     * @var resource|string
      */
     private $stream;
 

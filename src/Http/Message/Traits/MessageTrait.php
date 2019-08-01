@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -46,9 +47,7 @@ trait MessageTrait
      * The string MUST contain only the HTTP version number (e.g., '1.1',
      * '1.0').
      *
-     * @return string HTTP protocol version.
-     *
-     * @var string
+     * @var string HTTP protocol version.
      */
     private $protocolVersion = '1.1';
 

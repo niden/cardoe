@@ -1,14 +1,15 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Acl;
+namespace Cardoe\Acl\Adapter;
 
 /**
  * Interface AdapterInterface
@@ -92,7 +93,7 @@ interface AdapterInterface
     /**
      * Returns the access which the list is checking if some role can access it
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveAccess(): ?string;
 
@@ -100,7 +101,7 @@ interface AdapterInterface
      * Returns the component which the list is checking if some role can access
      * it
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveComponent(): ?string;
 
@@ -108,7 +109,7 @@ interface AdapterInterface
      * Returns the role which the list is checking if it's allowed to certain
      * component/access
      *
-     * @return string
+     * @return string|null
      */
     public function getActiveRole(): ?string;
 

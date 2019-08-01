@@ -1,21 +1,22 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Acl;
+namespace Cardoe\Acl\Adapter;
 
 /**
  * Class Adapter
  *
  * @package Cardoe\Acl
  */
-abstract class Adapter implements AdapterInterface
+abstract class AbstractAdapter implements AdapterInterface
 {
     const ALLOW = 1;
     const DENY  = 0;
@@ -65,7 +66,7 @@ abstract class Adapter implements AdapterInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getActiveComponent(): ?string
     {
@@ -73,7 +74,7 @@ abstract class Adapter implements AdapterInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getActiveRole(): ?string
     {

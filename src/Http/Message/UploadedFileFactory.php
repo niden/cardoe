@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -29,11 +30,11 @@ final class UploadedFileFactory implements UploadedFileFactoryInterface
      *
      * @param StreamInterface $stream          Underlying stream representing
      *                                         the uploaded file content.
-     * @param int             $size            in bytes
+     * @param int|null        $size            in bytes
      * @param int             $error           PHP file upload error
-     * @param string          $clientFilename  Filename as provided by the
+     * @param string|null     $clientFilename  Filename as provided by the
      *                                         client, if any.
-     * @param string          $clientMediaType Media type as provided by the
+     * @param string|null     $clientMediaType Media type as provided by the
      *                                         client, if any.
      *
      * @return UploadedFileInterface

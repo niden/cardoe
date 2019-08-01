@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,6 +12,7 @@ declare(strict_types=1);
 namespace Cardoe\Http\Message\Traits;
 
 use Cardoe\Collection\Collection;
+use Cardoe\Helper\Arr;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\UploadedFile;
 use Cardoe\Http\Message\Uri;
@@ -183,7 +185,8 @@ trait ServerRequestFactoryTrait
     private function checkContentHeader(string $key, $value, Collection $headers): void
     {
         if (mb_strpos($key, 'CONTENT_') === 0) {
-            $name = 'content-' . mb_strtolower(substr($key, 8));
+            $key  = (string) substr($key, 8);
+            $name = 'content-' . mb_strtolower($key);
             $headers->set($name, $value);
         }
     }
@@ -232,8 +235,8 @@ trait ServerRequestFactoryTrait
             $file['tmp_name'],
             $file['size'],
             $file['error'],
-            isset($file['name']) ? $file['name'] : null,
-            isset($file['type']) ? $file['type'] : null
+            Arr::get($file, 'name'),
+            Arr::get($file, 'type')
         );
     }
 
@@ -300,7 +303,7 @@ trait ServerRequestFactoryTrait
                  * if they are added by rewrite rules
                  */
                 if (mb_strpos($key, 'REDIRECT_') === 0) {
-                    $key = substr($key, 9);
+                    $key = (string) substr($key, 9);
                     /**
                      * We will not overwrite existing variables with the
                      * prefixed versions, though

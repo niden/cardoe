@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -37,8 +38,8 @@ class Component implements ComponentInterface
     /**
      * Component constructor.
      *
-     * @param string      $name
-     * @param string|null $description
+     * @param string $name
+     * @param string $description
      *
      * @throws Exception
      */

@@ -1,8 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -60,11 +61,11 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * The ServerRequest created is then passed to the fromServer() method in
      * order to marshal the request URI and headers.
      *
-     * @param array $server  $_SERVER superglobal
-     * @param array $get     $_GET superglobal
-     * @param array $post    $_POST superglobal
-     * @param array $cookies $_COOKIE superglobal
-     * @param array $files   $_FILES superglobal
+     * @param array|null $server  $_SERVER superglobal
+     * @param array|null $get     $_GET superglobal
+     * @param array|null $post    $_POST superglobal
+     * @param array|null $cookies $_COOKIE superglobal
+     * @param array|null $files   $_FILES superglobal
      *
      * @return ServerRequest
      * @see fromServer()
