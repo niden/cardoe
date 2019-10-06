@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Http\Client\Exception\NetworkException;
-use Cardoe\Http\Client\Request\RequestHandlerInterface;
+use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use function array_shift;
@@ -153,7 +153,7 @@ class Curl extends AbstractTransport
      */
     public function process(
         RequestInterface $request,
-        RequestHandlerInterface $handler
+        HandlerInterface $handler
     ): ResponseInterface {
         return $this->sendRequest($request);
     }

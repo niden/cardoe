@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Client\Transport\Curl;
 
-use Cardoe\Http\Client\MiddlewareInterface;
+use Cardoe\Http\Client\Middleware\MiddlewareInterface;
 use Cardoe\Http\Client\Transport\Curl;
 use Cardoe\Http\Client\Transport\TransportInterface;
 use Cardoe\Http\Message\ResponseFactory;

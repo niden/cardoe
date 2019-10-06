@@ -13,7 +13,7 @@ namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Http\Client\Exception\NetworkException;
 use Cardoe\Http\Client\Exception\RequestException;
-use Cardoe\Http\Client\Request\RequestHandlerInterface;
+use Cardoe\Http\Client\Request\HandlerInterface;
 use Exception;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -96,7 +96,7 @@ class Stream extends AbstractTransport
 
     public function process(
         RequestInterface $request,
-        RequestHandlerInterface $handler
+        HandlerInterface $handler
     ): ResponseInterface {
         return $this->sendRequest($request);
     }

@@ -9,9 +9,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Client;
+namespace Cardoe\Http\Client\Middleware;
 
-use Cardoe\Http\Client\Request\RequestHandlerInterface;
+use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -21,13 +21,13 @@ use Psr\Http\Message\ResponseInterface;
 interface MiddlewareInterface
 {
     /**
-     * @param RequestInterface        $request
-     * @param RequestHandlerInterface $handler
+     * @param RequestInterface $request
+     * @param HandlerInterface $handler
      *
      * @return ResponseInterface
      */
     public function process(
         RequestInterface $request,
-        RequestHandlerInterface $handler
+        HandlerInterface $handler
     ): ResponseInterface;
 }

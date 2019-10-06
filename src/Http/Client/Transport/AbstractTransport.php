@@ -13,7 +13,7 @@ namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Http\Client\Exception\NetworkException;
-use Cardoe\Http\Client\MiddlewareInterface;
+use Cardoe\Http\Client\Middleware\MiddlewareInterface;
 use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
