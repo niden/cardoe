@@ -189,8 +189,8 @@ class Memory extends AbstractAdapter
     /**
      * Adds access to components
      *
-     * @param string       $componentName
-     * @param array|string $accessList
+     * @param string $componentName
+     * @param mixed  $accessList
      *
      * @return bool
      * @throws Exception

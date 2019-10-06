@@ -103,9 +103,9 @@ class Loader
     }
 
     /**
-     * @param string       $namespace
-     * @param string|array $directories
-     * @param bool         $prepend
+     * @param string $namespace
+     * @param mixed  $directories
+     * @param bool   $prepend
      *
      * @return Loader
      * @throws Exception
