@@ -97,7 +97,14 @@ class Deflate implements MiddlewareInterface
         $stream->rewind();
         $stream->read(10);
 
-        $resource = fopen('php://temp', 'rb+');
+        try {
+            $resource = fopen('php://temp', 'rb+');
+        } catch (Exception $ex) {
+            throw new NetworkException(
+                'Cannot open temporary stream',
+                $request
+            );
+        }
 
         while (!$stream->eof()) {
             fwrite($resource, $stream->read(1048576));
