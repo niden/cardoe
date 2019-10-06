@@ -8,19 +8,33 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Domain\Payload\Payload;
+namespace Cardoe\Test\Unit\Domain\Payload\Status;
 
 use Cardoe\Domain\Payload\Status;
+use Error;
 use UnitTester;
 
 class StatusCest
 {
     /**
+     * Unit Tests Cardoe\Domain\Payload\Status :: __construct
+     *
+     * @since  2019-06-07
+     */
+    public function httpPayloadPayloadStatusConstantCount(UnitTester $I)
+    {
+        $I->wantToTest('Domain\Payload\Status - constants count');
+
+        $status = new \ReflectionClass(Status::class);
+        $I->assertCount(20, $status->getConstants());
+    }
+
+    /**
      * Unit Tests Cardoe\Domain\Payload\Status :: constants
      *
      * @since  2019-06-07
      */
-    public function httpPayloadPayloadStatus(UnitTester $I)
+    public function httpPayloadPayloadStatusConstants(UnitTester $I)
     {
         $I->wantToTest('Domain\Payload\Status - constants');
 

@@ -3,6 +3,7 @@ run.config:
   engine.config:
     runtime: php-7.2
     document_root: tests/testbed
+    allow_url_fopen: 'On'
     extensions:
       - apcu
       - ctype
