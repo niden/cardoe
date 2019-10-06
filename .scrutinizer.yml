@@ -29,7 +29,6 @@ build:
               file: './tests/_output/coverage.xml'
               format: 'clover'
           - php-scrutinizer-run --enable-security-analysis
-    tests: true
 
 filter:
   paths:
