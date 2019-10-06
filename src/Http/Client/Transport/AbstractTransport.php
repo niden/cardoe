@@ -12,11 +12,15 @@ declare(strict_types=1);
 namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Helper\Arr;
+use Cardoe\Http\Client\Exception\NetworkException;
 use Cardoe\Http\Client\MiddlewareInterface;
+use Exception;
 use InvalidArgumentException;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 use function explode;
 use function fopen;
 use function implode;
@@ -116,12 +120,14 @@ abstract class AbstractTransport implements TransportInterface, MiddlewareInterf
      *
      * @param mixed                  $resource
      * @param StreamFactoryInterface $factory
+     * @param RequestInterface       $request
      *
      * @return StreamInterface
      */
     protected function resourceToStream(
         $resource,
-        StreamFactoryInterface $factory
+        StreamFactoryInterface $factory,
+        RequestInterface $request
     ): StreamInterface {
         if (true !== is_resource($resource)) {
             throw new InvalidArgumentException(
@@ -133,7 +139,14 @@ abstract class AbstractTransport implements TransportInterface, MiddlewareInterf
             rewind($resource);
         }
 
-        $tempResource = fopen('php://temp', 'rb+');
+        try {
+            $tempResource = fopen('php://temp', 'rb+');
+        } catch (Exception $ex) {
+            throw new NetworkException(
+                'Cannot open temporary stream',
+                $request
+            );
+        }
 
         stream_copy_to_stream($resource, $tempResource);
 

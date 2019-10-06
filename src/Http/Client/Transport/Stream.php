@@ -42,7 +42,7 @@ class Stream extends AbstractTransport
             ],
         ];
 
-        if ($request->getBody()->getSize()) {
+        if (null !== $request->getBody()->getSize()) {
             $context['http']['content'] = $request->getBody()->__toString();
         }
 
@@ -60,10 +60,13 @@ class Stream extends AbstractTransport
             } else {
                 throw new RequestException($ex->getMessage(), $request);
             }
-
         }
 
-        $stream  = $this->resourceToStream($resource, $this->streamFactory);
+        $stream  = $this->resourceToStream(
+            $resource,
+            $this->streamFactory,
+            $request
+        );
         $headers = stream_get_meta_data($resource)['wrapper_data'] ?? [];
 
         if ($this->options['follow']) {

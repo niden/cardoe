@@ -83,11 +83,12 @@ class Curl extends AbstractTransport
             $this->serializeHeaders($request->getHeaders())
         );
 
-        if ($request->getBody()->getSize()) {
+        if (null !== $request->getBody()->getSize()) {
             $curlOptions[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
         }
 
-        $headers                             = [];
+        $headers = [];
+
         $curlOptions[CURLOPT_HEADERFUNCTION] = function ($resource, $headerString) use (&$headers) {
             $header = trim($headerString);
             if (strlen($header) > 0) {
@@ -98,11 +99,22 @@ class Curl extends AbstractTransport
         };
 
         $curlResource = curl_init($request->getUri()->__toString());
-        curl_setopt_array($curlResource, $curlOptions);
 
+        if (false === $curlResource) {
+            throw new NetworkException(
+                'curl could not open the URI',
+                $request
+            );
+        }
+
+        curl_setopt_array($curlResource, $curlOptions);
         curl_exec($curlResource);
 
-        $stream = $this->resourceToStream($resource, $this->streamFactory);
+        $stream = $this->resourceToStream(
+            $resource,
+            $this->streamFactory,
+            $request
+        );
 
         if ($this->options['follow']) {
             $headers = $this->filterHeaders($headers);
