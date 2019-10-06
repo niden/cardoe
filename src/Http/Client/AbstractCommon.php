@@ -9,17 +9,17 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Client\Transport;
+namespace Cardoe\Http\Client;
 
-use Cardoe\Helper\Arr;
-use Cardoe\Http\Client\AbstractCommon;
-use Cardoe\Http\Client\Middleware\MiddlewareInterface;
+use Cardoe\Http\Client\Exception\NetworkException;
+use Cardoe\Http\Message\ServerRequest;
+use Exception;
 use InvalidArgumentException;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use function explode;
+use function fopen;
 use function implode;
 use function is_resource;
 use function rewind;
@@ -38,44 +38,8 @@ use function ucwords;
  * @propety ResponseFactoryInterface $responseFactory
  * @propety array                    $options
  */
-abstract class AbstractTransport extends AbstractCommon implements TransportInterface, MiddlewareInterface
+abstract class AbstractCommon
 {
-    /**
-     * @var StreamFactoryInterface
-     */
-    protected $streamFactory;
-
-    /**
-     * @var ResponseFactoryInterface
-     */
-    protected $responseFactory;
-
-    /**
-     * @var array
-     */
-    protected $options;
-
-    /**
-     * @param StreamFactoryInterface   $streamFactory
-     * @param ResponseFactoryInterface $responseFactory
-     * @param array                    $options
-     */
-    public function __construct(
-        StreamFactoryInterface $streamFactory,
-        ResponseFactoryInterface $responseFactory,
-        array $options = []
-    ) {
-        $this->streamFactory   = $streamFactory;
-        $this->responseFactory = $responseFactory;
-
-        $data = [
-            'follow'  => (bool) Arr::get($options, 'follow', false),
-            'timeout' => (float) Arr::get($options, 'timeout', 10.0),
-        ];
-
-        $this->options = $data;
-    }
-
     /**
      * Filters headers removing the ones starting with `HTTP/`
      *
@@ -95,6 +59,53 @@ abstract class AbstractTransport extends AbstractCommon implements TransportInte
         }
 
         return $result;
+    }
+
+    /**
+     * @param ServerRequest $request
+     *
+     * @return resource
+     */
+    protected function getTemporaryStream(RequestInterface $request)
+    {
+        try {
+            $resouce = fopen('php://temp', 'rb+');
+        } catch (Exception $ex) {
+            throw new NetworkException(
+                'Cannot open temporary stream',
+                $request
+            );
+        }
+
+        return $resouce;
+    }
+
+    /**
+     * @param StreamInterface        $stream
+     * @param StreamFactoryInterface $factory
+     * @param RequestInterface       $request
+     *
+     * @return StreamInterface
+     */
+    protected function inflate(
+        StreamInterface $stream,
+        StreamFactoryInterface $factory,
+        RequestInterface $request
+    ): StreamInterface {
+        $stream->rewind();
+        $stream->read(10);
+
+        $resource = $this->getTemporaryStream($request);
+
+        while (!$stream->eof()) {
+            fwrite($resource, $stream->read(1048576));
+        }
+
+        fseek($resource, 0);
+
+        stream_filter_append($resource, "zlib.inflate", STREAM_FILTER_READ);
+
+        return $this->resourceToStream($resource, $factory, $request);
     }
 
     /**
@@ -184,51 +195,4 @@ abstract class AbstractTransport extends AbstractCommon implements TransportInte
 
         return $result;
     }
-
-
-
-//
-//    /**
-//     * @param StreamInterface $stream
-//     *
-//     * @return resource
-//     */
-//    function copyStreamToResource(StreamInterface $stream)
-//    {
-//        $resource = fopen('php://temp', 'rb+');
-//
-//        $stream->rewind();
-//
-//        while (!$stream->eof()) {
-//            fwrite($resource, $stream->read(1048576));
-//        }
-//
-//        fseek($resource, 0);
-//
-//        return $resource;
-//    }
-//
-//
-//    /**
-//     * @param StreamInterface $stream
-//     *
-//     * @return StreamInterface
-//     */
-//    function inflateStream(StreamInterface $stream, StreamFactoryInterface $factory): StreamInterface
-//    {
-//        $stream->rewind();
-//
-//        $stream->read(10);
-//
-//        $resource = fopen('php://temp', 'rb+');
-//
-//        while (!$stream->eof()) {
-//            fwrite($resource, $stream->read(1048576));
-//        }
-//        fseek($resource, 0);
-//
-//        stream_filter_append($resource, "zlib.inflate", STREAM_FILTER_READ);
-//
-//        return copyResourceToStream($resource, $factory);
-//    }
 }
