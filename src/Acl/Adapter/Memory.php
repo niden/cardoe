@@ -27,18 +27,18 @@ use function is_object;
 use function is_string;
 
 /**
- * @property mixed       $access
- * @property mixed       $accessList
- * @property mixed       $activeFunction
- * @property int         $activeFunctionCustomArgumentsCount
- * @property string|null $activeKey
- * @property mixed       $components
- * @property mixed       $componentsNames
- * @property mixed       $func
- * @property mixed       $noArgumentsDefaultAction
- * @property mixed       $roles
- * @property mixed       $roleInherits
- * @property mixed       $rolesNames
+ * @property mixed             $access
+ * @property mixed             $accessList
+ * @property mixed             $activeFunction
+ * @property int               $activeFunctionCustomArgumentsCount
+ * @property string|null|false $activeKey
+ * @property mixed             $components
+ * @property mixed             $componentsNames
+ * @property mixed             $func
+ * @property mixed             $noArgumentsDefaultAction
+ * @property mixed             $roles
+ * @property mixed             $roleInherits
+ * @property mixed             $rolesNames
  */
 class Memory extends AbstractAdapter
 {
@@ -521,10 +521,10 @@ class Memory extends AbstractAdapter
     /**
      * Check whether a role is allowed to access an action from a component
      *
-     * @param RoleInterface|RoleAware|string           $roleName
-     * @param ComponentInterface|ComponentAware|string $componentName
-     * @param string                                   $access
-     * @param array|null                               $parameters
+     * @param mixed      $roleName
+     * @param mixed      $componentName
+     * @param string     $access
+     * @param array|null $parameters
      *
      * @return bool
      * @throws Exception
@@ -544,10 +544,23 @@ class Memory extends AbstractAdapter
         $hasRole         = false;
         $parameters      = $parameters ?? [];
 
+        if (!is_string($roleName) && !is_object($roleName)) {
+            throw new Exception(
+                "roleName must be a string or an object implementing " .
+                "Cardoe\\Acl\\RoleAware or Cardoe\\Acl\\RoleInterface"
+            );
+        }
+
+        if (!is_string($componentName) && !is_object($componentName)) {
+            throw new Exception(
+                "componentName must be a string or an object implementing " .
+                "Cardoe\\Acl\\ComponentAware or Cardoe\\Acl\\ComponentInterface"
+            );
+        }
+
         if (is_object($roleName)) {
             if ($roleName instanceof RoleAware) {
-                $roleObject = $roleName;
-                $roleName   = $roleObject->getRoleName();
+                $roleName = $roleName->getRoleName();
             } elseif ($roleName instanceof RoleInterface) {
                 $roleName = $roleName->getName();
             } else {
@@ -560,8 +573,7 @@ class Memory extends AbstractAdapter
 
         if (is_object($componentName)) {
             if ($componentName instanceof ComponentAware) {
-                $componentObject = $componentName;
-                $componentName   = $componentObject->getComponentName();
+                $componentName = $componentName->getComponentName();
             } elseif ($componentName instanceof ComponentInterface) {
                 $componentName = $componentName->getName();
             } else {
