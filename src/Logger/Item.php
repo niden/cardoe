@@ -73,7 +73,7 @@ class Item
     /**
      * @return array|null
      */
-    public function getContext()
+    public function getContext() : ?array
     {
         return $this->context;
     }

@@ -367,7 +367,7 @@ class Logger implements LoggerInterface
     /**
      * Converts the level from string/word to an integer
      *
-     * @param string|int $level
+     * @param mixed $level
      *
      * @return int
      */
@@ -380,7 +380,7 @@ class Logger implements LoggerInterface
             if (true === isset($levels[$levelName])) {
                 return $levels[$levelName];
             }
-        } elseif (true === is_numeric($level)) {
+        } elseif (true === is_int($level)) {
             $levels = $this->getLevels();
 
             if (true === isset($levels[$level])) {

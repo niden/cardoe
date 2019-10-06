@@ -120,11 +120,11 @@ class Loader
 
         $namespace = trim($namespace, $ns) . $ns;
 
-        if (is_string($directories)) {
+        if (true === is_string($directories)) {
             $directories = [$directories];
         }
 
-        if (!is_array($directories)) {
+        if (true !== is_array($directories)) {
             throw new Exception(
                 'The directories parameter is not a string or array'
             );

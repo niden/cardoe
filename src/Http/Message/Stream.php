@@ -108,6 +108,7 @@ class Stream implements StreamInterface
     public function close(): void
     {
         if (null !== $this->handle) {
+            /** @var null|resource $handle */
             $handle = $this->detach();
             if (null !== $handle) {
                 fclose($handle);
