@@ -550,7 +550,6 @@ class Memory extends AbstractAdapter
         $this->activeComponent = $componentName;
         $this->activeAccess    = $access;
         $this->activeKey       = null;
-        $this->activeKey       = null;
         $this->activeFunction  = null;
         $accessList            = $this->access;
         $funcList              = $this->func;
