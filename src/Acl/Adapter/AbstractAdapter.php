@@ -14,8 +14,12 @@ namespace Cardoe\Acl\Adapter;
 /**
  * Class Adapter
  *
- * @package Cardoe\Acl
- */
+ * @property string|null $activeAccess
+ * @property string|null $activeComponent
+ * @property string|null $activeRole
+ * @property bool        $accessGranted
+ * @property int         $defaultAccess
+*/
 abstract class AbstractAdapter implements AdapterInterface
 {
     const ALLOW = 1;

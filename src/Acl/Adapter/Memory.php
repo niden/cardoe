@@ -26,6 +26,20 @@ use function is_array;
 use function is_object;
 use function is_string;
 
+/**
+ * @property mixed       $access
+ * @property mixed       $accessList
+ * @property mixed       $activeFunction
+ * @property int         $activeFunctionCustomArgumentsCount
+ * @property string|null $activeKey
+ * @property mixed       $components
+ * @property mixed       $componentsNames
+ * @property mixed       $func
+ * @property mixed       $noArgumentsDefaultAction
+ * @property mixed       $roles
+ * @property mixed       $roleInherits
+ * @property mixed       $rolesNames
+ */
 class Memory extends AbstractAdapter
 {
     /**
@@ -362,12 +376,16 @@ class Memory extends AbstractAdapter
      * @param string $roleName
      * @param string $componentName
      * @param mixed  $access
-     * @param null   $func
+     * @param mixed  $func
      *
      * @throws Exception
      */
-    public function allow(string $roleName, string $componentName, $access, $func = null): void
-    {
+    public function allow(
+        string $roleName,
+        string $componentName,
+        $access,
+        $func = null
+    ): void {
         if ("*" !== $roleName) {
             $this->allowOrDeny(
                 $roleName,
@@ -396,12 +414,16 @@ class Memory extends AbstractAdapter
      * @param string $roleName
      * @param string $componentName
      * @param mixed  $access
-     * @param null   $func
+     * @param mixed  $func
      *
      * @throws Exception
      */
-    public function deny(string $roleName, string $componentName, $access, $func = null): void
-    {
+    public function deny(
+        string $roleName,
+        string $componentName,
+        $access,
+        $func = null
+    ): void {
         if ("*" !== $roleName) {
             $this->allowOrDeny($roleName, $componentName, $access, self::DENY, $func);
         } else {
@@ -508,8 +530,12 @@ class Memory extends AbstractAdapter
      * @throws Exception
      * @throws ReflectionException
      */
-    public function isAllowed($roleName, $componentName, string $access, array $parameters = null): bool
-    {
+    public function isAllowed(
+        $roleName,
+        $componentName,
+        string $access,
+        array $parameters = null
+    ): bool {
         $componentObject = null;
         $haveAccess      = null;
         $funcAccess      = null;
@@ -562,7 +588,7 @@ class Memory extends AbstractAdapter
         $rolesNames = $this->rolesNames;
 
         if (!isset($rolesNames[$roleName])) {
-            return ($this->defaultAccess == self::ALLOW);
+            return ($this->defaultAccess === self::ALLOW);
         }
 
         /**
@@ -588,7 +614,7 @@ class Memory extends AbstractAdapter
              */
             $this->activeKey = $roleName . "!" . $componentName . "!" . $access;
 
-            return $this->defaultAccess == self::ALLOW;
+            return $this->defaultAccess === self::ALLOW;
         }
 
         /**
@@ -604,7 +630,7 @@ class Memory extends AbstractAdapter
              * array
              */
             if ($parameterNumber === 0) {
-                return $haveAccess == self::ALLOW && call_user_func($funcAccess);
+                return $haveAccess === self::ALLOW && call_user_func($funcAccess);
             }
 
             $parametersForFunction      = [];
@@ -682,7 +708,7 @@ class Memory extends AbstractAdapter
             }
 
             // We dont have any parameters so check default action
-            if (count($parametersForFunction) == 0) {
+            if (count($parametersForFunction) === 0) {
                 if ($numberOfRequiredParameters > 0) {
                     trigger_error(
                         "You didn't provide any parameters when '" . $roleName .
@@ -690,19 +716,19 @@ class Memory extends AbstractAdapter
                         "'. We will use default action when no arguments."
                     );
 
-                    return $haveAccess == self::ALLOW && $this->noArgumentsDefaultAction == self::ALLOW;
+                    return $haveAccess === self::ALLOW && $this->noArgumentsDefaultAction === self::ALLOW;
                 }
 
                 /**
-                 * Number of required parameters == 0 so call funcAccess without
+                 * Number of required parameters === 0 so call funcAccess without
                  * any arguments
                  */
-                return $haveAccess == self::ALLOW && call_user_func($funcAccess);
+                return $haveAccess === self::ALLOW && call_user_func($funcAccess);
             }
 
             // Check necessary parameters
             if (count($parametersForFunction) >= $numberOfRequiredParameters) {
-                return $haveAccess == self::ALLOW && call_user_func_array($funcAccess, $parametersForFunction);
+                return $haveAccess === self::ALLOW && call_user_func_array($funcAccess, $parametersForFunction);
             }
 
             // We don't have enough parameters
@@ -713,7 +739,7 @@ class Memory extends AbstractAdapter
             );
         }
 
-        return $haveAccess == self::ALLOW;
+        return $haveAccess === self::ALLOW;
     }
 
     /**
@@ -759,7 +785,7 @@ class Memory extends AbstractAdapter
      * @param string $componentName
      * @param mixed  $access
      * @param mixed  $action
-     * @param null   $func
+     * @param mixed  $func
      *
      * @throws Exception
      */
@@ -800,7 +826,7 @@ class Memory extends AbstractAdapter
                 $accessKey                = $roleName . "!" . $componentName . "!" . $accessName;
                 $this->access[$accessKey] = $action;
 
-                if ($func != null) {
+                if ($func !== null) {
                     $this->func[$accessKey] = $func;
                 }
             }
@@ -823,7 +849,7 @@ class Memory extends AbstractAdapter
              */
             $this->access[$accessKey] = $action;
 
-            if ($func != null) {
+            if ($func !== null) {
                 $this->func[$accessKey] = $func;
             }
         }
