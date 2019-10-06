@@ -69,7 +69,7 @@ abstract class AbstractCommon
     protected function getTemporaryStream(RequestInterface $request)
     {
         try {
-            $resouce = fopen('php://temp', 'rb+');
+            $resource = fopen('php://temp', 'rb+');
         } catch (Exception $ex) {
             throw new NetworkException(
                 'Cannot open temporary stream',
@@ -77,7 +77,14 @@ abstract class AbstractCommon
             );
         }
 
-        return $resouce;
+        if (false === $resource) {
+            throw new NetworkException(
+                'Cannot open temporary stream',
+                $request
+            );
+        }
+
+        return $resource;
     }
 
     /**
