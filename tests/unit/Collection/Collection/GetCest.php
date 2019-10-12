@@ -77,7 +77,7 @@ class GetCest
      */
     public function helperArrGetCast(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Helper\Arr - get() - cast ' . $example[0]);
+        $I->wantToTest('Collection\Collection - get() - cast ' . $example[0]);
 
         $collection = new Collection(
             [

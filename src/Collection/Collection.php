@@ -159,7 +159,7 @@ class Collection implements
                 "string"  => 1,
             ];
 
-            if (null !== $cast && true === isset($casts[$cast])) {
+            if (true === isset($casts[$cast])) {
                 $value = $this->data[$key] ?? $defaultValue;
                 settype($value, $cast);
 

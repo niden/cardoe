@@ -148,7 +148,7 @@ class Arr
             "string"  => 1,
         ];
 
-        if (null !== $cast && true === isset($casts[$cast])) {
+        if (true === isset($casts[$cast])) {
             $value = $collection[$index] ?? $defaultValue;
             settype($value, $cast);
 
