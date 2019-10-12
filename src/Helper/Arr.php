@@ -134,23 +134,27 @@ class Arr
         $defaultValue = null,
         $cast = null
     ) {
-        switch ($cast) {
-            case "array":
-            case "bool":
-            case "boolean":
-            case "double":
-            case "float":
-            case "int":
-            case "integer":
-            case "null":
-            case "object":
-            case "string":
-                $value = $collection[$index] ?? $defaultValue;
-                settype($value, $cast);
 
-                return $value;
-            default:
-                return $collection[$index] ?? $defaultValue;
+        $casts = [
+            "array"   => 1,
+            "bool"    => 1,
+            "boolean" => 1,
+            "double"  => 1,
+            "float"   => 1,
+            "int"     => 1,
+            "integer" => 1,
+            "null"    => 1,
+            "object"  => 1,
+            "string"  => 1,
+        ];
+
+        if (null !== $cast && true === isset($casts[$cast])) {
+            $value = $collection[$index] ?? $defaultValue;
+            settype($value, $cast);
+
+            return $value;
+        } else {
+            return $collection[$index] ?? $defaultValue;
         }
     }
 
