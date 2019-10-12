@@ -32,10 +32,12 @@ class Syslog extends AbstractFormatter
     {
         $message = $item->getMessage();
         $type    = $item->getType();
-        $context = $item->getContext();
 
-        if (true === is_array($context)) {
-            $message = $this->interpolate($message, $context);
+        if (null !== $item->getContext()) {
+            $message = $this->interpolate(
+                $item->getMessage(),
+                $item->getContext()
+            );
         }
 
         return [$type, $message];

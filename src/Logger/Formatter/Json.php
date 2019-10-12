@@ -58,7 +58,7 @@ class Json extends AbstractFormatter
      */
     public function format(Item $item): string
     {
-        if (true === is_array($item->getContext())) {
+        if (null !== $item->getContext()) {
             $message = $this->interpolate(
                 $item->getMessage(),
                 $item->getContext()
