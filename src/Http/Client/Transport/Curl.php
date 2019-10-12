@@ -12,37 +12,12 @@ declare(strict_types=1);
 namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Http\Client\Exception\Exception;
-use Cardoe\Http\Client\Exception\NetworkException;
+use Cardoe\Http\Message\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use function array_shift;
-use function curl_close;
-use function curl_errno;
-use function curl_error;
-use function curl_exec;
-use function curl_init;
-use function curl_setopt_array;
-use function explode;
 use function extension_loaded;
-use function fclose;
-use function fopen;
-use function strlen;
-use function trim;
-use const CURL_HTTP_VERSION_1_0;
-use const CURL_HTTP_VERSION_1_1;
-use const CURL_HTTP_VERSION_2_0;
-use const CURLOPT_CONNECTTIMEOUT;
-use const CURLOPT_CUSTOMREQUEST;
-use const CURLOPT_FILE;
-use const CURLOPT_FOLLOWLOCATION;
-use const CURLOPT_HEADER;
-use const CURLOPT_HEADERFUNCTION;
-use const CURLOPT_HTTP_VERSION;
-use const CURLOPT_HTTPHEADER;
-use const CURLOPT_POSTFIELDS;
-use const CURLOPT_RETURNTRANSFER;
 
 /**
  * Class Curl
@@ -79,5 +54,6 @@ class Curl extends AbstractTransport
      */
     public function process(RequestInterface $request): ResponseInterface
     {
+        return new Response();
     }
 }

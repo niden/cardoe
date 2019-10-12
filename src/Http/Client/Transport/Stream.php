@@ -11,12 +11,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Transport;
 
-use Cardoe\Http\Client\Exception\NetworkException;
-use Cardoe\Http\Client\Exception\RequestException;
-use Exception;
+use Cardoe\Http\Message\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use function strpos;
 
 /**
  * Class Stream
@@ -30,5 +27,6 @@ class Stream extends AbstractTransport
      */
     public function process(RequestInterface $request): ResponseInterface
     {
+        return new Response();
     }
 }
