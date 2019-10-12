@@ -19,6 +19,7 @@ use JsonSerializable;
 use Serializable;
 use Traversable;
 use function mb_strtolower;
+use function settype;
 
 /**
  * Cardoe\Collection
@@ -131,12 +132,13 @@ class Collection implements
     /**
      * Get the element from the collection
      *
-     * @param string     $element
-     * @param mixed|null $defaultValue
+     * @param string      $element
+     * @param null        $defaultValue
+     * @param string|null $cast
      *
-     * @return mixed
+     * @return mixed|null
      */
-    public function get(string $element, $defaultValue = null)
+    public function get(string $element, $defaultValue = null, string $cast = null)
     {
         if (true === $this->insensitive) {
             $element = mb_strtolower($element);
@@ -145,7 +147,24 @@ class Collection implements
         if (true === isset($this->lowerKeys[$element])) {
             $key = $this->lowerKeys[$element];
 
-            return $this->data[$key];
+            switch ($cast) {
+                case "array":
+                case "bool":
+                case "boolean":
+                case "double":
+                case "float":
+                case "int":
+                case "integer":
+                case "null":
+                case "object":
+                case "string":
+                    $value = $this->data[$key] ?? $defaultValue;
+                    settype($value, $cast);
+
+                    return $value;
+                default:
+                    return $this->data[$key] ?? $defaultValue;
+            }
         }
 
         return $defaultValue;

@@ -31,6 +31,7 @@ use function key;
 use function krsort;
 use function ksort;
 use function reset;
+use function settype;
 
 /**
  * Cardoe\Helper\Arr
@@ -135,21 +136,19 @@ class Arr
     ) {
         switch ($cast) {
             case "array":
-                return (array) $collection[$index] ?? $defaultValue;
-            case "binary":
-                return (binary) $collection[$index] ?? $defaultValue;
             case "bool":
-                return (bool) $collection[$index] ?? $defaultValue;
-            case "int":
-                return (int) $collection[$index] ?? $defaultValue;
+            case "boolean":
+            case "double":
             case "float":
-                return (float) $collection[$index] ?? $defaultValue;
+            case "int":
+            case "integer":
+            case "null":
             case "object":
-                return (object) $collection[$index] ?? $defaultValue;
             case "string":
-                return (string) $collection[$index] ?? $defaultValue;
-            case "unset":
-                return (unset) $collection[$index] ?? $defaultValue;
+                $value = $collection[$index] ?? $defaultValue;
+                settype($value, $cast);
+
+                return $value;
             default:
                 return $collection[$index] ?? $defaultValue;
         }

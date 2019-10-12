@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Helper\Arr;
 
 use Cardoe\Helper\Arr;
+use Codeception\Example;
+use stdClass;
 use UnitTester;
 
 class GetCest
@@ -73,5 +75,88 @@ class GetCest
             'Error',
             Arr::get($collection, 'unknown', 'Error')
         );
+    }
+
+    /**
+     * Tests Cardoe\Helper\Arr :: get() - cast
+     *
+     * @dataProvider getExamples
+     *
+     * @since  2019-10-12
+     */
+    public function helperArrGetCast(UnitTester $I, Example $example)
+    {
+        $I->wantToTest('Helper\Arr - get() - cast ' . $example[0]);
+
+        $collection = [
+            'value' => $example[1],
+        ];
+
+        $I->assertEquals(
+            $example[2],
+            Arr::get($collection, 'value', null, $example[0])
+        );
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamples(): array
+    {
+        $sample = new stdClass();
+        $sample->one = 'two';
+
+        return [
+            [
+                'boolean',
+                1,
+                true,
+            ],
+            [
+                'bool',
+                1,
+                true,
+            ],
+            [
+                'integer',
+                "123",
+                123,
+            ],
+            [
+                'int',
+                "123",
+                123,
+            ],
+            [
+                'float',
+                "123.45",
+                123.45,
+            ],
+            [
+                'double',
+                "123.45",
+                123.45,
+            ],
+            [
+                'string',
+                123,
+                "123",
+            ],
+            [
+                'array',
+                $sample,
+                ['one' => 'two'],
+            ],
+            [
+                'object',
+                ['one' => 'two'],
+                $sample,
+            ],
+            [
+                'null',
+                1234,
+                null,
+            ],
+        ];
     }
 }
