@@ -145,25 +145,27 @@ class Collection implements
         }
 
         if (true === isset($this->lowerKeys[$element])) {
-            $key = $this->lowerKeys[$element];
+            $key   = $this->lowerKeys[$element];
+            $casts = [
+                "array",
+                "bool",
+                "boolean",
+                "double",
+                "float",
+                "int",
+                "integer",
+                "null",
+                "object",
+                "string",
+            ];
 
-            switch ($cast) {
-                case "array":
-                case "bool":
-                case "boolean":
-                case "double":
-                case "float":
-                case "int":
-                case "integer":
-                case "null":
-                case "object":
-                case "string":
-                    $value = $this->data[$key] ?? $defaultValue;
-                    settype($value, $cast);
+            if (null !== $cast && true === isset($casts[$cast])) {
+                $value = $this->data[$key] ?? $defaultValue;
+                settype($value, $cast);
 
-                    return $value;
-                default:
-                    return $this->data[$key] ?? $defaultValue;
+                return $value;
+            } else {
+                return $this->data[$key] ?? $defaultValue;
             }
         }
 
