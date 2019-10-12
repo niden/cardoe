@@ -147,16 +147,16 @@ class Collection implements
         if (true === isset($this->lowerKeys[$element])) {
             $key   = $this->lowerKeys[$element];
             $casts = [
-                "array",
-                "bool",
-                "boolean",
-                "double",
-                "float",
-                "int",
-                "integer",
-                "null",
-                "object",
-                "string",
+                "array"   => 1,
+                "bool"    => 1,
+                "boolean" => 1,
+                "double"  => 1,
+                "float"   => 1,
+                "int"     => 1,
+                "integer" => 1,
+                "null"    => 1,
+                "object"  => 1,
+                "string"  => 1,
             ];
 
             if (null !== $cast && true === isset($casts[$cast])) {
