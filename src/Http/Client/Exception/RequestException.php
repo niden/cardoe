@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Exception;
 
-use Exception;
 use Psr\Http\Client\RequestExceptionInterface;
 use Psr\Http\Message\RequestInterface;
 use RuntimeException;
@@ -32,9 +31,9 @@ class RequestException extends RuntimeException implements RequestExceptionInter
      * @param string           $message
      * @param RequestInterface $request
      *
-     * @param Exception|null   $previous
+     * @param \Exception|null   $previous
      */
-    public function __construct($message, RequestInterface $request, Exception $previous = null)
+    public function __construct($message, RequestInterface $request, \Exception $previous = null)
     {
         $this->request = $request;
 
