@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Transport;
 
+use Cardoe\Http\Client\Exception\Exception;
 use Cardoe\Http\Client\Exception\NetworkException;
-use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
 use function array_shift;
 use function curl_close;
 use function curl_errno;
@@ -23,6 +25,7 @@ use function curl_exec;
 use function curl_init;
 use function curl_setopt_array;
 use function explode;
+use function extension_loaded;
 use function fclose;
 use function fopen;
 use function strlen;
@@ -47,114 +50,34 @@ use const CURLOPT_RETURNTRANSFER;
 class Curl extends AbstractTransport
 {
     /**
-     * @inheritdoc
+     * Curl constructor.
+     *
+     * @param StreamFactoryInterface   $streamFactory
+     * @param ResponseFactoryInterface $responseFactory
+     * @param array                    $options
+     *
+     * @throws Exception
      */
-    public function sendRequest(RequestInterface $request): ResponseInterface
-    {
-        $resource = fopen('php://temp', 'wb');
-
-        $curlOptions = [
-            CURLOPT_CUSTOMREQUEST  => $request->getMethod(),
-            CURLOPT_RETURNTRANSFER => false,
-            CURLOPT_FOLLOWLOCATION => $this->options['follow'],
-            CURLOPT_HEADER         => false,
-            CURLOPT_CONNECTTIMEOUT => $this->options['timeout'],
-            CURLOPT_FILE           => $resource,
-        ];
-
-        $version = $request->getProtocolVersion();
-        switch ($version) {
-            case "1.0":
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
-                break;
-
-            case "2.0":
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
-                break;
-
-            case "1.1":
-            default:
-                $curlOptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
-                break;
-        }
-
-        $curlOptions[CURLOPT_HTTPHEADER] = explode(
-            "\r\n",
-            $this->serializeHeaders($request->getHeaders())
-        );
-
-        if (null !== $request->getBody()->getSize()) {
-            $curlOptions[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
-        }
-
-        $headers = [];
-
-        $curlOptions[CURLOPT_HEADERFUNCTION] = function ($resource, $headerString) use (&$headers) {
-            $header = trim($headerString);
-            if (strlen($header) > 0) {
-                $headers[] = $header;
-            }
-
-            return mb_strlen($headerString, '8bit');
-        };
-
-        $curlResource = curl_init($request->getUri()->__toString());
-
-        if (false === $curlResource) {
-            throw new NetworkException(
-                'curl could not open the URI',
-                $request
+    public function __construct(
+        StreamFactoryInterface $streamFactory,
+        ResponseFactoryInterface $responseFactory,
+        array $options = []
+    ) {
+        if (true !== extension_loaded('curl')) {
+            throw new Exception(
+                'curl extension must be loaded for this transport to work'
             );
         }
 
-        curl_setopt_array($curlResource, $curlOptions);
-        curl_exec($curlResource);
-
-        $stream = $this->resourceToStream(
-            $resource,
-            $this->streamFactory,
-            $request
-        );
-
-        if ($this->options['follow']) {
-            $headers = $this->filterHeaders($headers);
-        }
-
-        fclose($resource);
-
-        $errorNumber  = curl_errno($curlResource);
-        $errorMessage = curl_error($curlResource);
-
-        if ($errorNumber) {
-            throw new NetworkException($errorMessage, $request);
-        }
-
-        $parts   = explode(' ', array_shift($headers), 3);
-        $version = explode('/', $parts[0])[1];
-        $status  = (int) $parts[1];
-
-        curl_close($curlResource);
-
-        $response = $this->responseFactory->createResponse($status)
-                                          ->withProtocolVersion($version)
-                                          ->withBody($stream)
-        ;
-
-        $headers = $this->unserializeHeaders($headers);
-        foreach ($headers as $key => $value) {
-            $response = $response->withHeader($key, $value);
-        }
-
-        return $response;
+        parent::__construct($streamFactory, $responseFactory, $options);
     }
 
     /**
-     * @inheritdoc
+     * @param RequestInterface $request
+     *
+     * @return ResponseInterface
      */
-    public function process(
-        RequestInterface $request,
-        HandlerInterface $handler
-    ): ResponseInterface {
-        return $this->sendRequest($request);
+    public function process(RequestInterface $request): ResponseInterface
+    {
     }
 }
