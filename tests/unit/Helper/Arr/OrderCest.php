@@ -65,16 +65,16 @@ class OrderCest
         $I->wantToTest('Helper\Arr - order()');
 
         $collection = [
-            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
-            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
-            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
+            Arr::toObject(['id' => 2, 'name' => 'Paul']),
+            Arr::toObject(['id' => 3, 'name' => 'Peter']),
+            Arr::toObject(['id' => 1, 'name' => 'John']),
         ];
 
 
         $expected = [
-            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
-            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
-            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
+            Arr::toObject(['id' => 1, 'name' => 'John']),
+            Arr::toObject(['id' => 2, 'name' => 'Paul']),
+            Arr::toObject(['id' => 3, 'name' => 'Peter']),
         ];
 
         $I->assertEquals(
@@ -84,9 +84,9 @@ class OrderCest
 
 
         $expected = [
-            Arr::arrayToObject(['id' => 3, 'name' => 'Peter']),
-            Arr::arrayToObject(['id' => 2, 'name' => 'Paul']),
-            Arr::arrayToObject(['id' => 1, 'name' => 'John']),
+            Arr::toObject(['id' => 3, 'name' => 'Peter']),
+            Arr::toObject(['id' => 2, 'name' => 'Paul']),
+            Arr::toObject(['id' => 1, 'name' => 'John']),
         ];
 
         $I->assertEquals(

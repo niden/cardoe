@@ -14,7 +14,7 @@ use Cardoe\Helper\Arr;
 use stdClass;
 use UnitTester;
 
-class ArrayToObjectCest
+class ToObjectCest
 {
     /**
      * Unit Tests Cardoe\Helper\Arr :: arrayToObject()
@@ -23,14 +23,14 @@ class ArrayToObjectCest
      */
     public function helperArrArrayToObject(UnitTester $I)
     {
-        $I->wantToTest('Helper\Arr - arrayToObject()');
+        $I->wantToTest('Helper\Arr - toObject()');
 
         $source = [
             'one'   => 'two',
             'three' => 'four',
         ];
 
-        $actual = Arr::arrayToObject($source);
+        $actual = Arr::toObject($source);
 
         $expected        = new stdClass();
         $expected->one   = 'two';

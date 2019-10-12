@@ -39,17 +39,6 @@ use function reset;
  */
 class Arr
 {
-    final public static function arrayToObject(array $collection)
-    {
-        $returnObject = new stdClass();
-
-        foreach ($collection as $key => $value) {
-            $returnObject->{$key} = $value;
-        }
-
-        return $returnObject;
-    }
-
     /**
      * Chunks an array into smaller arrays of a specified size.
      *
@@ -134,12 +123,36 @@ class Arr
      * @param array      $collection
      * @param mixed      $index
      * @param mixed|null $defaultValue
+     * @param mixed|null $cast
      *
      * @return mixed
      */
-    final public static function get(array $collection, $index, $defaultValue = null)
-    {
-        return $collection[$index] ?? $defaultValue;
+    final public static function get(
+        array $collection,
+        $index,
+        $defaultValue = null,
+        $cast = null
+    ) {
+        switch ($cast) {
+            case "array":
+                return (array) $collection[$index] ?? $defaultValue;
+            case "binary":
+                return (binary) $collection[$index] ?? $defaultValue;
+            case "bool":
+                return (bool) $collection[$index] ?? $defaultValue;
+            case "int":
+                return (int) $collection[$index] ?? $defaultValue;
+            case "float":
+                return (float) $collection[$index] ?? $defaultValue;
+            case "object":
+                return (object) $collection[$index] ?? $defaultValue;
+            case "string":
+                return (string) $collection[$index] ?? $defaultValue;
+            case "unset":
+                return (unset) $collection[$index] ?? $defaultValue;
+            default:
+                return $collection[$index] ?? $defaultValue;
+        }
     }
 
     /**
@@ -344,6 +357,18 @@ class Arr
     final public static function split(array $collection): array
     {
         return [array_keys($collection), array_values($collection)];
+    }
+
+    /**
+     * Returns an array as a stdClass object
+     *
+     * @param array $collection
+     *
+     * @return stdClass
+     */
+    final public static function toObject(array $collection): stdClass
+    {
+        return (object) $collection;
     }
 
     /**
