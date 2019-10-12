@@ -133,7 +133,7 @@ class Collection implements
      * Get the element from the collection
      *
      * @param string      $element
-     * @param null        $defaultValue
+     * @param mixed|null  $defaultValue
      * @param string|null $cast
      *
      * @return mixed|null
