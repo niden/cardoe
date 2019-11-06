@@ -2,15 +2,14 @@ run.config:
   engine: php
   engine.config:
     runtime: php-7.3
-#    document_root: tests/testbed
+    document_root: tests/testbed
     extensions:
       - apcu
       - ctype
       - curl
       - dom
       - fileinfo
-      - gmp
-      - gettext
+      - gd
       - iconv
       - json
       - mbstring
@@ -39,7 +38,6 @@ run.config:
   extra_packages:
     - autoconf
     - mysql-client
-    #    - postgresql94-client
     - sqlite3
   extra_steps:
     #===========================================================================
