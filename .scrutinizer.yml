@@ -9,6 +9,8 @@ build:
       environment:
         php:
           version: 7.3.11
+          apt_packages:
+            - libyaml
           pecl_extensions:
             - yaml
           ini:
@@ -27,6 +29,8 @@ build:
         override:
           -
             command: phpcs-run
+          -
+            command: ./vendor/bin/phpstan analyse -l max -c phpstan.neon src -v
           -
             command: './vendor/bin/codecept run --coverage-xml'
             coverage:

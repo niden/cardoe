@@ -24,7 +24,7 @@ class Config extends Collection
     const DEFAULT_PATH_DELIMITER = ".";
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $pathDelimiter = null;
 
@@ -45,7 +45,7 @@ class Config extends Collection
     /**
      * Merges a configuration into the current one
      *
-     * @param array|Config $toMerge
+     * @param array|object|Config $toMerge
      *
      * @return Config
      * @throws Exception
