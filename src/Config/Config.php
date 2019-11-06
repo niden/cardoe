@@ -52,9 +52,9 @@ class Config extends Collection
      */
     public function merge($toMerge): Config
     {
-        if (true === is_array($toMerge)) {
+        if (is_array($toMerge)) {
             $config = new Config($toMerge);
-        } elseif (true === is_object($toMerge) && $toMerge instanceof Config) {
+        } elseif (is_object($toMerge) && $toMerge instanceof Config) {
             $config = $toMerge;
         } else {
             throw new Exception(
@@ -139,7 +139,7 @@ class Config extends Collection
         $data    = parent::toArray();
 
         foreach ($data as $key => $value) {
-            if (true === is_object($value) &&
+            if (is_object($value) &&
                 true === method_exists($value, "toArray")) {
                 $value = $value->toArray();
             }
@@ -161,11 +161,11 @@ class Config extends Collection
     final protected function internalMerge(array $source, array $target): array
     {
         foreach ($target as $key => $value) {
-            if (true === is_array($value) &&
+            if (is_array($value) &&
                 true === isset($source[$key]) &&
-                true === is_array($source[$key])) {
+                is_array($source[$key])) {
                 $source[$key] = $this->internalMerge($source[$key], $value);
-            } elseif (true === is_int($key)) {
+            } elseif (is_int($key)) {
                 $source[] = $value;
             } else {
                 $source[$key] = $value;
@@ -188,7 +188,7 @@ class Config extends Collection
 
         $this->lowerKeys[$key] = $element;
 
-        if (true === is_array($value)) {
+        if (is_array($value)) {
             $data = new Config($value);
         } else {
             $data = $value;
