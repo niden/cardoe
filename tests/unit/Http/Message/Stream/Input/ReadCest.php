@@ -26,6 +26,6 @@ class ReadCest
     {
         $I->wantToTest('Http\Message\Stream\Input - read()');
 
-        $I->skipTest('Need implementation');
+        skipTest('Need implementation');
     }
 }

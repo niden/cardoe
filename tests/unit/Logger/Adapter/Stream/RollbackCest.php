@@ -27,7 +27,7 @@ class RollbackCest
     public function loggerAdapterStreamRollback(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - rollback()');
-        $fileName   = $I->getNewFileName('log', 'log');
+        $fileName   = getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
@@ -41,7 +41,7 @@ class RollbackCest
         $actual = $adapter->inTransaction();
         $I->assertFalse($actual);
 
-        $I->safeDeleteFile($outputPath . $fileName);
+        safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -53,7 +53,7 @@ class RollbackCest
         $I->expectThrowable(
             new Exception('There is no active transaction'),
             function () use ($I) {
-                $fileName   = $I->getNewFileName('log', 'log');
+                $fileName   = getNewFileName('log', 'log');
                 $outputPath = logsDir();
                 $adapter    = new Stream($outputPath . $fileName);
 

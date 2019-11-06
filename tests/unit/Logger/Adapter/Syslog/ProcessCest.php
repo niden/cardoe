@@ -30,7 +30,7 @@ class ProcessCest
     {
         $I->wantToTest('Logger\Adapter\Syslog - process()');
 
-        $streamName = $I->getNewFileName('log', 'log');
+        $streamName = getNewFileName('log', 'log');
 
         $adapter = new Syslog($streamName);
 

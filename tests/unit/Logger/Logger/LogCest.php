@@ -31,7 +31,7 @@ class LogCest
         $I->wantToTest('Logger - log()');
 
         $logPath  = logsDir();
-        $fileName = $I->getNewFileName('log', 'log');
+        $fileName = getNewFileName('log', 'log');
         $adapter  = new Stream($logPath . $fileName);
 
         $logger = new Logger(
@@ -80,7 +80,7 @@ class LogCest
             $I->seeInThisFile($expected);
         }
 
-        $I->safeDeleteFile($fileName);
+        safeDeleteFile($fileName);
     }
 
     /**

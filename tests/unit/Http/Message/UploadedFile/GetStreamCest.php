@@ -111,7 +111,7 @@ class GetStreamCest
                 $stream->write('Phalcon Framework');
 
                 $file   = new UploadedFile($stream, 0);
-                $target = $I->getNewFileName();
+                $target = getNewFileName();
                 $target = outputDir(
                     'tests/stream/' . $target
                 );

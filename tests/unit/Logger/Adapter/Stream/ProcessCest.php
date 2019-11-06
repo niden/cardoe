@@ -29,7 +29,7 @@ class ProcessCest
     public function loggerAdapterStreamProcess(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - process()');
-        $fileName   = $I->getNewFileName('log', 'log');
+        $fileName   = getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
@@ -41,6 +41,6 @@ class ProcessCest
         $I->openFile($fileName);
         $I->seeInThisFile('Message 1');
 
-        $I->safeDeleteFile($outputPath . $fileName);
+        safeDeleteFile($outputPath . $fileName);
     }
 }

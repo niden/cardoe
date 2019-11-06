@@ -32,7 +32,7 @@ class NewInstanceCest
     {
         $I->wantToTest('Logger\AdapterFactory - newInstance()');
 
-        $fileName = $I->getNewFileName();
+        $fileName = getNewFileName();
         $fileName = outputDir('tests/logs/' . $fileName);
         $factory  = new AdapterFactory();
 

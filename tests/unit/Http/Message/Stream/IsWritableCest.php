@@ -56,7 +56,7 @@ class IsWritableCest
             'Http\Message\Stream - isWritable() with "x" - ' . $example[0]
         );
 
-        $fileName = $I->getNewFileName();
+        $fileName = getNewFileName();
         $fileName = logsDir($fileName);
 
         $stream = new Stream($fileName, $example[0]);

@@ -43,7 +43,7 @@ namespace Phalcon\Test\Unit\Logger\Adapter\Syslog {
         {
             $I->wantToTest('Logger\Adapter\Syslog - add()');
 
-            $streamName = $I->getNewFileName('log', 'log');
+            $streamName = getNewFileName('log', 'log');
 
             $adapter = new Syslog($streamName);
 

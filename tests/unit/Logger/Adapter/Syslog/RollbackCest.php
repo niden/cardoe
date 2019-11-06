@@ -28,7 +28,7 @@ class RollbackCest
     {
         $I->wantToTest('Logger\Adapter\Syslog - rollback()');
 
-        $streamName = $I->getNewFileName('log', 'log');
+        $streamName = getNewFileName('log', 'log');
 
         $adapter = new Syslog($streamName);
 

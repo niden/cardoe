@@ -26,6 +26,6 @@ class SetStreamCest
     {
         $I->wantToTest('Http\Message\Stream - setStream()');
 
-        $I->skipTest('Need implementation');
+        skipTest('Need implementation');
     }
 }

@@ -26,6 +26,6 @@ class ToStringCest
     {
         $I->wantToTest('Http\Message\Stream\Input - __toString()');
 
-        $I->skipTest('Need implementation');
+        skipTest('Need implementation');
     }
 }

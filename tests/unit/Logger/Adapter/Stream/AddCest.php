@@ -26,7 +26,7 @@ class AddCest
     public function loggerAdapterStreamAdd(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - add()');
-        $fileName   = $I->getNewFileName('log', 'log');
+        $fileName   = getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
@@ -53,6 +53,6 @@ class AddCest
         $I->seeInThisFile('Message 2');
         $I->seeInThisFile('Message 3');
 
-        $I->safeDeleteFile($outputPath . $fileName);
+        safeDeleteFile($outputPath . $fileName);
     }
 }

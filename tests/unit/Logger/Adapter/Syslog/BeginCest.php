@@ -28,7 +28,7 @@ class BeginCest
     {
         $I->wantToTest('Logger\Adapter\Syslog - begin()');
 
-        $streamName = $I->getNewFileName('log', 'log');
+        $streamName = getNewFileName('log', 'log');
 
         $adapter = new Syslog($streamName);
 

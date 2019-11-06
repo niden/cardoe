@@ -27,7 +27,7 @@ class GetFormatterCest
     {
         $I->wantToTest('Logger\Adapter\Stream - getFormatter()');
 
-        $fileName = $I->getNewFileName('log', 'log');
+        $fileName = getNewFileName('log', 'log');
         $fileName = logsDir($fileName);
 
         $adapter = new Stream($fileName);
@@ -41,6 +41,6 @@ class GetFormatterCest
             $adapter->getFormatter()
         );
 
-        $I->safeDeleteFile($fileName);
+        safeDeleteFile($fileName);
     }
 }

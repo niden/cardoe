@@ -36,7 +36,7 @@ class MoveToCest
         $stream->write('Phalcon Framework');
 
         $file   = new UploadedFile($stream, 0);
-        $target = $I->getNewFileName();
+        $target = getNewFileName();
         $target = outputDir(
             'tests/stream/' . $target
         );
@@ -68,7 +68,7 @@ class MoveToCest
 
                 $stream->write('Phalcon Framework');
 
-                $target = $I->getNewFileName();
+                $target = getNewFileName();
 
                 $target = outputDir(
                     'tests/stream/' . $target
@@ -126,7 +126,7 @@ class MoveToCest
 
                 $file = new UploadedFile($stream, 0);
 
-                $target = $I->getNewFileName();
+                $target = getNewFileName();
 
                 $target = outputDir(
                     'tests/stream/' . $target

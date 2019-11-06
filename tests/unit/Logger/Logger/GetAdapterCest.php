@@ -28,7 +28,7 @@ class GetAdapterCest
     public function loggerGetAdapter(UnitTester $I)
     {
         $I->wantToTest('Logger - getAdapter()');
-        $fileName1  = $I->getNewFileName('log', 'log');
+        $fileName1  = getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
 
@@ -44,7 +44,7 @@ class GetAdapterCest
         $actual = $logger->getAdapter('one');
         $I->assertInstanceOf($class, $actual);
 
-        $I->safeDeleteFile($outputPath . $fileName1);
+        safeDeleteFile($outputPath . $fileName1);
     }
 
     /**
@@ -69,8 +69,8 @@ class GetAdapterCest
     public function loggerGetAdapterForTransaction(UnitTester $I)
     {
         $I->wantToTest('Logger - getAdapter() - for transaction');
-        $fileName1  = $I->getNewFileName('log', 'log');
-        $fileName2  = $I->getNewFileName('log', 'log');
+        $fileName1  = getNewFileName('log', 'log');
+        $fileName2  = getNewFileName('log', 'log');
         $outputPath = logsDir();
 
         $adapter1 = new Stream($outputPath . $fileName1);
@@ -99,7 +99,7 @@ class GetAdapterCest
         $logger->info('for');
         $logger->info('Phlying');
         $logger->info('with');
-        $logger->info('Phalcon');
+        $logger->info('Cardoe');
 
         $I->amInPath($outputPath);
         $I->openFile($fileName1);
@@ -108,7 +108,7 @@ class GetAdapterCest
         $I->seeInThisFile('for');
         $I->seeInThisFile('Phlying');
         $I->seeInThisFile('with');
-        $I->seeInThisFile('Phalcon');
+        $I->seeInThisFile('Cardoe');
 
         $I->amInPath($outputPath);
         $I->openFile($fileName2);
@@ -116,7 +116,7 @@ class GetAdapterCest
         $I->dontSeeInThisFile('for');
         $I->dontSeeInThisFile('Phlying');
         $I->dontSeeInThisFile('with');
-        $I->dontSeeInThisFile('Phalcon');
+        $I->dontSeeInThisFile('Cardoe');
 
         $logger->getAdapter('two')->commit();
 
@@ -126,9 +126,9 @@ class GetAdapterCest
         $I->seeInThisFile('for');
         $I->seeInThisFile('Phlying');
         $I->seeInThisFile('with');
-        $I->seeInThisFile('Phalcon');
+        $I->seeInThisFile('Cardoe');
 
-        $I->safeDeleteFile($outputPath . $fileName1);
-        $I->safeDeleteFile($outputPath . $fileName2);
+        safeDeleteFile($outputPath . $fileName1);
+        safeDeleteFile($outputPath . $fileName2);
     }
 }
