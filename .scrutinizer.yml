@@ -1,3 +1,39 @@
+<<<<<<< HEAD
+=======
+build:
+  nodes:
+    analysis:
+      project_setup:
+        override:
+          - 'true'
+      environment:
+        php:
+          version: 7.3.0
+          ini:
+            'date.timezone': 'UTC'
+
+      dependencies:
+        before:
+          - cd /home/scrutinizer/build
+          - composer install --no-interaction
+          - ./vendor/bin/codecept build
+          - echo -e 'opcache.enable_cli=1' >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
+          - echo -e 'apc.enabled=1'        >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
+          - echo -e 'apc.enable_cli=1'     >> /home/scrutinizer/.phpenv/versions/7.3.0/etc/php.ini
+
+      tests:
+        override:
+          -
+            command: phpcs-run
+          -
+            command: './vendor/bin/codecept run --coverage-xml'
+            coverage:
+              file: './tests/_output/coverage.xml'
+              format: 'clover'
+          - php-scrutinizer-run --enable-security-analysis
+    tests: true
+
+>>>>>>> Trying 7.3.0 for scrutinizer
 filter:
   paths:
     - 'src/*'
