@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info;
 
-class SqliteInfo extends Info
+class SqliteAbstractAdapter extends AbstractAdapter
 {
     public function fetchCurrentSchema(): string
     {

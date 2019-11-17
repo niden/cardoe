@@ -10,7 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info;
 
-class PgsqlInfo extends Info
+class PgsqlAbstractAdapter extends AbstractAdapter
 {
     public function fetchCurrentSchema(): string
     {

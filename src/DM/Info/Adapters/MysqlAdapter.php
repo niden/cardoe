@@ -1,18 +1,19 @@
 <?php
-/**
- *
- * This file is part of Atlas for PHP.
- *
- * @license http://opensource.org/licenses/mit-license.php MIT
- *
- */
+
 declare(strict_types=1);
+
+/**
+ * This file is part of the Cardoe Framework.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
 
 namespace Cardoe\DM\Info;
 
 use Cardoe\DM\Pdo\Connection;
 
-class MysqlInfo extends Info
+class MysqlAdapter extends AbstractInfo
 {
     protected $maria = false;
 
