@@ -16,304 +16,629 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Pdo;
 
-use Exception;
+use Cardoe\Logger\Exception;
 use PDO;
+use PDORow;
+use PDOStatement;
+use Psr\Log\LoggerInterface;
+use function is_array;
+use function is_bool;
+use function is_int;
+use function microtime;
+use function var_dump;
+use const PHP_EOL;
 
 /**
  * Decorator for PDO instances.
+ *
+ * @property bool            $collectQueries
+ * @property LoggerInterface $logger
+ * @property bool            $logQueries
+ * @property PDO             $pdo
+ * @property array           $queries
  */
 class Connection
 {
-    protected $pdo;
+    /**
+     * @var bool
+     */
+    protected $collectQueries = false;
 
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger = null;
+
+    /**
+     * @var string
+     */
+    protected $logFormat = '';
+
+    /**
+     * @var bool
+     */
     protected $logQueries = false;
 
+    /**
+     * @var PDO
+     */
+    protected $pdo;
+
+    /**
+     * @var array
+     */
     protected $queries = [];
 
-    protected $queryLogger;
+    /**
+     * Connection constructor.
+     *
+     * @param string $dsn
+     * @param string $username
+     * @param string $password
+     * @param array  $options
+     */
+    public function __construct(
+        string $dsn,
+        string $username = '',
+        string $password = '',
+        array $options = []
+    ) {
 
-    public static function new(...$args): Connection
-    {
-        if ($args[0] instanceof \PDO) {
-            return new static($args[0]);
+        if (true !== isset($options[PDO::ATTR_ERRMODE])) {
+            $options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
         }
 
-        return new static(new \PDO(...$args));
+        $this->logFormat = '[A: %start%][Z: %start%][D: %duration%]'
+            . '[S: %statement%][V: %values%]' . PHP_EOL . '[Trace: %trace%]';
+
+        $this->pdo = new PDO($dsn, $username, $password, $options);
     }
 
-    public static function factory(...$args): callable
-    {
-        return function () use ($args) {
-            return static::new(...$args);
-        };
-    }
-
-    public function __construct(\PDO $pdo)
-    {
-        $this->pdo = $pdo;
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-    }
-
-    public function __call(
-        string $method,
-        array $params
-    ) {
-        return $this->pdo->$method(...$params);
-    }
-
-    public function getDriverName(): string
-    {
-        return $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-    }
-
-    public function getPdo(): PDO
-    {
-        return $this->pdo;
-    }
-
-    /* Transactions */
-
+    /**
+     * Begins a transaction
+     *
+     * @return bool
+     */
     public function beginTransaction(): bool
     {
         $entry  = $this->newLogEntry(__METHOD__);
         $result = $this->pdo->beginTransaction();
         $this->addLogEntry($entry);
+
         return $result;
     }
 
+    /**
+     * Commits a transaction
+     *
+     * @return bool
+     */
     public function commit(): bool
     {
         $entry  = $this->newLogEntry(__METHOD__);
         $result = $this->pdo->commit();
         $this->addLogEntry($entry);
+
         return $result;
     }
 
-    public function rollBack(): bool
+    /**
+     * Enables collecting queries
+     *
+     * @param bool $enable
+     *
+     * @return Connection
+     */
+    public function enableCollect(bool $enable): Connection
     {
-        $entry  = $this->newLogEntry(__METHOD__);
-        $result = $this->pdo->rollBack();
-        $this->addLogEntry($entry);
-        return $result;
+        $this->collectQueries = $enable;
+
+        return $this;
     }
 
-    /* Queries */
+    /**
+     * Enables logging queries
+     *
+     * @param bool $enable
+     *
+     * @return Connection
+     */
+    public function enableLogging(bool $enable): Connection
+    {
+        $this->logQueries = $enable;
 
+        return $this;
+    }
+
+    /**
+     * Executes a PDO statement
+     *
+     * @param string $statement
+     *
+     * @return int
+     */
     public function exec(string $statement): int
     {
         $entry    = $this->newLogEntry($statement);
         $rowCount = $this->pdo->exec($statement);
         $this->addLogEntry($entry);
+
         return $rowCount;
     }
 
-    public function prepare(
-        string $statement,
-        array $driverOptions = []
-    ): \PDOStatement {
-        $sth = $this->pdo->prepare($statement, $driverOptions);
-        if ($sth instanceof LoggedStatement) {
-            $sth->setLogEntry($this->newLogEntry($statement));
-            $sth->setQueryLogger(function (array $entry): void {
-                $this->addLogEntry($entry);
-            });
-        }
-        return $sth;
-    }
-
-    public function perform(
-        string $statement,
-        array $values = []
-    ): \PDOStatement {
-        $sth = $this->prepare($statement);
-        foreach ($values as $name => $args) {
-            $this->performBind($sth, $name, $args);
-        }
-        $sth->execute();
-        return $sth;
-    }
-
-    protected function performBind(\PDOStatement $sth, $name, $args)
-    {
-        if (is_int($name)) {
-            // sequential placeholders are 1-based
-            $name++;
-        }
-
-        if (!is_array($args)) {
-            $sth->bindValue($name, $args);
-            return;
-        }
-
-        $type = $args[1] ?? PDO::PARAM_STR;
-        if ($type === PDO::PARAM_BOOL && is_bool($args[0])) {
-            $args[0] = $args[0] ? '1' : '0';
-        }
-
-        $sth->bindValue($name, ...$args);
-    }
-
-    public function query(string $statement, ...$fetch): \PDOStatement
-    {
-        $entry = $this->newLogEntry($statement);
-        $sth   = $this->pdo->query($statement, ...$fetch);
-        $this->addLogEntry($entry);
-        return $sth;
-    }
-
-    /* Fetching */
-
+    /**
+     * Returns the affected rows
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return int
+     */
     public function fetchAffected(
         string $statement,
         array $values = []
     ): int {
-        $sth = $this->perform($statement, $values);
-        return $sth->rowCount();
+        $entry  = $this->newLogEntry(__METHOD__);
+        $sth    = $this->perform($statement, $values);
+        $result = $sth->rowCount();
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches all the data with FETCH_ASSOC
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array
+     */
     public function fetchAll(
         string $statement,
         array $values = []
     ): array {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+        $entry  = $this->newLogEntry(__METHOD__);
+        $result = $this->performFetch(PDO::FETCH_ASSOC, $statement, $values);
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
-    public function fetchUnique(
-        string $statement,
-        array $values = []
-    ): array {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchAll(\PDO::FETCH_UNIQUE);
-    }
-
+    /**
+     * Fetches all the data using FETCH_COLUMN
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param int    $column
+     *
+     * @return array
+     */
     public function fetchColumn(
         string $statement,
         array $values = [],
         int $column = 0
     ): array {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchAll(\PDO::FETCH_COLUMN, $column);
+        $entry  = $this->newLogEntry(__METHOD__);
+        $sth    = $this->perform($statement, $values);
+        $result = $sth->fetchAll(PDO::FETCH_COLUMN, $column);
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches all the data with FETCH_GROUP
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param int    $style
+     *
+     * @return array
+     */
     public function fetchGroup(
         string $statement,
         array $values = [],
-        int $style = \PDO::FETCH_COLUMN
+        int $style = PDO::FETCH_ASSOC
     ): array {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchAll(\PDO::FETCH_GROUP | $style);
+        $entry  = $this->newLogEntry(__METHOD__);
+        $result = $this->performFetch(
+            PDO::FETCH_GROUP | $style,
+            $statement,
+            $values
+        );
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches all the data with FETCH_KEY_PAIR
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array
+     */
+    public function fetchKeyPair(
+        string $statement,
+        array $values = []
+    ): array {
+        $entry  = $this->newLogEntry(__METHOD__);
+        $result = $this->performFetch(PDO::FETCH_KEY_PAIR, $statement, $values);
+
+        $this->addLogEntry($entry);
+
+        return $result;
+    }
+
+    /**
+     * Fetches a record and returns it as an object
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param string $class
+     * @param array  $ctorArgs
+     *
+     * @return mixed
+     */
     public function fetchObject(
         string $statement,
         array $values = [],
         string $class = 'stdClass',
         array $ctorArgs = []
     ) {
-        $sth = $this->perform($statement, $values);
+        $entry = $this->newLogEntry(__METHOD__);
+        $sth   = $this->perform($statement, $values);
 
-        if (!empty($ctorArgs)) {
-            return $sth->fetchObject($class, $ctorArgs);
+        if (true !== empty($ctorArgs)) {
+            $result = $sth->fetchObject($class, $ctorArgs);
+        } else {
+            $result = $sth->fetchObject($class);
         }
 
-        return $sth->fetchObject($class);
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches all the data using FETCH_CLASS
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param string $class
+     * @param array  $ctorArgs
+     *
+     * @return array
+     */
     public function fetchObjects(
         string $statement,
         array $values = [],
         string $class = 'stdClass',
         array $ctorArgs = []
     ): array {
-        $sth = $this->perform($statement, $values);
+        $entry = $this->newLogEntry(__METHOD__);
+        $sth   = $this->perform($statement, $values);
 
-        if (!empty($ctorArgs)) {
-            return $sth->fetchAll(\PDO::FETCH_CLASS, $class, $ctorArgs);
+        if (true !== empty($ctorArgs)) {
+            $result = $sth->fetchAll(PDO::FETCH_CLASS, $class, $ctorArgs);
+        } else {
+            $result = $sth->fetchAll(PDO::FETCH_CLASS, $class);
         }
 
-        return $sth->fetchAll(\PDO::FETCH_CLASS, $class);
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches one record
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array|null
+     */
     public function fetchOne(
         string $statement,
         array $values = []
     ): ?array {
-        $sth    = $this->perform($statement, $values);
-        $result = $sth->fetch(\PDO::FETCH_ASSOC);
+        $entry = $this->newLogEntry(__METHOD__);
+        $sth   = $this->perform($statement, $values);
+
+        $result = $sth->fetch(PDO::FETCH_ASSOC);
+
+        $this->addLogEntry($entry);
+
         if ($result === false) {
             return null;
         }
+
         return $result;
     }
 
-    public function fetchKeyPair(
+    /**
+     * Fetches all the data with FETCH_UNIQUE
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param int    $style
+     *
+     * @return array
+     */
+    public function fetchUnique(
         string $statement,
-        array $values = []
+        array $values = [],
+        int $style = PDO::FETCH_ASSOC
     ): array {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchAll(\PDO::FETCH_KEY_PAIR);
+        $entry  = $this->newLogEntry(__METHOD__);
+        $result = $this->performFetch(
+            PDO::FETCH_UNIQUE | $style,
+            $statement,
+            $values
+        );
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
+    /**
+     * Fetches a value from a column
+     *
+     * @param string $statement
+     * @param array  $values
+     * @param int    $column
+     *
+     * @return mixed
+     */
     public function fetchValue(
         string $statement,
         array $values = [],
         int $column = 0
     ) {
-        $sth = $this->perform($statement, $values);
-        return $sth->fetchColumn($column);
+        $entry  = $this->newLogEntry(__METHOD__);
+        $sth    = $this->perform($statement, $values);
+        $result = $sth->fetchColumn($column);
+
+        $this->addLogEntry($entry);
+
+        return $result;
     }
 
-
-    /* Logging */
-
-    public function logQueries(bool $logQueries = true): void
+    /**
+     * Returns teh driver name
+     *
+     * @return string
+     */
+    public function getDriverName(): string
     {
-        $this->logQueries = $logQueries;
-
-        $statementClass = ($this->logQueries)
-            ? LoggedStatement::CLASS
-            : \PDOStatement::CLASS;
-
-        $this->pdo->setAttribute(\PDO::ATTR_STATEMENT_CLASS, [$statementClass]);
+        return $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 
+    /**
+     * Returns the log format
+     *
+     * @return string
+     */
+    public function getLogFormat(): string
+    {
+        return $this->logFormat;
+    }
+
+    /**
+     * Returns the PDO instance
+     *
+     * @return PDO
+     */
+    public function getPdo(): PDO
+    {
+        return $this->pdo;
+    }
+
+    /**
+     * Returns any collected queries
+     *
+     * @return array
+     */
     public function getQueries()
     {
         return $this->queries;
     }
 
-    public function setQueryLogger(callable $queryLogger): void
-    {
-        $this->queryLogger = $queryLogger;
+    /**
+     * Prepares a statement and executes it, binding any values
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return PDOStatement
+     */
+    public function perform(
+        string $statement,
+        array $values = []
+    ): PDOStatement {
+        $sth = $this->pdo->prepare($statement);
+
+        foreach ($values as $name => $args) {
+            $this->performBind($sth, $name, $args);
+        }
+
+        $sth->execute();
+
+        return $sth;
     }
 
-    protected function newLogEntry(string $statement): array
+    /**
+     * Execute a query
+     *
+     * @param string $statement
+     * @param mixed  ...$fetch
+     *
+     * @return PDOStatement
+     */
+    public function query(string $statement, ...$fetch): PDOStatement
     {
-        return [
-            'start'     => microtime(true),
-            'finish'    => null,
-            'duration'  => null,
-            'statement' => $statement,
-            'values'    => [],
-            'trace'     => null,
-        ];
+        $entry = $this->newLogEntry($statement);
+        $sth   = $this->pdo->query($statement, ...$fetch);
+        $this->addLogEntry($entry);
+
+        return $sth;
     }
 
+    /**
+     * Rolls back the transaction
+     *
+     * @return bool
+     */
+    public function rollBack(): bool
+    {
+        $entry  = $this->newLogEntry(__METHOD__);
+        $result = $this->pdo->rollBack();
+        $this->addLogEntry($entry);
+
+        return $result;
+    }
+
+    /**
+     * Sets the log format
+     *
+     * @param string $format
+     *
+     * @return Connection
+     */
+    public function setLogFormat(string $format): Connection
+    {
+        $this->logFormat = $format;
+
+        return $this;
+    }
+
+    /**
+     * @param LoggerInterface $logger
+     *
+     * @return Connection
+     */
+    public function setLogger(LoggerInterface $logger): Connection
+    {
+        $this->logger = $logger;
+
+        return $this;
+    }
+
+    /**
+     * Adds a log entry if logging is enabled
+     *
+     * @param array $entry
+     */
     protected function addLogEntry(array $entry): void
     {
-        if (!$this->logQueries) {
-            return;
+        if (true === $this->logQueries && $this->logger instanceof LoggerInterface) {
+            $entry['finish']   = microtime(true);
+            $entry['duration'] = $entry['finish'] - $entry['start'];
+            $entry['trace']    = (new Exception())->getTraceAsString();
+
+            $this->logger->info($this->formatLogEntry($entry));
         }
 
-        $entry['finish']   = microtime(true);
-        $entry['duration'] = $entry['finish'] - $entry['start'];
-        $entry['trace']    = (new Exception())->getTraceAsString();
-
-        if ($this->queryLogger !== null) {
-            ($this->queryLogger)($entry);
-        } else {
+        if (true === $this->collectQueries) {
             $this->queries[] = $entry;
         }
+    }
+
+    /**
+     * Formats the log data
+     *
+     * @param array $entry
+     *
+     * @return string
+     */
+    protected function formatLogEntry(array $entry): string
+    {
+        return str_replace(
+            [
+                '%start%',
+                '%finish%',
+                '%duration%',
+                '%statement%',
+                '%values%',
+                '%trace%',
+            ],
+            $entry,
+            $this->logFormat
+        );
+    }
+
+    /**
+     * Creates a new log entry array
+     *
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array
+     */
+    protected function newLogEntry(string $statement, array $values = []): array
+    {
+        if (true === $this->logQueries) {
+            return [
+                'start'     => microtime(true),
+                'finish'    => null,
+                'duration'  => null,
+                'statement' => $statement,
+                'values'    => $values,
+                'trace'     => null,
+            ];
+        }
+
+        return [];
+    }
+
+    /**
+     * @param PDOStatement $sth
+     * @param mixed        $name
+     * @param mixed        $args
+     */
+    protected function performBind(PDOStatement $sth, $name, $args)
+    {
+        if (true === is_int($name)) {
+            // sequential placeholders are 1-based
+            $name++;
+        }
+
+        if (true !== is_array($args)) {
+            $sth->bindValue($name, $args);
+        } else {
+            $type = $args[1] ?? PDO::PARAM_STR;
+
+            if ($type === PDO::PARAM_BOOL && true === is_bool($args[0])) {
+                $args[0] = $args[0] ? '1' : '0';
+            }
+
+            $sth->bindValue($name, ...$args);
+        }
+    }
+
+    /**
+     * Performs a fetchAll using a specific mode
+     *
+     * @param int    $mode
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array
+     */
+    private function performFetch(
+        int $mode,
+        string $statement,
+        array $values = []
+    ): array {
+        $sth = $this->perform($statement, $values);
+
+        return $sth->fetchAll($mode);
     }
 }
