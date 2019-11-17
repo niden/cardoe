@@ -16,6 +16,7 @@ build:
 
       dependencies:
         before:
+          - sudo apt-get install -y libyaml
           - cd /home/scrutinizer/build
           - composer install --no-interaction
           - ./vendor/bin/codecept build
