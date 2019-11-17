@@ -12,6 +12,7 @@ namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
 use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use IntegrationTester;
+use PDO;
 
 class FetchOneCest
 {
@@ -66,5 +67,64 @@ class FetchOneCest
         );
 
         $I->assertNull($all);
+    }
+
+    /**
+     * Tests Cardoe\DM\Pdo\Connection :: fetchOne() - bind types
+     *
+     * @since  2019-11-16
+     */
+    public function connectionFetchOneNoBindTypes(IntegrationTester $I)
+    {
+        $I->wantToTest('DM\Pdo\Connection - fetchOne() - bind types');
+
+        $result = $this->newInvoice(1);
+        $I->assertEquals(1, $result);
+
+        $all = $this->connection->fetchOne(
+            'select * from co_invoices WHERE inv_id = ?',
+            [
+                0 => 1,
+            ]
+        );
+
+        $I->assertIsArray($all);
+        $I->assertEquals(1, $all['inv_id']);
+
+        $all = $this->connection->fetchOne(
+            'select * from co_invoices WHERE inv_id = :id',
+            [
+                'id' => 1,
+            ]
+        );
+
+        $I->assertIsArray($all);
+        $I->assertEquals(1, $all['inv_id']);
+
+        $all = $this->connection->fetchOne(
+            'select * from co_invoices WHERE inv_id = :id',
+            [
+                'id' => [
+                    1,
+                    PDO::PARAM_STR
+                ],
+            ]
+        );
+
+        $I->assertIsArray($all);
+        $I->assertEquals(1, $all['inv_id']);
+
+        $all = $this->connection->fetchOne(
+            'select * from co_invoices WHERE inv_id = :id',
+            [
+                'id' => [
+                    true,
+                    PDO::PARAM_BOOL
+                ],
+            ]
+        );
+
+        $I->assertIsArray($all);
+        $I->assertEquals(1, $all['inv_id']);
     }
 }
