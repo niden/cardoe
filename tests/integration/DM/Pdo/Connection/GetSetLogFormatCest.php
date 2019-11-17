@@ -28,7 +28,7 @@ class GetSetLogFormatCest
         $I->wantToTest('DM\Pdo\Connection - getLogFormat()/setLogFormat()');
 
         $expected = "[A: %start%][Z: %start%][D: %duration%][S: %statement%]"
-            . "[V: %values%]\n[Trace: %trace%]";
+            . "[V: %values%]";
         $actual   = $this->connection->getLogFormat();
         $I->assertEquals($expected, $actual);
 

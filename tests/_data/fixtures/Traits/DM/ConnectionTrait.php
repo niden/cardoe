@@ -16,7 +16,6 @@ use function dbGetDsn;
 use function dbGetPassword;
 use function dbGetUsername;
 use function uniqid;
-use function var_dump;
 
 /**
  * Trait ConnectionTrait
@@ -38,6 +37,11 @@ trait ConnectionTrait
         );
     }
 
+    /**
+     * @param int $id
+     *
+     * @return int
+     */
     protected function newInvoice(int $id): int
     {
         $title = uniqid();

@@ -18,13 +18,14 @@ namespace Cardoe\DM\Pdo;
 
 use Cardoe\Logger\Exception;
 use PDO;
-use PDORow;
 use PDOStatement;
 use Psr\Log\LoggerInterface;
 use function is_array;
 use function is_bool;
 use function is_int;
+use function json_encode;
 use function microtime;
+use function substr;
 use function var_dump;
 use const PHP_EOL;
 
@@ -45,9 +46,14 @@ class Connection
     protected $collectQueries = false;
 
     /**
-     * @var LoggerInterface
+     * @var LoggerInterface|null
      */
     protected $logger = null;
+
+    /**
+     * @var bool
+     */
+    protected $logTrace = false;
 
     /**
      * @var string
@@ -89,7 +95,7 @@ class Connection
         }
 
         $this->logFormat = '[A: %start%][Z: %start%][D: %duration%]'
-            . '[S: %statement%][V: %values%]' . PHP_EOL . '[Trace: %trace%]';
+            . '[S: %statement%][V: %values%]';
 
         $this->pdo = new PDO($dsn, $username, $password, $options);
     }
@@ -151,6 +157,20 @@ class Connection
     }
 
     /**
+     * Enables logging trace
+     *
+     * @param bool $enable
+     *
+     * @return Connection
+     */
+    public function enableLogTrace(bool $enable): Connection
+    {
+        $this->logTrace = $enable;
+
+        return $this;
+    }
+
+    /**
      * Executes a PDO statement
      *
      * @param string $statement
@@ -178,8 +198,8 @@ class Connection
         string $statement,
         array $values = []
     ): int {
-        $entry  = $this->newLogEntry(__METHOD__);
         $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
         $result = $sth->rowCount();
 
         $this->addLogEntry($entry);
@@ -199,8 +219,9 @@ class Connection
         string $statement,
         array $values = []
     ): array {
-        $entry  = $this->newLogEntry(__METHOD__);
-        $result = $this->performFetch(PDO::FETCH_ASSOC, $statement, $values);
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 
         $this->addLogEntry($entry);
 
@@ -221,8 +242,8 @@ class Connection
         array $values = [],
         int $column = 0
     ): array {
-        $entry  = $this->newLogEntry(__METHOD__);
         $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
         $result = $sth->fetchAll(PDO::FETCH_COLUMN, $column);
 
         $this->addLogEntry($entry);
@@ -244,12 +265,9 @@ class Connection
         array $values = [],
         int $style = PDO::FETCH_ASSOC
     ): array {
-        $entry  = $this->newLogEntry(__METHOD__);
-        $result = $this->performFetch(
-            PDO::FETCH_GROUP | $style,
-            $statement,
-            $values
-        );
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
+        $result = $sth->fetchAll(PDO::FETCH_GROUP | $style);
 
         $this->addLogEntry($entry);
 
@@ -268,8 +286,9 @@ class Connection
         string $statement,
         array $values = []
     ): array {
-        $entry  = $this->newLogEntry(__METHOD__);
-        $result = $this->performFetch(PDO::FETCH_KEY_PAIR, $statement, $values);
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
+        $result = $sth->fetchAll(PDO::FETCH_KEY_PAIR);
 
         $this->addLogEntry($entry);
 
@@ -292,8 +311,8 @@ class Connection
         string $class = 'stdClass',
         array $ctorArgs = []
     ) {
-        $entry = $this->newLogEntry(__METHOD__);
         $sth   = $this->perform($statement, $values);
+        $entry = $this->newLogEntry($sth->queryString, $values);
 
         if (true !== empty($ctorArgs)) {
             $result = $sth->fetchObject($class, $ctorArgs);
@@ -322,8 +341,8 @@ class Connection
         string $class = 'stdClass',
         array $ctorArgs = []
     ): array {
-        $entry = $this->newLogEntry(__METHOD__);
-        $sth   = $this->perform($statement, $values);
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
 
         if (true !== empty($ctorArgs)) {
             $result = $sth->fetchAll(PDO::FETCH_CLASS, $class, $ctorArgs);
@@ -348,9 +367,8 @@ class Connection
         string $statement,
         array $values = []
     ): ?array {
-        $entry = $this->newLogEntry(__METHOD__);
         $sth   = $this->perform($statement, $values);
-
+        $entry = $this->newLogEntry($sth->queryString, $values);
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
         $this->addLogEntry($entry);
@@ -376,12 +394,9 @@ class Connection
         array $values = [],
         int $style = PDO::FETCH_ASSOC
     ): array {
-        $entry  = $this->newLogEntry(__METHOD__);
-        $result = $this->performFetch(
-            PDO::FETCH_UNIQUE | $style,
-            $statement,
-            $values
-        );
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
+        $result = $sth->fetchAll(PDO::FETCH_UNIQUE | $style);
 
         $this->addLogEntry($entry);
 
@@ -402,8 +417,8 @@ class Connection
         array $values = [],
         int $column = 0
     ) {
-        $entry  = $this->newLogEntry(__METHOD__);
         $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
         $result = $sth->fetchColumn($column);
 
         $this->addLogEntry($entry);
@@ -538,10 +553,12 @@ class Connection
      */
     protected function addLogEntry(array $entry): void
     {
-        if (true === $this->logQueries && $this->logger instanceof LoggerInterface) {
+        if (true === $this->logQueries && null !== $this->logger) {
             $entry['finish']   = microtime(true);
             $entry['duration'] = $entry['finish'] - $entry['start'];
-            $entry['trace']    = (new Exception())->getTraceAsString();
+            if (true === $this->logTrace) {
+                $entry['trace'] = (new Exception())->getTraceAsString();
+            }
 
             $this->logger->info($this->formatLogEntry($entry));
         }
@@ -560,6 +577,14 @@ class Connection
      */
     protected function formatLogEntry(array $entry): string
     {
+        $suffix = '';
+        if (false === strpos($this->logFormat, '%trace%') &&
+            true === $this->logTrace) {
+            $suffix = PHP_EOL . '[Trace: %trace%]';
+        }
+
+        $entry['values'] = json_encode($entry['values']);
+
         return str_replace(
             [
                 '%start%',
@@ -570,7 +595,7 @@ class Connection
                 '%trace%',
             ],
             $entry,
-            $this->logFormat
+            $this->logFormat . $suffix
         );
     }
 
@@ -591,7 +616,6 @@ class Connection
                 'duration'  => null,
                 'statement' => $statement,
                 'values'    => $values,
-                'trace'     => null,
             ];
         }
 
@@ -603,7 +627,7 @@ class Connection
      * @param mixed        $name
      * @param mixed        $args
      */
-    protected function performBind(PDOStatement $sth, $name, $args)
+    protected function performBind(PDOStatement $sth, $name, $args): void
     {
         if (true === is_int($name)) {
             // sequential placeholders are 1-based
@@ -621,24 +645,5 @@ class Connection
 
             $sth->bindValue($name, ...$args);
         }
-    }
-
-    /**
-     * Performs a fetchAll using a specific mode
-     *
-     * @param int    $mode
-     * @param string $statement
-     * @param array  $values
-     *
-     * @return array
-     */
-    private function performFetch(
-        int $mode,
-        string $statement,
-        array $values = []
-    ): array {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchAll($mode);
     }
 }
