@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage\Serializer;
 
+use function is_bool;
+use function is_numeric;
+
 /**
  * Class AbstractSerializer
  *

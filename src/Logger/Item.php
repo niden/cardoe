@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Logger;
 
+use function is_array;
+
 /**
  * Cardoe\Logger\Item
  *

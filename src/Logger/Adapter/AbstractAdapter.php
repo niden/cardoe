@@ -14,6 +14,7 @@ namespace Cardoe\Logger\Adapter;
 use Cardoe\Logger\Exception;
 use Cardoe\Logger\Formatter\FormatterInterface;
 use Cardoe\Logger\Item;
+use function is_object;
 
 /**
  * Class AbstractAdapter

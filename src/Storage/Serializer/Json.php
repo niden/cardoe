@@ -12,6 +12,9 @@ namespace Cardoe\Storage\Serializer;
 
 use InvalidArgumentException;
 use JsonSerializable;
+use function is_object;
+use function json_decode;
+use function json_encode;
 
 /**
  * Class Json

@@ -13,8 +13,10 @@ namespace Cardoe\Storage\Serializer;
 use InvalidArgumentException;
 use function is_string;
 use function restore_error_handler;
+use function serialize;
 use function set_error_handler;
 use function unserialize;
+use const E_NOTICE;
 
 /**
  * Class Php

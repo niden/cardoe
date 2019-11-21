@@ -10,6 +10,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage\Serializer;
 
+use function igbinary_serialize;
 use function igbinary_unserialize;
 use function restore_error_handler;
 use function set_error_handler;

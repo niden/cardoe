@@ -15,6 +15,7 @@ use Cardoe\Factory\Exception as ExceptionAlias;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
+use function array_keys;
 
 /**
  * Memory adapter

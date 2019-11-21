@@ -20,7 +20,21 @@ use FilesystemIterator;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use const E_WARNING;
+use function explode;
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_dir;
+use function mkdir;
+use function restore_error_handler;
+use function serialize;
+use function set_error_handler;
+use function str_replace;
+use function time;
+use function unlink;
+use function unserialize;
+use const E_NOTICE;
 
 /**
  * Stream adapter

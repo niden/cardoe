@@ -18,6 +18,7 @@ use Cardoe\Storage\SerializerFactory;
 use DateInterval;
 use DateTime;
 use function is_object;
+use function strtolower;
 
 /**
  * Class AbstractAdapter

@@ -14,6 +14,10 @@ namespace Cardoe\Logger;
 use Cardoe\Helper\Arr;
 use Cardoe\Logger\Adapter\AdapterInterface;
 use Psr\Log\LoggerInterface;
+use function array_flip;
+use function is_numeric;
+use function is_string;
+use function time;
 
 /**
  * Class Logger

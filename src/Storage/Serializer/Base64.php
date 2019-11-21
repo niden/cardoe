@@ -11,6 +11,8 @@ declare(strict_types=1);
 namespace Cardoe\Storage\Serializer;
 
 use InvalidArgumentException;
+use function base64_decode;
+use function base64_encode;
 use function is_string;
 
 /**

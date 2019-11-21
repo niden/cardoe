@@ -68,12 +68,12 @@ class Json extends AbstractFormatter
         }
 
         return json_encode(
-            [
+                [
                     "type"      => $item->getName(),
                     "message"   => $message,
                     "timestamp" => date($this->dateFormat, $item->getTime()),
                 ]
-        ) . PHP_EOL;
+            ) . PHP_EOL;
     }
 
     /**

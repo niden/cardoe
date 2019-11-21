@@ -15,6 +15,12 @@ use Cardoe\Factory\Exception as ExceptionAlias;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
+use function apcu_dec;
+use function apcu_delete;
+use function apcu_exists;
+use function apcu_fetch;
+use function apcu_inc;
+use function apcu_store;
 use function is_object;
 
 /**

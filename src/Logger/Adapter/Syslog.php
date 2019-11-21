@@ -16,10 +16,21 @@ use Cardoe\Logger\Exception;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
 use LogicException;
+use function closelog;
 use function is_array;
+use function openlog;
+use function sprintf;
+use function syslog;
+use const LOG_ALERT;
+use const LOG_CRIT;
+use const LOG_DEBUG;
+use const LOG_EMERG;
 use const LOG_ERR;
+use const LOG_INFO;
+use const LOG_NOTICE;
 use const LOG_ODELAY;
 use const LOG_USER;
+use const LOG_WARNING;
 
 /**
  * Class Syslog

@@ -16,6 +16,8 @@ use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
 use Memcached;
+use function array_merge;
+use function strtolower;
 
 /**
  * Libmemcached adapter
