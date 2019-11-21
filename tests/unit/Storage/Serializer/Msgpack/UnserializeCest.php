@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * This file is part of the Cardoe Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -22,7 +22,7 @@ class UnserializeCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerMsgpackUnserialize(UnitTester $I, Example $example)
@@ -35,6 +35,23 @@ class UnserializeCest
         $expected = $example[1];
         $actual   = $serializer->getData();
         $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Tests Cardoe\Storage\Serializer\Msgpack :: unserialize() - error
+     *
+     * @author       Cardoe Team <team@phalcon.io>
+     * @since        2019-09-28
+     */
+    public function storageSerializerMsgpackUnserializeError(UnitTester $I)
+    {
+        $I->wantToTest('Storage\Serializer\Msgpack - unserialize() - error');
+        $serializer = new Msgpack();
+
+        $serialized = '??hello?messagepack"';
+        $serializer->unserialize($serialized);
+
+        $I->assertEmpty($serializer->getData());
     }
 
     private function getExamples(): array

@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * This file is part of the Cardoe Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,6 +19,7 @@ class UnserializeCest
     /**
      * Tests Cardoe\Storage\Serializer\Base64 :: unserialize()
      *
+     * @author Cardoe Team <team@phalcon.io>
      * @since  2019-03-30
      */
     public function storageSerializerBase64Unserialize(UnitTester $I)
@@ -39,6 +40,7 @@ class UnserializeCest
     /**
      * Tests Cardoe\Storage\Serializer\Base64 :: serialize() - exception
      *
+     * @author Cardoe Team <team@phalcon.io>
      * @since  2019-03-30
      */
     public function storageSerializerBase64SerializeException(UnitTester $I)

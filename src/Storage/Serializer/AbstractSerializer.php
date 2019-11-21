@@ -61,6 +61,6 @@ abstract class AbstractSerializer implements SerializerInterface
      */
     protected function isSerializable($data): bool
     {
-        return (!empty($data) && !is_bool($data) && !is_numeric($data));
+        return !(empty($data) || is_bool($data) || is_numeric($data));
     }
 }

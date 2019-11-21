@@ -1,0 +1,267 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * This file is part of the Cardoe Framework.
+ *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
+ */
+
+namespace Cardoe\Storage\Adapter;
+
+use Cardoe\Factory\Exception as ExceptionAlias;
+use Cardoe\Helper\Arr;
+use Cardoe\Storage\Exception;
+use Cardoe\Storage\SerializerFactory;
+use DateInterval;
+use Memcached;
+
+/**
+ * Libmemcached adapter
+ *
+ * @property array $options
+ */
+class Libmemcached extends AbstractAdapter
+{
+    /**
+     * @var array
+     */
+    protected $options = [];
+
+    /**
+     * Libmemcached constructor.
+     *
+     * @param SerializerFactory|null $factory
+     * @param array                  $options
+     */
+    public function __construct(SerializerFactory $factory = null, array $options = [])
+    {
+        if (true !== isset($options["servers"])) {
+            $options["servers"] = [
+                0 => [
+                    "host"   => "127.0.0.1",
+                    "port"   => 11211,
+                    "weight" => 1,
+                ],
+            ];
+        }
+
+        $this->prefix  = "ph-memc-";
+        $this->options = $options;
+
+        parent::__construct($factory, $options);
+    }
+
+    /**
+     * Flushes/clears the cache
+     *
+     * @return bool
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function clear(): bool
+    {
+        return $this->getAdapter()->flush();
+    }
+
+    /**
+     * Decrements a stored number
+     *
+     * @param string $key
+     * @param int    $value
+     *
+     * @return bool|false|int
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function decrement(string $key, int $value = 1)
+    {
+        return $this->getAdapter()->decrement($key, $value);
+    }
+
+    /**
+     * Reads data from the adapter
+     *
+     * @param string $key
+     *
+     * @return bool
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function delete(string $key): bool
+    {
+        return $this->getAdapter()->delete($key, 0);
+    }
+
+    /**
+     * Reads data from the adapter
+     *
+     * @param string $key
+     * @param null   $defaultValue
+     *
+     * @return mixed
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function get(string $key, $defaultValue = null)
+    {
+        return $this->getUnserializedData(
+            $this->getAdapter()->get($key),
+            $defaultValue
+        );
+    }
+
+    /**
+     * Returns the already connected adapter or connects to the Memcached
+     * server(s)
+     *
+     * @return Memcached|mixed
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function getAdapter()
+    {
+        if (null === $this->adapter) {
+            $options      = $this->options;
+            $persistentId = Arr::get($options, "persistentId", "ph-mcid-");
+            $sasl         = Arr::get($options, "saslAuthData", []);
+            $connection   = new Memcached($persistentId);
+            $serverList   = $connection->getServerList();
+
+            $connection->setOption(Memcached::OPT_PREFIX_KEY, $this->prefix);
+
+            if (count($serverList) < 1) {
+                $servers  = Arr::get($options, "servers", []);
+                $client   = Arr::get($options, "client", []);
+                $saslUser = Arr::get($sasl, "user", "");
+                $saslPass = Arr::get($sasl, "pass", "");
+                $failover = [
+                    Memcached::OPT_CONNECT_TIMEOUT       => 10,
+                    Memcached::OPT_DISTRIBUTION          => Memcached::DISTRIBUTION_CONSISTENT,
+                    Memcached::OPT_SERVER_FAILURE_LIMIT  => 2,
+                    Memcached::OPT_REMOVE_FAILED_SERVERS => true,
+                    Memcached::OPT_RETRY_TIMEOUT         => 1,
+                ];
+                $client   = array_merge($failover, $client);
+
+                if (!$connection->setOptions($client)) {
+                    throw new Exception(
+                        "Cannot set Memcached client options"
+                    );
+                }
+
+                if (!$connection->addServers($servers)) {
+                    throw new Exception(
+                        "Cannot connect to the Memcached server(s)"
+                    );
+                }
+
+                if (!empty($saslUser)) {
+                    $connection->setSaslAuthData($saslUser, $saslPass);
+                }
+            }
+
+            $this->setSerializer($connection);
+
+            $this->adapter = $connection;
+        }
+
+        return $this->adapter;
+    }
+
+    /**
+     * Stores data in the adapter
+     *
+     * @return array
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function getKeys(): array
+    {
+        $keys = $this->getAdapter()->getAllKeys();
+
+        return (!$keys) ? [] : $keys;
+    }
+
+    /**
+     * Checks if an element exists in the cache
+     *
+     * @param string $key
+     *
+     * @return bool
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function has(string $key): bool
+    {
+        $connection = $this->getAdapter();
+        $connection->get($key);
+
+        return Memcached::RES_NOTFOUND !== $connection->getResultCode();
+    }
+
+    /**
+     * Increments a stored number
+     *
+     * @param string $key
+     * @param int    $value
+     *
+     * @return bool|false|int
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function increment(string $key, int $value = 1)
+    {
+        return $this->getAdapter()->increment($key, $value);
+    }
+
+    /**
+     * Stores data in the adapter
+     *
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
+     *
+     * @return bool
+     * @throws \Exception
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    public function set(string $key, $value, $ttl = null): bool
+    {
+        return $this->getAdapter()->set(
+            $key,
+            $this->getSerializedData($value),
+            $this->getTtl($ttl)
+        )
+            ;
+    }
+
+    /**
+     * Checks the serializer. If it is a supported one it is set, otherwise
+     * the custom one is set.
+     *
+     * @param Memcached $connection
+     *
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    private function setSerializer(Memcached $connection)
+    {
+        $map = [
+            "php"      => Memcached::SERIALIZER_PHP,
+            "json"     => Memcached::SERIALIZER_JSON,
+            "igbinary" => Memcached::SERIALIZER_IGBINARY,
+        ];
+
+        $serializer = strtolower($this->defaultSerializer);
+
+        if (true === isset($map[$serializer])) {
+            $this->defaultSerializer = "";
+            $connection->setOption(Memcached::OPT_SERIALIZER, $map[$serializer]);
+        } else {
+            $this->initSerializer();
+        }
+    }
+}

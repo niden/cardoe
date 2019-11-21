@@ -10,6 +10,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage\Serializer;
 
+use function restore_error_handler;
+use function set_error_handler;
+use const E_WARNING;
+
 /**
  * Class Msgpack
  *
@@ -17,6 +21,11 @@ namespace Cardoe\Storage\Serializer;
  */
 class Msgpack extends AbstractSerializer
 {
+    /**
+     * @var bool
+     */
+    private $warning = false;
+
     /**
      * Serializes data
      *
@@ -38,6 +47,20 @@ class Msgpack extends AbstractSerializer
      */
     public function unserialize($data): void
     {
+        $this->warning = false;
+        set_error_handler(
+            function ($number, $message, $file, $line, $context) {
+                $this->warning = true;
+            },
+            E_WARNING
+        );
+
         $this->data = msgpack_unpack($data);
+
+        restore_error_handler();
+
+        if (true === $this->warning) {
+            $this->data = null;
+        }
     }
 }

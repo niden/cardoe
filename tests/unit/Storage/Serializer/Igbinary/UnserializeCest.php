@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * This file is part of the Cardoe Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -23,7 +23,7 @@ class UnserializeCest
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerIgbinaryUnserialize(UnitTester $I, Example $example)
@@ -36,6 +36,21 @@ class UnserializeCest
         $expected = $example[1];
         $actual   = $serializer->getData();
         $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Tests Cardoe\Storage\Serializer\Igbinary :: unserialize() - error
+     *
+     * @author       Cardoe Team <team@phalcon.io>
+     * @since        2019-11-21
+     */
+    public function storageSerializerIgbinaryUnserializeError(UnitTester $I)
+    {
+        $I->wantToTest('Storage\Serializer\Igbinary - unserialize() - error');
+        $serializer = new Igbinary();
+        $serializer->unserialize('[DATA]');
+
+        $I->assertNull($serializer->getData());
     }
 
     private function getExamples(): array

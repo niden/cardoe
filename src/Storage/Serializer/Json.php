@@ -10,6 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage\Serializer;
 
+use InvalidArgumentException;
+use JsonSerializable;
+
 /**
  * Class Json
  *
@@ -24,6 +27,13 @@ class Json extends AbstractSerializer
      */
     public function serialize()
     {
+        if (is_object($this->data) && !($this->data instanceof JsonSerializable)) {
+            throw new InvalidArgumentException(
+                "Data for JSON serializer cannot be of type object " .
+                "without implementing JsonSerializable"
+            );
+        }
+
         if (true !== $this->isSerializable($this->data)) {
             return $this->data;
         }

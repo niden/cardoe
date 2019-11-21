@@ -10,6 +10,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage\Serializer;
 
+use InvalidArgumentException;
+use function is_string;
+use function restore_error_handler;
+use function set_error_handler;
+use function unserialize;
+
 /**
  * Class Php
  *
@@ -17,6 +23,11 @@ namespace Cardoe\Storage\Serializer;
  */
 class Php extends AbstractSerializer
 {
+    /**
+     * @var bool
+     */
+    private $warning = false;
+
     /**
      * Serializes data
      *
@@ -41,7 +52,27 @@ class Php extends AbstractSerializer
         if (true !== $this->isSerializable($data)) {
             $this->data = $data;
         } else {
+            if (true !== is_string($data)) {
+                throw new InvalidArgumentException(
+                    "Data for the unserializer must of type string"
+                );
+            }
+
+            $this->warning = false;
+            set_error_handler(
+                function ($number, $message, $file, $line, $context) {
+                    $this->warning = true;
+                },
+                E_NOTICE
+            );
+
             $this->data = unserialize($data);
+
+            restore_error_handler();
+
+            if (true === $this->warning) {
+                $this->data = null;
+            }
         }
     }
 }

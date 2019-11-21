@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Storage;
 
-use Cardoe\Factory\Exception;
 use Cardoe\Factory\AbstractFactory;
+use Cardoe\Factory\Exception;
 use Cardoe\Storage\Serializer\Base64;
 use Cardoe\Storage\Serializer\Igbinary;
 use Cardoe\Storage\Serializer\Json;

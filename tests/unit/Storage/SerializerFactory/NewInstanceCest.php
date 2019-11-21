@@ -4,7 +4,7 @@ declare(strict_types=1);
 /**
  * This file is part of the Cardoe Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -31,7 +31,7 @@ class NewInstanceCest
      * @throws Exception
      * @since        2019-05-04
      *
-     * @author       Cardoe Team <team@phalconphp.com>
+     * @author       Cardoe Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstance(UnitTester $I, Example $example)
     {
@@ -52,6 +52,7 @@ class NewInstanceCest
      * @throws Exception
      * @since  2019-05-04
      *
+     * @author Cardoe Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {
