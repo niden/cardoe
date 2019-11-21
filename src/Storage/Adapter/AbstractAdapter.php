@@ -123,11 +123,12 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Reads data from the adapter
      *
-     * @param string $key
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
-    abstract public function get(string $key);
+    abstract public function get(string $key, $defaultValue = null);
 
     /**
      * Returns the adapter - connects to the storage if not connected
@@ -286,7 +287,7 @@ abstract class AbstractAdapter implements AdapterInterface
             throw new Exception("A valid serializer is required");
         }
 
-        if (null !== $this->serializer) {
+        if (!is_object($this->serializer)) {
             $className        = strtolower($this->defaultSerializer);
             $this->serializer = $this->serializerFactory->newInstance($className);
         }

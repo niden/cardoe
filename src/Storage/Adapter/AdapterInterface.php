@@ -43,10 +43,11 @@ interface AdapterInterface
      * Reads data from the adapter
      *
      * @param string $key
+     * @param mixed  $defaultValue
      *
      * @return mixed
      */
-    public function get(string $key);
+    public function get(string $key, $defaultValue);
 
     /**
      * Returns the adapter - connects to the storage if not connected
