@@ -32,7 +32,7 @@ abstract class AbstractFormatter implements FormatterInterface
      */
     public function interpolate(string $message, $context = null): string
     {
-        if (true === is_array($context) && count($context) > 0) {
+        if (is_array($context) && count($context) > 0) {
             $replace = [];
             foreach ($context as $key => $value) {
                 $replace["{" . $key . "}"] = $value;

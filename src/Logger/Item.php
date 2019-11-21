@@ -65,7 +65,7 @@ class Item
         $this->type    = $type;
         $this->time    = $time;
 
-        if (true === is_array($context)) {
+        if (is_array($context)) {
             $this->context = $context;
         }
     }

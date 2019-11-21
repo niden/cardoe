@@ -104,7 +104,7 @@ class Arr
     {
         $data = [];
         foreach ($collection as $item) {
-            if (true !== is_array($item)) {
+            if (!is_array($item)) {
                 $data[] = $item;
             } else {
                 if (true === $deep) {
@@ -170,15 +170,15 @@ class Arr
     {
         $filtered = [];
         foreach ($collection as $element) {
-            if (true === is_callable($method) ||
-                (true === is_string($method) && true === function_exists($method))
+            if (is_callable($method) ||
+                (is_string($method) && function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);
                 $filtered[$key][] = $element;
-            } elseif (true === is_object($element)) {
+            } elseif (is_object($element)) {
                 $key              = $element->{$method};
                 $filtered[$key][] = $element;
-            } elseif (true === isset($element[$method])) {
+            } elseif (isset($element[$method])) {
                 $key              = $element[$method];
                 $filtered[$key][] = $element;
             }
@@ -263,7 +263,7 @@ class Arr
     ): array {
         $sorted = [];
         foreach ($collection as $item) {
-            if (true === is_object($item)) {
+            if (is_object($item)) {
                 $key = $item->{$attribute};
             } else {
                 $key = $item[$attribute];

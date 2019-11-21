@@ -311,17 +311,17 @@ final class UploadedFile implements UploadedFileInterface
         /**
          * All together for early failure
          */
-        if (!(true === is_string($targetPath) &&
-            true !== empty($targetPath) &&
-            true === is_dir(dirname($targetPath)) &&
-            true === is_writable(dirname($targetPath)))) {
+        if (!(is_string($targetPath) &&
+            !empty($targetPath) &&
+            is_dir(dirname($targetPath)) &&
+            is_writable(dirname($targetPath)))) {
             throw new InvalidArgumentException(
                 'Target folder is empty string, not a folder or not writable'
             );
         }
 
-        if (true === empty(PHP_SAPI) ||
-            true !== empty($this->fileName) ||
+        if (empty(PHP_SAPI) ||
+            !empty($this->fileName) ||
             true === Str::startsWith(PHP_SAPI, 'cli')) {
             $this->storeFile($targetPath);
         } else {
@@ -364,7 +364,7 @@ final class UploadedFile implements UploadedFileInterface
                 case (is_string($stream)):
                     $this->fileName = $stream;
                     break;
-                case (true === is_resource($stream)):
+                case (is_resource($stream)):
                     $this->stream = new Stream($stream);
                     break;
                 case ($stream instanceof StreamInterface):

@@ -68,7 +68,6 @@ class ConstructCest
      *
      * @dataProvider getStreamExamples
      *
-     * @author       Cardoe Team <team@cardoephp.com>
      * @since        2019-02-18
      */
     public function httpMessageUploadedFileConstructStreamException(UnitTester $I, Example $example)

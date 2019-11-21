@@ -146,11 +146,11 @@ final class Response implements ResponseInterface
         $code = (int) $code;
         $this->checkCodeValue($code);
 
-        if (true !== is_string($phrase)) {
+        if (!is_string($phrase)) {
             throw new InvalidArgumentException('Invalid response reason');
         }
 
-        if ('' === $phrase && true === isset($phrases[$code])) {
+        if ('' === $phrase && isset($phrases[$code])) {
             $phrase = $phrases[$code];
         }
 

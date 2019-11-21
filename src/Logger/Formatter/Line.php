@@ -103,7 +103,7 @@ class Line extends AbstractFormatter
 
         $format = str_replace("%message%", $item->getMessage(), $format) . PHP_EOL;
 
-        if (null !== $item->getContext()) {
+        if (is_array($item->getContext())) {
             return $this->interpolate(
                 $format,
                 $item->getContext()

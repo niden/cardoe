@@ -293,7 +293,7 @@ class Stream implements StreamInterface
     public function setStream($stream, string $mode = 'rb'): void
     {
         $handle = $stream;
-        if (true === is_string($stream)) {
+        if (is_string($stream)) {
             set_error_handler(
                 function ($error) {
                     if ($error === E_WARNING) {
@@ -307,8 +307,8 @@ class Stream implements StreamInterface
             restore_error_handler();
         }
 
-        if (true === $this->warning ||
-            true !== is_resource($handle) ||
+        if ($this->warning ||
+            !is_resource($handle) ||
             'stream' !== get_resource_type($handle)
         ) {
             throw new RuntimeException(

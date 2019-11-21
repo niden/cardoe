@@ -92,7 +92,7 @@ class Syslog extends AbstractAdapter
         $formatter = $this->getFormatter();
         $message   = $formatter->format($item);
 
-        if (true !== is_array($message)) {
+        if (!is_array($message)) {
             throw new Exception("The formatted message is not valid");
         }
 
