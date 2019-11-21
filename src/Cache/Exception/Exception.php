@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Cache\Exception;
 
+use Throwable;
+
 /**
  * Exceptions thrown in Cardoe\Cache will use this class
  */
-class Exception extends \Cardoe\Exception implements \Psr\SimpleCache\CacheException
+class Exception extends \Exception implements \Psr\SimpleCache\CacheException, Throwable
 {
 
 }

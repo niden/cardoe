@@ -127,7 +127,7 @@ trait UriTrait
 
         if (null !== $port) {
             $port = (int) $port;
-            if (true === isset($ports[$port])) {
+            if (isset($ports[$port])) {
                 $port = null;
             }
         }
@@ -201,7 +201,7 @@ trait UriTrait
             return '';
         }
 
-        if (true !== isset($schemes[$filtered])) {
+        if (!isset($schemes[$filtered])) {
             throw new InvalidArgumentException(
                 "Unsupported scheme [" . $filtered . "]. " .
                 "Scheme must be one of [" .
@@ -220,7 +220,7 @@ trait UriTrait
     private function splitQueryValue(string $element): array
     {
         $data = explode('=', $element, 2);
-        if (true !== isset($data[1])) {
+        if (!isset($data[1])) {
             $data[] = null;
         }
 

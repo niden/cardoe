@@ -120,7 +120,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getFormatter(): FormatterInterface
     {
-        if (true !== is_object($this->formatter)) {
+        if (!is_object($this->formatter)) {
             $className = "Cardoe\\Logger\\Formatter\\" . $this->defaultFormatter;
 
             $this->formatter = new $className();

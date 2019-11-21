@@ -461,10 +461,10 @@ final class ServerRequest implements ServerRequestInterface
     private function checkUploadedFiles(array $files): void
     {
         foreach ($files as $file) {
-            if (true === is_array($file)) {
+            if (is_array($file)) {
                 $this->checkUploadedFiles($file);
             } else {
-                if (!(true === is_object($file) &&
+                if (!(is_object($file) &&
                     $file instanceof UploadedFileInterface)) {
                     throw new InvalidArgumentException(
                         'Invalid uploaded file'

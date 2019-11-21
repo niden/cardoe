@@ -57,7 +57,7 @@ class AdapterFactory extends AbstractFactory
     {
         $this->checkService($name);
 
-        if (true !== isset($this->services[$name])) {
+        if (!isset($this->services[$name])) {
             $definition            = $this->mapper[$name];
             $this->services[$name] = new $definition($this->serializerFactory, $options);
         }

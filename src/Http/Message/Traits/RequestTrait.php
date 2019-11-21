@@ -248,9 +248,9 @@ trait RequestTrait
             'TRACE'   => 1,
         ];
 
-        if (!(true !== empty($method) &&
-            true === is_string($method) &&
-            true === isset($methods[$method]))) {
+        if (!(!empty($method) &&
+            is_string($method) &&
+            isset($methods[$method]))) {
             throw new InvalidArgumentException(
                 'Invalid or unsupported method ' . $method
             );
@@ -272,7 +272,7 @@ trait RequestTrait
             return $uri;
         }
 
-        if (true === is_string($uri)) {
+        if (is_string($uri)) {
             return new Uri($uri);
         }
 

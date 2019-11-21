@@ -89,7 +89,7 @@ abstract class AbstractAdapter implements AdapterInterface
         $this->serializer        = Arr::get($options, "serializer", null);
         $this->serializerFactory = $factory;
 
-        if (true === isset($options["prefix"])) {
+        if (isset($options["prefix"])) {
             $this->prefix = $options["prefix"];
         }
     }
@@ -244,7 +244,7 @@ abstract class AbstractAdapter implements AdapterInterface
             return $this->lifetime;
         }
 
-        if (true === is_object($ttl) && $ttl instanceof DateInterval) {
+        if (is_object($ttl) && $ttl instanceof DateInterval) {
             $dateTime = new DateTime("@0");
             return $dateTime->add($ttl)->getTimestamp();
         }
@@ -286,7 +286,7 @@ abstract class AbstractAdapter implements AdapterInterface
             throw new Exception("A valid serializer is required");
         }
 
-        if (!(is_object($this->serializer) && $this->serializer instanceof SerializerInterface)) {
+        if (null !== $this->serializer) {
             $className        = strtolower($this->defaultSerializer);
             $this->serializer = $this->serializerFactory->newInstance($className);
         }

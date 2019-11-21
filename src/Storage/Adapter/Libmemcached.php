@@ -37,7 +37,7 @@ class Libmemcached extends AbstractAdapter
      */
     public function __construct(SerializerFactory $factory = null, array $options = [])
     {
-        if (true !== isset($options["servers"])) {
+        if (!isset($options["servers"])) {
             $options["servers"] = [
                 0 => [
                     "host"   => "127.0.0.1",
@@ -257,7 +257,7 @@ class Libmemcached extends AbstractAdapter
 
         $serializer = strtolower($this->defaultSerializer);
 
-        if (true === isset($map[$serializer])) {
+        if (isset($map[$serializer])) {
             $this->defaultSerializer = "";
             $connection->setOption(Memcached::OPT_SERIALIZER, $map[$serializer]);
         } else {

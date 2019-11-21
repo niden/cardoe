@@ -142,7 +142,7 @@ class Collection implements
             $element = mb_strtolower($element);
         }
 
-        if (true === isset($this->lowerKeys[$element])) {
+        if (isset($this->lowerKeys[$element])) {
             $key = $this->lowerKeys[$element];
 
             return $this->data[$key];

@@ -60,7 +60,7 @@ class Igbinary extends AbstractSerializer
 
         restore_error_handler();
 
-        if (true === $this->warning) {
+        if ($this->warning) {
             $this->data = null;
         }
     }

@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Cache\Exception;
 
+use Throwable;
+
 /**
  * Exceptions thrown in Cardoe\Cache will use this class
  */
-class InvalidArgumentException extends \Cardoe\Exception implements \Psr\SimpleCache\InvalidArgumentException
+class InvalidArgumentException extends \Exception implements \Psr\SimpleCache\InvalidArgumentException, Throwable
 {
 
 }

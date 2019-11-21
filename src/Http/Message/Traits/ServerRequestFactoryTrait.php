@@ -118,7 +118,7 @@ trait ServerRequestFactoryTrait
         if (null !== $requestUri) {
             $result = preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
 
-            if (true !== is_string($result)) {
+            if (! is_string($result)) {
                 $result = "";
             }
 
@@ -221,9 +221,9 @@ trait ServerRequestFactoryTrait
      */
     private function createUploadedFile(array $file): UploadedFile
     {
-        if (true !== isset($file['tmp_name']) ||
-            true !== isset($file['size']) ||
-            true !== isset($file['error'])
+        if (!isset($file['tmp_name']) ||
+            !isset($file['size']) ||
+            !isset($file['error'])
         ) {
             throw new InvalidArgumentException(
                 'The file array must contain tmp_name, size and error; ' .
@@ -253,7 +253,7 @@ trait ServerRequestFactoryTrait
     {
         $value = $headers->get($name, $defaultValue);
 
-        if (true === is_array($value)) {
+        if (is_array($value)) {
             $value = implode(',', $value);
         }
 
@@ -378,7 +378,7 @@ trait ServerRequestFactoryTrait
             /**
              * file is array with 'tmp_name'
              */
-            if (true === is_array($file) && true === isset($file['tmp_name'])) {
+            if (is_array($file) && isset($file['tmp_name'])) {
                 $collection->set($key, $this->createUploadedFile($file));
                 continue;
             }
@@ -386,7 +386,7 @@ trait ServerRequestFactoryTrait
             /**
              * file is array of elements - recursion
              */
-            if (true === is_array($file)) {
+            if (is_array($file)) {
                 $data = $this->parseUploadedFiles($file);
                 $collection->set($key, $data->toArray());
                 continue;
