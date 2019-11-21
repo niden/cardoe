@@ -17,6 +17,15 @@ jobs:
           redis-version: '5.x'
       - run: redis-cli ping
 
+      - name: Setup PHP
+        uses: shivammathur/setup-php@1.5.2
+        with:
+          php-version: '7.3'
+          extension-csv: apcu, mbstring, xdebug
+          ini-values-csv: apc.enable_cli=1, apc.enabled=1
+          coverage: xdebug
+          pecl: true
+
       - name: Init Database
         run: |
           mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `gonano`;'
