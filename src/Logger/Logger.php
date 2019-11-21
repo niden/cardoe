@@ -173,7 +173,7 @@ class Logger implements LoggerInterface
          * this->excluded array
          */
         foreach ($adapters as $adapter) {
-            if (true === isset($registered[$adapter])) {
+            if (isset($registered[$adapter])) {
                 $this->excluded[$adapter] = true;
             }
         }
@@ -190,7 +190,7 @@ class Logger implements LoggerInterface
      */
     public function getAdapter(string $name): AdapterInterface
     {
-        if (true !== isset($this->adapters[$name])) {
+        if (!isset($this->adapters[$name])) {
             throw new Exception("Adapter does not exist for this logger");
         }
 
@@ -269,7 +269,7 @@ class Logger implements LoggerInterface
      */
     public function removeAdapter(string $name): Logger
     {
-        if (true !== isset($this->adapters[$name])) {
+        if (!isset($this->adapters[$name])) {
             throw new Exception("Adapter does not exist for this logger");
         }
 
@@ -333,7 +333,7 @@ class Logger implements LoggerInterface
          * Log only if the key does not exist in the excluded ones
          */
         foreach ($this->adapters as $name => $adapter) {
-            if (true !== isset($this->excluded[$name])) {
+            if (!isset($this->excluded[$name])) {
                 $adapter->process($item);
             }
         }
@@ -373,17 +373,17 @@ class Logger implements LoggerInterface
      */
     private function getLevelNumber($level): int
     {
-        if (true === is_string($level)) {
+        if (is_string($level)) {
             $levelName = mb_strtolower($level);
             $levels    = array_flip($this->getLevels());
 
-            if (true === isset($levels[$levelName])) {
+            if (isset($levels[$levelName])) {
                 return $levels[$levelName];
             }
-        } elseif (true === is_numeric($level)) {
+        } elseif (is_numeric($level)) {
             $levels = $this->getLevels();
 
-            if (true === isset($levels[$level])) {
+            if (isset($levels[$level])) {
                 return (int) $level;
             }
         }

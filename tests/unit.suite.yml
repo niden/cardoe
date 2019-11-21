@@ -8,3 +8,5 @@ modules:
     - Asserts
     - Filesystem
     - \Helper\Unit
+env:
+  - config/.env.test

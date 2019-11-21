@@ -31,7 +31,7 @@ trait ResponseTrait
      */
     private function checkCodeType($code): void
     {
-        if (true !== is_int($code) && true !== is_string($code)) {
+        if (!is_int($code) && !is_string($code)) {
             throw new InvalidArgumentException(
                 'Invalid status code; it must be an integer or string'
             );

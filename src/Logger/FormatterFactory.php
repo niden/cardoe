@@ -50,7 +50,7 @@ class FormatterFactory extends AbstractFactory
     ): FormatterInterface {
         $this->checkService($name);
 
-        if (true !== isset($this->services[$name])) {
+        if (!isset($this->services[$name])) {
             $definition            = $this->mapper[$name];
             $this->services[$name] = new $definition($name, $options);
         }

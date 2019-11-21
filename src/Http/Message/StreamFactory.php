@@ -73,7 +73,7 @@ final class StreamFactory implements StreamFactoryInterface
      */
     public function createStreamFromResource($phpResource): StreamInterface
     {
-        if (true !== is_resource($phpResource) ||
+        if (!is_resource($phpResource) ||
             'stream' !== get_resource_type($phpResource)) {
             throw new InvalidArgumentException(
                 'Invalid stream provided'

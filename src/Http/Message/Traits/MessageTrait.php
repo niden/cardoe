@@ -330,7 +330,7 @@ trait MessageTrait
      */
     private function checkHeaderName($name): void
     {
-        if (true !== is_string($name) ||
+        if (!is_string($name) ||
             !preg_match("/^[a-zA-Z0-9'`#$%&*+.^_|~!-]+$/", $name)) {
             throw new InvalidArgumentException(
                 'Invalid header name ' . $name
@@ -387,7 +387,7 @@ trait MessageTrait
      */
     private function checkHeaderValue($value): void
     {
-        if (true !== is_string($value) && true !== is_numeric($value)) {
+        if (!is_string($value) && !is_numeric($value)) {
             throw new InvalidArgumentException('Invalid header value');
         }
 
@@ -410,7 +410,7 @@ trait MessageTrait
      */
     private function getHeaderValue($values): array
     {
-        if (true !== is_array($values)) {
+        if (!is_array($values)) {
             $values = [$values];
         }
 
@@ -476,8 +476,8 @@ trait MessageTrait
     /**
      * Set a valid stream
      *
-     * @param StreamInterface|resource|string $body
-     * @param string                          $mode
+     * @param mixed  $body
+     * @param string $mode
      *
      * @return StreamInterface
      */
@@ -505,7 +505,7 @@ trait MessageTrait
      */
     private function processHeaders($headers): Collection
     {
-        if (true === is_array($headers)) {
+        if (is_array($headers)) {
             $collection = $this->populateHeaderCollection($headers);
             $collection = $this->checkHeaderHost($collection);
         } else {
@@ -541,7 +541,7 @@ trait MessageTrait
             throw new InvalidArgumentException('Invalid protocol value');
         }
 
-        if (true !== isset($protocols[$protocol])) {
+        if (!isset($protocols[$protocol])) {
             throw new InvalidArgumentException(
                 'Unsupported protocol ' . $protocol
             );

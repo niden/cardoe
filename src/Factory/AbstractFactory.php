@@ -37,7 +37,7 @@ abstract class AbstractFactory
      */
     protected function checkService(string $name): void
     {
-        if (true !== isset($this->mapper[$name])) {
+        if (!isset($this->mapper[$name])) {
             throw new Exception("Service " . $name . " is not registered");
         }
     }

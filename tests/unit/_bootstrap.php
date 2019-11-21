@@ -1,5 +1,7 @@
 <?php
 
+use Dotenv\Dotenv;
+
 error_reporting(-1);
 
 ini_set('display_errors', 1);
@@ -28,6 +30,15 @@ foreach ($folders as $folder) {
     }
 }
 
+function env(string $key, $default = null)
+{
+    if (defined($key)) {
+        return constant($key);
+    }
+
+    return getenv($key) ?: $default;
+}
+
 function dataDir(string $fileName = ''): string
 {
     return codecept_data_dir() . $fileName;
@@ -52,3 +63,31 @@ function outputDir(string $fileName = '')
 {
     return codecept_output_dir() . $fileName;
 }
+
+/*******************************************************************************
+ * Options
+ *******************************************************************************/
+function getOptionsLibmemcached(): array
+{
+    return [
+        'client'  => [],
+        'servers' => [
+            [
+                'host'   => env('DATA_MEMCACHED_HOST', '127.0.0.1'),
+                'port'   => env('DATA_MEMCACHED_PORT', 11211),
+                'weight' => env('DATA_MEMCACHED_WEIGHT', 0),
+            ],
+        ],
+    ];
+}
+
+function getOptionsRedis(): array
+{
+    return [
+        'host'  => env('DATA_REDIS_HOST'),
+        'port'  => env('DATA_REDIS_PORT'),
+        'index' => env('DATA_REDIS_NAME'),
+    ];
+}
+
+Dotenv::create(codecept_root_dir('config/'))->load();
