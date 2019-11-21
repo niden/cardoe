@@ -1,0 +1,56 @@
+<?php
+declare(strict_types=1);
+
+/**
+ * This file is part of the Cardoe Framework.
+ *
+ * (c) Cardoe Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
+
+use Cardoe\Cache\Adapter\Stream;
+use Cardoe\Storage\SerializerFactory;
+use UnitTester;
+use function outputDir;
+use function sort;
+
+class GetKeysCest
+{
+    /**
+     * Tests Cardoe\Cache\Adapter\Stream :: getKeys()
+     *
+     * @author Cardoe Team <team@phalcon.io>
+     * @since  2019-04-24
+     */
+    public function cacheAdapterStreamGetKeys(UnitTester $I)
+    {
+        $I->wantToTest('Cache\Adapter\Stream - getKeys()');
+
+        $serializer = new SerializerFactory();
+        $adapter    = new Stream($serializer, ['storageDir' => outputDir()]);
+
+        $adapter->clear();
+
+        $key = 'key-1';
+        $adapter->set($key, 'test');
+        $actual = $adapter->has($key);
+        $I->assertTrue($actual);
+
+        $key = 'key-2';
+        $adapter->set($key, 'test');
+        $actual = $adapter->has($key);
+        $I->assertTrue($actual);
+
+        $expected = [
+            'phstrm-key-1',
+            'phstrm-key-2',
+        ];
+        $actual   = $adapter->getKeys();
+        sort($actual);
+        $I->assertEquals($expected, $actual);
+    }
+}

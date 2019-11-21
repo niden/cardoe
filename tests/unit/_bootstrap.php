@@ -1,5 +1,7 @@
 <?php
 
+use Dotenv\Dotenv;
+
 error_reporting(-1);
 
 ini_set('display_errors', 1);
@@ -88,4 +90,4 @@ function getOptionsRedis(): array
     ];
 }
 
-
+Dotenv::create(codecept_root_dir('config/'))->load();
