@@ -1,7 +1,7 @@
 run.config:
   engine: php
   engine.config:
-    runtime: php-7.2
+    runtime: php-7.3
     document_root: tests/testbed
     extensions:
       - apcu
@@ -44,9 +44,6 @@ run.config:
         - opcache
   extra_packages:
     - autoconf
-    - freefonts
-    - freetype2
-    - fontconfig
     - mysql-client
     #    - postgresql94-client
     - re2c

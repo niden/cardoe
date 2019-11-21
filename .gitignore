@@ -1,2 +1,3 @@
+config/.env
 tests/_output/
 vendor/
