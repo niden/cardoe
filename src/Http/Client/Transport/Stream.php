@@ -11,12 +11,15 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Transport;
 
-use Cardoe\Http\Message\Response;
+use Cardoe\Http\Client\Exception\NetworkException;
+use Cardoe\Http\Client\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Class Stream
+ *
+ * @package Cardoe\Http\Client\Transport
  */
 class Stream extends AbstractTransport
 {
@@ -25,8 +28,67 @@ class Stream extends AbstractTransport
      *
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        return new Response();
+        $context = [
+            "http" => [
+                "method"           => $request->getMethod(),
+                "header"           => $this->serializeHeaders($request->getHeaders()),
+                "protocol_version" => $request->getProtocolVersion(),
+                "ignore_errors"    => true,
+                "timeout"          => $this->options["timeout"],
+                "follow_location"  => $this->options["followLocation"],
+            ],
+        ];
+
+        if ($request->getBody()->getSize()) {
+            $context["http"]["content"] = $request->getBody()->__toString();
+        }
+
+        $resource = fopen(
+            $request->getUri()->__toString(),
+            "rb",
+            false,
+            stream_context_create($context)
+        );
+
+        if (!is_resource($resource)) {
+            $error = error_get_last()["message"];
+            if (strpos($error, "getaddrinfo") ||
+                strpos($error, "Connection refused")) {
+                $ex = new NetworkException($error, $request);
+            } else {
+                $ex = new RequestException($error, $request);
+            }
+
+            throw $ex;
+        }
+
+        $stream  = $this->resourceToStream($resource, $this->streamFactory, $request);
+        $headers = stream_get_meta_data($resource)["wrapper_data"] ?? [];
+
+        if ($this->options["followLocation"]) {
+            $headers = $this->filterHeaders($headers);
+        }
+
+        fclose($resource);
+
+        $parts   = explode(" ", array_shift($headers), 3);
+        $version = explode("/", $parts[0])[1];
+        $status  = (int) $parts[1];
+
+        $response = $this
+            ->responseFactory
+            ->createResponse($status)
+            ->withProtocolVersion($version)
+            ->withBody($stream)
+        ;
+
+        $unserialized = $this->unserializeHeaders($headers);
+        foreach ($unserialized as $key => $value) {
+            $response = $response->withHeader($key, $value);
+        }
+
+        return $response;
     }
 }

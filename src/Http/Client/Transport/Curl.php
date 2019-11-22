@@ -11,49 +11,103 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Transport;
 
-use Cardoe\Http\Client\Exception\Exception;
-use Cardoe\Http\Message\Response;
+use Cardoe\Http\Client\Exception\NetworkException;
+use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamFactoryInterface;
-use function extension_loaded;
 
-/**
- * Class Curl
- */
 class Curl extends AbstractTransport
 {
-    /**
-     * Curl constructor.
-     *
-     * @param StreamFactoryInterface   $streamFactory
-     * @param ResponseFactoryInterface $responseFactory
-     * @param array                    $options
-     *
-     * @throws Exception
-     */
-    public function __construct(
-        StreamFactoryInterface $streamFactory,
-        ResponseFactoryInterface $responseFactory,
-        array $options = []
-    ) {
-        if (true !== extension_loaded('curl')) {
-            throw new Exception(
-                'curl extension must be loaded for this transport to work'
-            );
-        }
-
-        parent::__construct($streamFactory, $responseFactory, $options);
-    }
-
     /**
      * @param RequestInterface $request
      *
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request): ResponseInterface
+    public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        return new Response();
+        $version  = $request->getProtocolVersion();
+        $resource = fopen("php://temp", "wb");
+        $options  = [
+            CURLOPT_CUSTOMREQUEST  => $request->getMethod(),
+            CURLOPT_RETURNTRANSFER => false,
+            CURLOPT_FOLLOWLOCATION => $this->options["followLocation"],
+            CURLOPT_HEADER         => false,
+            CURLOPT_CONNECTTIMEOUT => $this->options["timeout"],
+            CURLOPT_FILE           => $resource,
+        ];
+
+        switch ($version) {
+            case "1.0":
+                $options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
+                break;
+
+            case "2.0":
+                $options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_2_0;
+                break;
+
+            case "1.1":
+            default:
+                $options[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+                break;
+        }
+
+        $options[CURLOPT_HTTPHEADER] = explode(
+            "\r\n",
+            $this->serializeHeaders($request->getHeaders())
+        );
+
+        if ($request->getBody()->getSize()) {
+            $options[CURLOPT_POSTFIELDS] = $request->getBody()->__toString();
+        }
+
+        $headers = [];
+
+        $options[CURLOPT_HEADERFUNCTION] = function ($resource, $headerString) use (&$headers) {
+            $header = trim($headerString);
+            if (strlen($header) > 0) {
+                $headers[] = $header;
+            }
+
+            return mb_strlen($headerString, "8bit");
+        };
+
+        $curlResource = curl_init($request->getUri()->__toString());
+        curl_setopt_array($curlResource, $options);
+        curl_exec($curlResource);
+
+        $stream = $this->resourceToStream($resource, $this->streamFactory, $request);
+
+        if ($this->options["followLocation"]) {
+            $headers = $this->filterHeaders($headers);
+        }
+
+        fclose($resource);
+
+        $errorNumber  = curl_errno($curlResource);
+        $errorMessage = curl_error($curlResource);
+
+        if ($errorNumber) {
+            throw new NetworkException($errorMessage, $request);
+        }
+
+        $parts   = explode(" ", array_shift($headers), 3);
+        $version = explode("/", $parts[0])[1];
+        $status  = (int) $parts[1];
+
+        curl_close($curlResource);
+
+        $response = $this
+            ->responseFactory
+            ->createResponse($status)
+            ->withProtocolVersion($version)
+            ->withBody($stream)
+        ;
+
+        $unserialized = $this->unserializeHeaders($headers);
+        foreach ($unserialized as $key => $value) {
+            $response = $response->withHeader($key, $value);
+        }
+
+        return $response;
     }
 }

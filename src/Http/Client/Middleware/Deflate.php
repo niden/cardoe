@@ -20,21 +20,21 @@ use Psr\Http\Message\StreamFactoryInterface;
 /**
  * Class Deflate
  *
- * @property StreamFactoryInterface $streamFactory
+ * @property StreamFactoryInterface $factory
  */
 class Deflate extends AbstractCommon implements MiddlewareInterface
 {
     /**
      * @var StreamFactoryInterface
      */
-    private $streamFactory;
+    private $factory;
 
     /**
      * @param StreamFactoryInterface $streamFactory
      */
     public function __construct(StreamFactoryInterface $streamFactory)
     {
-        $this->streamFactory = $streamFactory;
+        $this->factory = $streamFactory;
     }
 
     /**
@@ -46,29 +46,29 @@ class Deflate extends AbstractCommon implements MiddlewareInterface
     ): ResponseInterface {
         $response = $handler->handle($request);
 
-        if (true === $response->hasHeader('Content-Encoding')) {
-            $encoding = $response->getHeader('Content-Encoding');
-            if ($encoding[0] === 'gzip' || $encoding[0] === 'deflate') {
+        if ($response->hasHeader("Content-Encoding")) {
+            $encoding = $response->getHeader("Content-Encoding");
+            if ($encoding[0] === "gzip" || $encoding[0] === "deflate") {
                 $stream = $this->inflate(
                     $response->getBody(),
-                    $this->streamFactory,
+                    $this->factory,
                     $request
                 );
 
                 $response = $response
                     ->withBody($stream)
-                    ->withHeader('Content-Encoding-Original', $encoding)
-                    ->withoutHeader('Content-Encoding')
+                    ->withHeader("Content-Encoding-Original", $encoding)
+                    ->withoutHeader("Content-Encoding")
                 ;
 
-                if (true === $response->hasHeader('Content-Length')) {
+                if ($response->hasHeader("Content-Length")) {
                     $response = $response
                         ->withHeader(
-                            'Content-Length-Original',
-                            $response->getHeader('Content-Length')[0]
+                            "Content-Length-Original",
+                            $response->getHeader("Content-Length")[0]
                         )
                         ->withHeader(
-                            'Content-Length',
+                            "Content-Length",
                             (string) $response->getBody()->getSize()
                         )
                     ;

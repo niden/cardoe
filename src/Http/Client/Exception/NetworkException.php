@@ -15,6 +15,8 @@ use Psr\Http\Client\NetworkExceptionInterface;
 
 /**
  * Class NetworkException
+ *
+ * @package Cardoe\Http\Client\Exception
  */
 class NetworkException extends RequestException implements NetworkExceptionInterface
 {

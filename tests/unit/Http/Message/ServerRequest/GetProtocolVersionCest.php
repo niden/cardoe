@@ -10,37 +10,37 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
 
+use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\ServerRequest;
 use UnitTester;
 
 class GetProtocolVersionCest
 {
-//    /**
-//     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion()
-//     *
-//     * @author Cardoe Team <team@cardoephp.com>
-//     * @since  2019-03-05
-//     */
-//    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
-//    {
-//        $I->wantToTest('Http\Message\ServerRequest - getProtocolVersion()');
-//        $request = new ServerRequest(
-//            'GET',
-//            null,
-//            [],
-//            'php://input',
-//            [],
-//            [],
-//            [],
-//            [],
-//            null,
-//            '2.0'
-//        );
-//
-//        $expected = '2.0';
-//        $actual   = $request->getProtocolVersion();
-//        $I->assertEquals($expected, $actual);
-//    }
+    /**
+     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion()
+     *
+     * @since  2019-03-05
+     */
+    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
+    {
+        $I->wantToTest('Http\Message\ServerRequest - getProtocolVersion()');
+        $request = new ServerRequest(
+            'GET',
+            null,
+            [],
+            'php://input',
+            [],
+            [],
+            [],
+            [],
+            null,
+            '2.0'
+        );
+
+        $expected = '2.0';
+        $actual   = $request->getProtocolVersion();
+        $I->assertEquals($expected, $actual);
+    }
 
     /**
      * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() - empty
@@ -56,33 +56,32 @@ class GetProtocolVersionCest
         $actual   = $request->getProtocolVersion();
         $I->assertEquals($expected, $actual);
     }
-//
-//    /**
-//     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() -
-//     * exception
-//     *
-//     * @author Cardoe Team <team@cardoephp.com>
-//     * @since  2019-03-05
-//     */
-//    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)
-//    {
-//        $I->wantToTest('Http\Message\ServerRequest - getProtocolVersion() - exception');
-//        $I->expectThrowable(
-//            new InvalidArgumentException('Unsupported protocol 1.2'),
-//            function () {
-//                $request = new ServerRequest(
-//                    'GET',
-//                    null,
-//                    [],
-//                    'php://input',
-//                    [],
-//                    [],
-//                    [],
-//                    [],
-//                    null,
-//                    '1.2'
-//                );
-//            }
-//        );
-//    }
+
+    /**
+     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() -
+     * exception
+     *
+     * @since  2019-03-05
+     */
+    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)
+    {
+        $I->wantToTest('Http\Message\ServerRequest - getProtocolVersion() - exception');
+        $I->expectThrowable(
+            new InvalidArgumentException('Unsupported protocol 1.2'),
+            function () {
+                $request = new ServerRequest(
+                    'GET',
+                    null,
+                    [],
+                    'php://input',
+                    [],
+                    [],
+                    [],
+                    [],
+                    null,
+                    '1.2'
+                );
+            }
+        );
+    }
 }

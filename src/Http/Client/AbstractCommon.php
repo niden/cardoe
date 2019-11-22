@@ -62,9 +62,9 @@ abstract class AbstractCommon
     }
 
     /**
-     * @param ServerRequest $request
+     * @param RequestInterface $request
      *
-     * @return resource
+     * @return false|resource
      */
     protected function getTemporaryStream(RequestInterface $request)
     {

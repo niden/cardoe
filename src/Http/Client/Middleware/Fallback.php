@@ -13,28 +13,27 @@ namespace Cardoe\Http\Client\Middleware;
 
 use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Class UserAgent
+ * Class Fallback
  *
- * @package Cardoe\Http\Client\Middleware
- *
- * @property string $agent
+ * @property ResponseFactoryInterface $factory
  */
-class UserAgent implements MiddlewareInterface
+class Fallback implements MiddlewareInterface
 {
     /**
-     * @var string
+     * @var ResponseFactoryInterface
      */
-    private $agent;
+    private $factory;
 
     /**
-     * @param string $agent
+     * @param ResponseFactoryInterface $responseFactory
      */
-    public function __construct(string $agent = null)
+    public function __construct(ResponseFactoryInterface $responseFactory)
     {
-        $this->agent = $agent ?: sprintf("Cardoe HTTP Client PHP/%s", PHP_VERSION);
+        $this->factory = $responseFactory;
     }
 
     /**
@@ -44,10 +43,6 @@ class UserAgent implements MiddlewareInterface
         RequestInterface $request,
         HandlerInterface $handler
     ): ResponseInterface {
-        if (!$request->hasHeader("User-Agent")) {
-            $request = $request->withHeader("User-Agent", $this->agent);
-        }
-
-        return $handler->handle($request);
+        return $this->factory->createResponse();
     }
 }

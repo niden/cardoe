@@ -26,7 +26,7 @@ class Handler implements HandlerInterface
     /**
      * @var MiddlewareInterface[]
      */
-    private $collection;
+    private $collection = [];
 
     /**
      * @var MiddlewareInterface

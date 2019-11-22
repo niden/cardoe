@@ -13,7 +13,11 @@ namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Http\Client\AbstractCommon;
+use Cardoe\Http\Client\Middleware\MiddlewareInterface;
+use Cardoe\Http\Client\Request\HandlerInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 
 /**
@@ -23,7 +27,7 @@ use Psr\Http\Message\StreamFactoryInterface;
  * @propety ResponseFactoryInterface $responseFactory
  * @propety array                    $options
  */
-abstract class AbstractTransport extends AbstractCommon implements TransportInterface
+abstract class AbstractTransport extends AbstractCommon implements TransportInterface, MiddlewareInterface
 {
     /**
      * @var StreamFactoryInterface
@@ -50,14 +54,32 @@ abstract class AbstractTransport extends AbstractCommon implements TransportInte
         ResponseFactoryInterface $responseFactory,
         array $options = []
     ) {
+        $options["followLocation"] = Arr::get(
+            $options,
+            "followLocation",
+            true,
+            "bool"
+        );
+        $options["timeout"]        = Arr::get(
+            $options,
+            "timeout",
+            10,
+            "int"
+        );
+
         $this->streamFactory   = $streamFactory;
         $this->responseFactory = $responseFactory;
+        $this->options         = $options;
+    }
 
-        $data = [
-            'follow'  => (bool) Arr::get($options, 'follow', false),
-            'timeout' => (float) Arr::get($options, 'timeout', 10.0),
-        ];
-
-        $this->options = $data;
+    /**
+     * @param RequestInterface $request
+     * @param HandlerInterface $handler
+     *
+     * @return ResponseInterface
+     */
+    public function process(RequestInterface $request, HandlerInterface $handler): ResponseInterface
+    {
+        return $this->sendRequest($request);
     }
 }

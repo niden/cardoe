@@ -24,5 +24,5 @@ interface TransportInterface
      *
      * @return ResponseInterface
      */
-    public function process(RequestInterface $request): ResponseInterface;
+    public function sendRequest(RequestInterface $request): ResponseInterface;
 }

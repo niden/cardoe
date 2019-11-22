@@ -11,38 +11,46 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Middleware;
 
+use Cardoe\Http\Client\AbstractCommon;
 use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use function call_user_func;
 
 /**
- * Class FallbackMiddleware
+ * Class Closure
  *
- * @property ResponseFactoryInterface $responseFactory
+ * @property callable $closure
  */
-class FallbackMiddleware implements MiddlewareInterface
+class Closure implements MiddlewareInterface
 {
     /**
-     * @var ResponseFactoryInterface
+     * @var callable
      */
-    private $responseFactory;
+    private $closure;
 
     /**
-     * @param ResponseFactoryInterface $responseFactory
+     * Closure constructor.
+     *
+     * @param callable $closure
      */
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(callable $closure)
     {
-        $this->responseFactory = $responseFactory;
+        $this->closure = $closure;
     }
 
     /**
-     * @inheritdoc
+     * @param RequestInterface $request
+     * @param HandlerInterface $handler
+     *
+     * @return ResponseInterface
      */
     public function process(
         RequestInterface $request,
         HandlerInterface $handler
     ): ResponseInterface {
-        return $this->responseFactory->createResponse();
+
+        return call_user_func($this->closure, $request, $handler);
     }
 }
