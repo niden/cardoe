@@ -81,6 +81,14 @@ class DeleteMultipleCest
         $I->assertTrue(
             $adapter->has($key3)
         );
+
+        $I->assertFalse(
+            $adapter->deleteMultiple(
+                [
+                    'unknown',
+                ]
+            )
+        );
     }
 
     /**

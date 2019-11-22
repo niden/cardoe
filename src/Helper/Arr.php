@@ -15,6 +15,7 @@ use stdClass;
 use function array_chunk;
 use function array_filter;
 use function array_keys;
+use function array_map;
 use function array_merge;
 use function array_slice;
 use function array_unique;
@@ -22,6 +23,7 @@ use function array_values;
 use function call_user_func;
 use function count;
 use function end;
+use function explode;
 use function function_exists;
 use function is_array;
 use function is_callable;
@@ -32,6 +34,7 @@ use function krsort;
 use function ksort;
 use function reset;
 use function settype;
+use const PHP_INT_MAX;
 
 /**
  * Cardoe\Helper\Arr
@@ -55,6 +58,32 @@ class Arr
         bool $preserveKeys = false
     ): array {
         return array_chunk($collection, $size, $preserveKeys);
+    }
+
+    /**
+     * Splits a string based on a delimiter and filters it with a passed callback
+     *
+     * @param string   $source
+     * @param string   $delimiter
+     * @param int      $limit
+     * @param callable $method
+     *
+     * @return array
+     */
+    final public static function delimit(
+        string $source,
+        string $delimiter,
+        int $limit = PHP_INT_MAX,
+        $method = null
+    ): array {
+        $parts    = explode($delimiter, $source, $limit);
+        $parts[1] = $parts[1] ?? null;
+
+        if (null !== $method && is_callable($method)) {
+            return array_map($method, $parts);
+        } else {
+            return $parts;
+        }
     }
 
     /**
@@ -383,7 +412,7 @@ class Arr
      *
      * @return bool
      */
-    final public static function validateAll(array $collection, $method): bool
+    final public static function validateAll(array $collection, $method = null): bool
     {
         return count(self::filterCollection($collection, $method)) === count($collection);
     }
@@ -397,7 +426,7 @@ class Arr
      *
      * @return bool
      */
-    final public static function validateAny(array $collection, $method): bool
+    final public static function validateAny(array $collection, $method = null): bool
     {
         return count(self::filterCollection($collection, $method)) > 0;
     }
