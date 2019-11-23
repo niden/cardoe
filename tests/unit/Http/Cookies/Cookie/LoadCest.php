@@ -14,6 +14,7 @@ use Cardoe\Http\Cookies\Cookie;
 use DateTime;
 use InvalidArgumentException;
 use UnitTester;
+use function var_dump;
 
 class LoadCest
 {
@@ -38,7 +39,7 @@ class LoadCest
         $I->assertNull($cookie->getValue());
 
         $string = "darth=vader; "
-                . "domain=dev.phalcon.ld; "
+                . "domain=.phalcon.ld; "
                 . "path=/a/b/c; "
                 . "expires=2019-12-25 01:02:03; "
                 . "max-age=50; "
@@ -46,16 +47,17 @@ class LoadCest
                 . "secure"
         ;
 
-        $clone = $cookie->load($string);
+        $cookie->load($string, 'http://phalcon.io');
         $expires = (new DateTime('2019-12-25 01:02:03'))->getTimestamp();
-        $I->assertEquals('dev.phalcon.ld', $clone->getDomain());
-        $I->assertTrue($clone->getHttpOnly());
-        $I->assertEquals($expires, $clone->getExpires());
-        $I->assertEquals(50, $clone->getMaxAge());
-        $I->assertEquals('darth', $clone->getName());
-        $I->assertEquals('/a/b/c', $clone->getPath());
-        $I->assertTrue($clone->getSecure());
-        $I->assertEquals('vader', $clone->getValue());
+
+        $I->assertEquals('.phalcon.ld', $cookie->getDomain());
+        $I->assertTrue($cookie->getHttpOnly());
+        $I->assertEquals($expires, $cookie->getExpires());
+        $I->assertEquals(50, $cookie->getMaxAge());
+        $I->assertEquals('darth', $cookie->getName());
+        $I->assertEquals('/a/b/c', $cookie->getPath());
+        $I->assertTrue($cookie->getSecure());
+        $I->assertEquals('vader', $cookie->getValue());
     }
 
     /**
@@ -73,7 +75,7 @@ class LoadCest
             ),
             function () {
                 $cookie = new Cookie('one');
-                $clone  = $cookie->load('');
+                $clone  = $cookie->load('', 'phalcon.ld');
             }
         );
     }

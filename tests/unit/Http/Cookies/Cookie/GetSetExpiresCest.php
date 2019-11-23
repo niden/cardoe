@@ -16,10 +16,10 @@ use DateTime;
 use InvalidArgumentException;
 use UnitTester;
 
-class WithExpiresCest
+class GetSetExpiresCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withExpires()
+     * Tests Cardoe\Http\Cookies\Cookie :: getExpires()/setExpires()
      *
      * @dataProvider getExamples
      *
@@ -27,39 +27,39 @@ class WithExpiresCest
      */
     public function httpCookiesCookieWithExpires(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withExpires()');
+        $I->wantToTest('Http\Cookies\Cookie - getExpires()/setExpires()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withExpires($example[0]);
-
         $I->assertEquals(0, $cookie->getExpires());
-        $I->assertEquals($example[1], $clone->getExpires());
+
+        $cookie->setExpires($example[0]);
+        $I->assertEquals($example[1], $cookie->getExpires());
     }
 
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withExpires() - exception
+     * Tests Cardoe\Http\Cookies\Cookie :: getExpires()/setExpires() - exception
      *
      * @since  2019-11-22
      */
     public function httpCookiesCookieWithExpiresException(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withExpires() - exception');
+        $I->wantToTest('Http\Cookies\Cookie - getExpires()/setExpires() - exception');
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                "Invalid expires '2019-12-25 err:err:err' provided"
+                "Invalid expires '2019-12-15 01:dd:ee' provided"
             ),
             function () {
                 $cookie = new Cookie('one');
-                $clone  = $cookie
-                    ->withExpires(
-                        '2019-12-25 err:err:err'
-                    );
+                $cookie->setExpires("2019-12-15 01:dd:ee");
             }
         );
     }
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     private function getExamples(): array
     {
         return [

@@ -18,13 +18,25 @@ use DateTimeInterface;
 use Exception;
 use function array_filter;
 use function array_shift;
-use function is_int;
-use function is_numeric;
+use function explode;
+use function gmdate;
+use function implode;
 use function is_string;
+use function parse_url;
+use function preg_match;
+use function preg_quote;
 use function preg_split;
+use function print_r;
 use function sprintf;
+use function strpos;
 use function strtolower;
 use function strtotime;
+use function substr;
+use function time;
+use function trim;
+use function urlencode;
+use function var_dump;
+use const PHP_INT_MAX;
 
 /**
  * Class Cookie
@@ -43,41 +55,57 @@ use function strtotime;
 class Cookie
 {
     /**
+     * Cookie domain
+     *
      * @var string|null
      */
     private $domain = null;
 
     /**
+     * Use HTTP only or not
+     *
      * @var bool
      */
     private $httpOnly = false;
 
     /**
+     * Cookie expiration date in unix epoch seconds
+     *
      * @var int
      */
     private $expires = 0;
 
     /**
+     * Cookie max-age
+     *
      * @var int
      */
     private $maxAge = 0;
 
     /**
+     * Cookie name
+     *
      * @var string
      */
     private $name;
 
     /**
+     * Cookie path
+     *
      * @var string|null
      */
     private $path = null;
 
     /**
+     * Use SSL only
+     *
      * @var bool
      */
     private $secure = false;
 
     /**
+     * Cookie Value
+     *
      * @var string|null
      */
     private $value = null;
@@ -92,6 +120,27 @@ class Cookie
     {
         $this->name  = $name;
         $this->value = $value;
+    }
+
+    /**
+     * Returns the cookie name and value as a header string
+     *
+     * @return string
+     */
+    public function __toString(): string
+    {
+        $header = [
+            urlencode($this->name) . "=" . urlencode((string) $this->value)
+        ];
+
+        $header = $this->addPart($header, "domain", "Domain");
+        $header = $this->addPart($header, "path", "Path");
+        $header = $this->addPart($header, "expires", "Expires");
+        $header = $this->addPart($header, "maxAge", "Max-Age");
+        $header = $this->addPart($header, "httpOnly", "HttpOnly", true);
+        $header = $this->addPart($header, "secure", "Secure", true);
+
+        return implode($header, ";");
     }
 
     /**
@@ -180,69 +229,167 @@ class Cookie
      */
     public function expire(): Cookie
     {
-        return $this->withExpires(new DateTime("-5 years"));
+        $this->expires = $this->checkExpires(new DateTime("-5 years"));
+
+        return $this;
+    }
+
+    /**
+     * Try to match a $domain to this cookies domain.
+     *
+     * @param string $domain
+     *
+     * @return bool
+     */
+    protected function isSameDomain(string $domain): bool
+    {
+        if (empty($this->domain)) {
+            return false;
+        }
+
+        $cookieDomain = strtolower($this->domain);
+        $hostDomain   = strtolower($domain);
+
+        if (substr($cookieDomain, 0, 1) === ".") {
+            $cookieDomain = substr($cookieDomain, 1);
+        }
+
+        return ($cookieDomain === $hostDomain ||
+            preg_match(
+                "/\." . preg_quote($cookieDomain) . "$/",
+                $hostDomain
+            )
+        );
+    }
+
+    /**
+     * Has this cookie expired?
+     *
+     * @param bool $expire
+     *
+     * @return bool
+     */
+    public function isExpired(bool $expire = false): bool
+    {
+        if (!$this->expires && $expire) {
+            return true;
+        } elseif (!$this->expires) {
+            return false;
+        }
+
+        return $this->expires < time();
+    }
+
+    /**
+     * Match a $scheme, $domain and $path to this cookie object.
+     *
+     * @param string $scheme
+     * @param string $domain
+     * @param string $path
+     *
+     * @return bool
+     */
+    public function isMatch(string $scheme, string $domain, string $path)
+    {
+        if (('https' == $scheme && !$this->secure) ||
+            ('http'  == $scheme &&  $this->secure)) {
+            return false;
+        }
+
+        if (!$this->isSameDomain($domain)) {
+            return false;
+        }
+
+        return ($this->path && 0 === strpos($path, $this->path));
     }
 
     /**
      * Loads a cookie from a cookie string
      *
      * @param string $cookieString
+     * @param string $url
      *
      * @return Cookie
      */
-    public function load(string $cookieString): Cookie
+    public function load(string $cookieString, string $url): Cookie
     {
-        $attributes = $this->splitAttributes($cookieString);
-        $attribute  = array_shift($attributes);
+        $this->domain   = null;
+        $this->httpOnly = false;
+        $this->expires  = 0;
+        $this->maxAge   = 0;
+        $this->path     = null;
+        $this->value    = null;
 
-        if (!is_string($attribute)) {
-            throw new InvalidArgumentException(
-                sprintf(
-                    "The provided cookie string '%s' must have at least one attribute",
-                    $cookieString
-                )
+        $defaults = parse_url($url);
+
+        /**
+         * Secure
+         */
+        $this->secure = (
+            "https" === Arr::get($defaults, "scheme", "https", "string")
+        );
+
+        /**
+         * Path
+         */
+        $path = Arr::get($defaults, "path", "");
+        if (!empty($path)) {
+            $this->path = substr(
+                $path,
+                0,
+                strpos($path, "/") + 1
             );
         }
 
-        list ($cookieName, $cookieValue) = Arr::delimit(
-            $attribute,
+        /**
+         * Split cookies
+         */
+        $cookieList = explode(";", $cookieString);
+        $cookieList = array_filter($cookieList);
+
+        /**
+         * First element is name and value
+         */
+        $first = array_shift($cookieList);
+        if (empty($first)) {
+            throw new InvalidArgumentException(
+                "The provided cookie string '' must have at least one attribute"
+            );
+        }
+
+        list($this->name, $this->value) = Arr::delimit(
+            $first,
             "=",
             2,
             "urldecode"
         );
 
-        $clone = clone($this);
-
-        $clone->name = $cookieName;
-        if (null !== $cookieValue) {
-            $clone->value = $cookieValue;
-        }
-
-        foreach ($attributes as $attribute) {
-            list ($property, $value) = Arr::delimit($attribute, "=", 2);
-            $property = strtolower($property);
+        foreach ($cookieList as $item) {
+            list ($property, $value) = Arr::delimit($item, "=", 2, "trim");
+            $property = trim(strtolower($property));
             switch ($property) {
                 case "domain":
+                    $this->setDomain($value);
+                    break;
                 case "path":
-                    $clone->$property = $value;
+                    $this->setPath($value);
                     break;
                 case "expires":
-                    $clone->$property =  $this->checkExpires($value);
+                    $this->setExpires($value);
                     break;
                 case "max-age":
-                    $clone->maxAge = (int) $value;
+                    $this->setMaxAge((int) $value);
                     break;
                 case "secure":
-                    $clone->$property = true;
+                    $this->setSecure(true);
                     break;
                 case "httponly":
-                    $clone->httpOnly = true;
+                    $this->setHttpOnly(true);
                     break;
             }
-
         }
 
-        return $clone;
+        return $this;
     }
 
     /**
@@ -251,100 +398,155 @@ class Cookie
      */
     public function rememberForever(): Cookie
     {
-        return $this->withExpires(new DateTime("+5 years"));
+        $this->expires = $this->checkExpires(new DateTime("+5 years"));
+
+        return $this;
     }
 
     /**
-     * Return a new object with the domain set
+     * Return this with the domain set
      *
      * @param string|null $domain
      *
      * @return Cookie
      */
-    public function withDomain(?string $domain = null): Cookie
+    public function setDomain(?string $domain = null): Cookie
     {
-        return $this->performClone("domain", $domain);
+        $this->domain = $this->checkDomain($domain);
+
+        return $this;
     }
 
     /**
-     * Return a new object with the httpOnly set
+     * Return this with the httpOnly set
      *
      * @param bool $httpOnly
      *
      * @return Cookie
      */
-    public function withHttpOnly(bool $httpOnly): Cookie
+    public function setHttpOnly(bool $httpOnly): Cookie
     {
-        return $this->performClone("httpOnly", $httpOnly);
+        $this->httpOnly = $httpOnly;
+
+        return $this;
     }
 
     /**
-     * Return a new object with the expires set
+     * Return this with the expires set
      *
      * @param mixed $expires
      *
      * @return Cookie
      * @throws InvalidArgumentException
      */
-    public function withExpires($expires): Cookie
+    public function setExpires($expires): Cookie
     {
-        $expires = $this->checkExpires($expires);
+        $this->expires = $this->checkExpires($expires);
 
-        return $this->performClone("expires", $expires);
+        return $this;
     }
 
     /**
-     * Return a new object with the expires set
+     * Return this with the expires set
      *
      * @param int $maxAge
      *
      * @return Cookie
      */
-    public function withMaxAge(int $maxAge): Cookie
+    public function setMaxAge(int $maxAge): Cookie
     {
-        return $this->performClone("maxAge", $maxAge);
+        $this->maxAge = $maxAge;
+
+        return $this;
     }
 
     /**
-     * Return a new object with the path set
+     * Return this with the path set
      *
      * @param string|null $path
      *
      * @return Cookie
      */
-    public function withPath(?string $path = null): Cookie
+    public function setPath(?string $path = null): Cookie
     {
-        return $this->performClone("path", $path);
+        $this->path = $path;
+
+        return $this;
     }
 
     /**
-     * Return a new object with the secure set
+     * Return this with the secure set
      *
      * @param bool $secure
      *
      * @return Cookie
      */
-    public function withSecure(bool $secure): Cookie
+    public function setSecure(bool $secure): Cookie
     {
-        return $this->performClone("secure", $secure);
+        $this->secure = $secure;
+
+        return $this;
     }
 
     /**
-     * Return a new object with the value set
+     * Return this with the value set
      *
      * @param string|null $value
      *
      * @return Cookie
      */
-    public function withValue(?string $value): Cookie
+    public function setValue(?string $value): Cookie
     {
-        return $this->performClone("value", $value);
+        $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * Appends elements to the array based on present cookie attributes
+     *
+     * @param array  $header
+     * @param string $property
+     * @param string $attribute
+     * @param bool   $solo
+     *
+     * @return array
+     */
+    private function addPart(
+        array $header,
+        string $property,
+        string $attribute,
+        bool $solo = false
+    ): array {
+        if ($this->$property) {
+            if ("expires" === $property) {
+                $header[] = $attribute . "=" . gmdate('D, d M Y H:i:s T', $this->expires);
+            } else {
+                $header[] = $attribute . ($solo ? "" : "=" . $this->$property);
+            }
+        }
+
+        return $header;
+    }
+
+    /**
+     * @param string $domain
+     *
+     * @return string
+     */
+    private function checkDomain(string $domain): string
+    {
+        if (substr($domain, 0, 1) !== ".") {
+            $domain = "." . $domain;
+        }
+
+        return $domain;
     }
 
     /**
      * Checks the expires value
      *
-     * @param int $expires
+     * @param mixed $expires
      *
      * @return int
      * @throws InvalidArgumentException
@@ -363,42 +565,10 @@ class Cookie
 
         if (!is_int($time)) {
             throw new InvalidArgumentException(
-                sprintf("Invalid expires '%s' provided", $expires)
+                "Invalid expires '" . $expires . "' provided"
             );
         }
 
         return $time;
-    }
-
-    /**
-     * Clones this object and sets the property
-     *
-     * @param string $property
-     * @param mixed  $value
-     *
-     * @return Cookie
-     */
-    private function performClone(string $property, $value): Cookie
-    {
-        $clone = clone($this);
-
-        $clone->$property = $value;
-
-        return $clone;
-    }
-
-    /**
-     * @param string $cookieString
-     *
-     * @return array
-     */
-    private function splitAttributes(string $cookieString): array
-    {
-        $splitAttributes = preg_split("@\s*[;]\s*@", $cookieString);
-
-        /**
-         * Remove everything with `false`
-         */
-        return array_filter($splitAttributes);
     }
 }

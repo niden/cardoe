@@ -25,10 +25,11 @@ class ExpireCest
     {
         $I->wantToTest('Http\Cookies\Cookie - expire()');
 
-        $cookie  = new Cookie('one');
+        $cookie = new Cookie('one');
+        $cookie->expire();
+
         $past    = (new DateTime('-5 years'))->getTimestamp();
-        $clone   = $cookie->expire();
-        $expired = $clone->getExpires();
+        $expired = $cookie->getExpires();
 
         $min = $past - 10;
         $max = $past + 10;

@@ -13,25 +13,24 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class WithValueCest
+class GetSetValueCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withValue()
+     * Tests Cardoe\Http\Cookies\Cookie :: getValue()/setValue()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieWithValue(UnitTester $I)
+    public function httpCookiesCookieGetSetValue(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withValue()');
+        $I->wantToTest('Http\Cookies\Cookie - getValue()/setValue()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withValue('Darth Vader');
-
         $I->assertNull($cookie->getValue());
-        $I->assertEquals(
-            'Darth Vader',
-            $clone->getValue()
-        );
+
+        $cookie = new Cookie('one', 'two');
+        $I->assertEquals('two', $cookie->getValue());
+
+        $cookie->setValue('four');
+        $I->assertEquals('four', $cookie->getValue());
     }
 }

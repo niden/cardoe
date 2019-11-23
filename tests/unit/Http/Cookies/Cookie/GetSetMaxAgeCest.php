@@ -13,25 +13,21 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class WithMaxAgeCest
+class GetSetMaxAgeCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withMaxAge()
+     * Tests Cardoe\Http\Cookies\Cookie :: getMaxAge()/setMaxAge()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieWithMaxAge(UnitTester $I)
+    public function httpCookiesCookieGetSetMaxAge(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withMaxAge()');
+        $I->wantToTest('Http\Cookies\Cookie - getMaxAge()/setMaxAge()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withMaxAge(1776);
-
         $I->assertEquals(0, $cookie->getMaxAge());
-        $I->assertEquals(
-            1776,
-            $clone->getMaxAge()
-        );
+
+        $cookie->setMaxAge(1776);
+        $I->assertEquals(1776, $cookie->getMaxAge());
     }
 }

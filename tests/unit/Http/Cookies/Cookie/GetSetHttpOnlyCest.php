@@ -13,25 +13,22 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class WithPathCest
+class GetSetHttpOnlyCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withPath()
+     * Tests Cardoe\Http\Cookies\Cookie :: getHttpOnly()/setHttpOnly()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieWithPath(UnitTester $I)
+    public function httpCookiesCookieGetSetHttpOnly(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withPath()');
+        $I->wantToTest('Http\Cookies\Cookie - getHttpOnly()/setHttpOnly()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withPath('/a/b/c');
 
-        $I->assertNull($cookie->getPath());
-        $I->assertEquals(
-            '/a/b/c',
-            $clone->getPath()
-        );
+        $I->assertFalse($cookie->getHttpOnly());
+
+        $cookie->setHttpOnly(true);
+        $I->assertTrue($cookie->getHttpOnly());
     }
 }

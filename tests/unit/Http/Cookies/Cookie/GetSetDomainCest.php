@@ -13,25 +13,25 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class WithDomainCest
+class GetSetDomainCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withDomain()
+     * Tests Cardoe\Http\Cookies\Cookie :: getDomain()/setDomain()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieWithDomain(UnitTester $I)
+    public function httpCookiesCookieGetSetDomain(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withDomain()');
+        $I->wantToTest('Http\Cookies\Cookie - getDomain()/setDomain()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withDomain('https://dev.cardoe.ld');
 
         $I->assertNull($cookie->getDomain());
-        $I->assertEquals(
-            'https://dev.cardoe.ld',
-            $clone->getDomain()
-        );
+
+        $cookie->setDomain('.phalcon.io');
+        $I->assertEquals('.phalcon.io', $cookie->getDomain());
+
+        $cookie->setDomain('phalcon.io');
+        $I->assertEquals('.phalcon.io', $cookie->getDomain());
     }
 }

@@ -13,22 +13,22 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class WithSecureCest
+class GetSetSecureCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: withSecure()
+     * Tests Cardoe\Http\Cookies\Cookie :: getSecure()/setSecure()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieWithSecure(UnitTester $I)
+    public function httpCookiesCookieGetSetSecure(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - withSecure()');
+        $I->wantToTest('Http\Cookies\Cookie - getSecure()/setSecure()');
 
         $cookie = new Cookie('one');
-        $clone  = $cookie
-            ->withSecure(true);
 
         $I->assertFalse($cookie->getSecure());
-        $I->assertTrue($clone->getSecure());
+
+        $cookie->setSecure(true);
+        $I->assertTrue($cookie->getSecure());
     }
 }
