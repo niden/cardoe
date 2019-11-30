@@ -82,7 +82,7 @@ class GetCest
      *
      * @dataProvider getExamples
      *
-     * @since  2019-10-12
+     * @since        2019-10-12
      */
     public function helperArrGetCast(UnitTester $I, Example $example)
     {
@@ -103,7 +103,7 @@ class GetCest
      */
     private function getExamples(): array
     {
-        $sample = new stdClass();
+        $sample      = new stdClass();
         $sample->one = 'two';
 
         return [

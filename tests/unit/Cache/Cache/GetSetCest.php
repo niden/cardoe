@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Cache;
 
-use Cardoe\Cache\Cache;
 use Cardoe\Cache\AdapterFactory;
+use Cardoe\Cache\Cache;
 use Cardoe\Cache\Exception\InvalidArgumentException;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
@@ -39,7 +39,7 @@ class GetSetCest
 
         $key1 = uniqid();
         $key2 = uniqid();
-        $key3 = 'key.'.uniqid();
+        $key3 = 'key.' . uniqid();
 
 
         $adapter->set($key1, 'test');

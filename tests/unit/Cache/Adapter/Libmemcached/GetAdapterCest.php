@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Adapter\Libmemcached;
 
-use Memcached;
 use Cardoe\Cache\Adapter\Libmemcached;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Memcached;
 use UnitTester;
 use function getOptionsLibmemcached;
 

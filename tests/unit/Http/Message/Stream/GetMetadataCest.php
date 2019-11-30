@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Stream;
 
+use Cardoe\Http\Message\Stream;
 use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
 use Codeception\Example;
-use Cardoe\Http\Message\Stream;
 use UnitTester;
 
 class GetMetadataCest
@@ -71,10 +71,10 @@ class GetMetadataCest
     public function httpMessageStreamGetMetadataInvalidHandle(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - getMetadata() - invalid handle');
-        $stream   = new StreamFixture('php://memory', 'rb');
+        $stream = new StreamFixture('php://memory', 'rb');
         $stream->setHandle(null);
 
-        $actual   = $stream->getMetadata();
+        $actual = $stream->getMetadata();
         $I->assertNull($actual);
     }
 

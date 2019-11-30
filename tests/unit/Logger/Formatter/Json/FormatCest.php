@@ -13,8 +13,8 @@ namespace Cardoe\Test\Unit\Logger\Formatter\Json;
 use Cardoe\Logger\Formatter\Json;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
-use const PHP_EOL;
 use UnitTester;
+use const PHP_EOL;
 
 class FormatCest
 {

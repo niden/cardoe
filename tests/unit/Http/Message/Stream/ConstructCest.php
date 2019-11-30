@@ -10,9 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Stream;
 
-use Codeception\Example;
-use Cardoe\Http\Message\Exception;
 use Cardoe\Http\Message\Stream;
+use Codeception\Example;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use stdClass;

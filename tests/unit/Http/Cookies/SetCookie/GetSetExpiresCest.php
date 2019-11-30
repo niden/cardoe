@@ -8,9 +8,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
+namespace Cardoe\Test\Unit\Http\Cookies\SetCookie;
 
-use Cardoe\Http\Cookies\Cookie;
+use Cardoe\Http\Cookies\SetCookie;
 use Codeception\Example;
 use DateTime;
 use InvalidArgumentException;
@@ -29,7 +29,7 @@ class GetSetExpiresCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getExpires()/setExpires()');
 
-        $cookie = new Cookie(
+        $cookie = new SetCookie(
             [
                 'Name' => 'one',
             ]
@@ -55,7 +55,7 @@ class GetSetExpiresCest
                 "Invalid expires '2019-12-15 01:dd:ee' provided"
             ),
             function () {
-                $cookie = new Cookie(
+                $cookie = new SetCookie(
                     [
                         'Name' => 'one',
                     ]

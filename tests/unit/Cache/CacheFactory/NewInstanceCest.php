@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\CacheFactory;
 
-use Cardoe\Cache\Cache;
 use Cardoe\Cache\AdapterFactory;
+use Cardoe\Cache\Cache;
 use Cardoe\Cache\CacheFactory;
 use Cardoe\Storage\SerializerFactory;
 use Psr\SimpleCache\CacheInterface;

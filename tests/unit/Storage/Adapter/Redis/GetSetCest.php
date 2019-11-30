@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
 
-use Codeception\Example;
 use Cardoe\Storage\Adapter\Redis;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\RedisTrait;
+use Codeception\Example;
 use stdClass;
 use UnitTester;
 use function array_merge;

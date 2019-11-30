@@ -10,13 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Logger\FormatterFactory;
 
-use Cardoe\Logger\AdapterFactory;
 use Cardoe\Logger\Formatter\FormatterInterface;
 use Cardoe\Logger\Formatter\Json;
 use Cardoe\Logger\FormatterFactory;
-use Cardoe\Logger\Logger;
-use Cardoe\Logger\LoggerFactory;
-use Psr\Log\LoggerInterface;
 use UnitTester;
 
 class NewInstanceCest

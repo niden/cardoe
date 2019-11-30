@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Response;
 
-use InvalidArgumentException;
 use Cardoe\Http\Message\Response;
+use InvalidArgumentException;
 use UnitTester;
 
 class GetStatusCodeCest

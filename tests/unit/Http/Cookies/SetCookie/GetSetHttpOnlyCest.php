@@ -8,9 +8,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
+namespace Cardoe\Test\Unit\Http\Cookies\SetCookie;
 
-use Cardoe\Http\Cookies\Cookie;
+use Cardoe\Http\Cookies\SetCookie;
 use UnitTester;
 
 class GetSetHttpOnlyCest
@@ -24,7 +24,7 @@ class GetSetHttpOnlyCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getHttpOnly()/setHttpOnly()');
 
-        $cookie = new Cookie(
+        $cookie = new SetCookie(
             [
                 'Name' => 'one',
             ]

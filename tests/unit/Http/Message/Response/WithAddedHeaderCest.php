@@ -26,7 +26,7 @@ class WithAddedHeaderCest
         $data        = [
             'Accept' => ['text/html'],
         ];
-        $response     = new Response('php://memory', 200, $data);
+        $response    = new Response('php://memory', 200, $data);
         $newInstance = $response->withAddedHeader('Cache-Control', ['max-age=0']);
 
         $I->assertNotEquals($response, $newInstance);
@@ -55,7 +55,7 @@ class WithAddedHeaderCest
         $data        = [
             'Accept' => ['text/html'],
         ];
-        $response     = new Response('php://memory', 200, $data);
+        $response    = new Response('php://memory', 200, $data);
         $newInstance = $response->withAddedHeader('Accept', ['text/json']);
 
         $I->assertNotEquals($response, $newInstance);

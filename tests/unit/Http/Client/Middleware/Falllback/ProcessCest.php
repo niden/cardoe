@@ -10,17 +10,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Client\Middleware\Fallback;
 
-use Cardoe\Http\Client\Client;
-use Cardoe\Http\Client\ClientFactory;
-use Cardoe\Http\Client\Middleware\Deflate;
 use Cardoe\Http\Client\Middleware\Fallback;
 use Cardoe\Http\Client\Request\Handler;
-use Cardoe\Http\Client\Transport\Stream;
 use Cardoe\Http\Message\Request;
 use Cardoe\Http\Message\ResponseFactory;
-use Cardoe\Http\Message\StreamFactory;
 use Cardoe\Http\Message\Uri;
-use Psr\Http\Client\ClientInterface;
 use UnitTester;
 
 class ProcessCest

@@ -34,7 +34,7 @@ class GetPrefixCest
             $serializer,
             [
                 'storageDir' => outputDir(),
-                'prefix'   => 'my-prefix',
+                'prefix'     => 'my-prefix',
             ]
         );
 

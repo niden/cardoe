@@ -19,18 +19,17 @@ use Cardoe\Http\Message\Uri;
 use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use UnitTester;
-use function var_dump;
 
 class SendRequestCest
 {
     /**
      * Tests Cardoe\Http\Client\Client :: sendRequest()
      *
-     * @since  2019-11-21
-     *
      * @param UnitTester $I
      *
      * @throws ClientExceptionInterface
+     * @since  2019-11-21
+     *
      */
     public function httpClientClientSendRequest(UnitTester $I)
     {

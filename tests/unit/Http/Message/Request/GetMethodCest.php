@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Request;
 
-use InvalidArgumentException;
 use Cardoe\Http\Message\Request;
+use InvalidArgumentException;
 use UnitTester;
 
 class GetMethodCest

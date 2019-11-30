@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Helper\Arr;
 
-use Codeception\Example;
 use Cardoe\Helper\Arr;
+use Codeception\Example;
 use UnitTester;
 
 class DelimitCest
@@ -21,13 +21,13 @@ class DelimitCest
      *
      * @dataProvider getExamples
      *
-     * @since  2019-11-22
+     * @since        2019-11-22
      */
     public function helperArrDelimit(UnitTester $I, Example $example)
     {
         $I->wantToTest('Helper\Arr - delimit()');
 
-        $results  = Arr::delimit(
+        $results = Arr::delimit(
             $example[0],
             "=",
             2,

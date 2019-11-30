@@ -42,7 +42,6 @@ class WithHeaderCest
         $I->assertNotEquals($request, $newInstance);
 
 
-
         $expected = [
             'Accept' => ['text/html'],
         ];
@@ -51,7 +50,6 @@ class WithHeaderCest
             $expected,
             $request->getHeaders()
         );
-
 
 
         $expected = [
@@ -96,7 +94,7 @@ class WithHeaderCest
      *
      * @dataProvider getExamples
      *
-     * @since  2019-02-10
+     * @since        2019-02-10
      */
     public function httpMessageRequestWithHeaderExceptionValue(UnitTester $I, Example $example)
     {

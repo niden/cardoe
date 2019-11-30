@@ -10,9 +10,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
 
-use InvalidArgumentException;
 use Cardoe\Http\Message\ServerRequest;
 use Cardoe\Http\Message\UploadedFile;
+use InvalidArgumentException;
 use UnitTester;
 
 class WithUploadedFilesCest

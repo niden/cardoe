@@ -73,6 +73,7 @@ class InterpolateCest
             $formatter->format($item)
         );
     }
+
     /**
      * Tests Cardoe\Logger\Formatter\Line :: interpolate() - empty
      */

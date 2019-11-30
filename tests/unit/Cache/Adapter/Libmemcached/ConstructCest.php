@@ -12,12 +12,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Adapter\Libmemcached;
 
-use DateInterval;
-use Exception;
 use Cardoe\Cache\Adapter\AdapterInterface;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Cache\Adapter\Libmemcached;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use DateInterval;
+use Exception;
 use UnitTester;
 use function getOptionsLibmemcached;
 

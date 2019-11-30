@@ -8,9 +8,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
+namespace Cardoe\Test\Unit\Http\Cookies\SetCookie;
 
-use Cardoe\Http\Cookies\Cookie;
+use Cardoe\Http\Cookies\SetCookie;
 use Codeception\Example;
 use InvalidArgumentException;
 use UnitTester;
@@ -27,7 +27,7 @@ class GetSetNameCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getName()/setName()');
 
-        $cookie = new Cookie(
+        $cookie = new SetCookie(
             [
                 'Name' => 'one',
             ]
@@ -50,7 +50,7 @@ class GetSetNameCest
                 'The cookie name cannot be empty'
             ),
             function () {
-                $cookie = new Cookie(
+                $cookie = new SetCookie(
                     [
                         'Name' => 'one',
                     ]
@@ -78,7 +78,7 @@ class GetSetNameCest
                 " ASCII (0-31;127), space, tab and ()<>@,;:\"/?={}';"
             ),
             function () use ($example) {
-                $cookie = new Cookie(
+                $cookie = new SetCookie(
                     [
                         'Name' => 'one',
                     ]

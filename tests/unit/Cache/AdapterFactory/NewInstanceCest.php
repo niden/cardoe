@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\AdapterFactory;
 
-use Codeception\Example;
 use Cardoe\Cache\Adapter\Apcu;
 use Cardoe\Cache\Adapter\Libmemcached;
 use Cardoe\Cache\Adapter\Memory;
@@ -20,9 +19,10 @@ use Cardoe\Cache\Adapter\Redis;
 use Cardoe\Cache\Adapter\Stream;
 use Cardoe\Cache\AdapterFactory;
 use Cardoe\Factory\Exception;
-use Cardoe\Storage\SerializerFactory;
-use UnitTester;
 use Cardoe\Storage\Serializer\Json;
+use Cardoe\Storage\SerializerFactory;
+use Codeception\Example;
+use UnitTester;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
@@ -88,9 +88,9 @@ class NewInstanceCest
 
     private function getExamples(): array
     {
-        $jsonSerializer = new Json();
+        $jsonSerializer        = new Json();
         $optionsWithSerializer = [
-            'serializer' => $jsonSerializer
+            'serializer' => $jsonSerializer,
         ];
         return [
             [
@@ -109,13 +109,13 @@ class NewInstanceCest
                 'memory',
                 Memory::class,
                 [],
-                $optionsWithSerializer
+                $optionsWithSerializer,
             ],
             [
                 'redis',
                 Redis::class,
                 getOptionsRedis(),
-                array_merge(getOptionsRedis(), $optionsWithSerializer)
+                array_merge(getOptionsRedis(), $optionsWithSerializer),
             ],
             [
                 'stream',

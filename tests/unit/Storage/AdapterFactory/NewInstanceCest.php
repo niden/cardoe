@@ -12,7 +12,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Storage\AdapterFactory;
 
-use Codeception\Example;
 use Cardoe\Factory\Exception;
 use Cardoe\Storage\Adapter\Apcu;
 use Cardoe\Storage\Adapter\Libmemcached;
@@ -21,6 +20,7 @@ use Cardoe\Storage\Adapter\Redis;
 use Cardoe\Storage\Adapter\Stream;
 use Cardoe\Storage\AdapterFactory;
 use Cardoe\Storage\SerializerFactory;
+use Codeception\Example;
 use UnitTester;
 use function getOptionsLibmemcached;
 use function getOptionsRedis;

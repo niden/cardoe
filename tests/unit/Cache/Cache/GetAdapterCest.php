@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Cache;
 
-use Cardoe\Cache\Cache;
 use Cardoe\Cache\Adapter\AdapterInterface;
 use Cardoe\Cache\AdapterFactory;
+use Cardoe\Cache\Cache;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
 

@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
 
-use Codeception\Example;
 use Cardoe\Storage\Adapter\Libmemcached;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Codeception\Example;
 use stdClass;
 use UnitTester;
 use function getOptionsLibmemcached;

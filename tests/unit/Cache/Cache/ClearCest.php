@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Cache;
 
-use Cardoe\Cache\Cache;
 use Cardoe\Cache\AdapterFactory;
+use Cardoe\Cache\Cache;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
 use function uniqid;

@@ -8,9 +8,9 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
+namespace Cardoe\Test\Unit\Http\Cookies\SetCookie;
 
-use Cardoe\Http\Cookies\Cookie;
+use Cardoe\Http\Cookies\SetCookie;
 use DateTime;
 use InvalidArgumentException;
 use UnitTester;
@@ -26,7 +26,7 @@ class LoadCest
     {
         $I->wantToTest('Http\Cookies\Cookie - load()');
 
-        $cookie = new Cookie(
+        $cookie = new SetCookie(
             [
                 'Name' => 'one',
             ]
@@ -78,7 +78,7 @@ class LoadCest
                 "The provided cookie string '' must have at least one attribute"
             ),
             function () {
-                $cookie = new Cookie(
+                $cookie = new SetCookie(
                     [
                         'Name' => 'one',
                     ]

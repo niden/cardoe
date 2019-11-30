@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Storage\Adapter\Memory;
 
-use Codeception\Example;
 use Cardoe\Storage\Adapter\Memory;
 use Cardoe\Storage\SerializerFactory;
+use Codeception\Example;
 use stdClass;
 use UnitTester;
 

@@ -12,10 +12,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Adapter\Apcu;
 
-use Codeception\Example;
 use Cardoe\Cache\Adapter\Apcu;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\ApcuTrait;
+use Codeception\Example;
 use stdClass;
 use UnitTester;
 

@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Cache\Cache;
 
-use Cardoe\Cache\Cache;
 use Cardoe\Cache\AdapterFactory;
+use Cardoe\Cache\Cache;
 use Cardoe\Storage\SerializerFactory;
 use Psr\SimpleCache\CacheInterface;
 use UnitTester;
@@ -32,12 +32,12 @@ class ConstructCest
 
         $serializer = new SerializerFactory();
         $factory    = new AdapterFactory($serializer);
-        $options = [
+        $options    = [
             'defaultSerializer' => 'Json',
-            'lifetime'          => 7200
+            'lifetime'          => 7200,
         ];
 
-        $instance   = $factory->newInstance('apcu', $options);
+        $instance = $factory->newInstance('apcu', $options);
 
         $adapter = new Cache($instance);
 

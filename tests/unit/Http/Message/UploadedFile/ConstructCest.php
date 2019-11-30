@@ -11,12 +11,12 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
 
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Codeception\Example;
 use Cardoe\Http\Message\UploadedFile;
-use function fopen;
+use Codeception\Example;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use UnitTester;
+use function fopen;
 
 class ConstructCest
 {
@@ -54,7 +54,7 @@ class ConstructCest
             uniqid('test')
         );
         $stream = fopen($stream, 'w+b');
-        $file = new UploadedFile($stream, 100);
+        $file   = new UploadedFile($stream, 100);
 
         $I->assertInstanceOf(
             UploadedFileInterface::class,

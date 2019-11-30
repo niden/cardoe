@@ -11,7 +11,6 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Domain\Payload\Status;
 
 use Cardoe\Domain\Payload\Status;
-use Error;
 use UnitTester;
 
 class StatusCest

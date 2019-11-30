@@ -27,7 +27,7 @@ class WithoutHeaderCest
             'Accept'        => ['text/html'],
             'Cache-Control' => ['max-age=0'],
         ];
-        $response     = new Response('php://memory', 200, $data);
+        $response    = new Response('php://memory', 200, $data);
         $newInstance = $response->withoutHeader('Accept');
 
         $I->assertNotEquals($response, $newInstance);
