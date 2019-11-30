@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Http\Message\Uri;
 
 use Cardoe\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
 use UnitTester;
+
 use function sprintf;
 
 class WithPortCest

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Http\Cookies\SetCookie;
 
 use Cardoe\Http\Cookies\SetCookie;
 use Codeception\Example;
 use InvalidArgumentException;
 use UnitTester;
+
 use function chr;
 
 class GetSetNameCest

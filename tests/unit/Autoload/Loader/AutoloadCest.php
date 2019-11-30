@@ -16,6 +16,7 @@ use Cardoe\Test\Fixtures\Traits\LoaderTrait;
 use Example\Namespaces\Adapter\Another;
 use Example\Namespaces\Adapter\Mongo;
 use UnitTester;
+
 use function dataDir;
 
 class AutoloadCest

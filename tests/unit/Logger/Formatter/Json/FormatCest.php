@@ -15,6 +15,7 @@ use Cardoe\Logger\Formatter\Json;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
 use UnitTester;
+
 use const PHP_EOL;
 
 class FormatCest

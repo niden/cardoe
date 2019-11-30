@@ -18,6 +18,7 @@ use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use DateInterval;
 use Exception;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class ConstructCest

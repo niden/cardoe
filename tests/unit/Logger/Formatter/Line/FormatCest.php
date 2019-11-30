@@ -15,6 +15,7 @@ use Cardoe\Logger\Formatter\Line;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
 use UnitTester;
+
 use const PHP_EOL;
 
 class FormatCest

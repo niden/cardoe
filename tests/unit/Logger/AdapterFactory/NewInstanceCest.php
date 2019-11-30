@@ -15,6 +15,7 @@ use Cardoe\Factory\Exception;
 use Cardoe\Logger\Adapter\AdapterInterface;
 use Cardoe\Logger\AdapterFactory;
 use UnitTester;
+
 use function outputDir;
 
 class NewInstanceCest

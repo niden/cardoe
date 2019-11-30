@@ -21,6 +21,7 @@ use Cardoe\Storage\AdapterFactory;
 use Cardoe\Storage\SerializerFactory;
 use Codeception\Example;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

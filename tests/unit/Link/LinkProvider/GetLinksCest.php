@@ -14,6 +14,7 @@ namespace Cardoe\Test\Unit\Link\LinkProvider;
 use Cardoe\Link\Link;
 use Cardoe\Link\LinkProvider;
 use UnitTester;
+
 use function spl_object_hash;
 
 class GetLinksCest

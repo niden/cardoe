@@ -8,6 +8,7 @@
  */
 
 declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Cache\Adapter\Apcu;
 
 use UnitTester;

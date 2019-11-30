@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
 
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
@@ -15,7 +16,9 @@ use Cardoe\Http\Message\Stream;
 use Cardoe\Http\Message\UploadedFile;
 use Psr\Http\Message\StreamInterface;
 use UnitTester;
+
 use function outputDir;
+
 use const UPLOAD_ERR_CANT_WRITE;
 
 class GetStreamCest

@@ -15,6 +15,7 @@ use Cardoe\Cache\Adapter\Libmemcached;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class HasCest

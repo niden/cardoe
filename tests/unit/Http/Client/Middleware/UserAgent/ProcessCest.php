@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Client\Middleware\UserAgent;
 
@@ -19,7 +20,9 @@ use Cardoe\Http\Message\Request;
 use Cardoe\Http\Message\ResponseFactory;
 use Psr\Http\Message\RequestInterface;
 use UnitTester;
+
 use function sprintf;
+
 use const PHP_VERSION;
 
 class ProcessCest

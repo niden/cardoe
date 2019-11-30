@@ -18,6 +18,7 @@ use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class GetSetCest

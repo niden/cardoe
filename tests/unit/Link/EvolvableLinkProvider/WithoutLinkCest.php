@@ -14,6 +14,7 @@ namespace Cardoe\Test\Unit\Link\EvolvableLinkProvider;
 use Cardoe\Link\EvolvableLinkProvider;
 use Cardoe\Link\Link;
 use UnitTester;
+
 use function spl_object_hash;
 
 class WithoutLinkCest

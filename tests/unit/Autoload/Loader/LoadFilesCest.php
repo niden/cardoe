@@ -14,6 +14,7 @@ namespace Cardoe\Test\Unit\Autoload\Loader;
 use Cardoe\Autoload\Loader;
 use Cardoe\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
+
 use function dataDir;
 use function function_exists;
 

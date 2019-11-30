@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Storage\Serializer\Igbinary;
 
 use Cardoe\Storage\Serializer\Igbinary;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
+
 use function igbinary_serialize;
 
 class UnserializeCest

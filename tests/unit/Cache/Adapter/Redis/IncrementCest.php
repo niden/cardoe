@@ -15,6 +15,7 @@ use Cardoe\Cache\Adapter\Redis;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
+
 use function getOptionsRedis;
 
 class IncrementCest

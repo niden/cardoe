@@ -15,6 +15,7 @@ use Cardoe\Cache\Adapter\Libmemcached;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class GetKeysCest
@@ -44,7 +45,10 @@ class GetKeysCest
         foreach ($memcachedServerVersions as $server => $memcachedServerVersion) {
             // https://www.php.net/manual/en/memcached.getallkeys.php#123793
             // https://bugs.launchpad.net/libmemcached/+bug/1534062
-            if (version_compare($memcachedServerVersion, '1.4.23', '>=') && version_compare($memcachedExtensionVersion, '3.0.1', '<')) {
+            if (
+                version_compare($memcachedServerVersion, '1.4.23', '>=') &&
+                version_compare($memcachedExtensionVersion, '3.0.1', '<')
+            ) {
                 $I->skipTest(
                     'getAllKeys() does not work in certain Memcached versions'
                 );

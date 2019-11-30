@@ -18,6 +18,7 @@ use Cardoe\Test\Fixtures\Traits\RedisTrait;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
+
 use function array_merge;
 use function getOptionsRedis;
 use function uniqid;
