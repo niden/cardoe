@@ -3,7 +3,6 @@
 use Codeception\Actor;
 use Codeception\Lib\Friend;
 
-
 /**
  * Inherited Methods
  * @method void wantToTest($text)

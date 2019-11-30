@@ -1,13 +1,12 @@
 <?php
+
 declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
- *
  * For the full copyright and license information, please view the LICENSE.txt
- * file that was distributed with this source code.
+* file that was distributed with this source code.
  */
 
 namespace Cardoe\Test\Fixtures\Storage\Adapter;
