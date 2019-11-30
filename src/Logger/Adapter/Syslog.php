@@ -46,7 +46,7 @@ class Syslog extends AbstractAdapter
      *
      * @var string
      */
-    protected $defaultFormatter = "Syslog";
+    protected $defaultFormatter = "Line";
 
     /**
      * @var int
@@ -104,12 +104,7 @@ class Syslog extends AbstractAdapter
     {
         $formatter = $this->getFormatter();
         $message   = $formatter->format($item);
-
-        if (!is_array($message)) {
-            throw new Exception("The formatted message is not valid");
-        }
-
-        $result = openlog($this->name, $this->option, $this->facility);
+        $result    = openlog($this->name, $this->option, $this->facility);
 
         if (!$result) {
             throw new LogicException(
@@ -122,19 +117,19 @@ class Syslog extends AbstractAdapter
         }
 
         $this->opened = true;
-        $level        = $this->logLevelToSyslog($message[1]);
+        $level        = $this->logLevelToSyslog($item->getType());
 
-        syslog($level, $message[1]);
+        syslog($level, $message);
     }
 
     /**
      * Translates a Logger level to a Syslog level
      *
-     * @param string $level
+     * @param int $level
      *
      * @return int
      */
-    private function logLevelToSyslog(string $level): int
+    private function logLevelToSyslog(int $level): int
     {
         $levels = [
             Logger::ALERT     => LOG_ALERT,
