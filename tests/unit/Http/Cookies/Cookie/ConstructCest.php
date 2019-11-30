@@ -24,15 +24,40 @@ class ConstructCest
     {
         $I->wantToTest('Http\Cookies\Cookie - __construct()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
 
         $I->assertNull($cookie->getDomain());
         $I->assertFalse($cookie->getHttpOnly());
         $I->assertEquals(0, $cookie->getExpires());
         $I->assertEquals(0, $cookie->getMaxAge());
         $I->assertEquals('one', $cookie->getName());
-        $I->assertNull($cookie->getPath());
+        $I->assertEmpty($cookie->getPath());
         $I->assertFalse($cookie->getSecure());
         $I->assertNull($cookie->getValue());
+    }
+
+    /**
+     * Tests Cardoe\Http\Cookies\Cookie :: __construct() - expires
+     *
+     * @since  2019-11-22
+     */
+    public function httpCookiesCookieConstructExpires(UnitTester $I)
+    {
+        $I->wantToTest('Http\Cookies\Cookie - __construct() - expires');
+
+        $now    = time();
+        $cookie = new Cookie(
+            [
+                'Name'    => 'one',
+                'Max-Age' => 10,
+            ]
+        );
+
+        $expected = $now + 10;
+        $I->assertEquals($expected, $cookie->getExpires());
     }
 }

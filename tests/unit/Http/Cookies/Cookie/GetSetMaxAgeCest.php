@@ -24,7 +24,12 @@ class GetSetMaxAgeCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getMaxAge()/setMaxAge()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $I->assertEquals(0, $cookie->getMaxAge());
 
         $cookie->setMaxAge(1776);

@@ -24,9 +24,13 @@ class GetSetPathCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getPath()/setPath()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
 
-        $I->assertNull($cookie->getPath());
+        $I->assertEmpty($cookie->getPath());
 
         $cookie->setPath('/a/b/c');
         $I->assertEquals('/a/b/c', $cookie->getPath());

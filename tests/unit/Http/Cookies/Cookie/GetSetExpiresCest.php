@@ -10,8 +10,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 
-use Codeception\Example;
 use Cardoe\Http\Cookies\Cookie;
+use Codeception\Example;
 use DateTime;
 use InvalidArgumentException;
 use UnitTester;
@@ -23,13 +23,18 @@ class GetSetExpiresCest
      *
      * @dataProvider getExamples
      *
-     * @since  2019-11-22
+     * @since        2019-11-22
      */
     public function httpCookiesCookieWithExpires(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Cookies\Cookie - getExpires()/setExpires()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $I->assertEquals(0, $cookie->getExpires());
 
         $cookie->setExpires($example[0]);
@@ -50,7 +55,11 @@ class GetSetExpiresCest
                 "Invalid expires '2019-12-15 01:dd:ee' provided"
             ),
             function () {
-                $cookie = new Cookie('one');
+                $cookie = new Cookie(
+                    [
+                        'Name' => 'one',
+                    ]
+                );
                 $cookie->setExpires("2019-12-15 01:dd:ee");
             }
         );

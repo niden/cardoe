@@ -24,7 +24,11 @@ class GetSetSecureCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getSecure()/setSecure()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
 
         $I->assertFalse($cookie->getSecure());
 

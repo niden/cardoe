@@ -24,7 +24,11 @@ class GetSetHttpOnlyCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getHttpOnly()/setHttpOnly()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
 
         $I->assertFalse($cookie->getHttpOnly());
 

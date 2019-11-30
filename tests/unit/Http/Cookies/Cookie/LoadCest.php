@@ -14,7 +14,6 @@ use Cardoe\Http\Cookies\Cookie;
 use DateTime;
 use InvalidArgumentException;
 use UnitTester;
-use function var_dump;
 
 class LoadCest
 {
@@ -27,30 +26,35 @@ class LoadCest
     {
         $I->wantToTest('Http\Cookies\Cookie - load()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
 
         $I->assertNull($cookie->getDomain());
         $I->assertFalse($cookie->getHttpOnly());
         $I->assertEquals(0, $cookie->getExpires());
         $I->assertEquals(0, $cookie->getMaxAge());
         $I->assertEquals('one', $cookie->getName());
-        $I->assertNull($cookie->getPath());
+        $I->assertEmpty($cookie->getPath());
         $I->assertFalse($cookie->getSecure());
         $I->assertNull($cookie->getValue());
 
         $string = "darth=vader; "
-                . "domain=.phalcon.ld; "
-                . "path=/a/b/c; "
-                . "expires=2019-12-25 01:02:03; "
-                . "max-age=50; "
-                . "httpOnly; "
-                . "secure"
-        ;
+            . "domain=.phalcon.ld; "
+            . "path=/a/b/c; "
+            . "expires=2019-12-25 01:02:03; "
+            . "max-age=50; "
+            . "discard; "
+            . "httpOnly; "
+            . "secure";
 
         $cookie->load($string, 'http://phalcon.io');
         $expires = (new DateTime('2019-12-25 01:02:03'))->getTimestamp();
 
         $I->assertEquals('.phalcon.ld', $cookie->getDomain());
+        $I->assertTrue($cookie->getDiscard());
         $I->assertTrue($cookie->getHttpOnly());
         $I->assertEquals($expires, $cookie->getExpires());
         $I->assertEquals(50, $cookie->getMaxAge());
@@ -74,8 +78,13 @@ class LoadCest
                 "The provided cookie string '' must have at least one attribute"
             ),
             function () {
-                $cookie = new Cookie('one');
-                $clone  = $cookie->load('', 'phalcon.ld');
+                $cookie = new Cookie(
+                    [
+                        'Name' => 'one',
+                    ]
+                );
+
+                $clone = $cookie->load('', 'phalcon.ld');
             }
         );
     }

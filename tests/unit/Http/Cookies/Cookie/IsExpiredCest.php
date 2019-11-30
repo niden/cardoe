@@ -10,7 +10,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 
-use Codeception\Example;
 use Cardoe\Http\Cookies\Cookie;
 use DateTime;
 use UnitTester;
@@ -26,13 +25,16 @@ class IsExpiredCest
     {
         $I->wantToTest('Http\Cookies\Cookie - isExpired()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $I->assertFalse($cookie->isExpired());
-        $I->assertTrue($cookie->isExpired(true));
 
         $cookie->setExpires((new DateTime('2019-12-25 01:02:03'))->getTimestamp());
         $I->assertFalse($cookie->isExpired());
-        $I->assertFalse($cookie->isExpired(true));
 
         $cookie->setExpires((new DateTime('-1 day'))->getTimestamp());
         $I->assertTrue($cookie->isExpired());

@@ -25,7 +25,12 @@ class ExpireCest
     {
         $I->wantToTest('Http\Cookies\Cookie - expire()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $cookie->expire();
 
         $past    = (new DateTime('-5 years'))->getTimestamp();

@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -9,25 +7,32 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Http\Cookies;
 
-use InvalidArgumentException;
+use Cardoe\Collection\Collection;
 use Cardoe\Helper\Arr;
 use DateTime;
 use DateTimeInterface;
 use Exception;
+use InvalidArgumentException;
+
 use function array_filter;
+use function array_map;
+use function array_replace;
 use function array_shift;
 use function explode;
+use function filter_var;
 use function gmdate;
-use function implode;
-use function is_string;
+use function is_int;
+use function is_numeric;
+use function ltrim;
 use function parse_url;
 use function preg_match;
 use function preg_quote;
-use function preg_split;
-use function print_r;
-use function sprintf;
+use function rtrim;
+use function strlen;
 use function strpos;
 use function strtolower;
 use function strtotime;
@@ -35,91 +40,49 @@ use function substr;
 use function time;
 use function trim;
 use function urlencode;
-use function var_dump;
-use const PHP_INT_MAX;
+
+use const FILTER_VALIDATE_IP;
+use const PHP_EOL;
 
 /**
  * Class Cookie
  *
  * @package Cardoe\Http\Client\Middleware\Cookie
  *
- * @property string|null $domain;
- * @property bool        $httpOnly
- * @property int         $expires
- * @property int         $maxAge
- * @property string      $name
- * @property string|null $path
- * @property bool        $secure
- * @property string|null $value
+ * @property Collection $data
  */
 class Cookie
 {
     /**
-     * Cookie domain
+     * Internal store
      *
-     * @var string|null
+     * @var Collection
      */
-    private $domain = null;
-
-    /**
-     * Use HTTP only or not
-     *
-     * @var bool
-     */
-    private $httpOnly = false;
-
-    /**
-     * Cookie expiration date in unix epoch seconds
-     *
-     * @var int
-     */
-    private $expires = 0;
-
-    /**
-     * Cookie max-age
-     *
-     * @var int
-     */
-    private $maxAge = 0;
-
-    /**
-     * Cookie name
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
-     * Cookie path
-     *
-     * @var string|null
-     */
-    private $path = null;
-
-    /**
-     * Use SSL only
-     *
-     * @var bool
-     */
-    private $secure = false;
-
-    /**
-     * Cookie Value
-     *
-     * @var string|null
-     */
-    private $value = null;
+    private $data = [];
 
     /**
      * Cookie constructor.
      *
-     * @param string      $name
-     * @param string|null $value
+     * @param array $data
      */
-    public function __construct(string $name, ?string $value = null)
+    public function __construct(array $data = [])
     {
-        $this->name  = $name;
-        $this->value = $value;
+        $this->data = new Collection($this->getDefaults());
+        foreach ($data as $name => $value) {
+            $this->data->set($name, $value);
+        }
+
+        /**
+         * Trigger error for name
+         */
+        $this->setName($this->getName());
+
+        /**
+         * Check the expiration
+         */
+        if (!$this->getExpires() && $this->getMaxAge()) {
+            $this->setExpires(time() + $this->getMaxAge());
+        }
     }
 
     /**
@@ -129,18 +92,37 @@ class Cookie
      */
     public function __toString(): string
     {
-        $header = [
-            urlencode($this->name) . "=" . urlencode((string) $this->value)
-        ];
+        $result = urlencode($this->getName()) . "="
+            . urlencode((string) $this->getValue()) . "; ";
 
-        $header = $this->addPart($header, "domain", "Domain");
-        $header = $this->addPart($header, "path", "Path");
-        $header = $this->addPart($header, "expires", "Expires");
-        $header = $this->addPart($header, "maxAge", "Max-Age");
-        $header = $this->addPart($header, "httpOnly", "HttpOnly", true);
-        $header = $this->addPart($header, "secure", "Secure", true);
+        $data = $this->data->toArray();
+        foreach ($data as $name => $value) {
+            if (
+                "Name" !== $name &&
+                "Value" !== $name &&
+                null !== $value &&
+                false !== $value
+            ) {
+                if ("Expires" === $name) {
+                    $result .= "Expires="
+                        . gmdate('D, d M Y H:i:s T', $value) . "; ";
+                } else {
+                    $result .= (true === $value ? $name : $name . "=" . $value) . "; ";
+                }
+            }
+        }
 
-        return implode($header, ";");
+        return rtrim($result, "; ");
+    }
+
+    /**
+     * Returns the discard
+     *
+     * @return bool
+     */
+    public function getDiscard(): bool
+    {
+        return (bool) $this->data->get('Discard');
     }
 
     /**
@@ -150,7 +132,7 @@ class Cookie
      */
     public function getDomain(): ?string
     {
-        return $this->domain;
+        return $this->data->get('Domain');
     }
 
     /**
@@ -160,7 +142,7 @@ class Cookie
      */
     public function getHttpOnly(): bool
     {
-        return $this->httpOnly;
+        return (bool) $this->data->get('HttpOnly');
     }
 
     /**
@@ -170,7 +152,7 @@ class Cookie
      */
     public function getExpires(): int
     {
-        return $this->expires;
+        return (int) $this->data->get('Expires');
     }
 
     /**
@@ -180,7 +162,7 @@ class Cookie
      */
     public function getMaxAge(): int
     {
-        return $this->maxAge;
+        return (int) $this->data->get('Max-Age');
     }
 
     /**
@@ -190,17 +172,17 @@ class Cookie
      */
     public function getName(): string
     {
-        return $this->name;
+        return (string) $this->data->get('Name');
     }
 
     /**
      * Return the path
      *
-     * @return string|null
+     * @return string
      */
-    public function getPath(): ?string
+    public function getPath(): string
     {
-        return $this->path;
+        return (string) $this->data->get('Path');
     }
 
     /**
@@ -210,7 +192,7 @@ class Cookie
      */
     public function getSecure(): bool
     {
-        return $this->secure;
+        return (bool) $this->data->get('Secure');
     }
 
     /**
@@ -220,7 +202,7 @@ class Cookie
      */
     public function getValue(): ?string
     {
-        return $this->value;
+        return $this->data->get('Value');
     }
 
     /**
@@ -229,29 +211,35 @@ class Cookie
      */
     public function expire(): Cookie
     {
-        $this->expires = $this->checkExpires(new DateTime("-5 years"));
+        $this->setExpires(
+            $this->checkExpires(new DateTime("-5 years"))
+        );
 
         return $this;
     }
 
     /**
-     * Try to match a $domain to this cookies domain.
+     * Is the passed domain the same as the cookie domain
      *
      * @param string $domain
      *
      * @return bool
+     *
+     * @see http://tools.ietf.org/html/rfc6265#section-5.1.3
+     * @see http://tools.ietf.org/html/rfc6265#section-5.2.3
      */
-    protected function isSameDomain(string $domain): bool
+    public function isSameDomain(string $domain): bool
     {
-        if (empty($this->domain)) {
+        if (empty($this->getDomain())) {
             return false;
         }
 
-        $cookieDomain = strtolower($this->domain);
+        $cookieDomain = ltrim(strtolower($this->getDomain()), '.');
         $hostDomain   = strtolower($domain);
 
-        if (substr($cookieDomain, 0, 1) === ".") {
-            $cookieDomain = substr($cookieDomain, 1);
+        // Subdomain
+        if (filter_var($hostDomain, FILTER_VALIDATE_IP)) {
+            return false;
         }
 
         return ($cookieDomain === $hostDomain ||
@@ -263,44 +251,51 @@ class Cookie
     }
 
     /**
-     * Has this cookie expired?
+     * Is the passed path the same as the cookie path
      *
-     * @param bool $expire
+     * Return `true` if:
+     * - cookie path = passed path (both lowercase)
+     * - cookie path is prefix of passed path - last character is "/"
+     * - cookie path is a prefix of the passed path - first character of
+     *   the passed path is not included in the cookie path and is "/"
      *
-     * @return bool
-     */
-    public function isExpired(bool $expire = false): bool
-    {
-        if (!$this->expires && $expire) {
-            return true;
-        } elseif (!$this->expires) {
-            return false;
-        }
-
-        return $this->expires < time();
-    }
-
-    /**
-     * Match a $scheme, $domain and $path to this cookie object.
+     * @see https://tools.ietf.org/html/rfc6265#section-5.1.3
      *
-     * @param string $scheme
-     * @param string $domain
      * @param string $path
      *
      * @return bool
      */
-    public function isMatch(string $scheme, string $domain, string $path)
+    public function isSamePath(string $path): bool
     {
-        if (('https' == $scheme && !$this->secure) ||
-            ('http'  == $scheme &&  $this->secure)) {
+        $cookiePath = $this->getPath();
+
+        // Exact and not empty "/"
+        if ($cookiePath === "/" || strtolower($cookiePath) == strtolower($path)) {
+            return true;
+        }
+
+        // Prefix
+        if (0 !== strpos($path, $cookiePath)) {
             return false;
         }
 
-        if (!$this->isSameDomain($domain)) {
-            return false;
+        // Last character is "/"
+        if (substr($cookiePath, -1, 1) === "/") {
+            return true;
         }
 
-        return ($this->path && 0 === strpos($path, $this->path));
+        // Prefix - first character not included in cookie path is "/"
+        return substr($path, strlen($cookiePath), 1) === "/";
+    }
+
+    /**
+     * Has this cookie expired?
+     *
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        return 0 !== $this->getExpires() && $this->getExpires() < time();
     }
 
     /**
@@ -313,78 +308,91 @@ class Cookie
      */
     public function load(string $cookieString, string $url): Cookie
     {
-        $this->domain   = null;
-        $this->httpOnly = false;
-        $this->expires  = 0;
-        $this->maxAge   = 0;
-        $this->path     = null;
-        $this->value    = null;
+        $this->data->init($this->getDefaults());
 
         $defaults = parse_url($url);
 
         /**
          * Secure
          */
-        $this->secure = (
-            "https" === Arr::get($defaults, "scheme", "https", "string")
+        $this->setSecure(
+            "https" === Arr::get(
+                $defaults,
+                "scheme",
+                "https",
+                "string"
+            )
         );
 
         /**
          * Path
          */
-        $path = Arr::get($defaults, "path", "");
-        if (!empty($path)) {
-            $this->path = substr(
-                $path,
-                0,
-                strpos($path, "/") + 1
+        $path = Arr::get($defaults, "path", "/");
+        if ("/" !== $path && !empty($path)) {
+            $this->setPath(
+                substr(
+                    $path,
+                    0,
+                    strpos($path, "/") + 1
+                )
             );
         }
 
         /**
          * Split cookies
          */
-        $cookieList = explode(";", $cookieString);
-        $cookieList = array_filter($cookieList);
+        $list = array_filter(
+            array_map("trim", explode(";", $cookieString))
+        );
 
         /**
          * First element is name and value
          */
-        $first = array_shift($cookieList);
+        $first = array_shift($list);
         if (empty($first)) {
             throw new InvalidArgumentException(
-                "The provided cookie string '' must have at least one attribute"
+                "The provided cookie string '{$cookieString}' " .
+                "must have at least one attribute"
             );
         }
 
-        list($this->name, $this->value) = Arr::delimit(
+        [$name, $value] = Arr::delimit(
             $first,
             "=",
             2,
             "urldecode"
         );
 
-        foreach ($cookieList as $item) {
-            list ($property, $value) = Arr::delimit($item, "=", 2, "trim");
+        $this
+            ->setName($name)
+            ->setValue($value)
+        ;
+
+        foreach ($list as $item) {
+            [$property, $value] = Arr::delimit($item, "=");
             $property = trim(strtolower($property));
+            $value    = is_string($value) ? trim($value, " \n\r\t\0\x0B") : $value;
             switch ($property) {
+                case "discard":
+                    $this->setDiscard(true);
+                    break;
                 case "domain":
                     $this->setDomain($value);
-                    break;
-                case "path":
-                    $this->setPath($value);
                     break;
                 case "expires":
                     $this->setExpires($value);
                     break;
+                case "httponly":
+                    $this->setHttpOnly(true);
+                    break;
                 case "max-age":
                     $this->setMaxAge((int) $value);
                     break;
+                case "path":
+                    $this->setPath($value);
+                    break;
                 case "secure":
                     $this->setSecure(true);
-                    break;
-                case "httponly":
-                    $this->setHttpOnly(true);
                     break;
             }
         }
@@ -393,12 +401,30 @@ class Cookie
     }
 
     /**
+     * Set the cookie to remember forever
+     *
      * @return Cookie
      * @throws Exception
      */
     public function rememberForever(): Cookie
     {
-        $this->expires = $this->checkExpires(new DateTime("+5 years"));
+        $this->setExpires(
+            $this->checkExpires(new DateTime("+5 years"))
+        );
+
+        return $this;
+    }
+
+    /**
+     * Return this with the Discard set
+     *
+     * @param bool $discard
+     *
+     * @return Cookie
+     */
+    public function setDiscard(bool $discard): Cookie
+    {
+        $this->data->set('Discard', $discard);
 
         return $this;
     }
@@ -412,21 +438,10 @@ class Cookie
      */
     public function setDomain(?string $domain = null): Cookie
     {
-        $this->domain = $this->checkDomain($domain);
-
-        return $this;
-    }
-
-    /**
-     * Return this with the httpOnly set
-     *
-     * @param bool $httpOnly
-     *
-     * @return Cookie
-     */
-    public function setHttpOnly(bool $httpOnly): Cookie
-    {
-        $this->httpOnly = $httpOnly;
+        $this->data->set(
+            'Domain',
+            $this->checkDomain($domain)
+        );
 
         return $this;
     }
@@ -441,13 +456,27 @@ class Cookie
      */
     public function setExpires($expires): Cookie
     {
-        $this->expires = $this->checkExpires($expires);
+        $this->data->set('Expires', $this->checkExpires($expires));
 
         return $this;
     }
 
     /**
-     * Return this with the expires set
+     * Return this with the httpOnly set
+     *
+     * @param bool $httpOnly
+     *
+     * @return Cookie
+     */
+    public function setHttpOnly(bool $httpOnly): Cookie
+    {
+        $this->data->set('HttpOnly', $httpOnly);
+
+        return $this;
+    }
+
+    /**
+     * Return this with the max-age set
      *
      * @param int $maxAge
      *
@@ -455,7 +484,21 @@ class Cookie
      */
     public function setMaxAge(int $maxAge): Cookie
     {
-        $this->maxAge = $maxAge;
+        $this->data->set('Max-Age', $maxAge);
+
+        return $this;
+    }
+
+    /**
+     * Return this with the name set
+     *
+     * @param string $name
+     *
+     * @return Cookie
+     */
+    public function setName(string $name): Cookie
+    {
+        $this->data->set('Name', $this->checkName($name));
 
         return $this;
     }
@@ -463,13 +506,13 @@ class Cookie
     /**
      * Return this with the path set
      *
-     * @param string|null $path
+     * @param string $path
      *
      * @return Cookie
      */
-    public function setPath(?string $path = null): Cookie
+    public function setPath(string $path = "/"): Cookie
     {
-        $this->path = $path;
+        $this->data->set('Path', $path);
 
         return $this;
     }
@@ -483,7 +526,7 @@ class Cookie
      */
     public function setSecure(bool $secure): Cookie
     {
-        $this->secure = $secure;
+        $this->data->set('Secure', $secure);
 
         return $this;
     }
@@ -491,52 +534,58 @@ class Cookie
     /**
      * Return this with the value set
      *
-     * @param string|null $value
+     * @param string $value
      *
      * @return Cookie
      */
     public function setValue(?string $value): Cookie
     {
-        $this->value = $value;
+        $this->data->set('Value', $value);
 
         return $this;
     }
 
     /**
-     * Appends elements to the array based on present cookie attributes
+     * Checks the name
      *
-     * @param array  $header
-     * @param string $property
-     * @param string $attribute
-     * @param bool   $solo
+     * @param string $name
      *
-     * @return array
+     * @return string
      */
-    private function addPart(
-        array $header,
-        string $property,
-        string $attribute,
-        bool $solo = false
-    ): array {
-        if ($this->$property) {
-            if ("expires" === $property) {
-                $header[] = $attribute . "=" . gmdate('D, d M Y H:i:s T', $this->expires);
-            } else {
-                $header[] = $attribute . ($solo ? "" : "=" . $this->$property);
-            }
+    private function checkName(string $name): string
+    {
+        if (empty($name) && !is_numeric($name)) {
+            throw new InvalidArgumentException(
+                "The cookie name cannot be empty"
+            );
         }
 
-        return $header;
+        // RFC-6265
+        if (
+            preg_match(
+                '/[\x00-\x20\x22\x28-\x29\x2c\x2f\x3a-\x40{\x7d\x7f]/',
+                $name
+            )
+        ) {
+            throw new InvalidArgumentException(
+                "The cookie name cannot contain invalid characters: " .
+                " ASCII (0-31;127), space, tab and ()<>@,;:\"/?={}';"
+            );
+        }
+
+        return $name;
     }
 
     /**
+     * Checks the domain
+     *
      * @param string $domain
      *
      * @return string
      */
-    private function checkDomain(string $domain): string
+    private function checkDomain(?string $domain): ?string
     {
-        if (substr($domain, 0, 1) !== ".") {
+        if (!empty($domain) && substr($domain, 0, 1) !== ".") {
             $domain = "." . $domain;
         }
 
@@ -570,5 +619,25 @@ class Cookie
         }
 
         return $time;
+    }
+
+    /**
+     * Returns default values
+     *
+     * @return array
+     */
+    private function getDefaults(): array
+    {
+        return [
+            "Discard"  => false,
+            "Domain"   => null,
+            "Expires"  => null,
+            "HttpOnly" => false,
+            "Max-Age"  => null,
+            "Name"     => null,
+            "Path"     => null,
+            "Secure"   => false,
+            "Value"    => null,
+        ];
     }
 }

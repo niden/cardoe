@@ -25,7 +25,12 @@ class RememberForeverCest
     {
         $I->wantToTest('Http\Cookies\Cookie - rememberForever()');
 
-        $cookie  = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $past    = (new DateTime('+5 years'))->getTimestamp();
         $clone   = $cookie->rememberForever();
         $expires = $clone->getExpires();

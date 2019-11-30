@@ -13,16 +13,16 @@ namespace Cardoe\Test\Unit\Http\Cookies\Cookie;
 use Cardoe\Http\Cookies\Cookie;
 use UnitTester;
 
-class GetSetDomainCest
+class GetSetDiscardCest
 {
     /**
-     * Tests Cardoe\Http\Cookies\Cookie :: getDomain()/setDomain()
+     * Tests Cardoe\Http\Cookies\Cookie :: getDiscard()/setDiscard()
      *
      * @since  2019-11-22
      */
-    public function httpCookiesCookieGetSetDomain(UnitTester $I)
+    public function httpCookiesCookieGetSetDiscard(UnitTester $I)
     {
-        $I->wantToTest('Http\Cookies\Cookie - getDomain()/setDomain()');
+        $I->wantToTest('Http\Cookies\Cookie - getDiscard()/setDiscard()');
 
         $cookie = new Cookie(
             [
@@ -30,12 +30,9 @@ class GetSetDomainCest
             ]
         );
 
-        $I->assertNull($cookie->getDomain());
+        $I->assertFalse($cookie->getDiscard());
 
-        $cookie->setDomain('.phalcon.io');
-        $I->assertEquals('.phalcon.io', $cookie->getDomain());
-
-        $cookie->setDomain('phalcon.io');
-        $I->assertEquals('.phalcon.io', $cookie->getDomain());
+        $cookie->setDiscard(true);
+        $I->assertTrue($cookie->getDiscard());
     }
 }

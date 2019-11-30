@@ -24,10 +24,21 @@ class GetSetValueCest
     {
         $I->wantToTest('Http\Cookies\Cookie - getValue()/setValue()');
 
-        $cookie = new Cookie('one');
+        $cookie = new Cookie(
+            [
+                'Name' => 'one',
+            ]
+        );
+
         $I->assertNull($cookie->getValue());
 
-        $cookie = new Cookie('one', 'two');
+        $cookie = new Cookie(
+            [
+                'Name'  => 'one',
+                'Value' => 'two',
+            ]
+        );
+
         $I->assertEquals('two', $cookie->getValue());
 
         $cookie->setValue('four');
