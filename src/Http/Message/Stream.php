@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
@@ -16,6 +16,7 @@ use Cardoe\Http\Message\Traits\StreamTrait;
 use Exception;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+
 use function fclose;
 use function feof;
 use function fopen;
@@ -32,6 +33,7 @@ use function set_error_handler;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strpbrk;
+
 use const E_WARNING;
 
 class Stream implements StreamInterface
@@ -307,7 +309,8 @@ class Stream implements StreamInterface
             restore_error_handler();
         }
 
-        if ($this->warning ||
+        if (
+            $this->warning ||
             !is_resource($handle) ||
             'stream' !== get_resource_type($handle)
         ) {

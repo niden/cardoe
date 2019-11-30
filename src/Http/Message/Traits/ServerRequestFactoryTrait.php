@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Http\Message\Traits;
 
@@ -17,16 +17,17 @@ use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\UploadedFile;
 use Cardoe\Http\Message\Uri;
 use Psr\Http\Message\UploadedFileInterface;
+
 use function explode;
 use function implode;
 use function is_array;
 use function ltrim;
+use function mb_strpos;
 use function parse_str;
 use function preg_match;
 use function preg_replace;
 use function str_replace;
 use function strlen;
-use function mb_strpos;
 use function substr;
 
 /**
@@ -118,7 +119,7 @@ trait ServerRequestFactoryTrait
         if (null !== $requestUri) {
             $result = preg_replace('#^[^/:]+://[^/]+#', '', $requestUri);
 
-            if (! is_string($result)) {
+            if (!is_string($result)) {
                 $result = "";
             }
 
@@ -221,7 +222,8 @@ trait ServerRequestFactoryTrait
      */
     private function createUploadedFile(array $file): UploadedFile
     {
-        if (!isset($file['tmp_name']) ||
+        if (
+            !isset($file['tmp_name']) ||
             !isset($file['size']) ||
             !isset($file['error'])
         ) {

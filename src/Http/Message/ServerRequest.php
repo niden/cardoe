@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
@@ -21,6 +21,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
+
 use function is_array;
 use function is_object;
 
@@ -194,8 +195,8 @@ final class ServerRequest implements ServerRequestInterface
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
      *
-     * @param string        $name
-     * @param mixed|null    $defaultValue
+     * @param string     $name
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -464,8 +465,10 @@ final class ServerRequest implements ServerRequestInterface
             if (is_array($file)) {
                 $this->checkUploadedFiles($file);
             } else {
-                if (!(is_object($file) &&
-                    $file instanceof UploadedFileInterface)) {
+                if (
+                    !(is_object($file) &&
+                    $file instanceof UploadedFileInterface)
+                ) {
                     throw new InvalidArgumentException(
                         'Invalid uploaded file'
                     );

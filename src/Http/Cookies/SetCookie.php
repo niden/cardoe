@@ -49,7 +49,7 @@ use const FILTER_VALIDATE_IP;
  *
  * @property Collection $data
  */
-class Cookie
+class SetCookie
 {
     /**
      * Internal store
@@ -204,10 +204,10 @@ class Cookie
     }
 
     /**
-     * @return Cookie
+     * @return SetCookie
      * @throws Exception
      */
-    public function expire(): Cookie
+    public function expire(): SetCookie
     {
         $this->setExpires(
             $this->checkExpires(new DateTime("-5 years"))
@@ -302,9 +302,9 @@ class Cookie
      * @param string $cookieString
      * @param string $url
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function load(string $cookieString, string $url): Cookie
+    public function load(string $cookieString, string $url): SetCookie
     {
         $this->data->init($this->getDefaults());
 
@@ -401,10 +401,10 @@ class Cookie
     /**
      * Set the cookie to remember forever
      *
-     * @return Cookie
+     * @return SetCookie
      * @throws Exception
      */
-    public function rememberForever(): Cookie
+    public function rememberForever(): SetCookie
     {
         $this->setExpires(
             $this->checkExpires(new DateTime("+5 years"))
@@ -418,9 +418,9 @@ class Cookie
      *
      * @param bool $discard
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setDiscard(bool $discard): Cookie
+    public function setDiscard(bool $discard): SetCookie
     {
         $this->data->set('Discard', $discard);
 
@@ -432,9 +432,9 @@ class Cookie
      *
      * @param string|null $domain
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setDomain(?string $domain = null): Cookie
+    public function setDomain(?string $domain = null): SetCookie
     {
         $this->data->set(
             'Domain',
@@ -449,10 +449,10 @@ class Cookie
      *
      * @param mixed $expires
      *
-     * @return Cookie
+     * @return SetCookie
      * @throws InvalidArgumentException
      */
-    public function setExpires($expires): Cookie
+    public function setExpires($expires): SetCookie
     {
         $this->data->set('Expires', $this->checkExpires($expires));
 
@@ -464,9 +464,9 @@ class Cookie
      *
      * @param bool $httpOnly
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setHttpOnly(bool $httpOnly): Cookie
+    public function setHttpOnly(bool $httpOnly): SetCookie
     {
         $this->data->set('HttpOnly', $httpOnly);
 
@@ -478,9 +478,9 @@ class Cookie
      *
      * @param int $maxAge
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setMaxAge(int $maxAge): Cookie
+    public function setMaxAge(int $maxAge): SetCookie
     {
         $this->data->set('Max-Age', $maxAge);
 
@@ -492,9 +492,9 @@ class Cookie
      *
      * @param string $name
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setName(string $name): Cookie
+    public function setName(string $name): SetCookie
     {
         $this->data->set('Name', $this->checkName($name));
 
@@ -506,9 +506,9 @@ class Cookie
      *
      * @param string $path
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setPath(string $path = "/"): Cookie
+    public function setPath(string $path = "/"): SetCookie
     {
         $this->data->set('Path', $path);
 
@@ -520,9 +520,9 @@ class Cookie
      *
      * @param bool $secure
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setSecure(bool $secure): Cookie
+    public function setSecure(bool $secure): SetCookie
     {
         $this->data->set('Secure', $secure);
 
@@ -534,9 +534,9 @@ class Cookie
      *
      * @param string $value
      *
-     * @return Cookie
+     * @return SetCookie
      */
-    public function setValue(?string $value): Cookie
+    public function setValue(?string $value): SetCookie
     {
         $this->data->set('Value', $value);
 

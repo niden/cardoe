@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
@@ -17,6 +17,7 @@ use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use RuntimeException;
+
 use function dirname;
 use function fclose;
 use function fopen;
@@ -26,6 +27,7 @@ use function is_resource;
 use function is_string;
 use function is_writable;
 use function move_uploaded_file;
+
 use const PHP_SAPI;
 use const UPLOAD_ERR_CANT_WRITE;
 use const UPLOAD_ERR_EXTENSION;
@@ -311,18 +313,22 @@ final class UploadedFile implements UploadedFileInterface
         /**
          * All together for early failure
          */
-        if (!(is_string($targetPath) &&
+        if (
+            !(is_string($targetPath) &&
             !empty($targetPath) &&
             is_dir(dirname($targetPath)) &&
-            is_writable(dirname($targetPath)))) {
+            is_writable(dirname($targetPath)))
+        ) {
             throw new InvalidArgumentException(
                 'Target folder is empty string, not a folder or not writable'
             );
         }
 
-        if (empty(PHP_SAPI) ||
+        if (
+            empty(PHP_SAPI) ||
             !empty($this->fileName) ||
-            true === Str::startsWith(PHP_SAPI, 'cli')) {
+            true === Str::startsWith(PHP_SAPI, 'cli')
+        ) {
             $this->storeFile($targetPath);
         } else {
             if (true !== move_uploaded_file($this->fileName, $targetPath)) {
@@ -387,8 +393,10 @@ final class UploadedFile implements UploadedFileInterface
     {
         $errors = [
             UPLOAD_ERR_OK         => 'There is no error, the file uploaded with success.',
-            UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_filesize directive in php.ini.',
-            UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.',
+            UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_filesize ' .
+                                     'directive in php.ini.',
+            UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE directive ' .
+                                     'that was specified in the HTML form.',
             UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded.',
             UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
             UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder.',
