@@ -1,21 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by cardoe-api and AuraPHP
+ *
  * @link    https://github.com/cardoe/cardoe-api
  * @license https://github.com/cardoe/cardoe-api/blob/master/LICENSE
  * @link    https://github.com/auraphp/Aura.Payload
  * @license https://github.com/auraphp/Aura.Payload/blob/3.x/LICENSE
  *
- * @see Original inspiration for the https://github.com/cardoe/cardoe-api
+ * @see     Original inspiration for the https://github.com/cardoe/cardoe-api
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Domain\Payload;
 
@@ -125,7 +126,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setException(Throwable $exception) : PayloadInterface
+    public function setException(Throwable $exception): PayloadInterface
     {
         $this->exception = $exception;
 
@@ -139,7 +140,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setExtras($extras) : PayloadInterface
+    public function setExtras($extras): PayloadInterface
     {
         $this->extras = $extras;
 
@@ -153,7 +154,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setInput($input) : PayloadInterface
+    public function setInput($input): PayloadInterface
     {
         $this->input = $input;
 
@@ -167,7 +168,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setMessages($messages) : PayloadInterface
+    public function setMessages($messages): PayloadInterface
     {
         $this->messages = $messages;
 
@@ -181,7 +182,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setOutput($output) : PayloadInterface
+    public function setOutput($output): PayloadInterface
     {
         $this->output = $output;
 
@@ -195,7 +196,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setStatus($status) : PayloadInterface
+    public function setStatus($status): PayloadInterface
     {
         $this->status = $status;
 

@@ -1,17 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Helper;
 
 use stdClass;
+
 use function array_chunk;
 use function array_filter;
 use function array_keys;
@@ -34,6 +35,7 @@ use function krsort;
 use function ksort;
 use function reset;
 use function settype;
+
 use const PHP_INT_MAX;
 
 /**
@@ -61,7 +63,8 @@ class Arr
     }
 
     /**
-     * Splits a string based on a delimiter and filters it with a passed callback
+     * Splits a string based on a delimiter and filters it with a passed
+     * callback
      *
      * @param string   $source
      * @param string   $delimiter
@@ -199,7 +202,8 @@ class Arr
     {
         $filtered = [];
         foreach ($collection as $element) {
-            if (is_callable($method) ||
+            if (
+                is_callable($method) ||
                 (is_string($method) && function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);

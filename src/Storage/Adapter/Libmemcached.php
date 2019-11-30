@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Storage\Adapter;
 
@@ -16,6 +17,7 @@ use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
 use Memcached;
+
 use function array_merge;
 use function strtolower;
 

@@ -1,19 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Logger;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Logger\Adapter\AdapterInterface;
 use Psr\Log\LoggerInterface;
+
 use function array_flip;
 use function is_numeric;
 use function is_string;
@@ -26,15 +27,15 @@ use function time;
  */
 class Logger implements LoggerInterface
 {
-    const ALERT     = 2;
-    const CRITICAL  = 1;
-    const CUSTOM    = 8;
-    const DEBUG     = 7;
-    const EMERGENCY = 0;
-    const ERROR     = 3;
-    const INFO      = 6;
-    const NOTICE    = 5;
-    const WARNING   = 4;
+    public const ALERT     = 2;
+    public const CRITICAL  = 1;
+    public const CUSTOM    = 8;
+    public const DEBUG     = 7;
+    public const EMERGENCY = 0;
+    public const ERROR     = 3;
+    public const INFO      = 6;
+    public const NOTICE    = 5;
+    public const WARNING   = 4;
 
     /**
      * The adapter stack

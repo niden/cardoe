@@ -20,7 +20,6 @@ use InvalidArgumentException;
 
 use function array_filter;
 use function array_map;
-use function array_replace;
 use function array_shift;
 use function explode;
 use function filter_var;
@@ -42,7 +41,6 @@ use function trim;
 use function urlencode;
 
 use const FILTER_VALIDATE_IP;
-use const PHP_EOL;
 
 /**
  * Class Cookie

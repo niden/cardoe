@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Logger;
 
@@ -75,7 +75,7 @@ class Item
     /**
      * @return array|null
      */
-    public function getContext() : ?array
+    public function getContext(): ?array
     {
         return $this->context;
     }
