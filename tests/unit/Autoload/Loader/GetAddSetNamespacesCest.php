@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Autoload\Loader;
 
@@ -26,7 +27,7 @@ class GetAddSetNamespacesCest
      * @throws Exception
      * @since  2018-11-13
      */
-    public function autoloaderLoaderGetAddSetNamespaces(UnitTester $I)
+    public function autoloadLoaderGetAddSetNamespaces(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - getNamespaces()/addNamespace()/setNamespace()');
 
@@ -144,7 +145,7 @@ class GetAddSetNamespacesCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderGetAddSetNamespacesException(UnitTester $I)
+    public function autoloadLoaderGetAddSetNamespacesException(UnitTester $I)
     {
         $I->wantToTest(
             'Autoload\Loader - getNamespaces()/addNamespace()/setNamespace() - exception'

@@ -26,7 +26,7 @@ class RegisterUnregisterCest
      * @since  2018-11-13
      */
 
-    public function autoloaderLoaderRegisterUnregister(UnitTester $I)
+    public function autoloadLoaderRegisterUnregister(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - register()/unregister()');
 

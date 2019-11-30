@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Autoload\Loader;
 
@@ -26,7 +27,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadClasses(UnitTester $I)
+    public function autoloadLoaderAutoloadClasses(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - classes');
 
@@ -80,7 +81,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadNamespaces(UnitTester $I)
+    public function autoloadLoaderAutoloadNamespaces(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - namespaces');
 
@@ -121,7 +122,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadNamespacesMultipleFolders(UnitTester $I)
+    public function autoloadLoaderAutoloadNamespacesMultipleFolders(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - namespaces multiple folders');
 
@@ -171,7 +172,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadNamespacesNoFolders(UnitTester $I)
+    public function autoloadLoaderAutoloadNamespacesNoFolders(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - namespaces no folders');
 
@@ -197,7 +198,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadNamespaces404(UnitTester $I)
+    public function autoloadLoaderAutoloadNamespaces404(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - namespaces 404');
 
@@ -230,7 +231,7 @@ class AutoloadCest
      *
      * @since  2018-11-13
      */
-    public function autoloaderLoaderAutoloadExtension(UnitTester $I)
+    public function autoloadLoaderAutoloadExtension(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - autoload() - extension');
 

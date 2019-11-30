@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -7,6 +6,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Autoload\Loader;
 
@@ -18,9 +19,12 @@ use function function_exists;
 
 class LoadFilesCest
 {
-    use LoaderTrait;
-
-    public function autoloaderLoaderLoadFiles(UnitTester $I)
+    /**
+     * Unit Tests Cardoe\Autoload\Loader :: loadFiles()
+     *
+     * @since  2019-11-30
+     */
+    public function autoloadLoaderLoadFiles(UnitTester $I)
     {
         $I->wantToTest('Autoload\Loader - loadFiles()');
 
