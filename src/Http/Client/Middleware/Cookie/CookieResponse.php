@@ -9,32 +9,27 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\Client\Middleware;
+namespace Cardoe\Http\Client\Middleware\Cookie;
 
+use Cardoe\Http\Client\Middleware\MiddlewareInterface;
 use Cardoe\Http\Client\Request\HandlerInterface;
+use Dflydev\FigCookies\SetCookies;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
-/**
- * Class UserAgent
- *
- * @package Cardoe\Http\Client\Middleware
- *
- * @property string $agent
- */
-class UserAgent implements MiddlewareInterface
+class CookieResponse implements MiddlewareInterface
 {
     /**
-     * @var string
+     * @var Storage
      */
-    private $agent;
+    private $storage;
 
     /**
-     * @param string $agent
+     * @param Storage $storage
      */
-    public function __construct(string $agent = null)
+    public function __construct(Storage $storage)
     {
-        $this->agent = $agent ?: sprintf("Cardoe HTTP Client PHP/%s", PHP_VERSION);
+        $this->storage = $storage;
     }
 
     /**
@@ -44,10 +39,12 @@ class UserAgent implements MiddlewareInterface
         RequestInterface $request,
         HandlerInterface $handler
     ): ResponseInterface {
-        if (!$request->hasHeader("User-Agent")) {
-            $request = $request->withHeader("User-Agent", $this->agent);
+        $response = $handler->handle($request);
+
+        foreach (SetCookies::fromResponse($response)->getAll() as $setCookie) {
+            $this->storage->add($setCookie);
         }
 
-        return $handler->handle($request);
+        return $response;
     }
 }

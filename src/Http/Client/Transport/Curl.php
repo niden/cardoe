@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -9,10 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Http\Client\Transport;
 
 use Cardoe\Http\Client\Exception\NetworkException;
-use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

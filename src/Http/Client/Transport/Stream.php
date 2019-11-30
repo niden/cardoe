@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Transport;
 
@@ -54,8 +54,10 @@ class Stream extends AbstractTransport
 
         if (!is_resource($resource)) {
             $error = error_get_last()["message"];
-            if (strpos($error, "getaddrinfo") ||
-                strpos($error, "Connection refused")) {
+            if (
+                strpos($error, "getaddrinfo") ||
+                strpos($error, "Connection refused")
+            ) {
                 $ex = new NetworkException($error, $request);
             } else {
                 $ex = new RequestException($error, $request);

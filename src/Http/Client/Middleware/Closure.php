@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -11,11 +9,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Client\Middleware;
 
-use Cardoe\Http\Client\AbstractCommon;
 use Cardoe\Http\Client\Request\HandlerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\StreamFactoryInterface;
+
 use function call_user_func;
 
 /**
