@@ -19,7 +19,9 @@ use DateInterval;
 
 use function constant;
 use function defined;
+use function strlen;
 use function strtolower;
+use function substr;
 
 /**
  * Redis adapter
@@ -175,7 +177,17 @@ class Redis extends AbstractAdapter
      */
     public function getKeys(): array
     {
-        return $this->getAdapter()->keys("*");
+        $results = [];
+        $keys    = $this->getAdapter()->keys("*");
+        $keys    = (!$keys) ? [] : $keys;
+
+        foreach ($keys as $key) {
+            if (substr($key, 0, strlen($this->prefix)) === $this->prefix) {
+                $results[] = $key;
+            }
+        }
+
+        return $results;
     }
 
     /**

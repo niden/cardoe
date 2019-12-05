@@ -17,6 +17,8 @@ use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
 
 use function getOptionsLibmemcached;
+use function is_array;
+use function var_dump;
 
 class GetKeysCest
 {
@@ -40,6 +42,7 @@ class GetKeysCest
         );
 
         $memcachedServerVersions   = $adapter->getAdapter()->getVersion();
+        $memcachedServerVersions   = is_array($memcachedServerVersions) ? $memcachedServerVersions : [];
         $memcachedExtensionVersion = phpversion('memcached');
 
         foreach ($memcachedServerVersions as $server => $memcachedServerVersion) {
@@ -68,7 +71,6 @@ class GetKeysCest
         $adapter->set('key-2', 'test');
 
         $actual = $adapter->getKeys();
-        sort($actual);
         $I->assertEquals(
             [
                 'ph-memc-key-1',

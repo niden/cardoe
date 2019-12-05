@@ -19,7 +19,9 @@ use DateInterval;
 use Memcached;
 
 use function array_merge;
+use function strlen;
 use function strtolower;
+use function substr;
 
 /**
  * Libmemcached adapter
@@ -183,9 +185,17 @@ class Libmemcached extends AbstractAdapter
      */
     public function getKeys(): array
     {
-        $keys = $this->getAdapter()->getAllKeys();
+        $results = [];
+        $keys    = $this->getAdapter()->getAllKeys();
+        $keys    = (!$keys) ? [] : $keys;
 
-        return (!$keys) ? [] : $keys;
+        foreach ($keys as $key) {
+            if (substr($key, 0, strlen($this->prefix)) === $this->prefix) {
+                $results[] = $key;
+            }
+        }
+
+        return $results;
     }
 
     /**
