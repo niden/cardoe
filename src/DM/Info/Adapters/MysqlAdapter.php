@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -9,11 +7,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\DM\Info;
+declare(strict_types=1);
+
+namespace Cardoe\DM\Info\Adapter;
 
 use Cardoe\DM\Pdo\Connection;
 
-class MysqlAdapter extends AbstractInfo
+class MysqlAdapter extends AbstractAdapter
 {
     protected $maria = false;
 

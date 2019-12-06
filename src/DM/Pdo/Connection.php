@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -14,19 +12,21 @@ declare(strict_types=1);
  * @license https://github.com/atlasphp/Atlas.Pdo/blob/1.x/LICENSE.md
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\DM\Pdo;
 
 use Cardoe\Logger\Exception;
 use PDO;
 use PDOStatement;
 use Psr\Log\LoggerInterface;
+
 use function is_array;
 use function is_bool;
 use function is_int;
 use function json_encode;
 use function microtime;
-use function substr;
-use function var_dump;
+
 use const PHP_EOL;
 
 /**
@@ -341,8 +341,8 @@ class Connection
         string $class = 'stdClass',
         array $ctorArgs = []
     ): array {
-        $sth    = $this->perform($statement, $values);
-        $entry  = $this->newLogEntry($sth->queryString, $values);
+        $sth   = $this->perform($statement, $values);
+        $entry = $this->newLogEntry($sth->queryString, $values);
 
         if (true !== empty($ctorArgs)) {
             $result = $sth->fetchAll(PDO::FETCH_CLASS, $class, $ctorArgs);
@@ -367,8 +367,8 @@ class Connection
         string $statement,
         array $values = []
     ): ?array {
-        $sth   = $this->perform($statement, $values);
-        $entry = $this->newLogEntry($sth->queryString, $values);
+        $sth    = $this->perform($statement, $values);
+        $entry  = $this->newLogEntry($sth->queryString, $values);
         $result = $sth->fetch(PDO::FETCH_ASSOC);
 
         $this->addLogEntry($entry);
@@ -578,8 +578,10 @@ class Connection
     protected function formatLogEntry(array $entry): string
     {
         $suffix = '';
-        if (false === strpos($this->logFormat, '%trace%') &&
-            true === $this->logTrace) {
+        if (
+            false === strpos($this->logFormat, '%trace%') &&
+            true === $this->logTrace
+        ) {
             $suffix = PHP_EOL . '[Trace: %trace%]';
         }
 

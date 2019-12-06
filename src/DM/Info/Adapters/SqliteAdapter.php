@@ -1,16 +1,17 @@
 <?php
+
 /**
+ * This file is part of the Cardoe Framework.
  *
- * This file is part of Atlas for PHP.
- *
- * @license http://opensource.org/licenses/mit-license.php MIT
- *
+ * For the full copyright and license information, please view the LICENSE.md
+ * file that was distributed with this source code.
  */
+
 declare(strict_types=1);
 
-namespace Cardoe\DM\Info;
+namespace Cardoe\DM\Info\Adapter;
 
-class SqliteAbstractAdapter extends AbstractAdapter
+class SqliteAdapter extends AbstractAdapter
 {
     public function fetchCurrentSchema(): string
     {

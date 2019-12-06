@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -13,6 +11,8 @@ declare(strict_types=1);
  * @link    https://github.com/atlasphp/Atlas.Pdo
  * @license https://github.com/atlasphp/Atlas.Pdo/blob/1.x/LICENSE.md
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\DM\Pdo;
 

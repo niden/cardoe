@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * This file is part of Atlas for PHP.
@@ -6,17 +7,16 @@
  * @license https://opensource.org/licenses/MIT MIT
  *
  */
+
 declare(strict_types=1);
 
 namespace Cardoe\DM\Pdo;
 
 class ConnectionLocator
 {
-    const DEFAULT = 'DEFAULT';
-
-    const READ = 'READ';
-
-    const WRITE = 'WRITE';
+    public const DEFAULT = "DEFAULT";
+    public const READ    = "READ";
+    public const WRITE   = "WRITE";
 
     protected $factories = [
         self::DEFAULT => null,
@@ -160,7 +160,7 @@ class ConnectionLocator
         string $label
     ): Connection {
         $connection  = $factory();
-        $queryLogger = function (array $entry) use ($label) : void {
+        $queryLogger = function (array $entry) use ($label): void {
             $entry = ['connection' => $label] + $entry;
             $this->addLogEntry($entry);
         };
