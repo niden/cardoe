@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -9,9 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Link;
 
 use Psr\Link\LinkInterface;
+
 use function array_keys;
 use function strpos;
 use function strrpos;

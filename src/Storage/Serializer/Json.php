@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,8 +7,11 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Storage\Serializer;
 
+use Cardoe\Helper\Json as JsonHelper;
 use InvalidArgumentException;
 use JsonSerializable;
 
@@ -38,7 +40,7 @@ class Json extends AbstractSerializer
             return $this->data;
         }
 
-        return json_encode($this->data);
+        return JsonHelper::encode($this->data);
     }
 
     /**
@@ -48,6 +50,6 @@ class Json extends AbstractSerializer
      */
     public function unserialize($data): void
     {
-        $this->data = json_decode($data);
+        $this->data = JsonHelper::decode($data);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,11 +7,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Link\EvolvableLinkProvider;
 
 use Cardoe\Link\EvolvableLinkProvider;
 use Cardoe\Link\Link;
 use UnitTester;
+
 use function spl_object_hash;
 
 class WithoutLinkCest

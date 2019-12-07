@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Cardoe\Http\Message\Traits;
 
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
+
 use function is_string;
 
 /**

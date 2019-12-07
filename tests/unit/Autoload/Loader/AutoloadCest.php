@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,6 +7,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Autoload\Loader;
 
 use Cardoe\Autoload\Loader;
@@ -15,6 +16,7 @@ use Cardoe\Test\Fixtures\Traits\LoaderTrait;
 use Example\Namespaces\Adapter\Another;
 use Example\Namespaces\Adapter\Mongo;
 use UnitTester;
+
 use function dataDir;
 
 class AutoloadCest

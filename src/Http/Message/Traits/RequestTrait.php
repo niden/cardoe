@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -9,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Http\Message\Traits;
 
 use Cardoe\Collection\Collection;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Uri;
 use Psr\Http\Message\UriInterface;
+
 use function is_string;
 use function preg_match;
 
@@ -248,9 +249,11 @@ trait RequestTrait
             'TRACE'   => 1,
         ];
 
-        if (!(!empty($method) &&
+        if (
+            !(!empty($method) &&
             is_string($method) &&
-            isset($methods[$method]))) {
+            isset($methods[$method]))
+        ) {
             throw new InvalidArgumentException(
                 'Invalid or unsupported method ' . $method
             );

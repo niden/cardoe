@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -16,6 +14,8 @@ declare(strict_types=1);
  *
  * @see Original inspiration for the https://github.com/cardoe/cardoe-api
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Domain\Payload;
 

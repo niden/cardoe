@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,13 +7,16 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Logger\Formatter\Line;
 
 use Cardoe\Logger\Formatter\Line;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
-use const PHP_EOL;
 use UnitTester;
+
+use const PHP_EOL;
 
 class FormatCest
 {

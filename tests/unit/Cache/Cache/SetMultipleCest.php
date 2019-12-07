@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -10,6 +9,8 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Cache\Cache;
 
 use Cardoe\Cache\Cache;
@@ -17,6 +18,7 @@ use Cardoe\Cache\AdapterFactory;
 use Cardoe\Cache\Exception\InvalidArgumentException;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
+
 use function uniqid;
 
 class SetMultipleCest

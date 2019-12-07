@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -10,12 +9,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
 
 use Cardoe\Storage\Adapter\Libmemcached;
 use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class GetPrefixCest

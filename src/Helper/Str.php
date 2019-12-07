@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Helper;
 
@@ -32,6 +32,7 @@ use function strrev;
 use function substr;
 use function substr_compare;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
 
@@ -42,12 +43,12 @@ use const PATHINFO_FILENAME;
  */
 class Str
 {
-    const RANDOM_ALNUM    = 0;
-    const RANDOM_ALPHA    = 1;
-    const RANDOM_DISTINCT = 5;
-    const RANDOM_HEXDEC   = 2;
-    const RANDOM_NOZERO   = 4;
-    const RANDOM_NUMERIC  = 3;
+    public const RANDOM_ALNUM    = 0;
+    public const RANDOM_ALPHA    = 1;
+    public const RANDOM_DISTINCT = 5;
+    public const RANDOM_HEXDEC   = 2;
+    public const RANDOM_NOZERO   = 4;
+    public const RANDOM_NUMERIC  = 3;
 
     /**
      * Concatenates strings using the separator only once without duplication in

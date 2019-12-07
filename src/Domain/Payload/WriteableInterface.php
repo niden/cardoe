@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -16,6 +14,8 @@ declare(strict_types=1);
  *
  * @see Original inspiration for the https://github.com/cardoe/cardoe-api
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Domain\Payload;
 
@@ -35,7 +35,7 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setException(Throwable $exception) : PayloadInterface;
+    public function setException(Throwable $exception): PayloadInterface;
 
     /**
      * Sets arbitrary extra values produced by the domain layer.
@@ -44,7 +44,7 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setExtras($extras) : PayloadInterface;
+    public function setExtras($extras): PayloadInterface;
 
     /**
      *
@@ -54,7 +54,7 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setInput($input) : PayloadInterface;
+    public function setInput($input): PayloadInterface;
 
     /**
      * Sets the messages produced by the domain layer.
@@ -63,7 +63,7 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setMessages($messages) : PayloadInterface;
+    public function setMessages($messages): PayloadInterface;
 
     /**
      * Sets the output produced from the domain layer.
@@ -72,7 +72,7 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setOutput($output) : PayloadInterface;
+    public function setOutput($output): PayloadInterface;
 
     /**
      * Sets the status of this payload.
@@ -81,5 +81,5 @@ interface WriteableInterface
      *
      * @return PayloadInterface
      */
-    public function setStatus($status) : PayloadInterface;
+    public function setStatus($status): PayloadInterface;
 }

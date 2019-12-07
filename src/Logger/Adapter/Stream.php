@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -9,12 +7,15 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Logger\Adapter;
 
 use Cardoe\Helper\Arr;
 use Cardoe\Logger\Exception;
 use Cardoe\Logger\Item;
 use UnexpectedValueException;
+
 use function fclose;
 use function fopen;
 use function fwrite;

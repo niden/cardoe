@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Logger\Adapter;
 
@@ -16,7 +16,9 @@ use Cardoe\Logger\Exception;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
 use LogicException;
+
 use function is_array;
+
 use const LOG_ERR;
 use const LOG_ODELAY;
 use const LOG_USER;

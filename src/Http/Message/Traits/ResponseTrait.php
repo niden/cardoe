@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -9,11 +7,13 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Http\Message\Traits;
 
 use Cardoe\Helper\Number;
 use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
+
 use function is_int;
 use function is_string;
 

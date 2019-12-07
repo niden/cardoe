@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -8,11 +7,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Storage\Serializer;
 
 use function igbinary_unserialize;
 use function restore_error_handler;
 use function set_error_handler;
+
 use const E_WARNING;
 
 /**

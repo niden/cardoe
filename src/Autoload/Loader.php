@@ -1,13 +1,13 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Autoload;
 
@@ -25,6 +25,7 @@ use function str_replace;
 use function strrpos;
 use function substr;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -196,7 +197,7 @@ class Loader
 
             $file = $this->loadFile($namespace, $remainder);
             if (false !== $file) {
-                $this->debug[] = "Namespace: " . $namespace . " - " .$file;
+                $this->debug[] = "Namespace: " . $namespace . " - " . $file;
 
                 return $file;
             }

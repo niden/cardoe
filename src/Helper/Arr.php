@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -9,9 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Helper;
 
 use stdClass;
+
 use function array_chunk;
 use function array_filter;
 use function array_keys;
@@ -154,7 +155,8 @@ class Arr
     {
         $filtered = [];
         foreach ($collection as $element) {
-            if (is_callable($method) ||
+            if (
+                is_callable($method) ||
                 (is_string($method) && function_exists($method))
             ) {
                 $key              = call_user_func($method, $element);

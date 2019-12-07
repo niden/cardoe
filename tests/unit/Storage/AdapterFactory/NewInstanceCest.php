@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -9,6 +8,8 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Storage\AdapterFactory;
 
@@ -22,6 +23,7 @@ use Cardoe\Storage\Adapter\Stream;
 use Cardoe\Storage\AdapterFactory;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;

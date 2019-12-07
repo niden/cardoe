@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 /**
  * This file is part of the Cardoe Framework.
@@ -10,11 +9,14 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
 
 use Cardoe\Cache\Adapter\Stream;
 use Cardoe\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 use function uniqid;
 

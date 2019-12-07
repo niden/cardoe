@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
 * This file is part of the Cardoe Framework.
  *
@@ -16,6 +14,8 @@ declare(strict_types=1);
  *
  * @see Original inspiration for the https://github.com/cardoe/cardoe-api
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Domain\Payload;
 
@@ -125,7 +125,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setException(Throwable $exception) : PayloadInterface
+    public function setException(Throwable $exception): PayloadInterface
     {
         $this->exception = $exception;
 
@@ -139,7 +139,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setExtras($extras) : PayloadInterface
+    public function setExtras($extras): PayloadInterface
     {
         $this->extras = $extras;
 
@@ -153,7 +153,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setInput($input) : PayloadInterface
+    public function setInput($input): PayloadInterface
     {
         $this->input = $input;
 
@@ -167,7 +167,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setMessages($messages) : PayloadInterface
+    public function setMessages($messages): PayloadInterface
     {
         $this->messages = $messages;
 
@@ -181,7 +181,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setOutput($output) : PayloadInterface
+    public function setOutput($output): PayloadInterface
     {
         $this->output = $output;
 
@@ -195,7 +195,7 @@ class Payload implements PayloadInterface
      *
      * @return PayloadInterface
      */
-    public function setStatus($status) : PayloadInterface
+    public function setStatus($status): PayloadInterface
     {
         $this->status = $status;
 
