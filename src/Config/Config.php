@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 /**
  * This file is part of the Cardoe Framework.
  *
@@ -9,9 +7,12 @@ declare(strict_types=1);
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace Cardoe\Config;
 
 use Cardoe\Collection\Collection;
+
 use function array_shift;
 use function explode;
 use function is_array;
@@ -21,7 +22,7 @@ use function method_exists;
 
 class Config extends Collection
 {
-    const DEFAULT_PATH_DELIMITER = ".";
+    public const DEFAULT_PATH_DELIMITER = ".";
 
     /**
      * @var string|null
@@ -139,8 +140,10 @@ class Config extends Collection
         $data    = parent::toArray();
 
         foreach ($data as $key => $value) {
-            if (is_object($value) &&
-                true === method_exists($value, "toArray")) {
+            if (
+                is_object($value) &&
+                true === method_exists($value, "toArray")
+            ) {
                 $value = $value->toArray();
             }
 
@@ -161,9 +164,11 @@ class Config extends Collection
     final protected function internalMerge(array $source, array $target): array
     {
         foreach ($target as $key => $value) {
-            if (is_array($value) &&
+            if (
+                is_array($value) &&
                 true === isset($source[$key]) &&
-                is_array($source[$key])) {
+                is_array($source[$key])
+            ) {
                 $source[$key] = $this->internalMerge($source[$key], $value);
             } elseif (is_int($key)) {
                 $source[] = $value;
