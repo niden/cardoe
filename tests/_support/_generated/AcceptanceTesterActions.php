@@ -1454,7 +1454,7 @@ trait AcceptanceTesterActions
      *         ]
      *     ],
      *     'submitButton'
-     * );
+     *;
      * ```
      * Note that "2" will be the submitted value for the "plan" field, as it is
      * the selected option.
@@ -1473,7 +1473,7 @@ trait AcceptanceTesterActions
      *             'agree' => true
      *         ]
      *     ]
-     * );
+     *;
      * ```
      *
      * This function works well when paired with `seeInFormFields()`
