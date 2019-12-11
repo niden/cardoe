@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Profiler\Profiler;
 
+use Cardoe\DM\Pdo\Profiler\MemoryLogger;
+use Cardoe\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
 
 class GetLoggerCest
@@ -24,6 +26,16 @@ class GetLoggerCest
     {
         $I->wantToTest('DM\Pdo\Profiler\Profiler - getLogger()');
 
-        $I->skipTest('Need implementation');
+        $profile = new Profiler();
+        $logger = $profile->getLogger();
+
+        $I->assertInstanceOf(MemoryLogger::class, $logger);
+
+        $newLogger = new MemoryLogger();
+        $profile   = new Profiler($newLogger);
+
+        $logger = $profile->getLogger();
+        $I->assertInstanceOf(MemoryLogger::class, $logger);
+        $I->assertEquals($newLogger, $logger);
     }
 }

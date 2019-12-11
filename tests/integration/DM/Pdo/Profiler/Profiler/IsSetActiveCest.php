@@ -14,19 +14,22 @@ namespace Cardoe\Test\Integration\DM\Pdo\Profiler\Profiler;
 use Cardoe\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
 
-class ConstructCest
+class IsSetActiveCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Profiler\Profiler :: __construct()
+     * Integration Tests Cardoe\DM\Pdo\Profiler\Profiler :: isActive()/setActive()
      *
      * @since  2019-12-11
      */
-    public function dMPdoProfilerProfilerConstruct(IntegrationTester $I)
+    public function dMPdoProfilerProfilerIsSetActive(IntegrationTester $I)
     {
-        $I->wantToTest('DM\Pdo\Profiler\Profiler - __construct()');
+        $I->wantToTest('DM\Pdo\Profiler\Profiler - isActive()/setActive()');
 
         $profiler = new Profiler();
 
-        $I->assertInstanceOf(Profiler::class, $profiler);
+        $I->assertFalse($profiler->isActive());
+
+        $profiler->setActive(true);
+        $I->assertTrue($profiler->isActive());
     }
 }
