@@ -14,13 +14,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Pdo\Exception;
-
-use Throwable;
+namespace Cardoe\DM\Pdo\Parser;
 
 /**
- * Base Exception class
+ * Parsing/rebuilding functionality for the sqlite driver.
  */
-class Exception extends \Exception implements Throwable
+class SqliteParser extends AbstractParser
 {
 }

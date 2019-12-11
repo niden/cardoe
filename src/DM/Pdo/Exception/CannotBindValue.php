@@ -14,7 +14,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Sql\Exception;
+namespace Cardoe\DM\Pdo\Exception;
 
 /**
  * Could not bind a value to a placeholder in a statement, generally because

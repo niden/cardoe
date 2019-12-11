@@ -14,13 +14,14 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Pdo\Exception;
-
-use Throwable;
+namespace Cardoe\DM\Pdo\Parser;
 
 /**
- * Base Exception class
+ * Parsing/rebuilding functionality for the sqlsrv driver.
+ *
+ * @todo    add $split and $skip for single quote, double quote, and square
+ *          brackets
  */
-class Exception extends \Exception implements Throwable
+class SqlsrvParser extends AbstractParser
 {
 }
