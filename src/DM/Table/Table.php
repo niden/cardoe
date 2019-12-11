@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * This file is part of Atlas for PHP.
@@ -6,6 +7,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
+
 declare(strict_types=1);
 
 namespace Cardoe\DM\Table;
@@ -20,28 +22,18 @@ use PDOStatement;
 
 abstract class Table
 {
-    const NAME = '';
-
-    const COLUMNS = [];
-
-    const COLUMN_NAMES = [];
-
-    const COLUMN_DEFAULTS = [];
-
-    const PRIMARY_KEY = [];
-
-    const AUTOINC_COLUMN = null;
-
-    const AUTOINC_SEQUENCE = null;
+    public const NAME = '';
+    public const COLUMNS = [];
+    public const COLUMN_NAMES = [];
+    public const COLUMN_DEFAULTS = [];
+    public const PRIMARY_KEY = [];
+    public const AUTOINC_COLUMN = null;
+    public const AUTOINC_SEQUENCE = null;
 
     protected $queryFactory;
-
     protected $rowClass;
-
     protected $connectionLocator;
-
     protected $tableEvents;
-
     protected $primaryKey;
 
     public function __construct(

@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * This file is part of Atlas for PHP.
@@ -6,6 +7,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
+
 declare(strict_types=1);
 
 namespace Cardoe\DM\Table;
@@ -17,27 +19,21 @@ use Traversable;
 
 abstract class Row implements IteratorAggregate, JsonSerializable
 {
-    const INSERT = 'INSERT';
-    const UPDATE = 'UPDATE';
-    const DELETE = 'DELETE';
+    public const INSERT = 'INSERT';
+    public const UPDATE = 'UPDATE';
+    public const DELETE = 'DELETE';
 
-    const SELECTED = 'SELECTED';
-    const INSERTED = 'INSERTED';
-    const UPDATED  = 'UPDATED';
-    const DELETED  = 'DELETED';
+    public const SELECTED = 'SELECTED';
+    public const INSERTED = 'INSERTED';
+    public const UPDATED  = 'UPDATED';
+    public const DELETED  = 'DELETED';
 
     private $action = self::INSERT;
-
     private $delete = false;
-
     private $init = [];
-
     private $status = '';
-
     private $validAction = ['', self::INSERT, self::UPDATE, self::DELETE];
-
     private $validStatus = ['', self::SELECTED, self::INSERTED, self::UPDATED, self::DELETED];
-
     protected $cols = [];
 
     final public function __construct(array $cols = [])

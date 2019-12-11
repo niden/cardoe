@@ -54,7 +54,8 @@ class PgsqlAdapter extends AbstractAdapter
         );
 
         foreach ($cols as $name => $default) {
-            if ($default !== null && substr($default, 0, 9) == "nextval('"
+            if (
+                $default !== null && substr($default, 0, 9) == "nextval('"
             ) {
                 $pos = strrpos($default, "'");
                 $end = strlen($default) - $pos;

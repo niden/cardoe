@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * This file is part of Atlas for PHP.
@@ -6,6 +7,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
+
 declare(strict_types=1);
 
 namespace Cardoe\DM\Mapper\Relationship;
@@ -204,11 +206,9 @@ class ManyToMany extends RegularRelationship
 
         // find foreigns with a matching through
         foreach ($foreignRecordSet as $foreignRecord) {
-
             // does the foreign match any through?
             $matched = false;
             foreach ($throughRecords as $i => $throughRecord) {
-
                 // set for deletion, unless it matches
                 $throughRecord->setDelete(true);
 

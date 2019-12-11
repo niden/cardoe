@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * This file is part of Atlas for PHP.
@@ -6,6 +7,7 @@
  * @license http://opensource.org/licenses/MIT MIT
  *
  */
+
 declare(strict_types=1);
 
 namespace Cardoe\DM\Mapper\Relationship;
@@ -174,10 +176,12 @@ abstract class RegularRelationship extends Relationship
         $nativeRow  = $nativeRecord->getRow();
         $foreignRow = $foreignRecord->getRow();
         foreach ($this->on as $nativeCol => $foreignCol) {
-            if (!$this->valuesMatch(
-                $nativeRow->$nativeCol,
-                $foreignRow->$foreignCol
-            )) {
+            if (
+                !$this->valuesMatch(
+                    $nativeRow->$nativeCol,
+                    $foreignRow->$foreignCol
+                )
+            ) {
                 return false;
             }
         }
