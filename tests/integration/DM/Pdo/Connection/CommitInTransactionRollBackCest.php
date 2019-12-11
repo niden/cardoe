@@ -11,17 +11,15 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
+
 use function date;
-use function skipTest;
 use function str_replace;
 use function uniqid;
 
 class CommitInTransactionRollBackCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: commit()/inTransaction()
      *
@@ -31,12 +29,11 @@ class CommitInTransactionRollBackCest
     {
         $I->wantToTest('DM\Pdo\Connection - commit()/inTransaction()');
 
-        $this
-            ->connection
-            ->beginTransaction()
-        ;
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+        $connection->beginTransaction();
 
-        $I->assertTrue($this->connection->inTransaction());
+        $I->assertTrue($connection->inTransaction());
 
         $template = 'insert into co_invoices (inv_id, inv_cst_id, inv_status_flag, '
             . 'inv_title, inv_total, inv_created_at) values ('
@@ -58,16 +55,15 @@ class CommitInTransactionRollBackCest
             $template
         );
 
-        $result = $this->connection->exec($sql);
+        $result = $connection->exec($sql);
         $I->assertEquals(1, $result);
 
-        $this->connection->commit();
+        $connection->commit();
 
         /**
          * Committed record
          */
-        $all = $this
-            ->connection
+        $all = $connection
             ->fetchOne(
                 'select * from co_invoices WHERE inv_id = ?',
                 [
@@ -88,12 +84,11 @@ class CommitInTransactionRollBackCest
     {
         $I->wantToTest('DM\Pdo\Connection - rollBack()');
 
-        $this
-            ->connection
-            ->beginTransaction()
-        ;
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+        $connection->beginTransaction();
 
-        $I->assertTrue($this->connection->inTransaction());
+        $I->assertTrue($connection->inTransaction());
 
         $template = 'insert into co_invoices (inv_id, inv_cst_id, inv_status_flag, '
             . 'inv_title, inv_total, inv_created_at) values ('
@@ -115,14 +110,13 @@ class CommitInTransactionRollBackCest
             $template
         );
 
-        $result = $this->connection->exec($sql);
+        $result = $connection->exec($sql);
         $I->assertEquals(1, $result);
 
         /**
          * Committed record
          */
-        $all = $this
-            ->connection
+        $all = $connection
             ->fetchOne(
                 'select * from co_invoices WHERE inv_id = ?',
                 [
@@ -130,10 +124,9 @@ class CommitInTransactionRollBackCest
                 ]
             );
 
-        $this->connection->rollBack();
+        $connection->rollBack();
 
-        $all = $this
-            ->connection
+        $all = $connection
             ->fetchOne(
                 'select * from co_invoices WHERE inv_id = ?',
                 [

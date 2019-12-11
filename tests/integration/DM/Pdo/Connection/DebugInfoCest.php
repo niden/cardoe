@@ -11,16 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
-
 use PDO;
-use function dbGetDsn;
 
 class DebugInfoCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: __debugInfo()
      *
@@ -30,9 +26,12 @@ class DebugInfoCest
     {
         $I->wantToTest('DM\Pdo\Connection - __debugInfo()');
 
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
         $expected = [
             'args' => [
-                dbGetDsn(),
+                $I->getDatabaseDsn(),
                 '****',
                 '****',
                 [
@@ -41,6 +40,6 @@ class DebugInfoCest
                 [],
             ]
         ];
-        $I->assertEquals($expected, $this->connection->__debugInfo());
+        $I->assertEquals($expected, $connection->__debugInfo());
     }
 }

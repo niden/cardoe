@@ -11,15 +11,13 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
+use Cardoe\DM\Pdo\Connection;
 use Cardoe\Test\Fixtures\Resultset;
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use IntegrationTester;
 use stdClass;
 
 class FetchObjectCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: fetchObject()
      *
@@ -29,10 +27,13 @@ class FetchObjectCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchObject()');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchObject(
+        $all = $connection->fetchObject(
             'select inv_id, inv_total from co_invoices WHERE inv_id = ?',
             [
                 0 => 1,
@@ -53,10 +54,13 @@ class FetchObjectCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchObject() - ctor');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchObject(
+        $all = $connection->fetchObject(
             'select inv_id, inv_total from co_invoices WHERE inv_id = ?',
             [
                 0 => 1,

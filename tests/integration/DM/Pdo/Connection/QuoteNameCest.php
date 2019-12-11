@@ -11,71 +11,121 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
-use Codeception\Example;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
+use function ucfirst;
 
 class QuoteNameCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: quoteName()
      *
-     * @dataProvider getExamples
      * @since  2019-12-11
      */
-    public function dMPdoConnectionQuoteName(IntegrationTester $I, Example $example)
+    public function dMPdoConnectionQuoteName(IntegrationTester $I)
     {
         $I->wantToTest('DM\Pdo\Connection - quoteName()');
 
-        $I->assertEquals(
-            $example[0],
-            $this->connection->quoteName($example[1])
-        );
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+        $driver     = $connection->getDriverName();
+        $method     = "getExamples" . ucfirst($driver);
+        $examples   = $this->$method();
+
+        foreach ($examples as $example) {
+            $I->assertEquals(
+                $example[1],
+                $connection->quoteName($example[0])
+            );
+        }
     }
 
     /**
      * @return array
      */
-    private function getExamples(): array
+    private function getExamplesMysql(): array
     {
         return [
             [
-                '`on``e`',
                 'on`e',
+                '`on``e`',
             ],
             [
-                '`one`.```two```',
                 'one.`two`',
+                '`one`.```two```',
             ],
             [
-                '`on"e`',
                 'on"e',
-            ],
-            [
-                '`one`.`"two"`',
-                'one."two"',
-            ],
-            [
                 '`on"e`',
-                'on"e',
             ],
             [
-                '`one`.`"two"`',
                 'one."two"',
+                '`one`.`"two"`',
             ],
             [
-                '`on]e`',
+                'on"e',
+                '`on"e`',
+            ],
+            [
+                'one."two"',
+                '`one`.`"two"`',
+            ],
+            [
                 'on]e',
+                '`on]e`',
             ],
             [
-                '`on[e`',
                 'on[e',
+                '`on[e`',
             ],
             [
-                '`one`.`[two]`',
                 'one.[two]',
+                '`one`.`[two]`',
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamplesSqlite(): array
+    {
+        return [
+            [
+                'on`e',
+                '"on`e"',
+            ],
+            [
+                'one.`two`',
+                '"one"."`two`"',
+            ],
+            [
+                'on"e',
+                '"on""e"',
+            ],
+            [
+                'one."two"',
+                '"one"."""two"""',
+            ],
+            [
+                'on"e',
+                '"on""e"',
+            ],
+            [
+                'one."two"',
+                '"one"."""two"""',
+            ],
+            [
+                'on]e',
+                '"on]e"',
+            ],
+            [
+                'on[e',
+                '"on[e"',
+            ],
+            [
+                'one.[two]',
+                '"one"."[two]"',
             ],
         ];
     }

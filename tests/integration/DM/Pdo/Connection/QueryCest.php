@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 
 class QueryCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: query()
      *
@@ -27,14 +25,14 @@ class QueryCest
     {
         $I->wantToTest('DM\Pdo\Connection - query()');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this
-            ->connection
-            ->query(
-            'select * from co_invoices WHERE inv_id = 1'
-            )
+        $all = $connection
+            ->query('select * from co_invoices WHERE inv_id = 1')
             ->fetch()
         ;
 

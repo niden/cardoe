@@ -11,15 +11,13 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
+use Cardoe\DM\Pdo\Connection;
 use Cardoe\Test\Fixtures\Resultset;
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use IntegrationTester;
 use stdClass;
 
 class FetchObjectsCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: fetchObjects()
      *
@@ -29,16 +27,19 @@ class FetchObjectsCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchObjects()');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(2);
+        $result = $I->getNewInvoice($connection, 2);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(3);
+        $result = $I->getNewInvoice($connection, 3);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(4);
+        $result = $I->getNewInvoice($connection, 4);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchObjects(
+        $all = $connection->fetchObjects(
             'SELECT * from co_invoices'
         );
         $I->assertCount(4, $all);
@@ -63,16 +64,19 @@ class FetchObjectsCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchObjects() - ctor');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(2);
+        $result = $I->getNewInvoice($connection, 2);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(3);
+        $result = $I->getNewInvoice($connection, 3);
         $I->assertEquals(1, $result);
-        $result = $this->newInvoice(4);
+        $result = $I->getNewInvoice($connection, 4);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchObjects(
+        $all = $connection->fetchObjects(
             'SELECT * from co_invoices',
             [],
             Resultset::class,

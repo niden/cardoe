@@ -11,14 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
+use Cardoe\DM\Pdo\Connection;
 use Cardoe\DM\Pdo\Profiler\Profiler;
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use IntegrationTester;
 
 class GetSetProfilerCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: getProfiler()
      *
@@ -28,14 +26,17 @@ class GetSetProfilerCest
     {
         $I->wantToTest('DM\Pdo\Connection - getProfiler()');
 
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
         $I->assertInstanceOf(
             Profiler::class,
-            $this->connection->getProfiler()
+            $connection->getProfiler()
         );
 
         $profiler = new Profiler();
-        $this->connection->setProfiler($profiler);
+        $connection->setProfiler($profiler);
 
-        $I->assertSame($profiler, $this->connection->getProfiler());
+        $I->assertSame($profiler, $connection->getProfiler());
     }
 }

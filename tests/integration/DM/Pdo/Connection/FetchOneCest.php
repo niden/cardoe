@@ -11,16 +11,14 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
+use Cardoe\DM\Pdo\Connection;
 use Cardoe\DM\Pdo\Exception\CannotBindValue;
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use Codeception\Example;
 use IntegrationTester;
 use stdClass;
 
 class FetchOneCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: fetchOne()
      *
@@ -30,10 +28,13 @@ class FetchOneCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchOne()');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchOne(
+        $all = $connection->fetchOne(
             'select * from co_invoices WHERE inv_id = ?',
             [
                 0 => 1,
@@ -59,10 +60,13 @@ class FetchOneCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchOne() - no result');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchOne(
+        $all = $connection->fetchOne(
             'select * from co_invoices WHERE inv_id = ?',
             [
                 0 => 7,
@@ -83,10 +87,13 @@ class FetchOneCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchOne() - bind types - ' . $example[0]);
 
-        $result = $this->newInvoice(1, 'test-1');
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1, 'test-1');
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchOne(
+        $all = $connection->fetchOne(
             'select * from co_invoices WHERE ' . $example[1],
             $example[2]
         );
@@ -109,10 +116,13 @@ class FetchOneCest
                 "Cannot bind value of type 'object' to placeholder 'id'"
             ),
             function () use ($I) {
-                $result = $this->newInvoice(1);
+                /** @var Connection $connection */
+                $connection = $I->getConnection();
+
+                $result = $I->getNewInvoice($connection, 1);
                 $I->assertEquals(1, $result);
 
-                $all = $this->connection->fetchOne(
+                $all = $connection->fetchOne(
                     'select * from co_invoices WHERE inv_id = :id',
                     [
                         'id' => new stdClass(),

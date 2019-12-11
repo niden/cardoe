@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 
 class FetchValueCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: fetchValue()
      *
@@ -27,10 +25,13 @@ class FetchValueCest
     {
         $I->wantToTest('DM\Pdo\Connection - fetchValue()');
 
-        $result = $this->newInvoice(1);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $result = $I->getNewInvoice($connection, 1);
         $I->assertEquals(1, $result);
 
-        $all = $this->connection->fetchValue(
+        $all = $connection->fetchValue(
             'select inv_total from co_invoices WHERE inv_cst_id = ?',
             [
                 0 => 1,

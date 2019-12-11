@@ -11,14 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 use PDO;
 
 class GetSetAttributeCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: getAttribute()/setAttribute()
      *
@@ -28,19 +26,22 @@ class GetSetAttributeCest
     {
         $I->wantToTest('DM\Pdo\Connection - getAttribute()/setAttribute()');
 
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
         $I->assertEquals(
             PDO::ERRMODE_EXCEPTION,
-            $this->connection->getAttribute(PDO::ATTR_ERRMODE)
+            $connection->getAttribute(PDO::ATTR_ERRMODE)
         );
 
-        $this->connection->setAttribute(
+        $connection->setAttribute(
             PDO::ATTR_ERRMODE,
             PDO::ERRMODE_WARNING
         );
 
         $I->assertEquals(
             PDO::ERRMODE_WARNING,
-            $this->connection->getAttribute(PDO::ATTR_ERRMODE)
+            $connection->getAttribute(PDO::ATTR_ERRMODE)
         );
     }
 }

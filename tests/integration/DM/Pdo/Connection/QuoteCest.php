@@ -11,29 +11,39 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
-use Codeception\Example;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
+
+use function ucfirst;
 
 class QuoteCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: quote()
      *
-     * @dataProvider getExamples
      * @since  2019-12-11
      */
-    public function dMPdoConnectionQuote(IntegrationTester $I, Example $example)
+    public function dMPdoConnectionQuote(IntegrationTester $I)
     {
-        $I->wantToTest('DM\Pdo\Connection - quote() - ' . $example[0]);
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+        $driver     = $connection->getDriverName();
+        $method     = "getExamples" . ucfirst($driver);
+        $examples   = $this->$method();
 
-        $actual = $this->connection->quote($example[1]);
-        $I->assertEquals($example[2], $actual);
+        foreach ($examples as $example) {
+            $I->wantToTest('DM\Pdo\Connection - quote() - ' . $example[0]);
+            $I->assertEquals(
+                $example[2],
+                $connection->quote($example[1])
+            );
+        }
     }
 
-    private function getExamples(): array
+    /**
+     * @return array
+     */
+    private function getExamplesMysql(): array
     {
         return [
             [
@@ -59,6 +69,44 @@ class QuoteCest
                     "'three'",
                 ],
                 "'\\\"one\\\"', 'two', '\'three\''",
+            ],
+            [
+                'null',
+                null,
+                "''"
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamplesSqlite(): array
+    {
+        return [
+            [
+                'double',
+                '"one" two \'three\'',
+                "'\"one\" two ''three'''",
+            ],
+            [
+                'integer',
+                12345,
+                "'12345'",
+            ],
+            [
+                'float',
+                123.456,
+                "'123.456'"
+            ],
+            [
+                'array',
+                [
+                    '"one"',
+                    'two',
+                    "'three'",
+                ],
+                "'\"one\"', 'two', '''three'''",
             ],
             [
                 'null',

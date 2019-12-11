@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 
 class ErrorCodeCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: errorCode()
      *
@@ -27,8 +25,10 @@ class ErrorCodeCest
     {
         $I->wantToTest('DM\Pdo\Connection - errorCode()');
 
-        $actual = $this->connection->errorCode();
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
 
-        $I->assertNull($actual);
+        $actual = $connection->errorCode();
+        $I->assertEquals('00000', $actual);
     }
 }

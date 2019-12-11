@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 
 class GetAdapterCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: getAdapter()
      *
@@ -27,19 +25,22 @@ class GetAdapterCest
     {
         $I->wantToTest('DM\Pdo\Connection - getAdapter()');
 
-        $I->assertFalse($this->connection->isConnected());
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
 
-        $this->connection->connect();
+        $I->assertTrue($connection->isConnected());
 
-        $I->assertTrue($this->connection->isConnected());
-        $I->assertNotEmpty($this->connection->getAdapter());
+        $connection->connect();
 
-        $this->connection->disconnect();
+        $I->assertTrue($connection->isConnected());
+        $I->assertNotEmpty($connection->getAdapter());
+
+        $connection->disconnect();
 
         $I->assertNotEmpty(
-            $this->connection->getAdapter(),
+            $connection->getAdapter(),
             'getPdo() will re-connect if disconnected'
         );
-        $I->assertTrue($this->connection->isConnected());
+        $I->assertTrue($connection->isConnected());
     }
 }

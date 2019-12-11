@@ -11,13 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
+use Cardoe\DM\Pdo\Connection;
 use IntegrationTester;
 
 class ConnectDisconnectIsConnectedCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: connect()/disconnect()/isConnected()
      *
@@ -27,10 +25,13 @@ class ConnectDisconnectIsConnectedCest
     {
         $I->wantToTest('DM\Pdo\Connection - connect()/disconnect()/isConnected()');
 
-        $I->assertFalse($this->connection->isConnected());
-        $this->connection->connect();
-        $I->assertTrue($this->connection->isConnected());
-        $this->connection->disconnect();
-        $I->assertFalse($this->connection->isConnected());
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+
+        $I->assertTrue($connection->isConnected());
+        $connection->connect();
+        $I->assertTrue($connection->isConnected());
+        $connection->disconnect();
+        $I->assertFalse($connection->isConnected());
     }
 }

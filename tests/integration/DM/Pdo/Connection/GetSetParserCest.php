@@ -11,15 +11,12 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\DM\Pdo\Parser\MysqlParser;
+use Cardoe\DM\Pdo\Connection;
 use Cardoe\DM\Pdo\Parser\SqliteParser;
-use Cardoe\Test\Fixtures\Traits\DM\ConnectionTrait;
 use IntegrationTester;
 
 class GetSetParserCest
 {
-    use ConnectionTrait;
-
     /**
      * Integration Tests Cardoe\DM\Pdo\Connection :: getParser()/setParser()
      *
@@ -29,14 +26,18 @@ class GetSetParserCest
     {
         $I->wantToTest('DM\Pdo\Connection - getParser()/setParser()');
 
+        /** @var Connection $connection */
+        $connection = $I->getConnection();
+        $adapter    = $I->getAdapter();
+
         $I->assertInstanceOf(
-            MysqlParser::class,
-            $this->connection->getParser()
+            sprintf('Cardoe\DM\Pdo\Parser\%sParser', $adapter),
+            $connection->getParser()
         );
 
         $parser = new SqliteParser();
-        $this->connection->setParser($parser);
+        $connection->setParser($parser);
 
-        $I->assertSame($parser, $this->connection->getParser());
+        $I->assertSame($parser, $connection->getParser());
     }
 }
