@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace Cardoe\DM\Pdo\Profiler;
 
 use Cardoe\DM\Pdo\Exception\Exception;
+use Cardoe\Helper\Json;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
@@ -46,7 +47,7 @@ class Profiler implements ProfilerInterface
     /**
      * @var string
      */
-    protected $logFormat = "{function} ({duration} seconds): {statement} {backtrace}";
+    protected $logFormat = "{method} ({duration} seconds): {statement} {backtrace}";
 
     /**
      * @var string
@@ -88,7 +89,7 @@ class Profiler implements ProfilerInterface
             $this->context['duration']  = $finish - $this->context['start'];
             $this->context['finish']    = $finish;
             $this->context['statement'] = $statement;
-            $this->context['values']    = empty($values) ? '' : json_encode($values, true);
+            $this->context['values']    = empty($values) ? '' : Json::encode($values);
 
             $this->logger->log($this->logLevel, $this->logFormat, $this->context);
 

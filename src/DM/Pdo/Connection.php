@@ -23,7 +23,6 @@ use Cardoe\DM\Pdo\Profiler\Profiler;
 use Cardoe\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
 use PDOStatement;
-use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
