@@ -527,17 +527,27 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     *
      * Return the inner PDO (if any)
      *
      * @return PDO
-     *
      */
     public function getAdapter(): PDO
     {
         $this->connect();
 
         return $this->pdo;
+    }
+
+    /**
+     * Return the driver name
+     *
+     * @return string
+     */
+    public function getDriverName(): string
+    {
+        $this->connect();
+
+        return $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
 
     /**
