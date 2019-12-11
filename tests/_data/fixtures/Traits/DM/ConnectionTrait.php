@@ -39,13 +39,14 @@ trait ConnectionTrait
     }
 
     /**
-     * @param int $id
+     * @param int         $id
+     * @param string|null $title
      *
      * @return int
      */
-    protected function newInvoice(int $id): int
+    protected function newInvoice(int $id, string $title = null): int
     {
-        $title = uniqid();
+        $title = $title ?: uniqid();
         $now   = date('Y-m-d H:i:s');
         $total = 100 + $id;
         $flag  = (int) ($id % 2);
