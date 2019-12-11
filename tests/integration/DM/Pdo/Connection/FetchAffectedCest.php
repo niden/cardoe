@@ -38,10 +38,7 @@ class FetchAffectedCest
         $I->assertEquals(1, $result);
 
         $all = $connection->fetchAffected(
-            'select inv_id, inv_total from co_invoices WHERE inv_cst_id = ?',
-            [
-                0 => 1,
-            ]
+            'delete from co_invoices',
         );
         $I->assertEquals(4, $all);
     }
