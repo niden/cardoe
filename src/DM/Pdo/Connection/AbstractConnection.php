@@ -25,6 +25,7 @@ use PDO;
 use PDOStatement;
 
 use function call_user_func_array;
+use function is_array;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -814,8 +815,17 @@ abstract class AbstractConnection implements ConnectionInterface
         array $values = []
     ) {
         $sth = $this->perform($statement, $values);
+        $result = call_user_func_array([$sth, $method], $arguments);
 
-        return call_user_func_array([$sth, $method], $arguments);
+        /**
+         * If this returns boolean or anything other than an array, return
+         * an empty array back
+         */
+        if (!is_array($result)) {
+            $result = [];
+        }
+
+        return $result;
     }
 
     /**
