@@ -111,18 +111,6 @@ foreach ($phalconClasses as $class) {
         $placeholders['%sm%'] = $method;
 
         switch ($method) {
-            case '__construct':
-                $method = 'construct';
-
-                break;
-            case '__destruct':
-                $method = 'destruct';
-
-                break;
-            case '__toString':
-                $method = 'toString';
-
-                break;
             case '__get':
                 $method = 'underscoreGet';
 

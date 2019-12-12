@@ -646,7 +646,7 @@ abstract class AbstractConnection implements ConnectionInterface
 
         // quote array values, not keys, then combine with commas
         foreach ($value as $key => $element) {
-            $value[$key] = $this->pdo->quote($element, $type);
+            $value[$key] = $this->pdo->quote((string) $element, $type);
         }
 
         return implode(', ', $value);

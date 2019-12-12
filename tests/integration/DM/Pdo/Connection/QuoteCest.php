@@ -70,7 +70,7 @@ class QuoteCest
                     4,
                     5,
                 ],
-                "'\\\"one\\\"', 'two', '\'three\''",
+                "'\\\"one\\\"', 'two', '\'three\'', '4', '5'",
             ],
             [
                 'null',
