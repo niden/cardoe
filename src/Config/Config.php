@@ -20,6 +20,11 @@ use function is_int;
 use function is_object;
 use function method_exists;
 
+/**
+ * Class Config
+ *
+ * @property string|null $pathDelimiter
+ */
 class Config extends Collection
 {
     public const DEFAULT_PATH_DELIMITER = ".";
@@ -77,7 +82,7 @@ class Config extends Collection
      * Returns a value from current config using a dot separated path.
      *
      * @param string      $path
-     * @param null        $defaultValue
+     * @param mixed|null  $defaultValue
      * @param string|null $delimiter
      *
      * @return mixed|null
