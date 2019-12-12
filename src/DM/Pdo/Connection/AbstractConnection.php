@@ -814,7 +814,7 @@ abstract class AbstractConnection implements ConnectionInterface
         string $statement,
         array $values = []
     ) {
-        $sth = $this->perform($statement, $values);
+        $sth    = $this->perform($statement, $values);
         $result = call_user_func_array([$sth, $method], $arguments);
 
         /**
