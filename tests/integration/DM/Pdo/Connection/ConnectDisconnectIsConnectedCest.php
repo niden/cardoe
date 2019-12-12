@@ -44,26 +44,28 @@ class ConnectDisconnectIsConnectedCest
     {
         $I->wantToTest('DM\Pdo\Connection - connect() - queries');
 
-        /** @var Connection $connection */
-        $connection = new Connection(
-            $I->getDatabaseDsn(),
-            $I->getDatabaseUsername(),
-            $I->getDatabasePassword(),
-            [],
-            [
-                'set names big5',
-            ]
-        );
+        if ('mysql' === $I->getAdapter()) {
+            /** @var Connection $connection */
+            $connection = new Connection(
+                $I->getDatabaseDsn(),
+                $I->getDatabaseUsername(),
+                $I->getDatabasePassword(),
+                [],
+                [
+                    'set names big5',
+                ]
+            );
 
-        $result = $connection->fetchOne(
-            'show variables like "character_set_client"'
-        );
+            $result = $connection->fetchOne(
+                'show variables like "character_set_client"'
+            );
 
-        $expeced = [
-            'Variable_name' => 'character_set_client',
-            'Value'         => 'big5',
-        ];
+            $expeced = [
+                'Variable_name' => 'character_set_client',
+                'Value'         => 'big5',
+            ];
 
-        $I->assertEquals($expeced, $result);
+            $I->assertEquals($expeced, $result);
+        }
     }
 }
