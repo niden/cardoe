@@ -34,4 +34,36 @@ class ConnectDisconnectIsConnectedCest
         $connection->disconnect();
         $I->assertFalse($connection->isConnected());
     }
+
+    /**
+     * Integration Tests Cardoe\DM\Pdo\Connection :: connect() - queries
+     *
+     * @since  2019-12-11
+     */
+    public function dMPdoConnectionConnectQueries(IntegrationTester $I)
+    {
+        $I->wantToTest('DM\Pdo\Connection - connect() - queries');
+
+        /** @var Connection $connection */
+        $connection = new Connection(
+            $I->getDatabaseDsn(),
+            $I->getDatabaseUsername(),
+            $I->getDatabasePassword(),
+            [],
+            [
+                'set names big5',
+            ]
+        );
+
+        $result = $connection->fetchOne(
+            'show variables like "character_set_client"'
+        );
+
+        $expeced = [
+            'Variable_name' => 'character_set_client',
+            'Value'         => 'big5',
+        ];
+
+        $I->assertEquals($expeced, $result);
+    }
 }

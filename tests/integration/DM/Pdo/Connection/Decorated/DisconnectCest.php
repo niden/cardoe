@@ -11,7 +11,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection\Decorated;
 
+use Cardoe\DM\Pdo\Connection\Decorated;
+use Cardoe\DM\Pdo\Exception\CannotDisconnect;
 use IntegrationTester;
+use PDO;
 
 class DisconnectCest
 {
@@ -24,6 +27,20 @@ class DisconnectCest
     {
         $I->wantToTest('DM\Pdo\Connection\Decorated - disconnect()');
 
-        $I->skipTest('Need implementation');
+        $I->expectThrowable(
+            new CannotDisconnect(
+                "Cannot disconnect a Decorated connection instance"
+            ),
+            function () use ($I) {
+                $connection = new PDO(
+                    $I->getDatabaseDsn(),
+                    $I->getDatabaseUsername(),
+                    $I->getDatabasePassword(),
+                );
+
+                $decorated = new Decorated($connection);
+                $decorated->disconnect();
+            }
+        );
     }
 }

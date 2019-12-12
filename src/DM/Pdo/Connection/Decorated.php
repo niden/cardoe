@@ -67,7 +67,7 @@ class Decorated extends AbstractConnection
      */
     public function disconnect(): void
     {
-        $message = "Cannot disconnect a DecoratedPdo instance.";
+        $message = "Cannot disconnect a Decorated connection instance";
         throw new CannotDisconnect($message);
     }
 }

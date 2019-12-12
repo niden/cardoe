@@ -40,4 +40,23 @@ class GetSetParserCest
 
         $I->assertSame($parser, $connection->getParser());
     }
+
+    /**
+     * Integration Tests Cardoe\DM\Pdo\Connection :: getParser()/setParser() default
+     *
+     * @since  2019-12-11
+     */
+    public function dMPdoConnectionGetSetParserDefault(IntegrationTester $I)
+    {
+        $I->wantToTest('DM\Pdo\Connection - getParser()/setParser() - default');
+
+        $connection = new Connection(
+            'random:some data'
+        );
+
+        $I->assertInstanceOf(
+            SqliteParser::class,
+            $connection->getParser()
+        );
+    }
 }

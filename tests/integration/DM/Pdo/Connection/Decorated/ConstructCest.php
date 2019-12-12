@@ -11,7 +11,10 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Integration\DM\Pdo\Connection\Decorated;
 
+use Cardoe\DM\Pdo\Connection\Decorated;
+use Cardoe\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
+use PDO;
 
 class ConstructCest
 {
@@ -24,6 +27,17 @@ class ConstructCest
     {
         $I->wantToTest('DM\Pdo\Connection\Decorated - __construct()');
 
-        $I->skipTest('Need implementation');
+        $connection = new PDO(
+            $I->getDatabaseDsn(),
+            $I->getDatabaseUsername(),
+            $I->getDatabasePassword(),
+        );
+
+        $decorated = new Decorated($connection);
+        $decorated->connect();
+
+        $I->assertTrue($decorated->isConnected());
+        $I->assertInstanceOf(Profiler::class, $decorated->getProfiler());
+        $I->assertSame($connection, $decorated->getAdapter());
     }
 }

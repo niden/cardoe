@@ -23,9 +23,8 @@ use Cardoe\DM\Pdo\Parser\SqliteParser;
 use Cardoe\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
 use PDOStatement;
-use function array_merge;
+
 use function call_user_func_array;
-use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -811,7 +810,7 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param string $statement
      * @param array  $values
      *
-     * @return array
+     * @return array|bool
      * @throws CannotBindValue
      */
     protected function fetchData(
@@ -819,7 +818,7 @@ abstract class AbstractConnection implements ConnectionInterface
         array $arguments,
         string $statement,
         array $values = []
-    ): array {
+    ) {
         $sth = $this->perform($statement, $values);
 
         return call_user_func_array([$sth, $method], $arguments);
