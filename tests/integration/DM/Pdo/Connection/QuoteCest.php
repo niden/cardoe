@@ -67,6 +67,8 @@ class QuoteCest
                     '"one"',
                     'two',
                     "'three'",
+                    4,
+                    5,
                 ],
                 "'\\\"one\\\"', 'two', '\'three\''",
             ],
