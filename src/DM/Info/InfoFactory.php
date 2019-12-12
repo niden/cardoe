@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info;
 
-use Cardoe\DM\Info\Adapter\AdapterInterface;
 use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 use Cardoe\Factory\AbstractFactory;
 use Cardoe\Factory\Exception as FactoryException;
@@ -19,7 +18,7 @@ use Cardoe\Factory\Exception as FactoryException;
 /**
  * Class AdapterFactory
  *
- * @property Connection $connection
+ * @property ConnectionInterface $connection
  */
 class InfoFactory extends AbstractFactory
 {
@@ -47,10 +46,10 @@ class InfoFactory extends AbstractFactory
      *
      * @param string $name
      *
-     * @return AdapterInterface
+     * @return ConnectionInterface
      * @throws FactoryException
      */
-    public function newInstance(string $name): AdapterInterface
+    public function newInstance(string $name): ConnectionInterface
     {
         $this->checkService($name);
 

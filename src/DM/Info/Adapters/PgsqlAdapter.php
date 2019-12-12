@@ -48,7 +48,7 @@ class PgsqlAdapter extends AbstractAdapter
             ORDER BY columns.ordinal_position
         ";
 
-        $cols = $this->connection->fetchKeyPair(
+        $cols = $this->connection->fetchPairs(
             $stm,
             ['schema' => $schema, 'table' => $table]
         );

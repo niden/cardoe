@@ -22,7 +22,7 @@ class MysqlAdapter extends AbstractAdapter
     {
         parent::__construct($connection);
 
-        $vars = $connection->fetchKeyPair("SHOW VARIABLES LIKE '%version%'");
+        $vars = $connection->fetchPairs("SHOW VARIABLES LIKE '%version%'");
         if (isset($vars['version']) && stripos($vars['version'], 'maria')) {
             $this->maria = true;
         }
