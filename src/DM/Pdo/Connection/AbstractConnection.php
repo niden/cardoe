@@ -319,13 +319,9 @@ abstract class AbstractConnection implements ConnectionInterface
         string $class = 'stdClass',
         array $args = []
     ): object {
+        $sth = $this->perform($statement, $values);
 
-        return $this->fetchData(
-            "fetchObject",
-            [$class, $args],
-            $statement,
-            $values
-        );
+        return $sth->fetchObject($class, $args);
     }
 
     /**
@@ -415,7 +411,9 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchValue(string $statement, array $values = [])
     {
-        return $this->fetchData("fetchColumn", [0], $statement, $values);
+        $sth = $this->perform($statement, $values);
+
+        return $sth->fetchColumn(0);
     }
 
     /**

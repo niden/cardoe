@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info\Adapter;
 
-use Cardoe\DM\Pdo\Connection;
+
+use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 
 class MysqlAdapter extends AbstractAdapter
 {
     protected $maria = false;
 
-    public function __construct(Connection $connection)
+    public function __construct(ConnectionInterface $connection)
     {
         parent::__construct($connection);
 

@@ -13,6 +13,11 @@ namespace Cardoe\DM\Info\Adapter;
 
 use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 
+/**
+ * Class AbstractAdapter
+ *
+ * @property ConnectionInterface $connection
+ */
 abstract class AbstractAdapter
 {
     /**
