@@ -23,6 +23,8 @@ use Cardoe\DM\Pdo\Parser\SqliteParser;
 use Cardoe\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
 use PDOStatement;
+use function array_merge;
+use function call_user_func_array;
 use function var_dump;
 
 /**
@@ -214,9 +216,12 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchAll(string $statement, array $values = []): array
     {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $this->fetchData(
+            "fetchAll",
+            [PDO::FETCH_ASSOC],
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -255,9 +260,12 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchCol(string $statement, array $values = []): array
     {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchAll(PDO::FETCH_COLUMN, 0);
+        return $this->fetchData(
+            "fetchAll",
+            [PDO::FETCH_COLUMN, 0],
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -278,9 +286,12 @@ abstract class AbstractConnection implements ConnectionInterface
         array $values = [],
         int $style = PDO::FETCH_ASSOC
     ): array {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchAll(PDO::FETCH_GROUP | $style);
+        return $this->fetchData(
+            "fetchAll",
+            [PDO::FETCH_GROUP | $style],
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -308,13 +319,13 @@ abstract class AbstractConnection implements ConnectionInterface
         string $class = 'stdClass',
         array $args = []
     ): object {
-        $sth = $this->perform($statement, $values);
 
-        if (!empty($args)) {
-            return $sth->fetchObject($class, $args);
-        }
-
-        return $sth->fetchObject($class);
+        return $this->fetchData(
+            "fetchObject",
+            [$class, $args],
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -343,13 +354,18 @@ abstract class AbstractConnection implements ConnectionInterface
         string $class = 'stdClass',
         array $args = []
     ): array {
-        $sth = $this->perform($statement, $values);
+        $args = [
+            PDO::FETCH_CLASS,
+            $class,
+            $args
+        ];
 
-        if (!empty($args)) {
-            return $sth->fetchAll(PDO::FETCH_CLASS, $class, $args);
-        }
-
-        return $sth->fetchAll(PDO::FETCH_CLASS, $class);
+        return $this->fetchData(
+            "fetchAll",
+            $args,
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -363,8 +379,12 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchOne(string $statement, array $values = []): array
     {
-        $sth    = $this->perform($statement, $values);
-        $result = $sth->fetch(PDO::FETCH_ASSOC);
+        $result = $this->fetchData(
+            "fetch",
+            [PDO::FETCH_ASSOC],
+            $statement,
+            $values
+        );
 
         if (false === $result) {
             $result = [];
@@ -385,9 +405,12 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchPairs(string $statement, array $values = []): array
     {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchAll(PDO::FETCH_KEY_PAIR);
+        return $this->fetchData(
+            "fetchAll",
+            [PDO::FETCH_KEY_PAIR],
+            $statement,
+            $values
+        );
     }
 
     /**
@@ -401,9 +424,7 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchValue(string $statement, array $values = [])
     {
-        $sth = $this->perform($statement, $values);
-
-        return $sth->fetchColumn(0);
+        return $this->fetchData("fetchColumn", [0], $statement, $values);
     }
 
     /**
@@ -544,7 +565,7 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param array  $options   Set these attributes on the returned
      *                          PDOStatement.
      *
-     * @return PDOStatement
+     * @return PDOStatement|false
      *
      * @see http://php.net/manual/en/pdo.prepare.php
      */
@@ -793,6 +814,26 @@ abstract class AbstractConnection implements ConnectionInterface
         }
 
         return $sth->bindValue($key, $val);
+    }
+
+    /**
+     * @param string $method
+     * @param array  $arguments
+     * @param string $statement
+     * @param array  $values
+     *
+     * @return array|object
+     * @throws CannotBindValue
+     */
+    protected function fetchData(
+        string $method,
+        array $arguments,
+        string $statement,
+        array $values = []
+    ) {
+        $sth = $this->perform($statement, $values);
+
+        return call_user_func_array([$sth, $method], $arguments);
     }
 
     /**
