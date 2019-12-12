@@ -365,18 +365,12 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function fetchOne(string $statement, array $values = []): array
     {
-        $result = $this->fetchData(
+        return $this->fetchData(
             "fetch",
             [PDO::FETCH_ASSOC],
             $statement,
             $values
         );
-
-        if (false === $result) {
-            $result = [];
-        }
-
-        return $result;
     }
 
     /**
