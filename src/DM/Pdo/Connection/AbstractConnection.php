@@ -810,7 +810,7 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param string $statement
      * @param array  $values
      *
-     * @return array|bool
+     * @return array
      * @throws CannotBindValue
      */
     protected function fetchData(
