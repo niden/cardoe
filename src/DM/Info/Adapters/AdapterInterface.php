@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info\Adapter;
 
-use Cardoe\DM\Pdo\Connection;
+use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 
 interface AdapterInterface
 {
-    public function __construct(Connection $connection);
+    public function __construct(ConnectionInterface $connection);
 
     public function fetchAutoincSequence(string $table): ?string;
 
@@ -23,5 +23,5 @@ interface AdapterInterface
 
     public function fetchColumns(string $table): array;
 
-    public function fetchTableNames(string $schema = ''): array;
+    public function fetchTableNames(string $schema = ""): array;
 }

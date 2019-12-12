@@ -12,11 +12,7 @@ declare(strict_types=1);
 namespace Cardoe\DM\Info;
 
 use Cardoe\DM\Info\Adapter\AdapterInterface;
-use Cardoe\DM\Info\Adapter\MysqlAdapter;
-use Cardoe\DM\Info\Adapter\PgsqlAdapter;
-use Cardoe\DM\Info\Adapter\SqliteAdapter;
-use Cardoe\DM\Info\Adapter\SqlsrvAdapter;
-use Cardoe\DM\Pdo\Connection;
+use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 use Cardoe\Factory\AbstractFactory;
 use Cardoe\Factory\Exception as FactoryException;
 
@@ -28,18 +24,20 @@ use Cardoe\Factory\Exception as FactoryException;
 class InfoFactory extends AbstractFactory
 {
     /**
-     * @var Connection
+     * @var ConnectionInterface
      */
     private $connection;
 
     /**
      * InfoFactory constructor.
      *
-     * @param Connection $connection
-     * @param array      $services
+     * @param ConnectionInterface $connection
+     * @param array               $services
      */
-    public function __construct(Connection $connection, array $services = [])
-    {
+    public function __construct(
+        ConnectionInterface $connection,
+        array $services = []
+    ) {
         $this->connection = $connection;
         $this->init($services);
     }
@@ -48,25 +46,17 @@ class InfoFactory extends AbstractFactory
      * Create a new instance of the adapter
      *
      * @param string $name
-     * @param string $fileName
-     * @param array  $options
      *
      * @return AdapterInterface
      * @throws FactoryException
      */
-    public function newInstance(
-        string $name,
-        string $fileName,
-        array $options = []
-    ): AdapterInterface {
+    public function newInstance(string $name): AdapterInterface
+    {
         $this->checkService($name);
 
-        if (true !== isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition($this->connection);
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition($this->connection);
     }
 
     /**
@@ -75,10 +65,10 @@ class InfoFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "mysql"  => MysqlAdapter::class,
-            "sqlite" => SqliteAdapter::class,
-            "sqlsrv" => SqlsrvAdapter::class,
-            "pgsql"  => PgsqlAdapter::class,
+            "mysql"  => "Cardoe\\DM\\Info\\Adapter\\MysqlAdapter",
+            "pgsql"  => "Cardoe\\DM\\Info\\Adapter\\PgsqlAdapter",
+            "sqlite" => "Cardoe\\DM\\Info\\Adapter\\SqliteAdapter",
+            "sqlsrv" => "Cardoe\\DM\\Info\\Adapter\\SqlsrvAdapter",
         ];
     }
 }

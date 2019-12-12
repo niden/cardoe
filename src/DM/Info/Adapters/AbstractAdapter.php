@@ -11,66 +11,18 @@ declare(strict_types=1);
 
 namespace Cardoe\DM\Info\Adapter;
 
-use Cardoe\DM\Pdo\Connection;
+use Cardoe\DM\Pdo\Connection\ConnectionInterface;
 
 abstract class AbstractAdapter
 {
     /**
-     * @var Connection
+     * @var ConnectionInterface
      */
     protected $connection;
 
-    public function __construct(Connection $connection)
+    public function __construct(ConnectionInterface $connection)
     {
         $this->connection = $connection;
-    }
-
-    protected function extractColumn(string $schema, string $table, array $def): array
-    {
-        return [
-            'name'    => $def['_name'],
-            'type'    => $def['_type'],
-            'size'    => isset($def['_size']) ? (int) $def['_size'] : null,
-            'scale'   => isset($def['_scale']) ? (int) $def['_scale'] : null,
-            'notnull' => (bool) $def['_notnull'],
-            'default' => $this->extractDefault($def['_default'], $def['_type']),
-            'autoinc' => (bool) $def['_autoinc'],
-            'primary' => (bool) $def['_primary'],
-            'options' => null,
-        ];
-    }
-
-    protected function extractColumns(string $schema, string $table, array $defs): array
-    {
-        $columns = [];
-        foreach ($defs as $def) {
-            if (isset($columns[$def['_name']])) {
-                $columns[$def['_name']]['primary'] = $columns[$def['_name']]['primary'] ?: (bool) $def['_primary'];
-                continue;
-            }
-            $columns[$def['_name']] = $this->extractColumn($schema, $table, $def);
-        }
-        return $columns;
-    }
-
-    protected function extractDefault($default, string $type)
-    {
-        $type    = strtolower($type);
-        $default = $this->getDefault($default);
-
-        if ($default === null) {
-            return $default;
-        }
-
-        if (strpos($type, 'int') !== false) {
-            return (int) $default;
-        }
-
-        if ($type == 'float' || $type == 'double' || $type == 'real') {
-            return (float) $default;
-        }
-
-        return $default;
     }
 
     public function fetchAutoincSequence(string $table): ?string
@@ -148,6 +100,54 @@ abstract class AbstractAdapter
             'schema' => $schema,
             'type'   => 'BASE TABLE',
         ]);
+    }
+
+    protected function extractColumn(string $schema, string $table, array $def): array
+    {
+        return [
+            'name'    => $def['_name'],
+            'type'    => $def['_type'],
+            'size'    => isset($def['_size']) ? (int) $def['_size'] : null,
+            'scale'   => isset($def['_scale']) ? (int) $def['_scale'] : null,
+            'notnull' => (bool) $def['_notnull'],
+            'default' => $this->extractDefault($def['_default'], $def['_type']),
+            'autoinc' => (bool) $def['_autoinc'],
+            'primary' => (bool) $def['_primary'],
+            'options' => null,
+        ];
+    }
+
+    protected function extractColumns(string $schema, string $table, array $defs): array
+    {
+        $columns = [];
+        foreach ($defs as $def) {
+            if (isset($columns[$def['_name']])) {
+                $columns[$def['_name']]['primary'] = $columns[$def['_name']]['primary'] ?: (bool) $def['_primary'];
+                continue;
+            }
+            $columns[$def['_name']] = $this->extractColumn($schema, $table, $def);
+        }
+        return $columns;
+    }
+
+    protected function extractDefault($default, string $type)
+    {
+        $type    = strtolower($type);
+        $default = $this->getDefault($default);
+
+        if ($default === null) {
+            return $default;
+        }
+
+        if (strpos($type, 'int') !== false) {
+            return (int) $default;
+        }
+
+        if ($type == 'float' || $type == 'double' || $type == 'real') {
+            return (float) $default;
+        }
+
+        return $default;
     }
 
     abstract protected function getAutoincSql(): string;
