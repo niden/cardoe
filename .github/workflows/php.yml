@@ -27,14 +27,12 @@ jobs:
         ports:
           - 6379/tcp
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      memcached:
-        image: niden/actions-memcached@v4
-        ports:
-          - 11211
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Setup Memcached
+        uses: niden/actions-memcached@v4
 
       - name: Setup PHP
         uses: shivammathur/setup-php@1.5.2
