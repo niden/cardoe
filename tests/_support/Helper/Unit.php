@@ -4,10 +4,19 @@ namespace Helper;
 
 use Codeception\Module;
 use PHPUnit\Framework\SkippedTestError;
+
+use function extension_loaded;
 use function file_exists;
+use function glob;
+use function is_dir;
 use function is_file;
+use function rmdir;
+use function sprintf;
+use function substr;
 use function uniqid;
 use function unlink;
+
+use const GLOB_MARK;
 
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
@@ -52,6 +61,25 @@ class Unit extends Module
         $suffix = ($suffix) ? $suffix : 'log';
 
         return uniqid($prefix, true) . '.' . $suffix;
+    }
+
+    /**
+     * @param string $directory
+     */
+    public function safeDeleteDirectory(string $directory)
+    {
+        $files = glob($directory . '*', GLOB_MARK);
+        foreach ($files as $file) {
+            if (substr($file, -1) == '/') {
+                $this->safeDeleteDirectory($file);
+            } else {
+                unlink($file);
+            }
+        }
+
+        if (is_dir($directory)) {
+            rmdir($directory);
+        }
     }
 
     /**

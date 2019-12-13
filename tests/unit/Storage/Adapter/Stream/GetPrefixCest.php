@@ -67,7 +67,7 @@ class GetPrefixCest
         );
 
         $I->assertEquals(
-            'phstrm-',
+            'ph-strm',
             $adapter->getPrefix()
         );
     }
