@@ -147,21 +147,11 @@ class Libmemcached extends AbstractAdapter
                 ];
                 $client   = array_merge($failover, $client);
 
-                if (!$connection->setOptions($client)) {
-                    throw new Exception(
-                        "Cannot set Memcached client options"
-                    );
-                }
-
-                if (!$connection->addServers($servers)) {
-                    throw new Exception(
-                        "Cannot connect to the Memcached server(s)"
-                    );
-                }
-
-                if (!empty($saslUser)) {
-                    $connection->setSaslAuthData($saslUser, $saslPass);
-                }
+                $this
+                    ->setOptions($connection, $client)
+                    ->setServers($connection, $servers)
+                    ->setSasl($connection, $saslUser, $saslPass)
+                ;
             }
 
             $this->setSerializer($connection);
@@ -244,6 +234,40 @@ class Libmemcached extends AbstractAdapter
     }
 
     /**
+     * @param Memcached $connection
+     * @param array     $client
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setOptions(Memcached $connection, array $client): Libmemcached
+    {
+        if (!$connection->setOptions($client)) {
+            throw new Exception(
+                "Cannot set Memcached client options"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param string    $saslUser
+     * @param string    $saslPass
+     *
+     * @return Libmemcached
+     */
+    private function setSasl(Memcached $connection, string $saslUser, string $saslPass): Libmemcached
+    {
+        if (!empty($saslUser)) {
+            $connection->setSaslAuthData($saslUser, $saslPass);
+        }
+
+        return $this;
+    }
+
+    /**
      * Checks the serializer. If it is a supported one it is set, otherwise
      * the custom one is set.
      *
@@ -268,5 +292,23 @@ class Libmemcached extends AbstractAdapter
         } else {
             $this->initSerializer();
         }
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param array     $servers
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setServers(Memcached $connection, array $servers): Libmemcached
+    {
+        if (!$connection->addServers($servers)) {
+            throw new Exception(
+                "Cannot connect to the Memcached server(s)"
+            );
+        }
+
+        return $this;
     }
 }

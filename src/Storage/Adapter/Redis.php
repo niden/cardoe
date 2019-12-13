@@ -135,23 +135,11 @@ class Redis extends AbstractAdapter
                 $result       = $connection->pconnect($host, $port, $this->lifetime, $persistentid);
             }
 
-            if (!$result) {
-                throw new Exception(
-                    "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
-                );
-            }
-
-            if (!empty($auth) && !$connection->auth($auth)) {
-                throw new Exception(
-                    "Failed to authenticate with the Redis server"
-                );
-            }
-
-            if ($index > 0 && !$connection->select($index)) {
-                throw new Exception(
-                    "Redis server selected database failed"
-                );
-            }
+            $this
+                ->checkConnect($result, $host, $port)
+                ->checkAuth($auth, $connection)
+                ->checkIndex($index, $connection)
+            ;
 
             $connection->setOption(\Redis::OPT_PREFIX, $this->prefix);
 
@@ -227,6 +215,61 @@ class Redis extends AbstractAdapter
             $this->getTtl($ttl)
         )
             ;
+    }
+
+    /**
+     * @param string $auth
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkAuth($auth, \Redis $connection): Redis
+    {
+        if (!empty($auth) && !$connection->auth($auth)) {
+            throw new Exception(
+                "Failed to authenticate with the Redis server"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param bool   $result
+     * @param string $host
+     * @param int    $port
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkConnect(bool $result, string $host, int $port): Redis
+    {
+        if (!$result) {
+            throw new Exception(
+                "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param int    $index
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkIndex(int $index, \Redis $connection): Redis
+    {
+        if ($index > 0 && !$connection->select($index)) {
+            throw new Exception(
+                "Redis server selected database failed"
+            );
+        }
+
+        return $this;
     }
 
     /**
