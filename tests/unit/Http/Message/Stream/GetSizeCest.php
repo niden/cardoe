@@ -16,6 +16,7 @@ use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
 
 use function dataDir;
+use function filesize;
 
 class GetSizeCest
 {
@@ -56,10 +57,10 @@ class GetSizeCest
     public function httpMessageStreamGetSizeInvalidHandle(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - getSize() - invalid');
-        $stream   = new StreamFixture('php://memory', 'rb');
+        $stream = new StreamFixture('php://memory', 'rb');
         $stream->setHandle(null);
 
-        $actual   = $stream->getSize();
+        $actual = $stream->getSize();
         $I->assertNull($actual);
     }
 }

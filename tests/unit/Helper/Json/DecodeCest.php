@@ -18,9 +18,8 @@ use UnitTester;
 class DecodeCest
 {
     /**
-     * Tests Phalcon\Helper\Json :: decode()
+     * Tests Cardoe\Helper\Json :: decode()
      *
-     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonDecode(UnitTester $I)
@@ -30,16 +29,15 @@ class DecodeCest
         $data     = '{"one":"two","0":"three"}';
         $expected = [
             'one' => 'two',
-            'three'
+            'three',
         ];
         $actual   = Json::decode($data, true);
         $I->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests Phalcon\Helper\Json :: decode() - exception
+     * Tests Cardoe\Helper\Json :: decode() - exception
      *
-     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonDecodeException(UnitTester $I)

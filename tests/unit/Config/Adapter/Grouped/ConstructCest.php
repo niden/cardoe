@@ -1,0 +1,124 @@
+<?php
+
+/**
+ * This file is part of the Cardoe Framework.
+ *
+ * (c) Cardoe Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
+ * file that was distributed with this source code.
+ */
+
+declare(strict_types=1);
+
+namespace Cardoe\Test\Unit\Config\Adapter\Grouped;
+
+use Cardoe\Config\Adapter\Grouped;
+use Cardoe\Config\Exception;
+use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use UnitTester;
+
+use function dataDir;
+
+class ConstructCest
+{
+    use ConfigTrait;
+
+    /**
+     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - complex instance
+     *
+     * @author fenikkusu
+     * @since  2017-06-06
+     */
+    public function configAdapterGroupedConstructComplexInstance(UnitTester $I)
+    {
+        $I->wantToTest("Config\Adapter\Grouped - construct - complex instance");
+
+        $this->config['test']['property2'] = 'something-else';
+
+        $config = [
+            dataDir('assets/config/config.php'),
+            [
+                'adapter'  => 'json',
+                'filePath' => dataDir('assets/config/config.json'),
+            ],
+            [
+                'adapter' => 'array',
+                'config'  => [
+                    'test' => [
+                        'property2' => 'something-else',
+                    ],
+                ],
+            ],
+        ];
+
+        foreach ([[], ['']] as $parameters) {
+            $this->compareConfig(
+                $I,
+                $this->config,
+                new Grouped($config, ...$parameters)
+            );
+        }
+    }
+
+    /**
+     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - default adapter
+     *
+     * @author fenikkusu
+     * @since  2017-06-06
+     */
+    public function configAdapterGroupedConstructDefaultAdapter(UnitTester $I)
+    {
+        $I->wantToTest("Config\Adapter\Grouped - construct - default adapter");
+
+        $this->config['test']['property2'] = 'something-else';
+
+        $config = [
+            [
+                'filePath' => dataDir('assets/config/config.json'),
+            ],
+            [
+                'adapter' => 'array',
+                'config'  => [
+                    'test' => [
+                        'property2' => 'something-else',
+                    ],
+                ],
+            ],
+        ];
+
+        $object = new Grouped($config, 'json');
+
+        $this->compareConfig(
+            $I,
+            $this->config,
+            $object
+        );
+    }
+
+    /**
+     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - exception
+     *
+     * @author Fenikkusu
+     * @since  2017-06-06
+     */
+    public function configAdapterGroupedConstructThrowsException(UnitTester $I)
+    {
+        $I->wantToTest("Config\Adapter\Grouped - construct array without config throws exception");
+
+        $I->expectThrowable(
+            new Exception(
+                "To use the 'array' adapter you have to specify the 'config' as an array."
+            ),
+            function () {
+                new Grouped(
+                    [
+                        [
+                            'adapter' => 'array',
+                        ],
+                    ]
+                );
+            }
+        );
+    }
+}

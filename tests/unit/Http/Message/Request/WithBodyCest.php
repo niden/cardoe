@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Request;
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Request;
 use Cardoe\Http\Message\Stream;
 use UnitTester;

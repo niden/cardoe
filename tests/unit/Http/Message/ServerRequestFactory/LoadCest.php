@@ -97,8 +97,8 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - header host array
-     * prefixed
+     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - header host
+     * array prefixed
      *
      * @since  2019-02-09
      */
@@ -143,8 +143,8 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - original path info
-     * name/port prefixed
+     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - original path
+     * info name/port prefixed
      *
      * @since        2019-02-09
      */

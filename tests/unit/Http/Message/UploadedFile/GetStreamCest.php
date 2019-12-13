@@ -91,7 +91,8 @@ class GetStreamCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getStream() - exception already moved
+     * Tests Cardoe\Http\Message\UploadedFile :: getStream() - exception
+     * already moved
      *
      * @since  2019-02-10
      */

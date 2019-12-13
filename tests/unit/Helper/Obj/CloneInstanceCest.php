@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Helper\Number;
 
-use Cardoe\Helper\Number;
 use Cardoe\Helper\Obj;
 use stdClass;
 use UnitTester;
@@ -27,7 +26,7 @@ class CloneInstanceCest
     {
         $I->wantToTest('Helper\Obj - cloneInstance()');
 
-        $instance = new stdClass();
+        $instance      = new stdClass();
         $instance->one = 'two';
         $instance->two = 'three';
 

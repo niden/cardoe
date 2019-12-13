@@ -14,7 +14,6 @@ namespace Cardoe\Test\Unit\Http\Message\Uri;
 use Cardoe\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
-use stdClass;
 use UnitTester;
 
 use function sprintf;

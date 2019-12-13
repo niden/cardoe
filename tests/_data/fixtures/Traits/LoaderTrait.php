@@ -1,12 +1,13 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+* This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 namespace Cardoe\Test\Fixtures\Traits;
 
@@ -20,7 +21,7 @@ trait LoaderTrait
     /**
      * executed before each test
      */
-    protected function _before(UnitTester $I)
+    public function _before(UnitTester $I)
     {
         $this->loaders = spl_autoload_functions();
 
@@ -34,7 +35,7 @@ trait LoaderTrait
     /**
      * executed after each test
      */
-    protected function _after(UnitTester $I)
+    public function _after(UnitTester $I)
     {
         $loaders = spl_autoload_functions();
 

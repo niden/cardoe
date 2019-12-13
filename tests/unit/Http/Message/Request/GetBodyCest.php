@@ -15,6 +15,8 @@ use Cardoe\Http\Message\Request;
 use Cardoe\Http\Message\Stream;
 use UnitTester;
 
+use function dataDir;
+
 class GetBodyCest
 {
     /**

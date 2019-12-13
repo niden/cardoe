@@ -18,9 +18,8 @@ use UnitTester;
 class EncodeCest
 {
     /**
-     * Tests Phalcon\Helper\Json :: encode()
+     * Tests Cardoe\Helper\Json :: encode()
      *
-     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonEncode(UnitTester $I)
@@ -29,7 +28,7 @@ class EncodeCest
 
         $data     = [
             'one' => 'two',
-            'three'
+            'three',
         ];
         $expected = '{"one":"two","0":"three"}';
         $actual   = Json::encode($data);
@@ -37,9 +36,8 @@ class EncodeCest
     }
 
     /**
-     * Tests Phalcon\Helper\Json :: encode() - exception
+     * Tests Cardoe\Helper\Json :: encode() - exception
      *
-     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonEncodeException(UnitTester $I)

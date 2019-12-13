@@ -13,7 +13,6 @@ namespace Cardoe\Test\Unit\Http\Message\UriFactory;
 
 use Cardoe\Http\Message\UriFactory;
 use Psr\Http\Message\UriInterface;
-use TypeError;
 use UnitTester;
 
 class CreateUriCest

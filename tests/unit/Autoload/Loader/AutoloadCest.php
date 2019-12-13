@@ -110,15 +110,16 @@ class AutoloadCest
                 'Loading: Example\Namespaces\Adapter\Mongo',
                 'Class: 404 : Example\Namespaces\Adapter\Mongo',
                 'Namespace: Example\Namespaces\Adapter\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Adapter/') .
-                    'Mongo.php',
+                dataDir('fixtures/Loader/Example/Namespaces/Adapter/') .
+                'Mongo.php',
             ],
             $loader->getDebug()
         );
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces multiple folders
+     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces multiple
+     * folders
      *
      * @since  2018-11-13
      */
@@ -150,8 +151,7 @@ class AutoloadCest
                         dataDir('fixtures/Loader/Example/Namespaces/Plugin/'),
                     ],
                 ]
-            )
-        ;
+            );
 
         $loader->autoload(Another::class);
 
@@ -160,9 +160,9 @@ class AutoloadCest
                 'Loading: Example\Namespaces\Adapter\Another',
                 'Class: 404 : Example\Namespaces\Adapter\Another',
                 'Load: 404 : Example\Namespaces\Adapter\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Adapter/Another.php'),
+                dataDir('fixtures/Loader/Example/Namespaces/Adapter/Another.php'),
                 'Namespace: Example\Namespaces\Adapter\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Plugin/Another.php'),
+                dataDir('fixtures/Loader/Example/Namespaces/Plugin/Another.php'),
             ],
             $loader->getDebug()
         );
@@ -209,8 +209,7 @@ class AutoloadCest
             ->addNamespace(
                 'Example\Namespaces\Adapter',
                 dataDir('fixtures/Loader/Example/Namespaces/Adapter/')
-            )
-        ;
+            );
 
         $loader->autoload('Example\Namespaces\Adapter\Unknown');
 
@@ -219,7 +218,7 @@ class AutoloadCest
                 'Loading: Example\Namespaces\Adapter\Unknown',
                 'Class: 404 : Example\Namespaces\Adapter\Unknown',
                 'Load: 404 : Example\Namespaces\Adapter\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Adapter/Unknown.php'),
+                dataDir('fixtures/Loader/Example/Namespaces/Adapter/Unknown.php'),
                 'Load: No folders registered: Example\Namespaces\\',
                 'Load: No folders registered: Example\\',
                 'Namespace: 404 : Example\Namespaces\Adapter\Unknown',
@@ -262,9 +261,9 @@ class AutoloadCest
                 'Class: 404 : Example\Namespaces\Engines\Alcohol',
                 'Load: No folders registered: Example\Namespaces\Engines\\',
                 'Load: 404 : Example\Namespaces\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Engines/Alcohol.php'),
+                dataDir('fixtures/Loader/Example/Namespaces/Engines/Alcohol.php'),
                 'Namespace: Example\Namespaces\ - ' .
-                    dataDir('fixtures/Loader/Example/Namespaces/Engines/Alcohol.inc'),
+                dataDir('fixtures/Loader/Example/Namespaces/Engines/Alcohol.inc'),
             ],
             $loader->getDebug()
         );

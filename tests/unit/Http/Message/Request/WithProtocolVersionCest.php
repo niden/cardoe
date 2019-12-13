@@ -44,7 +44,8 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - unsupported protocol
+     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - unsupported
+     * protocol
      *
      * @since  2019-02-10
      */
@@ -65,7 +66,8 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - empty protocol
+     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - empty
+     * protocol
      *
      * @since  2019-02-10
      */

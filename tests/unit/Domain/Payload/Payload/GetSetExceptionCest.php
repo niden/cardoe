@@ -26,7 +26,7 @@ class GetSetExceptionCest
     {
         $I->wantToTest('Domain\Payload\Payload - getException()/setException()');
 
-        $payload = new Payload();
+        $payload   = new Payload();
         $exception = new RuntimeException('Runtime error');
         $payload->setException($exception);
 

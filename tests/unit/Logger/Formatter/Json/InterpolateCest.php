@@ -68,7 +68,7 @@ class InterpolateCest
 
         $expected = sprintf(
             '{"type":"debug","message":"The sky is blue","timestamp":"%s"}%s',
-            date('D, d M y H:i:s O', $time),
+            date('c', $time),
             PHP_EOL
         );
 

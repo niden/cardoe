@@ -15,6 +15,8 @@ use Cardoe\Http\Message\Stream;
 use RuntimeException;
 use UnitTester;
 
+use function dataDir;
+
 class GetContentsCest
 {
     /**

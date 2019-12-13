@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Response;
 
-use InvalidArgumentException;
 use Cardoe\Http\Message\Response;
+use InvalidArgumentException;
 use UnitTester;
 
 class WithProtocolVersionCest
@@ -25,7 +25,7 @@ class WithProtocolVersionCest
     public function httpMessageResponseWithProtocolVersion(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Response - withProtocolVersion()');
-        $response     = new Response();
+        $response    = new Response();
         $newInstance = $response->withProtocolVersion('2.0');
 
         $I->assertNotEquals($response, $newInstance);

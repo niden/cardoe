@@ -28,7 +28,7 @@ class GetDateFormatCest
         $formatter = new Json();
 
         $I->assertEquals(
-            'D, d M y H:i:s O',
+            'c',
             $formatter->getDateFormat()
         );
     }

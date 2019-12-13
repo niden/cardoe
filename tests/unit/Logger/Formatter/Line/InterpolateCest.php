@@ -67,7 +67,7 @@ class InterpolateCest
             $context
         );
 
-        $expected = sprintf('[%s][debug] The sky is blue', date('D, d M y H:i:s O', $time)) . PHP_EOL;
+        $expected = sprintf('[%s][debug] The sky is blue', date('c', $time)) . PHP_EOL;
 
         $I->assertEquals(
             $expected,

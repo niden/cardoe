@@ -40,7 +40,7 @@ class FormatCest
             $time
         );
 
-        $expected = sprintf('[%s][debug] log message', date('D, d M y H:i:s O', $time)) . PHP_EOL;
+        $expected = sprintf('[%s][debug] log message', date('c', $time)) . PHP_EOL;
 
         $I->assertEquals(
             $expected,
@@ -68,7 +68,7 @@ class FormatCest
             $time
         );
 
-        $expected = sprintf('log message-[debug]-%s', date('D, d M y H:i:s O', $time)) . PHP_EOL;
+        $expected = sprintf('log message-[debug]-%s', date('c', $time)) . PHP_EOL;
 
         $I->assertEquals(
             $expected,

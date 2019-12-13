@@ -66,7 +66,8 @@ class WithStatusCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: withStatus() - exception invalid code
+     * Tests Cardoe\Http\Message\Response :: withStatus() - exception invalid
+     * code
      *
      * @since  2019-03-09
      */
@@ -79,14 +80,15 @@ class WithStatusCest
                 'Invalid status code; it must be an integer or string'
             ),
             function () {
-                $response = new Response();
+                $response    = new Response();
                 $newInstance = $response->withStatus(true, '');
             }
         );
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: withStatus() - exception invalid phrase
+     * Tests Cardoe\Http\Message\Response :: withStatus() - exception invalid
+     * phrase
      *
      * @since  2019-03-09
      */
@@ -99,7 +101,7 @@ class WithStatusCest
                 'Invalid response reason'
             ),
             function () {
-                $response = new Response();
+                $response    = new Response();
                 $newInstance = $response->withStatus(200, true);
             }
         );

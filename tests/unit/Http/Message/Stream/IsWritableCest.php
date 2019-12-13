@@ -11,10 +11,11 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Http\Message\Stream;
 
-use Codeception\Example;
 use Cardoe\Http\Message\Stream;
+use Codeception\Example;
 use UnitTester;
 
+use function dataDir;
 use function logsDir;
 
 class IsWritableCest
