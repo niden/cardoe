@@ -87,18 +87,20 @@ jobs:
         run: |
           php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
-      - name: Run Integration Tests - MySQL
-        run: |
-          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
-
-      - name: Upload Integration MySQL Coverage to Scrutinizer
-        run: |
-          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
-
-      - name: Run Integration Tests - Sqlite
-        run: |
-          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
-
-      - name: Upload Integration Sqlite Coverage to Scrutinizer
-        run: |
-          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+# Removing for now until we start the database interactions
+#
+#      - name: Run Integration Tests - MySQL
+#        run: |
+#          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
+#
+#      - name: Upload Integration MySQL Coverage to Scrutinizer
+#        run: |
+#          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+#
+#      - name: Run Integration Tests - Sqlite
+#        run: |
+#          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
+#
+#      - name: Upload Integration Sqlite Coverage to Scrutinizer
+#        run: |
+#          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
