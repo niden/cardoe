@@ -29,10 +29,5 @@ class DecodeUrlCest
         $expected = 'https://cardoe.ld?one=two&data=json+vdi';
         $actual = Base64::decodeUrl($source);
         $I->assertEquals($expected, $actual);
-
-
-        $padding  = 'QFDvv71ZLO-_ve-_vVF777-92I10XO-_ve-_ve-_vRnvv73vv70r77-9bQQDTzvvv73vv73vv704Ww';
-        $expected = 'QFDvv71ZLO-_ve-_vVF777-92I10XO-_ve-_ve-_vRnvv73vv70r77-9bQQDTzvvv73vv73vv704Ww==';
-        $I->assertEquals($expected, Base64::decodeUrl($padding));
     }
 }
