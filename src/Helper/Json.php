@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -84,9 +84,9 @@ class Json
      * // {"one":"two","0":"three"}
      * ```
      *
-     * @param mixed  $data        JSON data to parse
-     * @param int    $options     Bitmask of JSON decode options.
-     * @param int    $depth       Recursion depth.
+     * @param mixed $data    JSON data to parse
+     * @param int   $options Bitmask of JSON decode options.
+     * @param int   $depth   Recursion depth.
      *
      * @return mixed
      *

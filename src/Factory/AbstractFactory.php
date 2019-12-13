@@ -14,7 +14,7 @@ namespace Cardoe\Factory;
 /**
  * Class AbstractFactory
  *
- * @package Cardoe\Factory
+ * @property array $mapper
  */
 abstract class AbstractFactory
 {
@@ -22,11 +22,6 @@ abstract class AbstractFactory
      * @var array
      */
     protected $mapper = [];
-
-    /**
-     * @var array
-     */
-    protected $services = [];
 
     /**
      * Checks if a service exists and throws an exception
@@ -59,7 +54,6 @@ abstract class AbstractFactory
 
         foreach ($adapters as $name => $service) {
             $this->mapper[$name] = $service;
-            unset($this->services[$name]);
         }
     }
 }

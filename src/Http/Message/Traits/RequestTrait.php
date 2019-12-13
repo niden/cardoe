@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -226,6 +226,7 @@ trait RequestTrait
     }
 
     abstract protected function checkHeaderHost(Collection $collection): Collection;
+
     abstract protected function cloneInstance($element, string $property);
 
     /**
@@ -265,7 +266,7 @@ trait RequestTrait
     /**
      * Sets a valid Uri
      *
-     * @param UriInterface|string|null $uri
+     * @param mixed $uri
      *
      * @return UriInterface
      */

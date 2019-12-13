@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -195,8 +195,8 @@ final class ServerRequest implements ServerRequestInterface
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
      *
-     * @param string        $name
-     * @param mixed|null    $defaultValue
+     * @param string     $name
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */

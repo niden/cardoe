@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -120,7 +120,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getFormatter(): FormatterInterface
     {
-        if (!is_object($this->formatter)) {
+        if (null === $this->formatter) {
             $className = "Cardoe\\Logger\\Formatter\\" . $this->defaultFormatter;
 
             $this->formatter = new $className();

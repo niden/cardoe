@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -15,6 +15,7 @@ use function array_merge;
 use function count;
 use function count_chars;
 use function explode;
+use function func_get_args;
 use function implode;
 use function ltrim;
 use function mb_strtolower;
@@ -86,60 +87,6 @@ class Str
         }
 
         return $prefix . implode($separator, $data) . $suffix;
-    }
-
-    /**
-     * Check if a string starts with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function startsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            0,
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
-    }
-
-    /**
-     * Check if a string ends with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function endsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            -strlen($needle),
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
     }
 
     /**
@@ -217,6 +164,32 @@ class Str
         return rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
     }
 
+    /**
+     * Check if a string ends with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function endsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return 0 === substr_compare(
+            $haystack,
+            $needle,
+            -strlen($needle),
+            strlen($needle),
+            $ignoreCase
+        );
+    }
     /**
      * Returns the first string there is between the strings from the
      * parameter start and end.
@@ -409,6 +382,33 @@ class Str
         $result = preg_replace('#(?<!:)//+#', '/', $text);
 
         return (null === $result) ? '' : $result;
+    }
+
+    /**
+     * Check if a string starts with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function startsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return 0 === substr_compare(
+            $haystack,
+            $needle,
+            0,
+            strlen($needle),
+            $ignoreCase
+        );
     }
 
     /**

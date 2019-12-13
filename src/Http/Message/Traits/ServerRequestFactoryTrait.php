@@ -22,12 +22,12 @@ use function explode;
 use function implode;
 use function is_array;
 use function ltrim;
+use function mb_strpos;
 use function parse_str;
 use function preg_match;
 use function preg_replace;
 use function str_replace;
 use function strlen;
-use function mb_strpos;
 use function substr;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -16,8 +16,6 @@ use Cardoe\Logger\Exception;
 use Cardoe\Logger\Item;
 use Cardoe\Logger\Logger;
 use LogicException;
-
-use function is_array;
 
 use const LOG_ERR;
 use const LOG_ODELAY;
@@ -35,7 +33,7 @@ class Syslog extends AbstractAdapter
      *
      * @var string
      */
-    protected $defaultFormatter = "Syslog";
+    protected $defaultFormatter = "Line";
 
     /**
      * @var int
@@ -93,12 +91,7 @@ class Syslog extends AbstractAdapter
     {
         $formatter = $this->getFormatter();
         $message   = $formatter->format($item);
-
-        if (!is_array($message)) {
-            throw new Exception("The formatted message is not valid");
-        }
-
-        $result = openlog($this->name, $this->option, $this->facility);
+        $result    = openlog($this->name, $this->option, $this->facility);
 
         if (!$result) {
             throw new LogicException(

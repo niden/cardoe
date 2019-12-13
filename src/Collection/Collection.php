@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -13,13 +13,20 @@ namespace Cardoe\Collection;
 
 use ArrayAccess;
 use ArrayIterator;
+use Cardoe\Helper\Json;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
 use Serializable;
 use Traversable;
 
+use function array_key_exists;
+use function array_keys;
+use function array_values;
+use function is_object;
 use function mb_strtolower;
+use function method_exists;
+use function strtolower;
 
 /**
  * Cardoe\Collection
@@ -30,7 +37,11 @@ use function mb_strtolower;
  * It can be used in any part of the application that needs collection of data
  * Such implementations are for instance accessing globals `$_GET`, `$_POST`
  * etc.
- */
+ *
+ * @property array $data
+ * @property bool  $insensitive
+ * @property array $lowerKeys
+*/
 class Collection implements
     ArrayAccess,
     Countable,
@@ -137,19 +148,35 @@ class Collection implements
      *
      * @return mixed
      */
-    public function get(string $element, $defaultValue = null)
-    {
-        if (true === $this->insensitive) {
-            $element = mb_strtolower($element);
+    /**
+     * Get the element from the collection
+     */
+    /**
+     * @param string      $element
+     * @param mixed|null  $defaultValue
+     * @param string|null $cast
+     *
+     * @return mixed
+     */
+    public function get(
+        string $element,
+        $defaultValue = null,
+        string $cast = null
+    ) {
+        $element = ($this->insensitive) ? strtolower($element) : $element;
+
+        if (!array_key_exists($element, $this->lowerKeys)) {
+            return $defaultValue;
         }
 
-        if (isset($this->lowerKeys[$element])) {
-            $key = $this->lowerKeys[$element];
+        $key   = $this->lowerKeys[$element];
+        $value = $this->data[$key];
 
-            return $this->data[$key];
+        if (null !== $cast) {
+            settype($value, $cast);
         }
 
-        return $defaultValue;
+        return $value;
     }
 
     /**
@@ -158,6 +185,32 @@ class Collection implements
     public function getIterator(): Traversable
     {
         return new ArrayIterator($this->data);
+    }
+
+    /**
+     * Returns the keys (insensitive or not) of the collection
+     *
+     * @param bool $insensitive
+     *
+     * @return array
+     */
+    public function getKeys(bool $insensitive = true): array
+    {
+        if ($insensitive) {
+            return array_keys($this->lowerKeys);
+        } else {
+            return array_keys($this->data);
+        }
+    }
+
+    /**
+     * Returns the values of the internal array
+     *
+     * @return array
+     */
+    public function getValues(): array
+    {
+        return array_values($this->data);
     }
 
     /**
@@ -170,7 +223,7 @@ class Collection implements
     public function has(string $element): bool
     {
         if (true === $this->insensitive) {
-            $element = mb_strtolower($element);
+            $element = strtolower($element);
         }
 
         return isset($this->lowerKeys[$element]);
@@ -195,7 +248,17 @@ class Collection implements
      */
     public function jsonSerialize(): array
     {
-        return $this->data;
+        $records = [];
+
+        foreach ($this->data as $key => $value) {
+            if (is_object($value) && method_exists($value, "jsonSerializable")) {
+                $records[$key] = $value->jsonSerialize();
+            } else {
+                $records[$key] = $value;
+            }
+        }
+
+        return $records;
     }
 
     /**
@@ -268,7 +331,7 @@ class Collection implements
     {
         if ($this->has($element)) {
             if (true === $this->insensitive) {
-                $element = mb_strtolower($element);
+                $element = strtolower($element);
             }
 
             $value = $this->lowerKeys[$element];
@@ -323,9 +386,7 @@ class Collection implements
      */
     public function toJson(int $options = 79): string
     {
-        $results = json_encode($this->toArray(), $options);
-
-        return (false === $results) ? '' : $results;
+        return Json::encode($this->jsonSerialize(), $options);
     }
 
     /**

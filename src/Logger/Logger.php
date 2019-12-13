@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -12,13 +12,16 @@ declare(strict_types=1);
 namespace Cardoe\Logger;
 
 use Cardoe\Helper\Arr;
+use Cardoe\Logger\Adapter\AbstractAdapter;
 use Cardoe\Logger\Adapter\AdapterInterface;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class Logger
  *
- * @package Cardoe\Logger
+ * @property AdapterInterface[] $adapters
+ * @property string             $name
+ * @property array              $excluded
  */
 class Logger implements LoggerInterface
 {
@@ -47,7 +50,7 @@ class Logger implements LoggerInterface
     /**
      * The excluded adapters for this log process
      *
-     * @var bool[]
+     * @var array
      */
     protected $excluded = [];
 
@@ -334,7 +337,11 @@ class Logger implements LoggerInterface
          */
         foreach ($this->adapters as $name => $adapter) {
             if (!isset($this->excluded[$name])) {
-                $adapter->process($item);
+                if ($adapter->inTransaction()) {
+                    $adapter->add($item);
+                } else {
+                    $adapter->process($item);
+                }
             }
         }
 
@@ -367,7 +374,7 @@ class Logger implements LoggerInterface
     /**
      * Converts the level from string/word to an integer
      *
-     * @param string|int $level
+     * @param mixed $level
      *
      * @return int
      */

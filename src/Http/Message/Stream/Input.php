@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -68,12 +68,12 @@ class Input extends Stream
     /**
      * Returns the remaining contents in a string
      *
-     * @throws RuntimeException if unable to read.
-     * @throws RuntimeException if error occurs while reading.
-     *
      * @param int $length
      *
      * @return string
+     * @throws RuntimeException if unable to read.
+     * @throws RuntimeException if error occurs while reading.
+     *
      */
     public function getContents(int $length = -1): string
     {

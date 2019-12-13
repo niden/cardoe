@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -42,12 +42,35 @@ use const DIRECTORY_SEPARATOR;
  */
 class Loader
 {
-    protected $classes      = [];
-    protected $debug        = [];
-    protected $extensions   = [];
-    protected $files        = [];
+    /**
+     * @var array
+     */
+    protected $classes = [];
+
+    /**
+     * @var array
+     */
+    protected $debug = [];
+
+    /**
+     * @var array
+     */
+    protected $extensions = [];
+
+    /**
+     * @var array
+     */
+    protected $files = [];
+
+    /**
+     * @var bool
+     */
     protected $isRegistered = false;
-    protected $namespaces   = [];
+
+    /**
+     * @var array
+     */
+    protected $namespaces = [];
 
     /**
      * Loader constructor.
@@ -104,9 +127,9 @@ class Loader
     }
 
     /**
-     * @param string       $namespace
-     * @param string|array $directories
-     * @param bool         $prepend
+     * @param string $namespace
+     * @param mixed  $directories
+     * @param bool   $prepend
      *
      * @return Loader
      * @throws Exception
@@ -140,7 +163,7 @@ class Loader
             $directories[$key] = rtrim($directory, $ds) . $ds;
         }
 
-        $source = ($prepend) ? $directories                  : $this->namespaces[$namespace];
+        $source = ($prepend) ? $directories : $this->namespaces[$namespace];
         $target = ($prepend) ? $this->namespaces[$namespace] : $directories;
 
         $this->namespaces[$namespace] = array_unique(

@@ -9,12 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\JWT\Exceptions;
+namespace Cardoe\Config;
 
-use Exception;
 use Throwable;
 
-class UnsupportedAlgorithmException extends Exception implements Throwable
+/**
+ * Exceptions thrown in Cardoe\Config will use this class
+ */
+class Exception extends \Exception implements Throwable
 {
 
 }

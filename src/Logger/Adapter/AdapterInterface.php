@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -57,6 +57,14 @@ interface AdapterInterface
      * @return FormatterInterface
      */
     public function getFormatter(): FormatterInterface;
+
+    /**
+     * Returns the whether the logger is currently in an active transaction or
+     * not
+     *
+     * @return bool
+     */
+    public function inTransaction(): bool;
 
     /**
      * Processes the message in the adapter

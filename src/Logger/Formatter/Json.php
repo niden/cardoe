@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -23,6 +23,8 @@ use const PHP_EOL;
  * Cardoe\Logger\Formatter\Json
  *
  * Formats messages using JSON encoding
+ *
+ * @property string $dateFormat
  */
 class Json extends AbstractFormatter
 {
@@ -38,7 +40,7 @@ class Json extends AbstractFormatter
      *
      * @param string $dateFormat
      */
-    public function __construct(string $dateFormat = "D, d M y H:i:s O")
+    public function __construct(string $dateFormat = "c")
     {
         $this->dateFormat = $dateFormat;
     }
@@ -71,10 +73,10 @@ class Json extends AbstractFormatter
 
         return json_encode(
             [
-                    "type"      => $item->getName(),
-                    "message"   => $message,
-                    "timestamp" => date($this->dateFormat, $item->getTime()),
-                ]
+                "type"      => $item->getName(),
+                "message"   => $message,
+                "timestamp" => date($this->dateFormat, $item->getTime()),
+            ]
         ) . PHP_EOL;
     }
 

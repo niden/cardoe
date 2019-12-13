@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Cardoe Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -24,6 +24,9 @@ use const PHP_EOL;
  * Cardoe\Logger\Formatter\Line
  *
  * Formats messages using an one-line string
+ *
+ * @property string $dateFormat
+ * @property string $format
  */
 class Line extends AbstractFormatter
 {
@@ -49,7 +52,7 @@ class Line extends AbstractFormatter
      */
     public function __construct(
         string $format = "[%date%][%type%] %message%",
-        string $dateFormat = "D, d M y H:i:s O"
+        string $dateFormat = "c"
     ) {
         $this->format     = $format;
         $this->dateFormat = $dateFormat;
