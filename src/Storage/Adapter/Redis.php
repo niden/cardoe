@@ -16,8 +16,6 @@ use Cardoe\Helper\Arr;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
-use function strlen;
-use function substr;
 
 /**
  * Redis adapter

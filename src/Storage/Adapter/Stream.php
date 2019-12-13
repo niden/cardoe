@@ -21,9 +21,9 @@ use FilesystemIterator;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+
 use function str_replace;
 use function strrchr;
-use function var_dump;
 
 /**
  * Stream adapter

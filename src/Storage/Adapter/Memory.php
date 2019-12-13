@@ -13,11 +13,9 @@ namespace Cardoe\Storage\Adapter;
 
 use Cardoe\Collection\Collection;
 use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Str;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
-use function array_keys;
 
 /**
  * Memory adapter

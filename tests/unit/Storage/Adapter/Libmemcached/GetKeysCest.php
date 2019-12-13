@@ -76,18 +76,18 @@ class GetKeysCest
         $I->assertTrue($adapter->has('one-2'));
 
         $expected = [
-            'ph-reds-key-1',
-            'ph-reds-key-2',
-            'ph-reds-one-1',
-            'ph-reds-one-2',
+            'ph-memc-key-1',
+            'ph-memc-key-2',
+            'ph-memc-one-1',
+            'ph-memc-one-2',
         ];
         $actual   = $adapter->getKeys();
         sort($actual);
         $I->assertEquals($expected, $actual);
 
         $expected = [
-            'ph-reds-one-1',
-            'ph-reds-one-2',
+            'ph-memc-one-1',
+            'ph-memc-one-2',
         ];
         $actual   = $adapter->getKeys("one");
         sort($actual);
