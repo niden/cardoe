@@ -27,7 +27,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
-      - name: Setup Memcached
+      - name: Setup Memcached Service
         uses: niden/actions-memcached@v1
 
       - uses: shogo82148/actions-setup-redis@v1
