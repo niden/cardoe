@@ -74,7 +74,7 @@ class LinkProvider implements LinkProviderInterface
         $links = [];
         foreach ($this->links as $link) {
             $rels = $link->getRels();
-            if (true === in_array($rel, $rels)) {
+            if (in_array($rel, $rels)) {
                 $links[] = $link;
             }
         }

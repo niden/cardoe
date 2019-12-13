@@ -251,7 +251,7 @@ final class UploadedFile implements UploadedFileInterface
             );
         }
 
-        if (true === $this->alreadyMoved) {
+        if ($this->alreadyMoved) {
             throw new InvalidArgumentException(
                 'The file has already been moved to the target location'
             );
@@ -309,7 +309,7 @@ final class UploadedFile implements UploadedFileInterface
         if (
             empty(PHP_SAPI) ||
             !empty($this->fileName) ||
-            true === Str::startsWith(PHP_SAPI, 'cli')
+            Str::startsWith(PHP_SAPI, 'cli')
         ) {
             $this->storeFile($targetPath);
         } else {
@@ -344,7 +344,7 @@ final class UploadedFile implements UploadedFileInterface
      */
     private function checkMoveIfMoved(): UploadedFile
     {
-        if (true === $this->alreadyMoved) {
+        if ($this->alreadyMoved) {
             throw new InvalidArgumentException('File has already been moved');
         }
 

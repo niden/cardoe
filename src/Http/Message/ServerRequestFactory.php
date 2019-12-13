@@ -99,7 +99,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         $headers = $this->parseHeaders($server);
         $files   = $this->parseUploadedFiles($files);
 
-        if (true === empty($cookies) && $headers->has('cookie')) {
+        if (empty($cookies) && $headers->has('cookie')) {
             $cookies = $this->parseCookieHeader($headers->get('cookie'));
         }
 
@@ -124,7 +124,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      */
     protected function getHeaders()
     {
-        if (true === function_exists('apache_request_headers')) {
+        if (function_exists('apache_request_headers')) {
             return apache_request_headers();
         }
 
@@ -214,7 +214,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
                      * We will not overwrite existing variables with the
                      * prefixed versions, though
                      */
-                    if (true === $server->has($key)) {
+                    if ($server->has($key)) {
                         continue;
                     }
                 }
@@ -244,7 +244,7 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         if (true !== $collection->has("HTTP_AUTHORIZATION") && false !== $headers) {
             $headersCollection = new Collection($headers);
 
-            if (true === $headersCollection->has('Authorization')) {
+            if ($headersCollection->has('Authorization')) {
                 $collection->set(
                     'HTTP_AUTHORIZATION',
                     $headersCollection->get('Authorization')

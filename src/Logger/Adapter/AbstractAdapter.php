@@ -57,7 +57,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function __destruct()
     {
-        if (true === $this->inTransaction) {
+        if ($this->inTransaction) {
             $this->commit();
         }
 

@@ -104,7 +104,7 @@ trait RequestTrait
                 $requestTarget .= '?' . $this->uri->getQuery();
             }
 
-            if (true === empty($requestTarget)) {
+            if (empty($requestTarget)) {
                 $requestTarget = '/';
             }
         }

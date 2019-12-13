@@ -107,7 +107,7 @@ class Ini extends Config
 
         // Decode float/int
         if (is_string($ini) && is_numeric($ini)) {
-            if (true === preg_match("/[.]+/", $ini)) {
+            if (preg_match("/[.]+/", $ini)) {
                 return (double) $ini;
             } else {
                 return (int) $ini;

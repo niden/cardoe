@@ -89,30 +89,27 @@ class Config extends Collection
      */
     public function path(string $path, $defaultValue = null, string $delimiter = null)
     {
-        if (true === $this->has($path)) {
+        if ($this->has($path)) {
             return $this->get($path);
         }
 
-        if (true === empty($delimiter)) {
-            $delimiter = $this->getPathDelimiter();
-        }
-
-        $config = clone $this;
-        $keys   = explode($delimiter, $path);
+        $delimiter = $this->checkDelimiter($delimiter);
+        $keys      = explode($delimiter, $path);
+        $config    = clone $this;
 
         while (!empty($keys)) {
             $key = array_shift($keys);
 
-            if (true !== $config->has($key)) {
+            if (!$config->has($key)) {
                 break;
             }
 
-            if (true === empty($keys)) {
+            if (empty($keys)) {
                 return $config->get($key);
             }
 
             $config = $config->get($key);
-            if (true === empty($config)) {
+            if (empty($config)) {
                 break;
             }
         }
@@ -147,7 +144,7 @@ class Config extends Collection
         foreach ($data as $key => $value) {
             if (
                 is_object($value) &&
-                true === method_exists($value, "toArray")
+                method_exists($value, "toArray")
             ) {
                 $value = $value->toArray();
             }
@@ -171,7 +168,7 @@ class Config extends Collection
         foreach ($target as $key => $value) {
             if (
                 is_array($value) &&
-                true === isset($source[$key]) &&
+                isset($source[$key]) &&
                 is_array($source[$key])
             ) {
                 $source[$key] = $this->internalMerge($source[$key], $value);
@@ -205,5 +202,19 @@ class Config extends Collection
         }
 
         $this->data[$element] = $data;
+    }
+
+    /**
+     * @param mixed $delimiter
+     *
+     * @return string
+     */
+    private function checkDelimiter($delimiter): string
+    {
+        if (empty($delimiter)) {
+            return $this->getPathDelimiter();
+        }
+
+        return $delimiter;
     }
 }

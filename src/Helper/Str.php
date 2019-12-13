@@ -73,11 +73,11 @@ class Str
         $suffix = '';
         $data   = [];
 
-        if (true === self::startsWith($first, $separator)) {
+        if (self::startsWith($first, $separator)) {
             $prefix = $separator;
         }
 
-        if (true === self::endsWith($last, $separator)) {
+        if (self::endsWith($last, $separator)) {
             $suffix = $separator;
         }
 
@@ -122,7 +122,7 @@ class Str
     ): string {
         $substr = mb_substr($text, 1);
 
-        if (true === $upperRest) {
+        if ($upperRest) {
             $suffix = mb_strtoupper($substr, $encoding);
         } else {
             $suffix = $substr;

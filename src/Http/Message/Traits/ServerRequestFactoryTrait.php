@@ -123,7 +123,7 @@ trait ServerRequestFactoryTrait
          * ORIG_PATH_INFO
          */
         $origPathInfo = $server->get('ORIG_PATH_INFO', null);
-        if (true === empty($origPathInfo)) {
+        if (empty($origPathInfo)) {
             return '/';
         }
 
@@ -155,7 +155,7 @@ trait ServerRequestFactoryTrait
         // URI scheme
         $scheme  = 'https';
         $isHttps = true;
-        if (true === $server->has('HTTPS')) {
+        if ($server->has('HTTPS')) {
             /** @var mixed $isHttps */
             $isHttps = (string) $server->get('HTTPS', 'on');
             $isHttps = 'off' !== mb_strtolower($isHttps);

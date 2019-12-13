@@ -34,7 +34,7 @@ class Yaml extends Config
             );
         }
 
-        if (true === empty($callbacks)) {
+        if (empty($callbacks)) {
             $yamlConfig = yaml_parse_file($filePath);
         } else {
             $yamlConfig = yaml_parse_file(

@@ -222,7 +222,7 @@ class Collection implements
      */
     public function has(string $element): bool
     {
-        if (true === $this->insensitive) {
+        if ($this->insensitive) {
             $element = strtolower($element);
         }
 
@@ -330,7 +330,7 @@ class Collection implements
     public function remove(string $element): void
     {
         if ($this->has($element)) {
-            if (true === $this->insensitive) {
+            if ($this->insensitive) {
                 $element = strtolower($element);
             }
 
@@ -413,7 +413,7 @@ class Collection implements
     protected function setData($element, $value): void
     {
         $element = (string) $element;
-        $key     = (true === $this->insensitive) ? mb_strtolower($element) : $element;
+        $key     = ($this->insensitive) ? mb_strtolower($element) : $element;
 
         $this->data[$element]  = $value;
         $this->lowerKeys[$key] = $element;

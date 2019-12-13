@@ -87,7 +87,7 @@ class Unit extends Module
      */
     public function safeDeleteFile(string $filename)
     {
-        if (true === file_exists($filename) && true === is_file($filename)) {
+        if (file_exists($filename) && is_file($filename)) {
             unlink($filename);
         }
     }

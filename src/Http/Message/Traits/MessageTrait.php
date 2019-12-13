@@ -305,7 +305,7 @@ trait MessageTrait
     protected function checkHeaderHost(Collection $collection): Collection
     {
         if (
-            true === $collection->has('host') &&
+            $collection->has('host') &&
             true !== empty($this->uri) &&
             '' !== $this->uri->getHost()
         ) {
@@ -421,7 +421,7 @@ trait MessageTrait
             $values = [$values];
         }
 
-        if (true === empty($values)) {
+        if (empty($values)) {
             throw new InvalidArgumentException(
                 'Invalid header value: must be a string or ' .
                 'array of strings; cannot be an empty array'

@@ -90,8 +90,8 @@ class Stream implements StreamInterface
     public function __toString(): string
     {
         try {
-            if (true === $this->isReadable()) {
-                if (true === $this->isSeekable()) {
+            if ($this->isReadable()) {
+                if ($this->isSeekable()) {
                     $this->rewind();
                 }
 

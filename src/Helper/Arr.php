@@ -118,7 +118,7 @@ class Arr
             if (!is_array($item)) {
                 $data[] = $item;
             } else {
-                if (true === $deep) {
+                if ($deep) {
                     $data = array_merge($data, self::flatten($item, true));
                 } else {
                     $data = array_merge($data, array_values($item));

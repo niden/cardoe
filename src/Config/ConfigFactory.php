@@ -172,7 +172,7 @@ class ConfigFactory extends AbstractFactory
      */
     private function checkExtension(string $extension): ConfigFactory
     {
-        if (true === empty($extension)) {
+        if (empty($extension)) {
             throw new Exception(
                 "You need to provide the extension in the file path"
             );

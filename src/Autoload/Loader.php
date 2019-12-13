@@ -444,7 +444,7 @@ class Loader
      */
     protected function requireFile(string $file): bool
     {
-        if (true === file_exists($file)) {
+        if (file_exists($file)) {
             require $file;
 
             return true;

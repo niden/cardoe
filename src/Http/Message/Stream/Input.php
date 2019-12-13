@@ -56,7 +56,7 @@ class Input extends Stream
      */
     public function __toString(): string
     {
-        if (true === $this->eof) {
+        if ($this->eof) {
             return $this->data;
         }
 
@@ -77,7 +77,7 @@ class Input extends Stream
      */
     public function getContents(int $length = -1): string
     {
-        if (true === $this->eof) {
+        if ($this->eof) {
             return $this->data;
         }
 
@@ -86,7 +86,7 @@ class Input extends Stream
 
         $this->data = $data;
 
-        if (-1 === $length || true === $this->eof()) {
+        if (-1 === $length || $this->eof()) {
             $this->eof = true;
         }
 
@@ -116,7 +116,7 @@ class Input extends Stream
             $this->data = $data;
         }
 
-        if (true === $this->eof()) {
+        if ($this->eof()) {
             $this->eof = true;
         }
 
