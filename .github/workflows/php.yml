@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v1
 
       - name: Setup Memcached
-        uses: niden/actions-memcached@v5
+        uses: niden/actions-memcached@v6
 
       - name: Setup PHP
         uses: shivammathur/setup-php@1.5.2
