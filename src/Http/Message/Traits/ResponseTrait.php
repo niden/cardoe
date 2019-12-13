@@ -25,35 +25,6 @@ use function is_string;
 trait ResponseTrait
 {
     /**
-     * Checks if a code is integer or string
-     *
-     * @param mixed $code
-     */
-    private function checkCodeType($code): void
-    {
-        if (!is_int($code) && !is_string($code)) {
-            throw new InvalidArgumentException(
-                'Invalid status code; it must be an integer or string'
-            );
-        }
-    }
-
-    /**
-     * Checks if a code is integer or string
-     *
-     * @param int $code
-     */
-    private function checkCodeValue(int $code): void
-    {
-        if (true !== Number::between($code, 100, 599)) {
-            throw new InvalidArgumentException(
-                "Invalid status code '" . $code .
-                "', (allowed values 100-599)"
-            );
-        }
-    }
-
-    /**
      * Returns the list of status codes available
      */
     private function getPhrases(): array
