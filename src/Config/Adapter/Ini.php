@@ -37,8 +37,12 @@ class Ini extends Config
      *
      * @throws Exception
      */
-    public function __construct(string $filePath, int $mode = INI_SCANNER_RAW)
+    public function __construct(string $filePath, int $mode = null)
     {
+        if (null === $mode) {
+            $mode = INI_SCANNER_RAW;
+        }
+
         $iniConfig = parse_ini_file(
             $filePath,
             true,
