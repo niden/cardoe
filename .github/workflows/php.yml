@@ -22,17 +22,17 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-      redis:
-        image: redis
-        ports:
-          - 6379/tcp
-        options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Setup Redis
+        uses: zhulik/redis-action@v1.0.0
+        with:
+          redis version: '5'
+
       - name: Setup Memcached
-        uses: niden/actions-memcached@v6
+        uses: niden/actions-memcached@v7
 
       - name: Setup PHP
         uses: shivammathur/setup-php@1.5.2
@@ -74,9 +74,12 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
-      - name: Run Unit Tests
+      - name: Getting Ocular
         run: |
           wget https://scrutinizer-ci.com/ocular.phar
+
+      - name: Run Unit Tests
+        run: |
           vendor/bin/codecept build
           vendor/bin/codecept run unit --coverage --coverage-xml
 
