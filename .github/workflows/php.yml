@@ -28,7 +28,7 @@ jobs:
           - 6379/tcp
         options: --health-cmd="redis-cli ping" --health-interval=10s --health-timeout=5s --health-retries=3
       memcached:
-        image: niden/actions-memcached@v3
+        image: niden/actions-memcached
         ports:
           - 11211
     steps:
