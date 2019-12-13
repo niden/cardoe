@@ -300,29 +300,11 @@ final class UploadedFile implements UploadedFileInterface
      */
     public function moveTo($targetPath): void
     {
-        if (true === $this->alreadyMoved) {
-            throw new InvalidArgumentException('File has already been moved');
-        }
-
-        if (UPLOAD_ERR_OK !== $this->error) {
-            throw new InvalidArgumentException(
-                $this->getErrorDescription($this->error)
-            );
-        }
-
-        /**
-         * All together for early failure
-         */
-        if (
-            !(is_string($targetPath) &&
-            !empty($targetPath) &&
-            is_dir(dirname($targetPath)) &&
-            is_writable(dirname($targetPath)))
-        ) {
-            throw new InvalidArgumentException(
-                'Target folder is empty string, not a folder or not writable'
-            );
-        }
+        $this
+            ->checkMoveIfMoved()
+            ->checkMoveError()
+            ->checkMoveDirectory($targetPath)
+        ;
 
         if (
             empty(PHP_SAPI) ||
@@ -355,6 +337,57 @@ final class UploadedFile implements UploadedFileInterface
         }
 
         $this->error = $error;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function checkMoveIfMoved(): UploadedFile
+    {
+        if (true === $this->alreadyMoved) {
+            throw new InvalidArgumentException('File has already been moved');
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return UploadedFile
+     */
+    private function checkMoveError(): UploadedFile
+    {
+        if (UPLOAD_ERR_OK !== $this->error) {
+            throw new InvalidArgumentException(
+                $this->getErrorDescription($this->error)
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $targetPath
+     *
+     * @return UploadedFile
+     */
+    private function checkMoveDirectory($targetPath): UploadedFile
+    {
+        /**
+         * All together for early failure
+         */
+        if (
+            !(is_string($targetPath) &&
+            !empty($targetPath) &&
+            is_dir(dirname($targetPath)) &&
+            is_writable(dirname($targetPath)))
+        ) {
+            throw new InvalidArgumentException(
+                'Target folder is empty string, not a folder or not writable'
+            );
+        }
+
+
+        return $this;
     }
 
     /**

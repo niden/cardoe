@@ -290,7 +290,7 @@ class LoadCest
         ];
 
         $factory = new ServerRequestFactory();
-        $request = $factory->load(null, null, null, null, $files);
+        $request = $factory->load([], [], [], [], $files);
 
         $actual = $request->getUploadedFiles();
 
@@ -338,7 +338,7 @@ class LoadCest
                 ];
 
                 $factory = new ServerRequestFactory();
-                $request = $factory->load(null, null, null, null, $files);
+                $request = $factory->load([], [], [], [], $files);
             }
         );
     }

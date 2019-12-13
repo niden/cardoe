@@ -14,6 +14,7 @@ namespace Cardoe\Config\Adapter;
 use Cardoe\Config\Config;
 use Cardoe\Config\ConfigFactory;
 use Cardoe\Config\Exception;
+use Cardoe\Factory\Exception as ExceptionAlias;
 
 class Grouped extends Config
 {
@@ -24,6 +25,7 @@ class Grouped extends Config
      * @param string $defaultAdapter
      *
      * @throws Exception
+     * @throws ExceptionAlias
      */
     public function __construct(array $arrayConfig, string $defaultAdapter = "php")
     {
@@ -50,21 +52,43 @@ class Grouped extends Config
                 $configInstance["adapter"] = $defaultAdapter;
             }
 
-            if ("array" === $configInstance["adapter"]) {
-                if (true !== isset($configInstance["config"])) {
-                    throw new Exception(
-                        "To use the 'array' adapter you have to specify " .
-                        "the 'config' as an array."
-                    );
-                }
-
-                $configArray    = $configInstance["config"];
-                $configInstance = new Config($configArray);
-            } else {
-                $configInstance = (new ConfigFactory())->load($configInstance);
-            }
+            $configInstance = $this->getInstance($configInstance);
 
             $this->merge($configInstance);
+        }
+    }
+
+    /**
+     * @param array $configInstance
+     *
+     * @throws Exception
+     */
+    private function checkArrayAdapter(array $configInstance)
+    {
+        if (true !== isset($configInstance["config"])) {
+            throw new Exception(
+                "To use the 'array' adapter you have to specify " .
+                "the 'config' as an array."
+            );
+        }
+    }
+
+    /**
+     * @param array $configInstance
+     *
+     * @return mixed
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    private function getInstance(array $configInstance)
+    {
+        if ("array" === $configInstance["adapter"]) {
+            $this->checkArrayAdapter($configInstance);
+
+            $configArray    = $configInstance["config"];
+            return new Config($configArray);
+        } else {
+            return (new ConfigFactory())->load($configInstance);
         }
     }
 }

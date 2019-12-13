@@ -76,28 +76,22 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
      * The ServerRequest created is then passed to the fromServer() method in
      * order to marshal the request URI and headers.
      *
-     * @param array|null $server  $_SERVER superglobal
-     * @param array|null $get     $_GET superglobal
-     * @param array|null $post    $_POST superglobal
-     * @param array|null $cookies $_COOKIE superglobal
-     * @param array|null $files   $_FILES superglobal
+     * @param array $server  $_SERVER superglobal
+     * @param array $get     $_GET superglobal
+     * @param array $post    $_POST superglobal
+     * @param array $cookies $_COOKIE superglobal
+     * @param array $files   $_FILES superglobal
      *
      * @return ServerRequest
      * @see fromServer()
      */
     public function load(
-        array $server = null,
-        array $get = null,
-        array $post = null,
-        array $cookies = null,
-        array $files = null
+        array $server = [],
+        array $get = [],
+        array $post = [],
+        array $cookies = [],
+        array $files = []
     ): ServerRequest {
-        $server  = $server ?: $_SERVER;
-        $files   = $files ?: $_FILES;
-        $cookies = $cookies ?: $_COOKIE;
-        $get     = $get ?: $_GET;
-        $post    = $post ?: $_POST;
-
         $method   = Arr::get($server, 'REQUEST_METHOD', 'GET');
         $protocol = Arr::get($server, 'SERVER_PROTOCOL', '1.1');
 
