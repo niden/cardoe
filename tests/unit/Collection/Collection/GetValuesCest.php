@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Collection\Collection;
 
+use Cardoe\Collection\Collection;
 use UnitTester;
 
 class GetValuesCest
@@ -24,6 +25,20 @@ class GetValuesCest
     {
         $I->wantToTest('Collection\Collection - getValues()');
 
-        $I->skipTest('Need implementation');
+        $values = [
+            'two',
+            'four',
+            'six',
+        ];
+
+        $data = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new Collection($data);
+
+        $I->assertEquals($values, $collection->getValues());
     }
 }

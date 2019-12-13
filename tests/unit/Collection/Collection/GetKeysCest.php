@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Cardoe\Test\Unit\Collection\Collection;
 
+use Cardoe\Collection\Collection;
 use UnitTester;
 
 class GetKeysCest
@@ -24,6 +25,30 @@ class GetKeysCest
     {
         $I->wantToTest('Collection\Collection - getKeys()');
 
-        $I->skipTest('Need implementation');
+        $keys = [
+            'one',
+            'three',
+            'five',
+        ];
+
+        $data = [
+            'one'   => 'two',
+            'three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new Collection($data);
+
+        $I->assertEquals($keys, $collection->getKeys());
+
+        $data = [
+            'one'   => 'two',
+            'Three' => 'four',
+            'five'  => 'six',
+        ];
+
+        $collection = new Collection($data);
+        $I->assertEquals($keys, $collection->getKeys());
+        $I->assertEquals(array_keys($data), $collection->getKeys(false));
     }
 }

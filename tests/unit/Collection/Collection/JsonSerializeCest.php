@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Cardoe\Test\Unit\Collection\Collection;
 
 use Cardoe\Collection\Collection;
+use Cardoe\Test\Fixtures\Helper\JsonFixture;
 use UnitTester;
 
 class JsonSerializeCest
@@ -35,6 +36,29 @@ class JsonSerializeCest
 
         $I->assertEquals(
             $data,
+            $collection->jsonSerialize()
+        );
+
+        $data = [
+            'one'    => 'two',
+            'three'  => 'four',
+            'five'   => 'six',
+            'object' => new JsonFixture(),
+        ];
+
+        $expected = [
+            'one'    => 'two',
+            'three'  => 'four',
+            'five'   => 'six',
+            'object' => [
+                'one' => 'two'
+            ],
+        ];
+
+        $collection = new Collection($data);
+
+        $I->assertEquals(
+            $expected,
             $collection->jsonSerialize()
         );
     }

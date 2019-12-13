@@ -47,11 +47,4 @@ class Status
     public const SUCCESS           = "SUCCESS";
     public const UPDATED           = "UPDATED";
     public const VALID             = "VALID";
-
-    /**
-     * Instantiation not allowed.
-     */
-    final private function __construct()
-    {
-    }
 }

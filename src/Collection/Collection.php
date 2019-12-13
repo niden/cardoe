@@ -251,7 +251,7 @@ class Collection implements
         $records = [];
 
         foreach ($this->data as $key => $value) {
-            if (is_object($value) && method_exists($value, "jsonSerializable")) {
+            if (is_object($value) && method_exists($value, "jsonSerialize")) {
                 $records[$key] = $value->jsonSerialize();
             } else {
                 $records[$key] = $value;

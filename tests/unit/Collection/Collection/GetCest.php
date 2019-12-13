@@ -29,6 +29,7 @@ class GetCest
             'one'   => 'two',
             'three' => 'four',
             'five'  => 'six',
+            'seven' => '1',
         ];
 
         $collection = new Collection($data);
@@ -48,6 +49,11 @@ class GetCest
         $I->assertEquals(
             $expected,
             $collection->get('unknown', 'four')
+        );
+
+        $I->assertEquals(
+            1,
+            $collection->get('seven', null, "int")
         );
 
         $I->assertEquals(
