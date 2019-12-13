@@ -35,7 +35,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@1.5.2
         with:
-          php-version: '7.3'
+          php-version: '${{ matrix.php-versions }}'
           extension-csv: apcu, mbstring, xdebug
           ini-values-csv: apc.enable_cli=1, apc.enabled=1
           coverage: xdebug

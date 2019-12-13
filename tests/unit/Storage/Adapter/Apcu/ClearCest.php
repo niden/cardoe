@@ -18,9 +18,6 @@ use Cardoe\Storage\SerializerFactory;
 use Cardoe\Test\Fixtures\Traits\ApcuTrait;
 use UnitTester;
 
-use function getOptionsRedis;
-use function var_dump;
-
 class ClearCest
 {
     use ApcuTrait;

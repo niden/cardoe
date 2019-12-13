@@ -109,7 +109,6 @@ class Stream extends AbstractAdapter
     public function process(Item $item): void
     {
         if (!is_resource($this->handler)) {
-            var_dump($this->name);
             $handler = fopen($this->name, $this->mode);
 
             if (!is_resource($handler)) {

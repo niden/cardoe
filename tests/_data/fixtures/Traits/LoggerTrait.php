@@ -17,7 +17,6 @@ use Cardoe\Logger\Logger;
 use UnitTester;
 
 use function logsDir;
-use function var_dump;
 
 trait LoggerTrait
 {
@@ -35,7 +34,7 @@ trait LoggerTrait
 
         $logString = 'Hello';
         $logTime   = date('c');
-        var_dump($fileName);
+
         $logger->{$level}($logString);
 
         $logger->getAdapter('one')->close();
