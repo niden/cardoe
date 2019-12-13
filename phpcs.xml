@@ -5,7 +5,7 @@
     <arg value="s"/>
     <arg value="p"/>
     <rule ref="PSR12">
-        <exclude name="PSR1.Files.SideEffects.FoundWithSymbols"/>
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/>
     </rule>
     <file>src</file>
     <file>tests/unit</file>

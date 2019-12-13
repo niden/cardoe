@@ -3,14 +3,29 @@ on: [push, pull_request]
 
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        operating-system: [ubuntu-latest]
+        # Disabling Windows for now
+        # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
+        php-versions: ['7.3', '7.4']
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     services:
       mysql:
         image: mysql:5.7
         env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: false
           MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: gonano
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v1
 
       - uses: shogo82148/actions-setup-redis@v1
         with:
@@ -29,60 +44,56 @@ jobs:
       - name: Init Database
         run: |
           mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `gonano`;'
+
+      - name: Setup PHP, with composer and extensions
+        uses: shivammathur/setup-php@v1 #https://github.com/shivammathur/setup-php
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: mbstring, dom, zip, mysql, sqlite, pgsql
+          coverage: xdebug #optional
+
       - name: Show PHP Version
         run: php -v
+
+      - name: Get composer cache directory
+        id: composer-cache
+        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Install Composer dependencies
-        run: composer install --prefer-dist --no-progress --no-suggest
-
-      - name: Setup .env
-        run: cp -v config/.env.example config/.env
-
-      #      - name: Install PHPStan
-      #        run: composer require --prefer-dist --no-progress --no-suggest --dev phpstan/phpstan
-      #
-      #      - name: Run Psalm
-      #        run: vendor/bin/psalm --show-info=false
-      #
-      #      - name: Run PHPStan
-      #        run: vendor/bin/phpstan analyse -l 5 src
-
-      - name: Run Tests
-        run: |
-          vendor/bin/codecept build
-          vendor/bin/codecept run --coverage --coverage-xml
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.3
+      - name: Cache composer dependencies
+        uses: actions/cache@v1
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: ./tests/_output/coverage.xml
-          name: codecov-umbrella
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
 
+      - name: Install Composer dependencies
+        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
-#    strategy:
-#      fail-fast: false
-#      max-parallel: 3
-#      matrix:
-#        php-versions: ['7.3']
-#    steps:
-#      - uses: actions/checkout@v1
-#      - name: Setup PHP, with composer and extensions
-#        uses: shivammathur/setup-php@master #https://github.com/shivammathur/setup-php
-#        with:
-#          php-version: ${{ matrix.php-versions }}
-#          extension-csv: mbstring, xml
-#          coverage: xdebug #optional
-#      - name: Install Composer dependencies
-#        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-#      - name: Run Tests
-#        run: |
-#          vendor/bin/codecept build
-#          vendor/bin/codecept run --coverage --coverage-xml
-#      - uses: codecov/codecov-action@v1.0.3
-#        with:
-#          token: ${{secrets.CODECOV_TOKEN}} #required
-#          file: ./tests/_output/coverage.xml #optional
-#          flags: unittests #optional
+      - name: Run Unit Tests
+        run: |
+          wget https://scrutinizer-ci.com/ocular.phar
+          vendor/bin/codecept build
+          vendor/bin/codecept run unit --coverage --coverage-xml
+
+      - name: Upload Unit Coverage to Scrutinizer
+        run: |
+          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+
+      - name: Run Integration Tests - MySQL
+        run: |
+          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
+
+      - name: Upload Integration MySQL Coverage to Scrutinizer
+        run: |
+          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+
+      - name: Run Integration Tests - Sqlite
+        run: |
+          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
+
+      - name: Upload Integration Sqlite Coverage to Scrutinizer
+        run: |
+          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml

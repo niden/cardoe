@@ -78,8 +78,11 @@ run.config:
 data.memcached:
   image: nanobox/memcached:1.4
 
-data.mongodb:
-  image: mongo:4.0
+data.mysql:
+  image: nanobox/mysql:5.7
+
+data.postgres:
+  image: nanobox/postgresql:9.5
 
 data.redis :
   image : nanobox/redis:3.2
