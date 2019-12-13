@@ -27,6 +27,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v1
 
+      - name: Setup Memcached
+        uses: niden/actions-memcached@v1
+
       - uses: shogo82148/actions-setup-redis@v1
         with:
           redis-version: '5.x'
