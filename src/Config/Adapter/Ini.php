@@ -37,38 +37,20 @@ class Ini extends Config
      *
      * @throws Exception
      */
-    public function __construct(string $filePath, int $mode = null)
+    public function __construct(string $filePath, int $mode = INI_SCANNER_RAW)
     {
-
-        // Default to INI_SCANNER_RAW if not specified
-        if (null === $mode) {
-            $mode = INI_SCANNER_RAW;
-        }
-
         $iniConfig = parse_ini_file(
             $filePath,
             true,
             $mode
         );
 
-        if (false === $iniConfig) {
-            throw new Exception(
-                "Configuration file " .
-                basename($filePath) .
-                " cannot be loaded"
-            );
-        }
+        $this->checkIni($iniConfig, $filePath);
 
         $config = [];
         foreach ($iniConfig as $section => $directives) {
             if (is_array($directives)) {
-                $sections = [];
-                foreach ($directives as $path => $lastValue) {
-                    $sections[] = $this->parseIniString(
-                        (string) $path,
-                        $lastValue
-                    );
-                }
+                $sections = $this->parseSections($directives);
 
                 if (count($sections) > 0) {
                     $config[$section] = call_user_func_array(
@@ -156,5 +138,40 @@ class Ini extends Config
         return [
             $key => $this->parseIniString($path, $value),
         ];
+    }
+
+    /**
+     * @param mixed  $iniConfig
+     * @param string $filePath
+     *
+     * @throws Exception
+     */
+    private function checkIni($iniConfig, string $filePath): void
+    {
+        if (false === $iniConfig) {
+            throw new Exception(
+                "Configuration file " .
+                basename($filePath) .
+                " cannot be loaded"
+            );
+        }
+    }
+
+    /**
+     * @param array $directives
+     *
+     * @return array
+     */
+    private function parseSections(array $directives): array
+    {
+        $sections = [];
+        foreach ($directives as $path => $lastValue) {
+            $sections[] = $this->parseIniString(
+                (string) $path,
+                $lastValue
+            );
+        }
+
+        return $sections;
     }
 }

@@ -15,7 +15,14 @@ use Cardoe\Factory\AbstractFactory;
 use Cardoe\Factory\Exception as FactoryException;
 use Cardoe\Helper\Arr;
 
+use function is_array;
 use function is_object;
+use function is_string;
+use function lcfirst;
+use function pathinfo;
+use function strpos;
+use function strtolower;
+use const PATHINFO_EXTENSION;
 
 class ConfigFactory extends AbstractFactory
 {
@@ -43,12 +50,7 @@ class ConfigFactory extends AbstractFactory
         if (is_string($config)) {
             $oldConfig = $config;
             $extension = pathinfo($config, PATHINFO_EXTENSION);
-
-            if (true === empty($extension)) {
-                throw new Exception(
-                    "You need to provide the extension in the file path"
-                );
-            }
+            $this->checkExtension($extension);
 
             $config = [
                 "adapter"  => $extension,
@@ -63,23 +65,11 @@ class ConfigFactory extends AbstractFactory
             $config = $config->toArray();
         }
 
-        if (true !== is_array($config)) {
-            throw new Exception(
-                "Config must be array or Cardoe\\Config\\Config object"
-            );
-        }
-
-        if (true !== isset($config["filePath"])) {
-            throw new Exception(
-                "You must provide 'filePath' option in factory config parameter."
-            );
-        }
-
-        if (true !== isset($config["adapter"])) {
-            throw new Exception(
-                "You must provide 'adapter' option in factory config parameter."
-            );
-        }
+        $this
+            ->checkConfig($config)
+            ->checkFilePath($config)
+            ->checkAdapter($config)
+        ;
 
         $adapter = strtolower($config["adapter"]);
         $first   = $config["filePath"];
@@ -138,5 +128,73 @@ class ConfigFactory extends AbstractFactory
             "php"     => "Cardoe\\Config\\Adapter\\Php",
             "yaml"    => "Cardoe\\Config\\Adapter\\Yaml",
         ];
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkAdapter(array $config): ConfigFactory
+    {
+        if (true !== isset($config["adapter"])) {
+            throw new Exception(
+                "You must provide 'adapter' option in factory config parameter."
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param $config
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkConfig($config): ConfigFactory
+    {
+        if (true !== is_array($config)) {
+            throw new Exception(
+                "Config must be array or Cardoe\\Config\\Config object"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $extension
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkExtension(string $extension): ConfigFactory
+    {
+        if (true === empty($extension)) {
+            throw new Exception(
+                "You need to provide the extension in the file path"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkFilePath(array $config): ConfigFactory
+    {
+        if (true !== isset($config["filePath"])) {
+            throw new Exception(
+                "You must provide 'filePath' option in factory config parameter."
+            );
+        }
+
+        return $this;
     }
 }
