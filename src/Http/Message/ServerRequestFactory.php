@@ -11,14 +11,28 @@ declare(strict_types=1);
 
 namespace Cardoe\Http\Message;
 
+use Cardoe\Collection\Collection;
 use Cardoe\Helper\Arr;
+use Cardoe\Http\Message\Exception\InvalidArgumentException;
 use Cardoe\Http\Message\Traits\ServerRequestFactoryTrait;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 use function apache_request_headers;
+use function explode;
 use function function_exists;
+use function implode;
+use function is_array;
+use function is_string;
+use function ltrim;
+use function parse_str;
+use function preg_match;
+use function preg_replace;
+use function str_replace;
+use function strlen;
+use function substr;
 
 class ServerRequestFactory implements ServerRequestFactoryInterface
 {
@@ -121,5 +135,129 @@ class ServerRequestFactory implements ServerRequestFactoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * Checks if a header starts with CONTENT_ and adds it to the collection
+     *
+     * @param string     $key
+     * @param mixed      $value
+     * @param Collection $headers
+     */
+    private function checkContentHeader(string $key, $value, Collection $headers): void
+    {
+        if (mb_strpos($key, 'CONTENT_') === 0) {
+            $key  = (string) substr($key, 8);
+            $name = 'content-' . mb_strtolower($key);
+            $headers->set($name, $value);
+        }
+    }
+
+    /**
+     * Checks if a header starts with HTTP_ and adds it to the collection
+     *
+     * @param string     $key
+     * @param mixed      $value
+     * @param Collection $headers
+     */
+    private function checkHttpHeader(string $key, $value, Collection $headers): void
+    {
+        if (mb_strpos($key, 'HTTP_') === 0) {
+            $name = str_replace(
+                '_',
+                '-',
+                mb_strtolower(substr($key, 5))
+            );
+            $headers->set($name, $value);
+        }
+    }
+
+    /**
+     * Parse a cookie header according to RFC 6265.
+     *
+     * @param string $cookieHeader A string cookie header value.
+     *
+     * @return array key/value cookie pairs.
+     *
+     */
+    private function parseCookieHeader($cookieHeader): array
+    {
+        $cookies = [];
+        parse_str(
+            strtr(
+                $cookieHeader,
+                [
+                    '&' => '%26',
+                    '+' => '%2B',
+                    ';' => '&',
+                ]
+            ),
+            $cookies
+        );
+
+        return $cookies;
+    }
+
+    /**
+     * Processes headers from SAPI
+     *
+     * @param Collection $server
+     *
+     * @return Collection
+     */
+    private function parseHeaders(Collection $server): Collection
+    {
+        $headers = new Collection();
+        foreach ($server as $key => $value) {
+            if ('' !== $value) {
+                /**
+                 * Apache prefixes environment variables with REDIRECT_
+                 * if they are added by rewrite rules
+                 */
+                if (mb_strpos($key, 'REDIRECT_') === 0) {
+                    $key = (string) substr($key, 9);
+                    /**
+                     * We will not overwrite existing variables with the
+                     * prefixed versions, though
+                     */
+                    if (true === $server->has($key)) {
+                        continue;
+                    }
+                }
+
+                $this->checkHttpHeader($key, $value, $headers);
+                $this->checkContentHeader($key, $value, $headers);
+            }
+        }
+
+        return $headers;
+    }
+
+    /**
+     * Parse the $_SERVER array amd return it back after looking for the
+     * authorization header
+     *
+     * @param array $server Either verbatim, or with an added
+     *                      HTTP_AUTHORIZATION header.
+     *
+     * @return Collection
+     */
+    private function parseServer(array $server): Collection
+    {
+        $collection = new Collection($server);
+        $headers    = $this->getHeaders();
+
+        if (true !== $collection->has("HTTP_AUTHORIZATION") && false !== $headers) {
+            $headersCollection = new Collection($headers);
+
+            if (true === $headersCollection->has('Authorization')) {
+                $collection->set(
+                    'HTTP_AUTHORIZATION',
+                    $headersCollection->get('Authorization')
+                );
+            }
+        }
+
+        return $collection;
     }
 }
