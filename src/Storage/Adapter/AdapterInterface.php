@@ -59,8 +59,12 @@ interface AdapterInterface
 
     /**
      * Returns all the keys stored
+     *
+     * @param string $prefix
+     *
+     * @return array
      */
-    public function getKeys(): array;
+    public function getKeys(string $prefix = ""): array;
 
     /**
      * Returns the prefix for the keys

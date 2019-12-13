@@ -13,6 +13,7 @@ namespace Cardoe\Storage\Adapter;
 
 use Cardoe\Factory\Exception as ExceptionAlias;
 use Cardoe\Helper\Arr;
+use Cardoe\Helper\Str;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\Serializer\SerializerInterface;
 use Cardoe\Storage\SerializerFactory;
@@ -150,9 +151,11 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Returns all the keys stored
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    abstract public function getKeys(): array;
+    abstract public function getKeys(string $prefix = ""): array;
 
     /**
      * Returns the prefix
@@ -200,6 +203,29 @@ abstract class AbstractAdapter implements AdapterInterface
     public function setDefaultSerializer(string $serializer): void
     {
         $this->defaultSerializer = $serializer;
+    }
+
+    /**
+     * Filters the keys array based on global and passed prefix
+     *
+     * @param mixed  $keys
+     * @param string $prefix
+     *
+     * @return array
+     */
+    protected function getFilteredKeys($keys, string $prefix): array
+    {
+        $results = [];
+        $pattern = $this->prefix . $prefix;
+        $keys    = !$keys ? [] : $keys;
+
+        foreach ($keys as $key) {
+            if (Str::startsWith($key, $pattern)) {
+                $results[] = $key;
+            }
+        }
+
+        return $results;
     }
 
     /**

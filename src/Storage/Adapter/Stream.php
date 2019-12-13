@@ -21,9 +21,16 @@ use FilesystemIterator;
 use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
+use function str_replace;
+use function strrchr;
+use function var_dump;
 
 /**
  * Stream adapter
+ *
+ * @property string $storageDir
+ * @property array  $options
+ * @property bool   $warning
  */
 class Stream extends AbstractAdapter
 {
@@ -64,7 +71,7 @@ class Stream extends AbstractAdapter
          * Lets set some defaults and options here
          */
         $this->storageDir = Str::dirSeparator($storageDir);
-        $this->prefix     = "phstrm-";
+        $this->prefix     = "ph-strm";
         $this->options    = $options;
 
         parent::__construct($factory, $options);
@@ -172,21 +179,27 @@ class Stream extends AbstractAdapter
 
     /**
      * Stores data in the adapter
+     *
+     * @param string $prefix
+     *
+     * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $results   = [];
-        $directory = Str::dirSeparator($this->storageDir);
+        $files     = [];
+        $directory = $this->getDir();
         $iterator  = $this->getIterator($directory);
 
         foreach ($iterator as $file) {
             if ($file->isFile()) {
-                $split     = explode("/", $file->getPathName());
-                $results[] = $this->prefix . Arr::last($split);
+                $key = str_replace($directory, "", $file->getPathName());
+                $key = strrchr($key, "/");
+                $key = $this->prefix . str_replace("/", "", $key);
+                $files[] = $key;
             }
         }
 
-        return $results;
+        return $this->getFilteredKeys($files, $prefix);
     }
 
     /**
@@ -270,12 +283,12 @@ class Stream extends AbstractAdapter
      */
     private function getDir(string $key = ""): string
     {
-        $dirPrefix   = $this->storageDir . $this->prefix;
+        $dirPrefix   = Str::dirSeparator($this->storageDir . $this->prefix);
         $dirFromFile = Str::dirFromFile(
             str_replace($this->prefix, "", $key)
         );
 
-        return Str::dirSeparator($dirPrefix) . $dirFromFile;
+        return Str::dirSeparator($dirPrefix . $dirFromFile);
     }
 
     /**

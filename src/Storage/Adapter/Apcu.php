@@ -128,16 +128,18 @@ class Apcu extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $pattern = "/^" . $this->prefix . "/";
+        $pattern = "/^" . $this->prefix . $prefix . "/";
         $apc     = new APCuIterator($pattern);
         $results = [];
 
         if (!is_object($apc)) {
-            return $$results;
+            return $results;
         }
 
         foreach ($apc as $item) {

@@ -13,12 +13,16 @@ namespace Cardoe\Storage\Adapter;
 
 use Cardoe\Collection\Collection;
 use Cardoe\Factory\Exception as ExceptionAlias;
+use Cardoe\Helper\Str;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
+use function array_keys;
 
 /**
  * Memory adapter
+ *
+ * @property Collection $data
  */
 class Memory extends AbstractAdapter
 {
@@ -135,11 +139,16 @@ class Memory extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        return array_keys($this->data->toArray());
+        return $this->getFilteredKeys(
+            $this->data->getKeys(),
+            $prefix
+        );
     }
 
     /**

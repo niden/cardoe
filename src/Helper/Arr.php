@@ -69,6 +69,22 @@ class Arr
     }
 
     /**
+     * Returns the first element of the collection. If a callable is passed, the
+     * element returned is the first that validates true
+     *
+     * @param array    $collection
+     * @param callable $method
+     *
+     * @return mixed
+     */
+    final public static function first(array $collection, $method = null)
+    {
+        $filtered = self::filterCollection($collection, $method);
+
+        return reset($filtered);
+    }
+
+    /**
      * Returns the key of the first element of the collection. If a callable
      * is passed, the element returned is the first that validates true
      *
@@ -84,22 +100,6 @@ class Arr
         reset($filtered);
 
         return key($filtered);
-    }
-
-    /**
-     * Returns the first element of the collection. If a callable is passed, the
-     * element returned is the first that validates true
-     *
-     * @param array    $collection
-     * @param callable $method
-     *
-     * @return mixed
-     */
-    final public static function first(array $collection, $method = null)
-    {
-        $filtered = self::filterCollection($collection, $method);
-
-        return reset($filtered);
     }
 
     /**

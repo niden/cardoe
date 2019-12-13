@@ -13,6 +13,7 @@ namespace Cardoe\Storage\Adapter;
 
 use Cardoe\Factory\Exception as ExceptionAlias;
 use Cardoe\Helper\Arr;
+use Cardoe\Helper\Str;
 use Cardoe\Storage\Exception;
 use Cardoe\Storage\SerializerFactory;
 use DateInterval;
@@ -174,23 +175,18 @@ class Libmemcached extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $results = [];
-        $keys    = $this->getAdapter()->getAllKeys();
-        $keys    = !$keys ? [] : $keys;
-
-        foreach ($keys as $key) {
-            if (substr($key, 0, strlen($this->prefix)) === $this->prefix) {
-                $results[] = $key;
-            }
-        }
-
-        return $results;
+        return $this->getFilteredKeys(
+            $this->getAdapter()->getAllKeys(),
+            $prefix
+        );
     }
 
     /**

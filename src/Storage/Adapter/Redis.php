@@ -167,23 +167,18 @@ class Redis extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $results = [];
-        $keys    = $this->getAdapter()->keys("*");
-        $keys    = !$keys ? [] : $keys;
-
-        foreach ($keys as $key) {
-            if (substr($key, 0, strlen($this->prefix)) === $this->prefix) {
-                $results[] = $key;
-            }
-        }
-
-        return $results;
+        return $this->getFilteredKeys(
+            $this->getAdapter()->keys("*"),
+            $prefix
+        );
     }
 
     /**
