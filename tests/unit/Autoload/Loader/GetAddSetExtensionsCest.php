@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Autoload\Loader;
+namespace Phalcon\Test\Unit\Autoload\Loader;
 
-use Cardoe\Autoload\Loader;
-use Cardoe\Test\Fixtures\Traits\LoaderTrait;
+use Phalcon\Autoload\Loader;
+use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
 
 class GetAddSetExtensionsCest
@@ -20,7 +20,7 @@ class GetAddSetExtensionsCest
     use LoaderTrait;
 
     /**
-     * Tests Cardoe\Autoload\Loader ::
+     * Tests Phalcon\Autoload\Loader ::
      * getExtensions()/addExtension()/setExtension()
      *
      * @since  2018-11-13

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Autoload;
+namespace Phalcon\Autoload;
 
 use function array_merge;
 use function array_unique;
@@ -31,7 +31,7 @@ use const DIRECTORY_SEPARATOR;
 /**
  * Class Logger
  *
- * @package Cardoe\Autoload
+ * @package Phalcon\Autoload
  *
  * @property array $classes
  * @property array $debug

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger;
+namespace Phalcon\Logger;
 
-use Cardoe\Helper\Arr;
-use Cardoe\Logger\Adapter\AbstractAdapter;
-use Cardoe\Logger\Adapter\AdapterInterface;
+use Phalcon\Helper\Arr;
+use Phalcon\Logger\Adapter\AbstractAdapter;
+use Phalcon\Logger\Adapter\AdapterInterface;
 use Psr\Log\LoggerInterface;
 
 /**

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Autoload\Loader;
+namespace Phalcon\Test\Unit\Autoload\Loader;
 
-use Cardoe\Autoload\Loader;
-use Cardoe\Test\Fixtures\Traits\LoaderTrait;
+use Phalcon\Autoload\Loader;
+use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use Example\Namespaces\Adapter\Another;
 use Example\Namespaces\Adapter\Mongo;
 use UnitTester;
@@ -24,7 +24,7 @@ class AutoloadCest
     use LoaderTrait;
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = classes
+     * Tests Phalcon\Autoloader\Loader :: autoload() = classes
      *
      * @since  2018-11-13
      */
@@ -78,7 +78,7 @@ class AutoloadCest
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces
+     * Tests Phalcon\Autoloader\Loader :: autoload() = namespaces
      *
      * @since  2018-11-13
      */
@@ -118,7 +118,7 @@ class AutoloadCest
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces multiple
+     * Tests Phalcon\Autoloader\Loader :: autoload() = namespaces multiple
      * folders
      *
      * @since  2018-11-13
@@ -169,7 +169,7 @@ class AutoloadCest
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces no folders
+     * Tests Phalcon\Autoloader\Loader :: autoload() = namespaces no folders
      *
      * @since  2018-11-13
      */
@@ -195,7 +195,7 @@ class AutoloadCest
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = namespaces 404
+     * Tests Phalcon\Autoloader\Loader :: autoload() = namespaces 404
      *
      * @since  2018-11-13
      */
@@ -228,7 +228,7 @@ class AutoloadCest
     }
 
     /**
-     * Tests Cardoe\Autoloader\Loader :: autoload() = extension
+     * Tests Phalcon\Autoloader\Loader :: autoload() = extension
      *
      * @since  2018-11-13
      */
