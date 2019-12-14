@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger\Adapter;
+namespace Phalcon\Logger\Adapter;
 
-use Cardoe\Helper\Arr;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Item;
+use Phalcon\Helper\Arr;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Item;
 use UnexpectedValueException;
 
 use function fclose;
@@ -22,11 +22,12 @@ use function fwrite;
 use function is_resource;
 use function sprintf;
 use function strpos;
+use const PHP_EOL;
 
 /**
  * Class Stream
  *
- * @package Cardoe\Logger\Adapter
+ * @package Phalcon\Logger\Adapter
  */
 class Stream extends AbstractAdapter
 {
@@ -127,7 +128,7 @@ class Stream extends AbstractAdapter
         }
 
         $formatter        = $this->getFormatter();
-        $formattedMessage = (string) $formatter->format($item);
+        $formattedMessage = (string) $formatter->format($item). PHP_EOL;
 
         fwrite($this->handler, $formattedMessage);
     }

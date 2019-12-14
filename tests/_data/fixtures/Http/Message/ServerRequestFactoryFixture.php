@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Fixtures\Http\Message;
+namespace Phalcon\Test\Fixtures\Http\Message;
 
-use Cardoe\Http\Message\ServerRequestFactory;
+use Phalcon\Http\Message\ServerRequestFactory;
 
 class ServerRequestFactoryFixture extends ServerRequestFactory
 {
@@ -25,7 +25,7 @@ class ServerRequestFactoryFixture extends ServerRequestFactory
         return [
             'Accept-Language' => 'en-us',
             'Accept-Encoding' => 'gzip, deflate',
-            'Host'            => 'dev.cardoe.ld',
+            'Host'            => 'dev.phalcon.ld',
             'Authorization'   => 'Bearer',
         ];
     }

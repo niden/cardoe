@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,19 +9,19 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger;
+namespace Phalcon\Logger;
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as FactoryException;
-use Cardoe\Logger\Adapter\AdapterInterface;
-use Cardoe\Logger\Adapter\Noop;
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Adapter\Syslog;
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as FactoryException;
+use Phalcon\Logger\Adapter\AdapterInterface;
+use Phalcon\Logger\Adapter\Noop;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Adapter\Syslog;
 
 /**
  * Class AdapterFactory
  *
- * @package Cardoe\Logger
+ * @package Phalcon\Logger
  */
 class AdapterFactory extends AbstractFactory
 {

@@ -1,21 +1,23 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Logger;
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Formatter\Json;
-use Cardoe\Logger\Logger;
-use Cardoe\Test\Fixtures\Traits\LoggerTrait;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Formatter\Json;
+use Phalcon\Test\Fixtures\Traits\LoggerTrait;
 use Psr\Log\LoggerInterface;
 use UnitTester;
 
@@ -24,7 +26,7 @@ class ConstructCest
     use LoggerTrait;
 
     /**
-     * Tests Cardoe\Logger :: __construct() - implement PSR
+     * Tests Phalcon\Logger :: __construct() - implement PSR
      */
     public function loggerConstructImplementPsr(UnitTester $I)
     {
@@ -39,8 +41,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - constants
+     * Tests Phalcon\Logger :: __construct() - constants
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerConstructConstants(UnitTester $I)
@@ -59,7 +62,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - file with json formatter
+     * Tests Phalcon\Logger :: __construct() - file with json formatter
      */
     public function loggerConstructStreamWithJsonConstants(UnitTester $I)
     {
@@ -115,7 +118,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - read only mode exception
+     * Tests Phalcon\Logger :: __construct() - read only mode exception
      */
     public function loggerConstructStreamReadOnlyModeException(UnitTester $I)
     {
@@ -141,7 +144,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - no adapter exception
+     * Tests Phalcon\Logger :: __construct() - no adapter exception
      */
     public function loggerConstructNoAdapterException(UnitTester $I)
     {

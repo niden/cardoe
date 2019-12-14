@@ -2,7 +2,7 @@
 
 return [
     'phalcon'     => [
-        'baseuri' => '/phalcon/',
+        'baseuri' => '/phalcon4/',
     ],
     'models'      => [
         'metadata' => 'memory',

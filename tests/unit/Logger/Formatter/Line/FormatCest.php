@@ -1,28 +1,29 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Line;
+namespace Phalcon\Test\Unit\Logger\Formatter\Line;
 
-use Cardoe\Logger\Formatter\Line;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+use Phalcon\Logger;
+use Phalcon\Logger\Formatter\Line;
+use Phalcon\Logger\Item;
 use UnitTester;
-
-use const PHP_EOL;
 
 class FormatCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: format()
+     * Tests Phalcon\Logger\Formatter\Line :: format()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterLineFormat(UnitTester $I)
@@ -40,7 +41,10 @@ class FormatCest
             $time
         );
 
-        $expected = sprintf('[%s][debug] log message', date('c', $time)) . PHP_EOL;
+        $expected = sprintf(
+            '[%s][debug] log message',
+            date('c', $time)
+        );
 
         $I->assertEquals(
             $expected,
@@ -49,8 +53,9 @@ class FormatCest
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: format() -custom
+     * Tests Phalcon\Logger\Formatter\Line :: format() -custom
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterLineFormatCustom(UnitTester $I)
@@ -68,7 +73,10 @@ class FormatCest
             $time
         );
 
-        $expected = sprintf('log message-[debug]-%s', date('c', $time)) . PHP_EOL;
+        $expected = sprintf(
+            'log message-[debug]-%s',
+            date('c', $time)
+        );
 
         $I->assertEquals(
             $expected,

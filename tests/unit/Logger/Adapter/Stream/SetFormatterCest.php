@@ -1,25 +1,27 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Stream;
+namespace Phalcon\Test\Unit\Logger\Adapter\Stream;
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Formatter\FormatterInterface;
-use Cardoe\Logger\Formatter\Line;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Formatter\FormatterInterface;
+use Phalcon\Logger\Formatter\Line;
 use UnitTester;
 
 class SetFormatterCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Stream :: setFormatter()
+     * Tests Phalcon\Logger\Adapter\Stream :: setFormatter()
      */
     public function loggerAdapterStreamSetFormatter(UnitTester $I)
     {

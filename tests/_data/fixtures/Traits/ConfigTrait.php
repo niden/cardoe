@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Fixtures\Traits;
+namespace Phalcon\Test\Fixtures\Traits;
 
-use Cardoe\Config\Adapter\Grouped;
-use Cardoe\Config\Adapter\Ini;
-use Cardoe\Config\Adapter\Json;
-use Cardoe\Config\Adapter\Php;
-use Cardoe\Config\Adapter\Yaml;
-use Cardoe\Config\Config;
-use Cardoe\Config\Exception;
+use Phalcon\Config\Adapter\Grouped;
+use Phalcon\Config\Adapter\Ini;
+use Phalcon\Config\Adapter\Json;
+use Phalcon\Config\Adapter\Php;
+use Phalcon\Config\Adapter\Yaml;
+use Phalcon\Config;
+use Phalcon\Config\Exception;
 use UnitTester;
 
 use function dataDir;
@@ -28,8 +28,8 @@ trait ConfigTrait
      * @var array
      */
     protected $config = [
-        'cardoe'      => [
-            'baseuri' => '/cardoe/',
+        'phalcon'      => [
+            'baseuri' => '/phalcon/',
         ],
         'models'      => [
             'metadata' => 'memory',
@@ -67,7 +67,7 @@ trait ConfigTrait
     ];
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: __construct()
+     * Tests Phalcon\Config\Adapter\* :: __construct()
      *
      * @since  2018-11-13
      */
@@ -177,7 +177,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: count()
+     * Tests Phalcon\Config\Adapter\* :: count()
      *
      * @author Faruk Brbovic <fbrbovic@devstub.com>
      * @since  2014-11-03
@@ -200,7 +200,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: get()
+     * Tests Phalcon\Config\Adapter\* :: get()
      *
      * @since  2018-11-13
      */
@@ -222,7 +222,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: getPathDelimiter()
+     * Tests Phalcon\Config\Adapter\* :: getPathDelimiter()
      *
      * @since  2018-11-13
      */
@@ -258,7 +258,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: merge() - exception
+     * Tests Phalcon\Config\Adapter\* :: merge() - exception
      *
      * @since  2019-06-19
      */
@@ -283,7 +283,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: offsetExists()
+     * Tests Phalcon\Config\Adapter\* :: offsetExists()
      *
      * @since  2018-11-13
      */
@@ -304,7 +304,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: offsetGet()
+     * Tests Phalcon\Config\Adapter\* :: offsetGet()
      *
      * @since  2018-11-13
      */
@@ -326,7 +326,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: offsetSet()
+     * Tests Phalcon\Config\Adapter\* :: offsetSet()
      *
      * @since  2018-11-13
      */
@@ -350,7 +350,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: offsetUnset()
+     * Tests Phalcon\Config\Adapter\* :: offsetUnset()
      *
      * @since  2018-11-13
      */
@@ -377,7 +377,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: path()
+     * Tests Phalcon\Config\Adapter\* :: path()
      *
      * @author michanismus
      * @since  2017-03-29
@@ -406,7 +406,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: path() - default
+     * Tests Phalcon\Config\Adapter\* :: path() - default
      *
      * @since  2018-11-13
      */
@@ -428,7 +428,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: setPathDelimiter()
+     * Tests Phalcon\Config\Adapter\* :: setPathDelimiter()
      *
      * @since  2018-11-13
      */
@@ -466,7 +466,7 @@ trait ConfigTrait
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\* :: toArray()
+     * Tests Phalcon\Config\Adapter\* :: toArray()
      *
      * @since  2018-11-13
      */

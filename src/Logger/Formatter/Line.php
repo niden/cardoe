@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger\Formatter;
+namespace Phalcon\Logger\Formatter;
 
-use Cardoe\Logger\Item;
+use Phalcon\Logger\Item;
 
 use function date;
 use function is_array;
@@ -21,7 +21,7 @@ use function strpos;
 use const PHP_EOL;
 
 /**
- * Cardoe\Logger\Formatter\Line
+ * Phalcon\Logger\Formatter\Line
  *
  * Formats messages using an one-line string
  *
@@ -106,7 +106,7 @@ class Line extends AbstractFormatter
             $format = str_replace("%type%", $item->getName(), $format);
         }
 
-        $format = str_replace("%message%", $item->getMessage(), $format) . PHP_EOL;
+        $format = str_replace("%message%", $item->getMessage(), $format);
 
         if (is_array($item->getContext())) {
             return $this->interpolate(

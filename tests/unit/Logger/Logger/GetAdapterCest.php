@@ -1,19 +1,21 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Logger;
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Logger;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Exception;
 use UnitTester;
 
 use function logsDir;
@@ -21,7 +23,7 @@ use function logsDir;
 class GetAdapterCest
 {
     /**
-     * Tests Cardoe\Logger :: getAdapter()
+     * Tests Phalcon\Logger :: getAdapter()
      */
     public function loggerGetAdapter(UnitTester $I)
     {
@@ -46,7 +48,7 @@ class GetAdapterCest
     }
 
     /**
-     * Tests Cardoe\Logger :: getAdapter() - unknown
+     * Tests Phalcon\Logger :: getAdapter() - unknown
      */
     public function loggerGetAdapterUnknown(UnitTester $I)
     {
@@ -62,7 +64,7 @@ class GetAdapterCest
     }
 
     /**
-     * Tests Cardoe\Logger :: getAdapter() - for transaction
+     * Tests Phalcon\Logger :: getAdapter() - for transaction
      */
     public function loggerGetAdapterForTransaction(UnitTester $I)
     {
@@ -97,7 +99,7 @@ class GetAdapterCest
         $logger->info('for');
         $logger->info('Phlying');
         $logger->info('with');
-        $logger->info('Cardoe');
+        $logger->info('Phalcon');
 
         $I->amInPath($outputPath);
         $I->openFile($fileName1);
@@ -106,7 +108,7 @@ class GetAdapterCest
         $I->seeInThisFile('for');
         $I->seeInThisFile('Phlying');
         $I->seeInThisFile('with');
-        $I->seeInThisFile('Cardoe');
+        $I->seeInThisFile('Phalcon');
 
         $I->amInPath($outputPath);
         $I->openFile($fileName2);
@@ -114,7 +116,7 @@ class GetAdapterCest
         $I->dontSeeInThisFile('for');
         $I->dontSeeInThisFile('Phlying');
         $I->dontSeeInThisFile('with');
-        $I->dontSeeInThisFile('Cardoe');
+        $I->dontSeeInThisFile('Phalcon');
 
         $logger->getAdapter('two')->commit();
 
@@ -124,7 +126,7 @@ class GetAdapterCest
         $I->seeInThisFile('for');
         $I->seeInThisFile('Phlying');
         $I->seeInThisFile('with');
-        $I->seeInThisFile('Cardoe');
+        $I->seeInThisFile('Phalcon');
 
         $I->safeDeleteFile($outputPath . $fileName1);
         $I->safeDeleteFile($outputPath . $fileName2);

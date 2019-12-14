@@ -1,5 +1,5 @@
-cardoe:
-  baseuri: /cardoe/
+phalcon:
+  baseuri: /phalcon/
 models:
   metadata: memory
 database:

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger\Adapter;
+namespace Phalcon\Logger\Adapter;
 
-use Cardoe\Helper\Arr;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+use Phalcon\Helper\Arr;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Item;
+use Phalcon\Logger;
 use LogicException;
 
 use const LOG_ERR;
@@ -24,7 +24,11 @@ use const LOG_USER;
 /**
  * Class Syslog
  *
- * @package Cardoe\Logger\Adapter
+ * @property string $defaultFormatter
+ * @property int    $facility
+ * @property string $name
+ * @property bool   $opened
+ * @property int    $option
  */
 class Syslog extends AbstractAdapter
 {
@@ -104,19 +108,19 @@ class Syslog extends AbstractAdapter
         }
 
         $this->opened = true;
-        $level        = $this->logLevelToSyslog($message[1]);
+        $level        = $this->logLevelToSyslog($item->getType());
 
-        syslog($level, $message[1]);
+        syslog($level, $message);
     }
 
     /**
      * Translates a Logger level to a Syslog level
      *
-     * @param string $level
+     * @param int $level
      *
      * @return int
      */
-    private function logLevelToSyslog(string $level): int
+    private function logLevelToSyslog(int $level): int
     {
         $levels = [
             Logger::ALERT     => LOG_ALERT,

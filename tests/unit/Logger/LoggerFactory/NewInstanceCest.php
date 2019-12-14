@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,18 +9,18 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\LoggerFactory;
+namespace Phalcon\Test\Unit\Logger\LoggerFactory;
 
-use Cardoe\Logger\AdapterFactory;
-use Cardoe\Logger\Logger;
-use Cardoe\Logger\LoggerFactory;
+use Phalcon\Logger\AdapterFactory;
+use Phalcon\Logger;
+use Phalcon\Logger\LoggerFactory;
 use Psr\Log\LoggerInterface;
 use UnitTester;
 
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Logger\LoggerFactory :: newInstance()
+     * Tests Phalcon\Logger\LoggerFactory :: newInstance()
      *
      * @since  2019-05-03
      */

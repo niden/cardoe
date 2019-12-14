@@ -1,25 +1,27 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Stream;
+namespace Phalcon\Test\Unit\Logger\Adapter\Stream;
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class AddCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Stream :: add()
+     * Tests Phalcon\Logger\Adapter\Stream :: add()
      */
     public function loggerAdapterStreamAdd(UnitTester $I)
     {

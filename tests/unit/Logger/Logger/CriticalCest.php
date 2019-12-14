@@ -1,17 +1,19 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Logger;
 
-use Cardoe\Test\Fixtures\Traits\LoggerTrait;
+use Phalcon\Test\Fixtures\Traits\LoggerTrait;
 use UnitTester;
 
 class CriticalCest
@@ -19,7 +21,7 @@ class CriticalCest
     use LoggerTrait;
 
     /**
-     * Tests Cardoe\Logger :: critical()
+     * Tests Phalcon\Logger :: critical()
      */
     public function loggerCritical(UnitTester $I)
     {

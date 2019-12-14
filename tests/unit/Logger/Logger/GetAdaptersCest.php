@@ -1,24 +1,26 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Logger;
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Logger;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream;
 use UnitTester;
 
 class GetAdaptersCest
 {
     /**
-     * Tests Cardoe\Logger :: getAdapters()
+     * Tests Phalcon\Logger :: getAdapters()
      */
     public function loggerGetAdapters(UnitTester $I)
     {

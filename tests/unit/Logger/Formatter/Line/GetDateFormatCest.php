@@ -1,23 +1,25 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Line;
+namespace Phalcon\Test\Unit\Logger\Formatter\Line;
 
-use Cardoe\Logger\Formatter\Line;
+use Phalcon\Logger\Formatter\Line;
 use UnitTester;
 
 class GetDateFormatCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: getDateFormat()
+     * Tests Phalcon\Logger\Formatter\Line :: getDateFormat()
      */
     public function loggerFormatterLineGetDateFormat(UnitTester $I)
     {
@@ -30,7 +32,7 @@ class GetDateFormatCest
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: getDateFormat() - custom
+     * Tests Phalcon\Logger\Formatter\Line :: getDateFormat() - custom
      */
     public function loggerFormatterLineGetDateFormatCustom(UnitTester $I)
     {

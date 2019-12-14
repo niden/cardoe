@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Logger\Formatter;
+namespace Phalcon\Logger\Formatter;
 
-use Cardoe\Logger\Item;
+use Phalcon\Logger\Item;
 
 use function date;
 use function is_array;
@@ -20,7 +20,7 @@ use function json_encode;
 use const PHP_EOL;
 
 /**
- * Cardoe\Logger\Formatter\Json
+ * Phalcon\Logger\Formatter\Json
  *
  * Formats messages using JSON encoding
  *
@@ -77,7 +77,7 @@ class Json extends AbstractFormatter
                 "message"   => $message,
                 "timestamp" => date($this->dateFormat, $item->getTime()),
             ]
-        ) . PHP_EOL;
+        );
     }
 
     /**

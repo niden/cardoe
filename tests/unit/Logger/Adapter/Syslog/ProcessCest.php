@@ -1,26 +1,29 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Syslog;
+namespace Phalcon\Test\Unit\Logger\Adapter\Syslog;
 
-use Cardoe\Logger\Adapter\Syslog;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Syslog;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class ProcessCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Syslog :: process()
+     * Tests Phalcon\Logger\Adapter\Syslog :: process()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerAdapterSyslogProcess(UnitTester $I)
