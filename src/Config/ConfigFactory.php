@@ -47,26 +47,11 @@ class ConfigFactory extends AbstractFactory
      */
     public function load($config): object
     {
-        if (is_string($config)) {
-            $oldConfig = $config;
-            $extension = pathinfo($config, PATHINFO_EXTENSION);
-            $this->checkExtension($extension);
-
-            $config = [
-                "adapter"  => $extension,
-                "filePath" => $oldConfig,
-            ];
-        }
-
-        if (
-            is_object($config) &&
-            $config instanceof Config
-        ) {
-            $config = $config->toArray();
-        }
+        $config = $this->checkConfigFile($config);
+        $config = $this->checkConfigObject($config);
 
         $this
-            ->checkConfig($config)
+            ->checkConfigIsArray($config)
             ->checkFilePath($config)
             ->checkAdapter($config)
         ;
@@ -148,20 +133,25 @@ class ConfigFactory extends AbstractFactory
     }
 
     /**
-     * @param $config
+     * @param mixed $config
      *
-     * @return ConfigFactory
+     * @return array|string
      * @throws Exception
      */
-    private function checkConfig($config): ConfigFactory
+    private function checkConfigFile($config)
     {
-        if (true !== is_array($config)) {
-            throw new Exception(
-                "Config must be array or Cardoe\\Config\\Config object"
-            );
+        if (is_string($config)) {
+            $oldConfig = $config;
+            $extension = pathinfo($config, PATHINFO_EXTENSION);
+            $this->checkExtension($extension);
+
+            $config = [
+                "adapter"  => $extension,
+                "filePath" => $oldConfig,
+            ];
         }
 
-        return $this;
+        return $config;
     }
 
     /**
@@ -196,5 +186,39 @@ class ConfigFactory extends AbstractFactory
         }
 
         return $this;
+    }
+
+    /**
+     * @param $config
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkConfigIsArray($config): ConfigFactory
+    {
+        if (true !== is_array($config)) {
+            throw new Exception(
+                "Config must be array or Cardoe\\Config\\Config object"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param mixed $config
+     *
+     * @return array
+     */
+    private function checkConfigObject($config): array
+    {
+        if (
+            is_object($config) &&
+            $config instanceof Config
+        ) {
+            $config = $config->toArray();
+        }
+
+        return $config;
     }
 }

@@ -139,30 +139,18 @@ class Loader
         $directories,
         bool $prepend = false
     ): Loader {
-        $ns = '\\';
-        $ds = DIRECTORY_SEPARATOR;
 
-        $namespace = trim($namespace, $ns) . $ns;
-
-        if (is_string($directories)) {
-            $directories = [$directories];
-        }
-
-        if (!is_array($directories)) {
-            throw new Exception(
-                'The directories parameter is not a string or array'
-            );
-        }
+        $ns          = '\\';
+        $ds          = DIRECTORY_SEPARATOR;
+        $namespace   = trim($namespace, $ns) . $ns;
+        $directories = $this->checkDirectories($directories);
 
         // initialize the namespace prefix array if needed
         if (!isset($this->namespaces[$namespace])) {
             $this->namespaces[$namespace] = [];
         }
 
-        foreach ($directories as $key => $directory) {
-            $directories[$key] = rtrim($directory, $ds) . $ds;
-        }
-
+        $directories = $this->processDirectories($directories, $ds);
         $source = ($prepend) ? $directories : $this->namespaces[$namespace];
         $target = ($prepend) ? $this->namespaces[$namespace] : $directories;
 
@@ -451,5 +439,41 @@ class Loader
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $directories
+     *
+     * @return array
+     * @throws Exception
+     */
+    private function checkDirectories($directories): array
+    {
+        if (!is_string($directories) && !is_array($directories)) {
+            throw new Exception(
+                'The directories parameter is not a string or array'
+            );
+        }
+
+        if (is_string($directories)) {
+            $directories = [$directories];
+        }
+
+        return $directories;
+    }
+
+    /**
+     * @param array  $directories
+     * @param string $ds
+     *
+     * @return array
+     */
+    private function processDirectories(array $directories, string $ds): array
+    {
+        foreach ($directories as $key => $directory) {
+            $directories[$key] = rtrim($directory, $ds) . $ds;
+        }
+
+        return $directories;
     }
 }
