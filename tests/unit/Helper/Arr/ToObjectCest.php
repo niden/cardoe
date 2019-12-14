@@ -1,37 +1,40 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use stdClass;
 use UnitTester;
 
-class ArrayToObjectCest
+class ToObjectCest
 {
     /**
-     * Unit Tests Cardoe\Helper\Arr :: arrayToObject()
+     * Unit Tests Phalcon\Helper\Arr :: toObject()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
     public function helperArrArrayToObject(UnitTester $I)
     {
-        $I->wantToTest('Helper\Arr - arrayToObject()');
+        $I->wantToTest('Helper\Arr - toObject()');
 
         $source = [
             'one'   => 'two',
             'three' => 'four',
         ];
 
-        $actual = Arr::arrayToObject($source);
+        $actual = Arr::toObject($source);
 
         $expected        = new stdClass();
         $expected->one   = 'two';

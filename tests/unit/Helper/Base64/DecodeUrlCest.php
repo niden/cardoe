@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Base64;
+namespace Phalcon\Test\Unit\Helper\Base64;
 
-use Cardoe\Helper\Base64;
+use Phalcon\Helper\Base64;
 use UnitTester;
 
 class DecodeUrlCest
 {
     /**
-     * Tests Cardoe\Helper\Base64 :: decodeUrl()
+     * Tests Phalcon\Helper\Base64 :: decodeUrl()
      *
      * @since  2019-12-12
      */

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Helper;
+namespace Phalcon\Helper;
 
 use stdClass;
 
@@ -34,23 +34,12 @@ use function ksort;
 use function reset;
 
 /**
- * Cardoe\Helper\Arr
+ * Phalcon\Helper\Arr
  *
  * This class offers quick array functions throughout the framework
  */
 class Arr
 {
-    final public static function arrayToObject(array $collection)
-    {
-        $returnObject = new stdClass();
-
-        foreach ($collection as $key => $value) {
-            $returnObject->{$key} = $value;
-        }
-
-        return $returnObject;
-    }
-
     /**
      * Chunks an array into smaller arrays of a specified size.
      *
@@ -69,6 +58,23 @@ class Arr
     }
 
     /**
+     * Helper method to filter the collection
+     *
+     * @param array    $collection
+     * @param callable $method
+     *
+     * @return array
+     */
+    final public static function filter(array $collection, $method = null): array
+    {
+        if (null === $method || !is_callable($method))  {
+            return $collection;
+    }
+
+        return array_filter($collection, $method);
+    }
+
+    /**
      * Returns the first element of the collection. If a callable is passed, the
      * element returned is the first that validates true
      *
@@ -79,7 +85,7 @@ class Arr
      */
     final public static function first(array $collection, $method = null)
     {
-        $filtered = self::filterCollection($collection, $method);
+        $filtered = self::filter($collection, $method);
 
         return reset($filtered);
     }
@@ -89,13 +95,13 @@ class Arr
      * is passed, the element returned is the first that validates true
      *
      * @param array    $collection
-     * @param callable $method
+     * @param callable|null $method
      *
      * @return mixed
      */
     final public static function firstKey(array $collection, $method = null)
     {
-        $filtered = self::filterCollection($collection, $method);
+        $filtered = self::filter($collection, $method);
 
         reset($filtered);
 
@@ -103,8 +109,7 @@ class Arr
     }
 
     /**
-     * Flattens an array up to the one level depth, unless `$deep` is set to
-     * `true`
+     * Flattens an array up to the one level depth, unless `$deep` is set to `true`
      *
      * @param array $collection
      * @param bool  $deep
@@ -132,15 +137,26 @@ class Arr
     /**
      * Helper method to get an array element or a default
      *
-     * @param array      $collection
-     * @param mixed      $index
-     * @param mixed|null $defaultValue
+     * @param array       $collection
+     * @param mixed       $index
+     * @param mixed|null  $defaultValue
+     * @param string|null $cast
      *
-     * @return mixed
+     * @return mixed|null
      */
-    final public static function get(array $collection, $index, $defaultValue = null)
-    {
-        return $collection[$index] ?? $defaultValue;
+    final public static function get(
+        array $collection,
+        $index,
+        $defaultValue = null,
+        string $cast = null
+    ) {
+        $value = $collection[$index] ?? $defaultValue;
+
+        if (is_string($cast)) {
+            settype($value, $cast);
+        }
+
+        return $value;
     }
 
     /**
@@ -200,6 +216,22 @@ class Arr
     }
 
     /**
+     * Returns the last element of the collection. If a callable is passed, the
+     * element returned is the first that validates true
+     *
+     * @param array         $collection
+     * @param callable|null $method
+     *
+     * @return mixed
+     */
+    final public static function last(array $collection, $method = null)
+    {
+        $filtered = self::filter($collection, $method);
+
+        return end($filtered);
+    }
+
+    /**
      * Returns the key of the last element of the collection. If a callable is
      * passed, the element returned is the first that validates true
      *
@@ -210,27 +242,11 @@ class Arr
      */
     final public static function lastKey(array $collection, $method = null)
     {
-        $filtered = self::filterCollection($collection, $method);
+        $filtered = self::filter($collection, $method);
 
         end($filtered);
 
         return key($filtered);
-    }
-
-    /**
-     * Returns the last element of the collection. If a callable is passed, the
-     * element returned is the first that validates true
-     *
-     * @param array    $collection
-     * @param callable $method
-     *
-     * @return mixed
-     */
-    final public static function last(array $collection, $method = null)
-    {
-        $filtered = self::filterCollection($collection, $method);
-
-        return end($filtered);
     }
 
     /**
@@ -298,8 +314,10 @@ class Arr
      *
      * @return array
      */
-    final public static function set(array $collection, $value, $index = null): array
-    {
+    final public static function set(
+        array $collection,
+        $value, $index = null
+    ): array {
         if (null === $index) {
             $collection[] = $value;
         } else {
@@ -345,7 +363,18 @@ class Arr
      */
     final public static function split(array $collection): array
     {
-        return [array_keys($collection), array_values($collection)];
+        return [
+            array_keys($collection),
+            array_values($collection)
+        ];
+    }
+
+    /**
+     * Returns the passed array as an object
+     */
+    final public static function toObject(array $collection)
+    {
+        return (object) $collection;
     }
 
     /**
@@ -359,7 +388,7 @@ class Arr
      */
     final public static function validateAll(array $collection, $method): bool
     {
-        return count(self::filterCollection($collection, $method)) === count($collection);
+        return count(self::filter($collection, $method)) === count($collection);
     }
 
     /**
@@ -373,23 +402,35 @@ class Arr
      */
     final public static function validateAny(array $collection, $method): bool
     {
-        return count(self::filterCollection($collection, $method)) > 0;
+        return count(self::filter($collection, $method)) > 0;
     }
 
     /**
-     * Helper method to filter the collection
+     * White list filter by key: obtain elements of an array filtering
+     * by the keys obtained from the elements of a whitelist
      *
-     * @param array    $collection
-     * @param callable $method
+     * @param array $collection
+     * @param array $whiteList
      *
      * @return array
      */
-    final private static function filterCollection(array $collection, $method = null): array
-    {
-        if (null !== $method && is_callable($method)) {
-            return array_filter($collection, $method);
-        } else {
-            return $collection;
-        }
+    final public static function whiteList(
+        array $collection,
+        array $whiteList
+    ): array {
+        /**
+         * Clean whitelist, just strings and integers
+         */
+        $whiteList = self::filter(
+            $whiteList,
+            function ($element) {
+                return is_int($element) || is_string($element);
+            }
+        );
+
+        return array_intersect_key(
+            $collection,
+            array_flip($whiteList)
+        );
     }
 }

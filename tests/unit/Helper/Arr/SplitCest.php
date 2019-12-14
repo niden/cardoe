@@ -1,37 +1,40 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class SplitCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: split()
+     * Tests Phalcon\Helper\Arr :: split()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrSplit(UnitTester $I)
     {
         $I->wantToTest('Helper\Arr - split()');
         $collection = [
-            1 => 'Cardoe',
+            1 => 'Phalcon',
             3 => 'Framework',
         ];
 
         $expected = [
             [1, 3],
-            ['Cardoe', 'Framework'],
+            ['Phalcon', 'Framework'],
         ];
         $actual   = Arr::split($collection);
         $I->assertEquals($expected, $actual);

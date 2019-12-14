@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,18 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Helper;
+namespace Phalcon\Helper;
 
 use function array_merge;
-use function count;
 use function count_chars;
 use function explode;
-use function func_get_args;
 use function implode;
 use function ltrim;
-use function mb_strtolower;
-use function mb_strtoupper;
-use function mb_substr;
 use function mt_rand;
 use function pathinfo;
 use function preg_match_all;
@@ -33,12 +28,11 @@ use function strrev;
 use function substr;
 use function substr_compare;
 use function trim;
-
 use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
 
 /**
- * Cardoe\Helper\Str
+ * Phalcon\Helper\Str
  *
  * This class offers quick string functions throughout the framework
  */
@@ -129,6 +123,38 @@ class Str
         }
 
         return mb_strtolower(mb_substr($text, 0, 1), $encoding) . $suffix;
+    }
+
+    /**
+     * Removes a number from a string or decrements that number if it already is defined.
+     * defined
+     *
+     * ```php
+     * use Phalcon\Helper\Str;
+     *
+     * echo Str::decrement("a_1");    // "a"
+     * echo Str::decrement("a_2");  // "a_1"
+     * ```
+     *
+     * @param string $text
+     * @param string $separator
+     *
+     * @return string
+     */
+    final public static function decrement(string $text, string $separator = "_"): string
+    {
+        $number = 0;
+        $parts  = explode($separator, $text);
+
+        if (isset($parts[1])) {
+            $number = $parts[1];
+            $number--;
+            if ($number <= 0) {
+                return $parts[0];
+            }
+        }
+
+        return $parts[0] . $separator . $number;
     }
 
     /**
@@ -237,7 +263,11 @@ class Str
      */
     final public static function includes(string $haystack, string $needle): bool
     {
-        return (bool) mb_strpos($haystack, $needle);
+        if (function_exists("mb_strpos")) {
+            return false !== mb_strpos($haystack, $needle);
+        } else {
+            return false !== strpos($haystack, $needle);
+        }
     }
 
     /**

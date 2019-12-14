@@ -1,25 +1,28 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use stdClass;
 use UnitTester;
 
 class GroupCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: group()
+     * Tests Phalcon\Helper\Arr :: group()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrGroup(UnitTester $I)
@@ -27,9 +30,18 @@ class GroupCest
         $I->wantToTest('Helper\Arr - group()');
 
         $collection = [
-            ['name' => 'Paul', 'age' => 34],
-            ['name' => 'Peter', 'age' => 31],
-            ['name' => 'John', 'age' => 29],
+            [
+                'name' => 'Paul',
+                'age'  => 34,
+            ],
+            [
+                'name' => 'Peter',
+                'age'  => 31,
+            ],
+            [
+                'name' => 'John',
+                'age'  => 29,
+            ],
         ];
 
         $expected = [
@@ -59,8 +71,9 @@ class GroupCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: group() - object
+     * Tests Phalcon\Helper\Arr :: group() - object
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrGroupObject(UnitTester $I)
@@ -93,8 +106,9 @@ class GroupCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: group() - function
+     * Tests Phalcon\Helper\Arr :: group() - function
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrGroupFunction(UnitTester $I)

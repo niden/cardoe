@@ -1,24 +1,27 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class SliceLeftCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: sliceLeft()
+     * Tests Phalcon\Helper\Arr :: sliceLeft()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperArrSliceLeft(UnitTester $I)
@@ -26,7 +29,7 @@ class SliceLeftCest
         $I->wantToTest('Helper\Arr - sliceLeft()');
 
         $collection = [
-            'Cardoe',
+            'Phalcon',
             'Framework',
             'for',
             'PHP',
@@ -34,7 +37,7 @@ class SliceLeftCest
 
 
         $expected = [
-            'Cardoe',
+            'Phalcon',
         ];
 
         $I->assertEquals(
@@ -44,7 +47,7 @@ class SliceLeftCest
 
 
         $expected = [
-            'Cardoe',
+            'Phalcon',
             'Framework',
             'for',
         ];

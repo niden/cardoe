@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Helper;
+namespace Phalcon\Helper;
 
 use InvalidArgumentException;
 
@@ -30,7 +30,7 @@ class Json
      * JSON data cannot be decoded
      *
      * ```php
-     * use Cardoe\Helper\Json;
+     * use Phalcon\Helper\Json;
      *
      * $data = '{"one":"two","0":"three"}';
      *
@@ -73,7 +73,7 @@ class Json
      * JSON data cannot be encoded
      *
      * ```php
-     * use Cardoe\Helper\Json;
+     * use Phalcon\Helper\Json;
      *
      * $data = [
      *     'one' => 'two',

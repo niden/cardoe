@@ -1,24 +1,27 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class HasCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: has()
+     * Tests Phalcon\Helper\Arr :: has()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function helperArrHas(UnitTester $I)
@@ -26,7 +29,7 @@ class HasCest
         $I->wantToTest('Helper\Arr - has()');
 
         $collection = [
-            1        => 'Cardoe',
+            1        => 'Phalcon',
             'suffix' => 'Framework',
         ];
 

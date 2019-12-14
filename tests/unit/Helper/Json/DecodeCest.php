@@ -1,25 +1,28 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Json;
+namespace Phalcon\Test\Unit\Helper\Json;
 
 use InvalidArgumentException;
-use Cardoe\Helper\Json;
+use Phalcon\Helper\Json;
 use UnitTester;
 
 class DecodeCest
 {
     /**
-     * Tests Cardoe\Helper\Json :: decode()
+     * Tests Phalcon\Helper\Json :: decode()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonDecode(UnitTester $I)
@@ -36,8 +39,9 @@ class DecodeCest
     }
 
     /**
-     * Tests Cardoe\Helper\Json :: decode() - exception
+     * Tests Phalcon\Helper\Json :: decode() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-12-01
      */
     public function helperJsonDecodeException(UnitTester $I)

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Helper;
+namespace Phalcon\Helper;
 
 use function base64_decode;
 use function base64_encode;
@@ -18,7 +18,7 @@ use function str_replace;
 use function strlen;
 
 /**
- * Cardoe\Helper\Base64
+ * Phalcon\Helper\Base64
  *
  * This class offers quick string base64 functions
  */

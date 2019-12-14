@@ -1,24 +1,27 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
 
-use Cardoe\Helper\Arr;
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class ValidateAllCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: validateAll()
+     * Tests Phalcon\Helper\Arr :: validateAll()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrValidateAll(UnitTester $I)

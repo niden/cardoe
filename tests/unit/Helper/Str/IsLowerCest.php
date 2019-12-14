@@ -1,34 +1,37 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
 
-use Cardoe\Helper\Str;
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class IsLowerCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: isLower()
+     * Tests Phalcon\Helper\Str :: isLower()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrIsLower(UnitTester $I)
     {
         $I->wantToTest('Helper\Str - isLower()');
 
-        $actual = Str::isLower('cardoe framework');
+        $actual = Str::isLower('phalcon framework');
         $I->assertTrue($actual);
 
-        $actual = Str::isLower('Cardoe Framework');
+        $actual = Str::isLower('Phalcon Framework');
         $I->assertFalse($actual);
     }
 }

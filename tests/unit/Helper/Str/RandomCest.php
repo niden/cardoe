@@ -1,25 +1,28 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
 
-use Cardoe\Helper\Str;
 use Codeception\Example;
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class RandomCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: random() - constants
+     * Tests Phalcon\Helper\Str :: random() - constants
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrRandomConstants(UnitTester $I)
@@ -35,8 +38,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - alnum
+     * Tests Phalcon\Helper\Str :: random() - alnum
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -69,8 +73,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - alpha
+     * Tests Phalcon\Helper\Str :: random() - alpha
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -103,8 +108,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - hexdec
+     * Tests Phalcon\Helper\Str :: random() - hexdec
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -137,8 +143,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - numeric
+     * Tests Phalcon\Helper\Str :: random() - numeric
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -171,8 +178,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - non zero
+     * Tests Phalcon\Helper\Str :: random() - non zero
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider oneToTenProvider
@@ -205,8 +213,9 @@ class RandomCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: random() - distinct type
+     * Tests Phalcon\Helper\Str :: random() - distinct type
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-04-06
      *
      * @dataProvider helperStrRandomDistinctProvider

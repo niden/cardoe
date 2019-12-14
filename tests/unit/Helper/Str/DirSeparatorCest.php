@@ -1,41 +1,44 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
 
-use Cardoe\Helper\Str;
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class DirSeparatorCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: dirSeparator()
+     * Tests Phalcon\Helper\Str :: dirSeparator()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-16
      */
     public function helperStrFolderSeparator(UnitTester $I)
     {
         $I->wantToTest('Helper\Str - dirSeparator()');
 
-        $expected = '/home/cardoe/';
-        $actual   = Str::dirSeparator('/home/cardoe');
+        $expected = '/home/phalcon/';
+        $actual   = Str::dirSeparator('/home/phalcon');
         $I->assertEquals($expected, $actual);
 
-        $expected = '/home/cardoe/';
-        $actual   = Str::dirSeparator('/home/cardoe//');
+        $expected = '/home/phalcon/';
+        $actual   = Str::dirSeparator('/home/phalcon//');
         $I->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: dirSeparator() - empty string
+     * Tests Phalcon\Helper\Str :: dirSeparator() - empty string
      */
     public function helperStrFolderSeparatorEmptyString(UnitTester $I)
     {
