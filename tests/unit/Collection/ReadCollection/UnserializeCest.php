@@ -1,29 +1,32 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
 
-use Cardoe\Collection\ReadCollection;
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class UnserializeCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: serialize()
+     * Tests Phalcon\Collection\ReadOnly :: serialize()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - serialize()');
+        $I->wantToTest('ReadOnly - serialize()');
 
         $data = [
             'one'   => 'two',
@@ -33,7 +36,7 @@ class UnserializeCest
 
         $serialized = serialize($data);
 
-        $collection = new ReadCollection();
+        $collection = new ReadOnly();
 
         $collection->unserialize($serialized);
 

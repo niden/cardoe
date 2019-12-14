@@ -1,29 +1,32 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
 
-use Cardoe\Collection\Collection;
+use Phalcon\Collection;
 use UnitTester;
 
 class ToJsonCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: toJson()
+     * Tests Phalcon\Collection :: toJson()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionToJson(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - toJson()');
+        $I->wantToTest('Collection - toJson()');
 
         $data = [
             'one'   => 'two',

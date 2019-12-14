@@ -1,29 +1,32 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
 
-use Cardoe\Collection\ReadCollection;
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class JsonSerializeCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: jsonSerialize()
+     * Tests Phalcon\Collection\ReadOnly :: jsonSerialize()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionJsonSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - jsonSerialize()');
+        $I->wantToTest('ReadOnly - jsonSerialize()');
 
         $data = [
             'one'   => 'two',
@@ -31,7 +34,7 @@ class JsonSerializeCest
             'five'  => 'six',
         ];
 
-        $collection = new ReadCollection($data);
+        $collection = new ReadOnly($data);
 
         $I->assertEquals(
             $data,

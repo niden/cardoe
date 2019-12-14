@@ -1,30 +1,33 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
 
-use Cardoe\Collection\Collection;
-use Cardoe\Test\Fixtures\Helper\JsonFixture;
+use Phalcon\Collection;
+use Phalcon\Test\Fixtures\Helper\JsonFixture;
 use UnitTester;
 
 class JsonSerializeCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: jsonSerialize()
+     * Tests Phalcon\Collection :: jsonSerialize()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionJsonSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - jsonSerialize()');
+        $I->wantToTest('Collection - jsonSerialize()');
 
         $data = [
             'one'   => 'two',

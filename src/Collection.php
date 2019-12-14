@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Collection;
+namespace Phalcon;
 
 use ArrayAccess;
 use ArrayIterator;

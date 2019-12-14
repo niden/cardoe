@@ -1,32 +1,35 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
 
-use Cardoe\Collection\ReadCollection;
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: __construct()
+     * Tests Phalcon\Collection\ReadOnly :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionConstruct(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - __construct()');
-        $collection = new ReadCollection();
+        $I->wantToTest('ReadOnly - __construct()');
+        $collection = new ReadOnly();
 
-        $class = ReadCollection::class;
+        $class = ReadOnly::class;
         $I->assertInstanceOf($class, $collection);
     }
 }

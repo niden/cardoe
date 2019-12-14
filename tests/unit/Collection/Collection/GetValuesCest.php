@@ -1,44 +1,50 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
 
-use Cardoe\Collection\Collection;
+use Phalcon\Collection;
 use UnitTester;
 
 class GetValuesCest
 {
     /**
-     * Unit Tests Cardoe\Collection\Collection :: getValues()
+     * Tests Phalcon\Collection :: get()
      *
-     * @since  2019-12-12
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
      */
-    public function collectionCollectionGetValues(UnitTester $I)
+    public function collectionGetValues(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - getValues()');
-
-        $values = [
-            'two',
-            'four',
-            'six',
-        ];
+        $I->wantToTest('Collection - getValues()');
 
         $data = [
             'one'   => 'two',
-            'three' => 'four',
+            'Three' => 'four',
             'five'  => 'six',
         ];
 
         $collection = new Collection($data);
 
-        $I->assertEquals($values, $collection->getValues());
+        $expected = [
+            'two',
+            'four',
+            'six',
+        ];
+
+        $I->assertEquals(
+            $expected,
+            $collection->getValues(false)
+        );
     }
 }

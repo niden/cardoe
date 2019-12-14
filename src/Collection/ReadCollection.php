@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Collection;
+namespace Phalcon\Collection;
 
 /**
- * Cardoe\Collection
+ * Phalcon\Collection
  *
- * Cardoe\Collection is a supercharged object oriented array. It implements
+ * Phalcon\Collection is a supercharged object oriented array. It implements
  * ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
  *
  * It can be used in any part of the application that needs collection of data

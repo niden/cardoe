@@ -1,35 +1,38 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
 
-use Cardoe\Collection\Exception;
-use Cardoe\Collection\ReadCollection;
+use Phalcon\Collection\Exception;
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class SetCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: set()
+     * Tests Phalcon\Collection\ReadOnly :: set()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionSet(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - set()');
+        $I->wantToTest('ReadOnly - set()');
 
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection = new ReadCollection();
+                $collection = new ReadOnly();
                 $collection->set('three', 123);
             }
         );
@@ -37,15 +40,15 @@ class SetCest
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection        = new ReadCollection();
-                $collection->three = 'Cardoe';
+                $collection        = new ReadOnly();
+                $collection->three = 'Phalcon';
             }
         );
 
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection = new ReadCollection();
+                $collection = new ReadOnly();
                 $collection->offsetSet('three', 123);
             }
         );
@@ -53,7 +56,7 @@ class SetCest
         $I->expectThrowable(
             new Exception('The object is read only'),
             function () {
-                $collection          = new ReadCollection();
+                $collection          = new ReadOnly();
                 $collection['three'] = true;
             }
         );
