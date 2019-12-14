@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Serializer\Msgpack;
+namespace Phalcon\Test\Unit\Storage\Serializer\Msgpack;
 
-use Cardoe\Storage\Serializer\Msgpack;
+use Phalcon\Storage\Serializer\Msgpack;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
@@ -19,11 +21,11 @@ use UnitTester;
 class UnserializeCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\Msgpack :: unserialize()
+     * Tests Phalcon\Storage\Serializer\Msgpack :: unserialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerMsgpackUnserialize(UnitTester $I, Example $example)
@@ -39,9 +41,9 @@ class UnserializeCest
     }
 
     /**
-     * Tests Cardoe\Storage\Serializer\Msgpack :: unserialize() - error
+     * Tests Phalcon\Storage\Serializer\Msgpack :: unserialize() - error
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-09-28
      */
     public function storageSerializerMsgpackUnserializeError(UnitTester $I)
@@ -68,11 +70,11 @@ class UnserializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
+                'Phalcon Framework',
             ],
             [
                 'array',
-                ['Cardoe Framework'],
+                ['Phalcon Framework'],
             ],
             [
                 'object',

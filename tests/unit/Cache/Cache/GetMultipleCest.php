@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Cache;
+namespace Phalcon\Test\Unit\Cache\Cache;
 
-use Cardoe\Cache\Cache;
-use Cardoe\Cache\AdapterFactory;
-use Cardoe\Cache\Exception\InvalidArgumentException;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Cache;
+use Phalcon\Cache\AdapterFactory;
+use Phalcon\Cache\Exception\InvalidArgumentException;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 use function uniqid;
@@ -24,9 +24,9 @@ use function uniqid;
 class GetMultipleCest
 {
     /**
-     * Tests Cardoe\Cache :: getMultiple()
+     * Tests Phalcon\Cache :: getMultiple()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
     public function cacheCacheGetMultiple(UnitTester $I)
@@ -71,9 +71,9 @@ class GetMultipleCest
     }
 
     /**
-     * Tests Cardoe\Cache :: getMultiple() - exception
+     * Tests Phalcon\Cache :: getMultiple() - exception
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
     public function cacheCacheGetMultipleException(UnitTester $I)

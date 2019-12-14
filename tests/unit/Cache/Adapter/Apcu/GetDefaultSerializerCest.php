@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,16 +11,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Apcu;
+namespace Phalcon\Test\Unit\Cache\Adapter\Apcu;
 
 use UnitTester;
 
 class GetDefaultSerializerCest
 {
     /**
-     * Unit Tests Cardoe\Cache\Adapter\Apcu :: getDefaultSerializer()
+     * Unit Tests Phalcon\Cache\Adapter\Apcu :: getDefaultSerializer()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
     public function cacheAdapterApcuGetDefaultSerializer(UnitTester $I)

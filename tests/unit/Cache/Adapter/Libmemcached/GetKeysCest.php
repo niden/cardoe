@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Libmemcached;
+namespace Phalcon\Test\Unit\Cache\Adapter\Libmemcached;
 
-use Cardoe\Cache\Adapter\Libmemcached;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Cache\Adapter\Libmemcached;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
 
 use function getOptionsLibmemcached;
@@ -25,9 +25,9 @@ class GetKeysCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: getKeys()
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: getKeys()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
     public function cacheAdapterLibmemcachedGetKeys(UnitTester $I)
@@ -41,7 +41,7 @@ class GetKeysCest
             getOptionsLibmemcached()
         );
 
-        $memcachedServerVersions = $adapter->getAdapter()->getVersion();
+        $memcachedServerVersions   = $adapter->getAdapter()->getVersion();
         $memcachedExtensionVersion = phpversion('memcached');
 
         foreach ($memcachedServerVersions as $server => $memcachedServerVersion) {

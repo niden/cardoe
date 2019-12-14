@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Apcu;
+namespace Phalcon\Test\Unit\Cache\Adapter\Apcu;
 
-use Cardoe\Cache\Adapter\Apcu;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\ApcuTrait;
+use Phalcon\Cache\Adapter\Apcu;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\ApcuTrait;
 use UnitTester;
 
 class GetKeysCest
@@ -23,9 +23,9 @@ class GetKeysCest
     use ApcuTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Apcu :: getKeys()
+     * Tests Phalcon\Cache\Adapter\Apcu :: getKeys()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
     public function cacheAdapterApcuGetKeys(UnitTester $I)

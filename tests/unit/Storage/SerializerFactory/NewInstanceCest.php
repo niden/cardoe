@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,30 +11,30 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Storage\SerializerFactory;
 
-use Cardoe\Factory\Exception;
-use Cardoe\Storage\Serializer\Base64;
-use Cardoe\Storage\Serializer\Igbinary;
-use Cardoe\Storage\Serializer\Json;
-use Cardoe\Storage\Serializer\Msgpack;
-use Cardoe\Storage\Serializer\None;
-use Cardoe\Storage\Serializer\Php;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Factory\Exception;
+use Phalcon\Storage\Serializer\Base64;
+use Phalcon\Storage\Serializer\Igbinary;
+use Phalcon\Storage\Serializer\Json;
+use Phalcon\Storage\Serializer\Msgpack;
+use Phalcon\Storage\Serializer\None;
+use Phalcon\Storage\Serializer\Php;
+use Phalcon\Storage\SerializerFactory;
 use Codeception\Example;
 use UnitTester;
 
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Storage\SerializerFactory :: newInstance()
+     * Tests Phalcon\Storage\SerializerFactory :: newInstance()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-05-04
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstance(UnitTester $I, Example $example)
     {
@@ -48,12 +50,12 @@ class NewInstanceCest
     }
 
     /**
-     * Tests Cardoe\Storage\SerializerFactory :: newInstance() - exception
+     * Tests Phalcon\Storage\SerializerFactory :: newInstance() - exception
      *
      * @throws Exception
      * @since  2019-05-04
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {

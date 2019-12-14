@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
+namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
 
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 use function getOptionsRedis;
@@ -22,10 +22,10 @@ use function getOptionsRedis;
 class GetSetDefaultSerializerCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Redis ::
+     * Tests Phalcon\Storage\Adapter\Redis ::
      * getDefaultSerializer()/setDefaultSerializer()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
     public function storageAdapterRedisGetKeys(UnitTester $I)

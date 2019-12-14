@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Libmemcached;
+namespace Phalcon\Test\Unit\Cache\Adapter\Libmemcached;
 
 use Codeception\Example;
-use Cardoe\Cache\Adapter\Libmemcached;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Cache\Adapter\Libmemcached;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use stdClass;
 use UnitTester;
 
@@ -28,14 +28,14 @@ class GetSetCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: get()/set()
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: get()/set()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-03-31
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterLibmemcachedGetSet(UnitTester $I, Example $example)
     {
@@ -57,13 +57,13 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: get()/set() - custom
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: get()/set() - custom
      * serializer
      *
      * @throws Exception
      * @since  2019-04-29
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterLibmemcachedGetSetCustomSerializer(UnitTester $I)
     {
@@ -82,7 +82,7 @@ class GetSetCest
         );
 
         $key    = 'cache-data';
-        $source = 'Cardoe Framework';
+        $source = 'Phalcon Framework';
 
         $I->assertTrue(
             $adapter->set($key, $source)

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Cache\Adapter;
+namespace Phalcon\Cache\Adapter;
 
-use Cardoe\Storage\Adapter\AdapterInterface as StorageAdapterInterface;
+use Phalcon\Storage\Adapter\AdapterInterface as StorageAdapterInterface;
 
 /**
- * Interface for Cardoe\Cache adapters
+ * Interface for Phalcon\Cache adapters
  */
 interface AdapterInterface extends StorageAdapterInterface
 {

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,23 +9,24 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Storage\Adapter;
+namespace Phalcon\Storage\Adapter;
 
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Arr;
-use Cardoe\Helper\Str;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\Serializer\SerializerInterface;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Helper\Str;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\Serializer\SerializerInterface;
+use Phalcon\Storage\SerializerFactory;
 use DateInterval;
 use DateTime;
 
 use function is_object;
+use function var_dump;
 
 /**
  * Class AbstractAdapter
  *
- * @package Cardoe\Storage\Adapter
+ * @package Phalcon\Storage\Adapter
  *
  * @property mixed               $adapter
  * @property string              $defaultSerializer

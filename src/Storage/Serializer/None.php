@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Storage\Serializer;
+namespace Phalcon\Storage\Serializer;
 
 /**
  * Class None
  *
- * @package Cardoe\Storage\Serializer
+ * @package Phalcon\Storage\Serializer
  */
 class None extends AbstractSerializer
 {

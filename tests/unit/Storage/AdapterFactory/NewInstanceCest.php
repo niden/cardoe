@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,17 +11,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\AdapterFactory;
+namespace Phalcon\Test\Unit\Storage\AdapterFactory;
 
 use Codeception\Example;
-use Cardoe\Factory\Exception;
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\Adapter\Memory;
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\Adapter\Stream;
-use Cardoe\Storage\AdapterFactory;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Factory\Exception;
+use Phalcon\Storage\Adapter\Apcu;
+use Phalcon\Storage\Adapter\Libmemcached;
+use Phalcon\Storage\Adapter\Memory;
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\Adapter\Stream;
+use Phalcon\Storage\AdapterFactory;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 use function getOptionsLibmemcached;
@@ -31,14 +31,14 @@ use function outputDir;
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Storage\AdapterFactory :: newInstance()
+     * Tests Phalcon\Storage\AdapterFactory :: newInstance()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-05-04
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterFactoryNewInstance(UnitTester $I, Example $example)
     {
@@ -54,12 +54,12 @@ class NewInstanceCest
     }
 
     /**
-     * Tests Cardoe\Storage\SerializerFactory :: newInstance() - exception
+     * Tests Phalcon\Storage\SerializerFactory :: newInstance() - exception
      *
      * @throws Exception
      * @since  2019-05-04
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {

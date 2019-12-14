@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
+namespace Phalcon\Test\Unit\Storage\Adapter\Libmemcached;
 
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Storage\Adapter\Libmemcached;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
 
 use function getOptionsLibmemcached;
@@ -26,12 +26,12 @@ class DecrementCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: decrement()
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: decrement()
      *
      * @throws Exception
      * @since  2019-03-31
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterLibmemcachedDecrement(UnitTester $I)
     {

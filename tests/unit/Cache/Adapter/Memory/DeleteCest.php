@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,18 +11,18 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Memory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Memory;
 
-use Cardoe\Cache\Adapter\Memory;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 class DeleteCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Memory :: delete()
+     * Tests Phalcon\Cache\Adapter\Memory :: delete()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterMemoryDelete(UnitTester $I)
@@ -50,9 +50,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Memory :: delete() - twice
+     * Tests Phalcon\Cache\Adapter\Memory :: delete() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterMemoryDeleteTwice(UnitTester $I)
@@ -80,9 +80,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Memory :: delete() - unknown
+     * Tests Phalcon\Cache\Adapter\Memory :: delete() - unknown
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterMemoryDeleteUnknown(UnitTester $I)

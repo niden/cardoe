@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Storage;
+namespace Phalcon\Storage;
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Storage\Adapter\AdapterInterface;
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\Adapter\Memory;
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\Adapter\Stream;
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Adapter\AdapterInterface;
+use Phalcon\Storage\Adapter\Apcu;
+use Phalcon\Storage\Adapter\Libmemcached;
+use Phalcon\Storage\Adapter\Memory;
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\Adapter\Stream;
 
 class AdapterFactory extends AbstractFactory
 {

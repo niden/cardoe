@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Unserializer\Php;
+namespace Phalcon\Test\Unit\Storage\Unserializer\Php;
 
-use Cardoe\Storage\Serializer\Php;
+use Phalcon\Storage\Serializer\Php;
 use Codeception\Example;
 use InvalidArgumentException;
 use stdClass;
@@ -20,11 +22,11 @@ use UnitTester;
 class UnserializeCest
 {
     /**
-     * Tests Cardoe\Storage\Unserializer\Php :: unserialize()
+     * Tests Phalcon\Storage\Unserializer\Php :: unserialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerPhpUnserialize(UnitTester $I, Example $example)
@@ -44,9 +46,9 @@ class UnserializeCest
     }
 
     /**
-     * Tests Cardoe\Storage\Serializer\Php :: unserialize() - error not string
+     * Tests Phalcon\Storage\Serializer\Php :: unserialize() - error not string
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-11-21
      */
     public function storageSerializerPhpUnserializeErrorNotString(UnitTester $I)
@@ -66,9 +68,9 @@ class UnserializeCest
     }
 
     /**
-     * Tests Cardoe\Storage\Serializer\Php :: unserialize() - error
+     * Tests Phalcon\Storage\Serializer\Php :: unserialize() - error
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-11-21
      */
     public function storageSerializerPhpUnserializeError(UnitTester $I)
@@ -112,13 +114,13 @@ class UnserializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
-                serialize('Cardoe Framework'),
+                'Phalcon Framework',
+                serialize('Phalcon Framework'),
             ],
             [
                 'array',
-                ['Cardoe Framework'],
-                serialize(['Cardoe Framework']),
+                ['Phalcon Framework'],
+                serialize(['Phalcon Framework']),
             ],
             [
                 'object',

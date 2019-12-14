@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Stream;
+namespace Phalcon\Test\Unit\Storage\Adapter\Stream;
 
-use Cardoe\Storage\Adapter\AdapterInterface;
-use Cardoe\Storage\Adapter\Stream;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Storage\Adapter\AdapterInterface;
+use Phalcon\Storage\Adapter\Stream;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 use function outputDir;
@@ -24,9 +24,9 @@ use function outputDir;
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: __construct()
+     * Tests Phalcon\Storage\Adapter\Stream :: __construct()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function storageAdapterStreamConstruct(UnitTester $I)
@@ -54,9 +54,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: __construct() - exception
+     * Tests Phalcon\Storage\Adapter\Stream :: __construct() - exception
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function storageAdapterStreamConstructException(UnitTester $I)

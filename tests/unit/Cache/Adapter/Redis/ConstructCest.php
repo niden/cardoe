@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,12 +11,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Redis;
+namespace Phalcon\Test\Unit\Cache\Adapter\Redis;
 
-use Cardoe\Cache\Adapter\AdapterInterface;
-use Cardoe\Cache\Adapter\Redis;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+use Phalcon\Cache\Adapter\AdapterInterface;
+use Phalcon\Cache\Adapter\Redis;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
 
 use function getOptionsRedis;
@@ -26,9 +26,9 @@ class ConstructCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Redis :: __construct()
+     * Tests Phalcon\Cache\Adapter\Redis :: __construct()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
     public function cacheAdapterRedisConstruct(UnitTester $I)

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,11 +11,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Stream;
+namespace Phalcon\Test\Unit\Storage\Adapter\Stream;
 
-use Cardoe\Storage\Adapter\Stream;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Storage\Adapter\Stream;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 use function file_put_contents;
@@ -27,12 +27,12 @@ use function sleep;
 class GetSetCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: set()
+     * Tests Phalcon\Storage\Adapter\Stream :: set()
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterStreamSet(UnitTester $I)
     {
@@ -47,26 +47,26 @@ class GetSetCest
             ]
         );
 
-        $data   = 'Cardoe Framework';
+        $data   = 'Phalcon Framework';
         $result = $adapter->set('test-key', $data);
         $I->assertTrue($result);
 
         $target = outputDir() . 'ph-strm/te/st/-k/';
         $I->amInPath($target);
         $I->openFile('test-key');
-        $expected = 's:3:"ttl";i:3600;s:7:"content";s:24:"s:16:"Cardoe Framework";";}';
+        $expected = 's:3:"ttl";i:3600;s:7:"content";s:25:"s:17:"Phalcon Framework";";}';
 
         $I->seeInThisFile($expected);
         $I->safeDeleteFile($target . 'test-key');
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: get()
+     * Tests Phalcon\Storage\Adapter\Stream :: get()
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterStreamGet(UnitTester $I)
     {
@@ -82,13 +82,13 @@ class GetSetCest
         );
 
         $target = outputDir() . 'ph-strm/te/st/-k/';
-        $data   = 'Cardoe Framework';
+        $data   = 'Phalcon Framework';
 
         $I->assertTrue(
             $adapter->set('test-key', $data)
         );
 
-        $expected = 'Cardoe Framework';
+        $expected = 'Phalcon Framework';
         $actual   = $adapter->get('test-key');
         $I->assertNotNull($actual);
         $I->assertEquals($expected, $actual);
@@ -106,12 +106,12 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: get() - errors
+     * Tests Phalcon\Storage\Adapter\Stream :: get() - errors
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterStreamGetErrors(UnitTester $I)
     {
@@ -151,7 +151,7 @@ class GetSetCest
         );
 
         // Expiry
-        $data = 'Cardoe Framework';
+        $data = 'Phalcon Framework';
 
         $I->assertTrue(
             $adapter->set('test-key', $data, 1)

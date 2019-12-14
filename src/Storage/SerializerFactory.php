@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,22 +9,22 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Storage;
+namespace Phalcon\Storage;
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception;
-use Cardoe\Storage\Serializer\Base64;
-use Cardoe\Storage\Serializer\Igbinary;
-use Cardoe\Storage\Serializer\Json;
-use Cardoe\Storage\Serializer\Msgpack;
-use Cardoe\Storage\Serializer\None;
-use Cardoe\Storage\Serializer\Php;
-use Cardoe\Storage\Serializer\SerializerInterface;
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception;
+use Phalcon\Storage\Serializer\Base64;
+use Phalcon\Storage\Serializer\Igbinary;
+use Phalcon\Storage\Serializer\Json;
+use Phalcon\Storage\Serializer\Msgpack;
+use Phalcon\Storage\Serializer\None;
+use Phalcon\Storage\Serializer\Php;
+use Phalcon\Storage\Serializer\SerializerInterface;
 
 /**
  * Class SerializerFactory
  *
- * @package Cardoe\Storage
+ * @package Phalcon\Storage
  */
 class SerializerFactory extends AbstractFactory
 {

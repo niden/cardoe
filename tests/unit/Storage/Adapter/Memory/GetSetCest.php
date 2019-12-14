@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,22 +11,22 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Memory;
+namespace Phalcon\Test\Unit\Storage\Adapter\Memory;
 
 use Codeception\Example;
-use Cardoe\Storage\Adapter\Memory;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Storage\Adapter\Memory;
+use Phalcon\Storage\SerializerFactory;
 use stdClass;
 use UnitTester;
 
 class GetSetCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Memory :: get()
+     * Tests Phalcon\Storage\Adapter\Memory :: get()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-31
      */
     public function storageAdapterMemoryGetSet(UnitTester $I, Example $example)

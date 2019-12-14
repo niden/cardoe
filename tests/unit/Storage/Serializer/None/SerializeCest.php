@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,20 +11,20 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Serializer\None;
+namespace Phalcon\Test\Unit\Storage\Serializer\None;
 
-use Cardoe\Storage\Serializer\None;
+use Phalcon\Storage\Serializer\None;
 use Codeception\Example;
 use UnitTester;
 
 class SerializeCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\None :: serialize()
+     * Tests Phalcon\Storage\Serializer\None :: serialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerNoneSerialize(UnitTester $I, Example $example)
@@ -65,13 +67,13 @@ class SerializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
-                'Cardoe Framework',
+                'Phalcon Framework',
+                'Phalcon Framework',
             ],
             [
                 'array',
-                ['Cardoe Framework'],
-                ["Cardoe Framework"],
+                ['Phalcon Framework'],
+                ["Phalcon Framework"],
             ],
         ];
     }

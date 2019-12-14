@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,21 +11,21 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Cache\CacheFactory;
+namespace Phalcon\Test\Unit\Cache\CacheFactory;
 
-use Cardoe\Cache\Cache;
-use Cardoe\Cache\AdapterFactory;
-use Cardoe\Cache\CacheFactory;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Cache;
+use Phalcon\Cache\AdapterFactory;
+use Phalcon\Cache\CacheFactory;
+use Phalcon\Storage\SerializerFactory;
 use Psr\SimpleCache\CacheInterface;
 use UnitTester;
 
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Cache\CacheFactory :: newInstance()
+     * Tests Phalcon\Cache\CacheFactory :: newInstance()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-03
      */
     public function cacheCacheFactoryNewInstance(UnitTester $I)

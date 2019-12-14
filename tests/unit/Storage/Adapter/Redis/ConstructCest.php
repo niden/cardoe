@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
+namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
 
-use Cardoe\Storage\Adapter\AdapterInterface;
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+use Phalcon\Storage\Adapter\AdapterInterface;
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
 
 use function getOptionsRedis;
@@ -27,9 +27,9 @@ class ConstructCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: __construct()
+     * Tests Phalcon\Storage\Adapter\Redis :: __construct()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
     public function storageAdapterRedisConstruct(UnitTester $I)
@@ -55,9 +55,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: __construct() - invalid serializer
+     * Tests Phalcon\Storage\Adapter\Redis :: __construct() - invalid serializer
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
     public function storageAdapterRedisConstructInvalidSerializerException(UnitTester $I)

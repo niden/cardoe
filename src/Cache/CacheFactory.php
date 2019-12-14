@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Cache;
+namespace Phalcon\Cache;
 
-use Cardoe\Factory\Exception as ExceptionAlias;
+use Phalcon\Cache;
+use Phalcon\Factory\Exception as ExceptionAlias;
 
 /**
  * Creates a new Cache class
