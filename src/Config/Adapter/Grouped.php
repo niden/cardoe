@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Config\Adapter;
+namespace Phalcon\Config\Adapter;
 
-use Cardoe\Config\Config;
-use Cardoe\Config\ConfigFactory;
-use Cardoe\Config\Exception;
-use Cardoe\Factory\Exception as ExceptionAlias;
+use Phalcon\Config;
+use Phalcon\Config\ConfigFactory;
+use Phalcon\Config\Exception;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use function is_array;
+use function is_string;
 
 class Grouped extends Config
 {
@@ -35,7 +37,10 @@ class Grouped extends Config
             $configInstance = $configName;
 
             // Set to default adapter if passed as string
-            if (is_string($configName)) {
+            if ($configName instanceof Config) {
+                $this->merge($configInstance);
+                continue;
+            } elseif (is_string($configName)) {
                 if ("" === $defaultAdapter) {
                     $this->merge(
                         (new ConfigFactory())->load($configName)
@@ -48,47 +53,25 @@ class Grouped extends Config
                     "filePath" => $configName,
                     "adapter"  => $defaultAdapter,
                 ];
-            } elseif (true !== isset($configInstance["adapter"])) {
+            } elseif (!isset($configInstance["adapter"])) {
                 $configInstance["adapter"] = $defaultAdapter;
             }
 
-            $configInstance = $this->getInstance($configInstance);
+            if (is_array($configInstance["adapter"])) {
+                if (!isset($configInstance["config"])) {
+                    throw new Exception(
+                        "To use 'array' adapter you have to specify " .
+                        "the 'config' as an array."
+                    );
+                }
+
+                $configArray    = $configInstance["config"];
+                $configInstance = new Config($configArray);
+            } else {
+                $configInstance = (new ConfigFactory())->load($configInstance);
+            }
 
             $this->merge($configInstance);
-        }
-    }
-
-    /**
-     * @param array $configInstance
-     *
-     * @throws Exception
-     */
-    private function checkArrayAdapter(array $configInstance)
-    {
-        if (true !== isset($configInstance["config"])) {
-            throw new Exception(
-                "To use the 'array' adapter you have to specify " .
-                "the 'config' as an array."
-            );
-        }
-    }
-
-    /**
-     * @param array $configInstance
-     *
-     * @return mixed
-     * @throws Exception
-     * @throws ExceptionAlias
-     */
-    private function getInstance(array $configInstance)
-    {
-        if ("array" === $configInstance["adapter"]) {
-            $this->checkArrayAdapter($configInstance);
-
-            $configArray    = $configInstance["config"];
-            return new Config($configArray);
-        } else {
-            return (new ConfigFactory())->load($configInstance);
         }
     }
 }

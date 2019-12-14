@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\Adapter\Ini;
+namespace Phalcon\Test\Unit\Config\Adapter\Ini;
 
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 class ToArrayCest
@@ -19,7 +21,7 @@ class ToArrayCest
     use ConfigTrait;
 
     /**
-     * Tests Cardoe\Config\Adapter\Ini :: toArray()
+     * Tests Phalcon\Config\Adapter\Ini :: toArray()
      *
      * @author kjdev
      * @since  2013-07-18
@@ -36,6 +38,7 @@ class ToArrayCest
         $this->config['database']['num6'] = true;
         $this->config['database']['num7'] = null;
         $this->config['database']['num8'] = 123;
+        $this->config['database']['num9'] = (float) 123.45;
         $config                           = $this->getConfig('Ini');
 
         $I->assertEquals(

@@ -41,9 +41,9 @@
   },
   "autoload": {
     "psr-4": {
-      "Cardoe\\": "src/",
-      "Cardoe\\Test\\Unit\\": "tests/unit/",
-      "Cardoe\\Test\\Fixtures\\": "tests/_data/fixtures/"
+      "Phalcon\\": "src/",
+      "Phalcon\\Test\\Unit\\": "tests/unit/",
+      "Phalcon\\Test\\Fixtures\\": "tests/_data/fixtures/"
     }
   },
   "require-dev": {

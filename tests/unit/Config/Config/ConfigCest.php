@@ -1,16 +1,18 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Config\Config;
+namespace Phalcon\Test\Unit\Config\Config;
 
-use Cardoe\Config\Config;
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Config;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 class ConfigCest
@@ -50,6 +52,7 @@ class ConfigCest
     /**
      * Tests standard config simple array
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2012-09-11
      */
     public function testStandardConfigSimpleArray(UnitTester $I)

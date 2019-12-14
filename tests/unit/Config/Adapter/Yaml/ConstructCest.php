@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\Adapter\Yaml;
+namespace Phalcon\Test\Unit\Config\Adapter\Yaml;
 
-use Cardoe\Config\Adapter\Yaml;
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Config\Adapter\Yaml;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 use function dataDir;
@@ -27,8 +29,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\Yaml :: __construct()
+     * Tests Phalcon\Config\Adapter\Yaml :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function configAdapterYamlConstruct(UnitTester $I)
@@ -39,8 +42,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\Yaml :: __construct() - callbacks
+     * Tests Phalcon\Config\Adapter\Yaml :: __construct() - callbacks
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function configAdapterYamlConstructCallbacks(UnitTester $I)
@@ -54,13 +58,13 @@ class ConstructCest
                     return hash('sha256', $value);
                 },
                 '!approot' => function ($value) {
-                    return APP_DATA . $value;
+                    return APP_PATH . $value;
                 },
             ]
         );
 
         $I->assertEquals(
-            APP_DATA . '/app/controllers/',
+            APP_PATH . '/app/controllers/',
             $config->application->controllersDir
         );
 

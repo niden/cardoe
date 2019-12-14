@@ -28,9 +28,9 @@ trait LoggerTrait
      */
     protected function runLoggerFile(UnitTester $I, string $level)
     {
+        $filePath = logsDir();
         $fileName = $I->getNewFileName('log', 'log');
-        $fileName = logsDir($fileName);
-        $logger   = $this->getLogger($fileName);
+        $logger   = $this->getLogger($filePath . $fileName);
 
         $logString = 'Hello';
         $logTime   = date('c');
@@ -39,7 +39,7 @@ trait LoggerTrait
 
         $logger->getAdapter('one')->close();
 
-        $I->amInPath(logsDir());
+        $I->amInPath($filePath);
         $I->openFile($fileName);
 
         $I->seeInThisFile(
@@ -50,7 +50,7 @@ trait LoggerTrait
             )
         );
 
-        $I->safeDeleteFile($fileName);
+        $I->safeDeleteFile($filePath . $fileName);
     }
 
     /**

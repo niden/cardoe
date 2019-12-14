@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,19 +11,19 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\ConfigFactory;
+namespace Phalcon\Test\Unit\Config\ConfigFactory;
 
-use Cardoe\Config\Adapter\Ini;
-use Cardoe\Config\Adapter\Yaml;
-use Cardoe\Config\ConfigFactory;
-use Cardoe\Config\Exception;
-use Cardoe\Test\Fixtures\Traits\FactoryTrait;
+use Phalcon\Config\Adapter\Ini;
+use Phalcon\Config\Adapter\Yaml;
+use Phalcon\Config\ConfigFactory;
+use Phalcon\Config\Exception;
+use Phalcon\Test\Fixtures\Traits\FactoryTrait;
 use UnitTester;
 
 use function dataDir;
 use function hash;
 
-use const APP_DATA;
+use const APP_PATH;
 
 class LoadCest
 {
@@ -33,7 +35,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Config\ConfigFactory :: load() - Config
+     * Tests Phalcon\Config\ConfigFactory :: load() - Config
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-03-02
@@ -54,7 +56,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Config\ConfigFactory :: load() - array
+     * Tests Phalcon\Config\ConfigFactory :: load() - array
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-03-02
@@ -75,7 +77,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Config\ConfigFactory :: load() - string
+     * Tests Phalcon\Config\ConfigFactory :: load() - string
      *
      * @author Wojciech Ślawski <jurigag@gmail.com>
      * @since  2017-11-24
@@ -96,8 +98,9 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Config\ConfigFactory :: load() -  exception
+     * Tests Phalcon\Config\ConfigFactory :: load() -  exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-19
      */
     public function configFactoryLoadException(UnitTester $I)
@@ -115,7 +118,7 @@ class LoadCest
 
         $I->expectThrowable(
             new Exception(
-                'Config must be array or Cardoe\Config\Config object'
+                'Config must be array or Phalcon\Config object'
             ),
             function () {
                 $ini = (new ConfigFactory())->load(false);
@@ -148,8 +151,9 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Config\ConfigFactory :: load() -  yaml callback
+     * Tests Phalcon\Config\ConfigFactory :: load() -  yaml callback
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-19
      */
     public function configFactoryLoadYamlCallback(UnitTester $I)
@@ -166,12 +170,36 @@ class LoadCest
                     return hash('sha256', $value);
                 },
                 '!approot' => function ($value) {
-                    return APP_DATA . $value;
+                    return APP_PATH . $value;
                 },
             ],
         ];
 
         $config = $factory->load($config);
         $I->assertInstanceOf(Yaml::class, $config);
+    }
+
+    /**
+     * Tests Phalcon\Config\ConfigFactory :: load() -  two calls new instances
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-12-07
+     * @issue  14584
+     */
+    public function configFactoryLoadTwoCallsNewInstances(UnitTester $I)
+    {
+        $I->wantToTest('Config\ConfigFactory - load() - two calls new instances');
+
+        $factory = new ConfigFactory();
+
+        $configFile1 = dataDir('assets/config/config.php');
+        $config      = $factory->load($configFile1);
+
+        $I->assertEquals("/phalcon/", $config->phalcon->baseUri);
+
+        $configFile2 = dataDir('assets/config/config-2.php');
+        $config2     = $factory->load($configFile2);
+
+        $I->assertEquals("/phalcon4/", $config2->phalcon->baseUri);
     }
 }

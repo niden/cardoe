@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,10 +11,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\Config;
+namespace Phalcon\Test\Unit\Config\Config;
 
-use Cardoe\Config\Config;
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Config;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 class MergeCest
@@ -20,8 +22,9 @@ class MergeCest
     use ConfigTrait;
 
     /**
-     * Tests Cardoe\Config\Config :: merge()
+     * Tests Phalcon\Config :: merge()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-15
      */
     public function configMergeConfig(UnitTester $I)
@@ -37,8 +40,9 @@ class MergeCest
     }
 
     /**
-     * Tests Cardoe\Config\Config :: merge()
+     * Tests Phalcon\Config :: merge()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-15
      */
     public function configMergeArr(UnitTester $I)
@@ -130,6 +134,7 @@ class MergeCest
     /**
      * Tests merging complex config objects
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2012-12-16
      */
     public function testConfigMergeComplexObjects(UnitTester $I)
@@ -414,7 +419,7 @@ class MergeCest
     }
 
     /**
-     * Tests Cardoe\Config\Config :: merge()
+     * Tests Phalcon\Config :: merge()
      *
      * @author Cameron Hall <me@chall.id.au>
      * @link   https://github.com/phalcon/cphalcon/issues/13201
@@ -489,7 +494,7 @@ class MergeCest
     }
 
     /**
-     * Tests Cardoe\Config\Config :: merge()
+     * Tests Phalcon\Config :: merge()
      *
      * @author Cameron Hall <me@chall.id.au>
      * @link   https://github.com/phalcon/cphalcon/issues/13768

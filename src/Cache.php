@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Cache;
+namespace Phalcon;
 
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Exception\InvalidArgumentException;

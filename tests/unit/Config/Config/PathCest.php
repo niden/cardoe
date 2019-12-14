@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,9 +11,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\Config;
+namespace Phalcon\Test\Unit\Config\Config;
 
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 class PathCest
@@ -19,8 +21,9 @@ class PathCest
     use ConfigTrait;
 
     /**
-     * Tests Cardoe\Config\Config :: path()
+     * Tests Phalcon\Config :: path()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-19
      */
     public function configPath(UnitTester $I)
@@ -31,8 +34,9 @@ class PathCest
     }
 
     /**
-     * Tests Cardoe\Config\Config :: path() - default
+     * Tests Phalcon\Config :: path() - default
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-19
      */
     public function configPathDefault(UnitTester $I)

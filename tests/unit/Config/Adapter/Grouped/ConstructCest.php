@@ -1,9 +1,11 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -11,11 +13,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\Adapter\Grouped;
+namespace Phalcon\Test\Unit\Config\Adapter\Grouped;
 
-use Cardoe\Config\Adapter\Grouped;
-use Cardoe\Config\Exception;
-use Cardoe\Test\Fixtures\Traits\ConfigTrait;
+use Phalcon\Config;
+use Phalcon\Config\Adapter\Grouped;
+use Phalcon\Config\Exception;
+use Phalcon\Test\Fixtures\Traits\ConfigTrait;
 use UnitTester;
 
 use function dataDir;
@@ -24,8 +27,13 @@ class ConstructCest
 {
     use ConfigTrait;
 
+    public function _after()
+    {
+        unset($this->config['test']['property']); //Removing Extra Property
+    }
+
     /**
-     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - complex instance
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - complex instance
      *
      * @author fenikkusu
      * @since  2017-06-06
@@ -35,6 +43,7 @@ class ConstructCest
         $I->wantToTest("Config\Adapter\Grouped - construct - complex instance");
 
         $this->config['test']['property2'] = 'something-else';
+        $this->config['test']['property']  = 'blah';
 
         $config = [
             dataDir('assets/config/config.php'),
@@ -50,6 +59,11 @@ class ConstructCest
                     ],
                 ],
             ],
+            new Config([
+                'test' => [
+                    'property' => 'blah',
+                ],
+            ]),
         ];
 
         foreach ([[], ['']] as $parameters) {
@@ -62,7 +76,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - default adapter
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - default adapter
      *
      * @author fenikkusu
      * @since  2017-06-06
@@ -97,7 +111,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Config\Adapter\Grouped :: __construct() - exception
+     * Tests Phalcon\Config\Adapter\Grouped :: __construct() - exception
      *
      * @author Fenikkusu
      * @since  2017-06-06
@@ -108,7 +122,7 @@ class ConstructCest
 
         $I->expectThrowable(
             new Exception(
-                "To use the 'array' adapter you have to specify the 'config' as an array."
+                "To use 'array' adapter you have to specify the 'config' as an array."
             ),
             function () {
                 new Grouped(

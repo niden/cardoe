@@ -9,17 +9,19 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Logger;
+namespace Phalcon;
 
 use Phalcon\Helper\Arr;
-use Phalcon\Logger\Adapter\AbstractAdapter;
 use Phalcon\Logger\Adapter\AdapterInterface;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Item;
 use Psr\Log\LoggerInterface;
 
 /**
  * Class Logger
  *
  * @property AdapterInterface[] $adapters
+ * @property int                $logLevel
  * @property string             $name
  * @property array              $excluded
  */
@@ -41,6 +43,13 @@ class Logger implements LoggerInterface
      * @var AdapterInterface[]
      */
     protected $adapters = [];
+
+    /**
+     * Minimum log level for the logger
+     *
+     * @var int
+     */
+    protected $logLevel = 8;
 
     /**
      * @var string
@@ -211,6 +220,14 @@ class Logger implements LoggerInterface
     }
 
     /**
+     * Returns the log level
+     */
+    public function getLogLevel(): int
+    {
+        return $this->logLevel;
+    }
+
+    /**
      * Returns the name of the logger
      */
     public function getName(): string
@@ -296,6 +313,21 @@ class Logger implements LoggerInterface
     }
 
     /**
+     * Sets the adapters stack overriding what is already there
+     *
+     * @param int $level
+     *
+     * @return Logger
+     */
+    public function setLogLevel(int $level): Logger
+    {
+        $levels         = $this->getLevels();
+        $this->logLevel = isset($levels[$level]) ? $level : self::CUSTOM;
+
+        return $this;
+    }
+
+    /**
      * Exceptional occurrences that are not errors.
      *
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
@@ -323,32 +355,34 @@ class Logger implements LoggerInterface
      */
     protected function addMessage(int $level, string $message, array $context = []): bool
     {
-        if (count($this->adapters) === 0) {
-            throw new Exception("No adapters specified");
-        }
+        if ($this->logLevel >= $level) {
+            if (count($this->adapters) === 0) {
+                throw new Exception("No adapters specified");
+            }
 
-        $levels    = $this->getLevels();
-        $levelName = Arr::get($levels, $level, self::CUSTOM);
+            $levels    = $this->getLevels();
+            $levelName = Arr::get($levels, $level, self::CUSTOM);
 
-        $item = new Item($message, $levelName, $level, time(), $context);
+            $item = new Item($message, $levelName, $level, time(), $context);
 
-        /**
-         * Log only if the key does not exist in the excluded ones
-         */
-        foreach ($this->adapters as $name => $adapter) {
-            if (!isset($this->excluded[$name])) {
-                if ($adapter->inTransaction()) {
-                    $adapter->add($item);
-                } else {
-                    $adapter->process($item);
+            /**
+             * Log only if the key does not exist in the excluded ones
+             */
+            foreach ($this->adapters as $name => $adapter) {
+                if (!isset($this->excluded[$name])) {
+                    if ($adapter->inTransaction()) {
+                        $adapter->add($item);
+                    } else {
+                        $adapter->process($item);
+                    }
                 }
             }
-        }
 
-        /**
-         * Clear the excluded array since we made the call now
-         */
-        $this->excluded = [];
+            /**
+             * Clear the excluded array since we made the call now
+             */
+            $this->excluded = [];
+        }
 
         return true;
     }

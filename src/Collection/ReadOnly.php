@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Collection;
 
+use Phalcon\Collection;
+
 /**
  * Phalcon\Collection
  *
@@ -21,7 +23,7 @@ namespace Phalcon\Collection;
  * Such implementations are for instance accessing globals `$_GET`, `$_POST`
  * etc.
  */
-class ReadCollection extends Collection
+class ReadOnly extends Collection
 {
     /**
      * Delete the element from the collection

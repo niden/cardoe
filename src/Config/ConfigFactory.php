@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Config;
+namespace Phalcon\Config;
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as FactoryException;
-use Cardoe\Helper\Arr;
+use Phalcon\Config;
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as FactoryException;
+use Phalcon\Helper\Arr;
 
 use function is_array;
 use function is_object;
@@ -22,6 +23,7 @@ use function lcfirst;
 use function pathinfo;
 use function strpos;
 use function strtolower;
+
 use const PATHINFO_EXTENSION;
 
 class ConfigFactory extends AbstractFactory
@@ -107,11 +109,11 @@ class ConfigFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "grouped" => "Cardoe\\Config\\Adapter\\Grouped",
-            "ini"     => "Cardoe\\Config\\Adapter\\Ini",
-            "json"    => "Cardoe\\Config\\Adapter\\Json",
-            "php"     => "Cardoe\\Config\\Adapter\\Php",
-            "yaml"    => "Cardoe\\Config\\Adapter\\Yaml",
+            "grouped" => "Phalcon\\Config\\Adapter\\Grouped",
+            "ini"     => "Phalcon\\Config\\Adapter\\Ini",
+            "json"    => "Phalcon\\Config\\Adapter\\Json",
+            "php"     => "Phalcon\\Config\\Adapter\\Php",
+            "yaml"    => "Phalcon\\Config\\Adapter\\Yaml",
         ];
     }
 
@@ -198,7 +200,7 @@ class ConfigFactory extends AbstractFactory
     {
         if (true !== is_array($config)) {
             throw new Exception(
-                "Config must be array or Cardoe\\Config\\Config object"
+                "Config must be array or Phalcon\\Config\\Config object"
             );
         }
 

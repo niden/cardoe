@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -40,7 +40,7 @@ foreach ($iterator as $file) {
 $template = '<?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -48,7 +48,7 @@ $template = '<?php
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\%type%\%n%;
+namespace Phalcon\Test\%type%\%n%;
 
 use %type%Tester;
 
@@ -72,7 +72,7 @@ $allClasses     = get_declared_classes();
 $phalconClasses = [];
 
 foreach ($allClasses as $class) {
-    if ('Cardoe\\' === substr($class, 0, 7)) {
+    if ('Phalcon\\' === substr($class, 0, 7)) {
         $phalconClasses[] = $class;
     }
 }
@@ -98,7 +98,7 @@ $placeholders = [
 $outputDir = dirname(__DIR__) . '/nikos/';
 
 foreach ($phalconClasses as $class) {
-    $newClass = str_replace('Cardoe\\', '', $class);
+    $newClass = str_replace('Phalcon\\', '', $class);
 
     $methods = get_class_methods($class);
 

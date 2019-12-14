@@ -1,7 +1,9 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,13 +11,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Config\ConfigFactory;
+namespace Phalcon\Test\Unit\Config\ConfigFactory;
 
-use Cardoe\Config\Adapter\Ini;
-use Cardoe\Config\Adapter\Json;
-use Cardoe\Config\Adapter\Php;
-use Cardoe\Config\Adapter\Yaml;
-use Cardoe\Config\ConfigFactory;
+use Phalcon\Config\Adapter\Ini;
+use Phalcon\Config\Adapter\Json;
+use Phalcon\Config\Adapter\Php;
+use Phalcon\Config\Adapter\Yaml;
+use Phalcon\Config\ConfigFactory;
 use UnitTester;
 
 use function dataDir;
@@ -23,8 +25,9 @@ use function dataDir;
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Logger\LoggerFactory :: newInstance()
+     * Tests Phalcon\Logger\LoggerFactory :: newInstance()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-03
      */
     public function configFactoryNewInstance(UnitTester $I)

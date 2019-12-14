@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Config;
+namespace Phalcon;
 
-use Phalcon\Collection;
+use Phalcon\Config\Exception;
 
 use function array_shift;
 use function explode;
