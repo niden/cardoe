@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\Message;
+namespace Phalcon\Http\Message;
 
-use Cardoe\Helper\Number;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Traits\CommonTrait;
-use Cardoe\Http\Message\Traits\MessageTrait;
-use Cardoe\Http\Message\Traits\ResponseTrait;
+use Phalcon\Helper\Number;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\MessageTrait;
+use Phalcon\Http\Message\Traits\ResponseTrait;
 use Psr\Http\Message\ResponseInterface;
 
 use function is_int;

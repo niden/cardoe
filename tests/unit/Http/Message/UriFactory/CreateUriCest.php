@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\UriFactory;
+namespace Phalcon\Test\Unit\Http\Message\UriFactory;
 
-use Cardoe\Http\Message\UriFactory;
+use Phalcon\Http\Message\UriFactory;
 use Psr\Http\Message\UriInterface;
 use UnitTester;
 
 class CreateUriCest
 {
     /**
-     * Tests Cardoe\Http\Message\UriFactory :: createUri()
+     * Tests Phalcon\Http\Message\UriFactory :: createUri()
      *
      * @since  2019-02-09
      */

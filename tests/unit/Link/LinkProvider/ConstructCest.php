@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Link\LinkProvider;
+namespace Phalcon\Test\Unit\Link\LinkProvider;
 
-use Cardoe\Link\Link;
-use Cardoe\Link\LinkProvider;
+use Phalcon\Link\Link;
+use Phalcon\Link\LinkProvider;
 use Psr\Link\LinkProviderInterface;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Link\LinkProvider :: __construct()
+     * Tests Phalcon\Link\LinkProvider :: __construct()
      *
      * @since  2019-06-15
      */

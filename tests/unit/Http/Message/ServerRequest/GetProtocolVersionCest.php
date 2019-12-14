@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
 
-use Cardoe\Http\Message\ServerRequest;
+use Phalcon\Http\Message\ServerRequest;
 use UnitTester;
 
 class GetProtocolVersionCest
 {
 //    /**
-//     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion()
+//     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion()
 //     *
-//     * @author Cardoe Team <team@cardoephp.com>
+//     * @author Phalcon Team <team@cardoephp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
@@ -44,7 +44,7 @@ class GetProtocolVersionCest
 //    }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() - empty
+     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion() - empty
      *
      * @since  2019-03-05
      */
@@ -59,10 +59,10 @@ class GetProtocolVersionCest
     }
 //
 //    /**
-//     * Tests Cardoe\Http\Message\ServerRequest :: getProtocolVersion() -
+//     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion() -
 //     * exception
 //     *
-//     * @author Cardoe Team <team@cardoephp.com>
+//     * @author Phalcon Team <team@cardoephp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)

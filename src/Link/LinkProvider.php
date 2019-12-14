@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Link;
+namespace Phalcon\Link;
 
 use Psr\Link\LinkInterface;
 use Psr\Link\LinkProviderInterface;
@@ -21,7 +21,7 @@ use function spl_object_hash;
 /**
  * Class LinkProvider
  *
- * @package Cardoe\Link
+ * @package Phalcon\Link
  *
  * @property LinkInterface[] $links
  */

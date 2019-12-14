@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\Message\Traits;
+namespace Phalcon\Http\Message\Traits;
 
-use Cardoe\Collection\Collection;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Stream;
+use Phalcon\Collection;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Stream;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -518,7 +518,7 @@ trait MessageTrait
         } else {
             if (!($headers instanceof Collection)) {
                 throw new InvalidArgumentException(
-                    'Headers needs to be either an array or instance of Cardoe\Collection'
+                    'Headers needs to be either an array or instance of Phalcon\Collection'
                 );
             }
 

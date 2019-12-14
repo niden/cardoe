@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
 
-use Cardoe\Http\Message\Uri;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class GetSchemeCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: getScheme()
+     * Tests Phalcon\Http\Message\Uri :: getScheme()
      *
      * @since  2019-02-09
      */
@@ -33,7 +33,7 @@ class GetSchemeCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: getScheme() - empty
+     * Tests Phalcon\Http\Message\Uri :: getScheme() - empty
      *
      * @since  2019-02-07
      */

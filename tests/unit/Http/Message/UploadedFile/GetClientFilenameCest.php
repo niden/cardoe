@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
 
-use Cardoe\Http\Message\UploadedFile;
+use Phalcon\Http\Message\UploadedFile;
 use UnitTester;
 
 class GetClientFilenameCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getClientFilename()
+     * Tests Phalcon\Http\Message\UploadedFile :: getClientFilename()
      *
      * @since  2019-02-10
      */

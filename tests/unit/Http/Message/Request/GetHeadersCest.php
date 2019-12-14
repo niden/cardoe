@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Request;
+namespace Phalcon\Test\Unit\Http\Message\Request;
 
-use Cardoe\Collection\Collection;
-use Cardoe\Http\Message\Request;
+use Phalcon\Collection;
+use Phalcon\Http\Message\Request;
 use UnitTester;
 
 class GetHeadersCest
 {
     /**
-     * Tests Cardoe\Http\Message\Request :: getHeaders()
+     * Tests Phalcon\Http\Message\Request :: getHeaders()
      *
      * @since  2019-02-10
      */
@@ -50,7 +50,7 @@ class GetHeadersCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: getHeaders() - collection
+     * Tests Phalcon\Http\Message\Request :: getHeaders() - collection
      *
      * @since  2019-02-10
      */
@@ -84,7 +84,7 @@ class GetHeadersCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: getHeaders() - empty
+     * Tests Phalcon\Http\Message\Request :: getHeaders() - empty
      *
      * @since  2019-02-10
      */

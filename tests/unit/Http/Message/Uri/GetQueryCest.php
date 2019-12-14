@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
 
-use Cardoe\Http\Message\Uri;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class GetQueryCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: getQuery()
+     * Tests Phalcon\Http\Message\Uri :: getQuery()
      *
      * @since  2019-02-09
      */
@@ -33,7 +33,7 @@ class GetQueryCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: getQuery() - empty
+     * Tests Phalcon\Http\Message\Uri :: getQuery() - empty
      *
      * @since  2019-02-07
      */

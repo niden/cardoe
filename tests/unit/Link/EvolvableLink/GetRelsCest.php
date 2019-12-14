@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Link\EvolvableLink;
+namespace Phalcon\Test\Unit\Link\EvolvableLink;
 
-use Cardoe\Link\EvolvableLink;
+use Phalcon\Link\EvolvableLink;
 use UnitTester;
 
 class GetRelsCest
 {
     /**
-     * Tests Cardoe\Link\Link :: getRels()
+     * Tests Phalcon\Link\Link :: getRels()
      *
      * @since  2019-06-15
      */

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
 
-use Cardoe\Http\Message\Stream;
-use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
+use Phalcon\Http\Message\Stream;
+use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use RuntimeException;
 use UnitTester;
 
 class SeekCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: seek()
+     * Tests Phalcon\Http\Message\Stream :: seek()
      *
      * @since  2019-02-10
      */
@@ -37,7 +37,7 @@ class SeekCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: seek() - after file size
+     * Tests Phalcon\Http\Message\Stream :: seek() - after file size
      *
      * @since  2019-02-10
      */
@@ -54,7 +54,7 @@ class SeekCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: seek() - exception
+     * Tests Phalcon\Http\Message\Stream :: seek() - exception
      *
      * @since  2019-02-10
      */

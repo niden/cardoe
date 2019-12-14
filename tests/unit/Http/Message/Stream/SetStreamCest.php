@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,14 +9,14 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
 
 use UnitTester;
 
 class SetStreamCest
 {
     /**
-     * Unit Tests Cardoe\Http\Message\Stream :: setStream()
+     * Unit Tests Phalcon\Http\Message\Stream :: setStream()
      *
      * @since  2019-05-25
      */

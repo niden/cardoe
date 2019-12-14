@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Link\EvolvableLinkProvider;
+namespace Phalcon\Test\Unit\Link\EvolvableLinkProvider;
 
-use Cardoe\Link\EvolvableLinkProvider;
+use Phalcon\Link\EvolvableLinkProvider;
 use Psr\Link\EvolvableLinkProviderInterface;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Link\EvolvableLinkProvider :: __construct()
+     * Tests Phalcon\Link\EvolvableLinkProvider :: __construct()
      *
      * @since  2019-06-15
      */

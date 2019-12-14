@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Stream;
-use Cardoe\Http\Message\UploadedFile;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Stream;
+use Phalcon\Http\Message\UploadedFile;
 use UnitTester;
 
 use function outputDir;
@@ -21,7 +21,7 @@ use function outputDir;
 class MoveToCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: moveTo()
+     * Tests Phalcon\Http\Message\UploadedFile :: moveTo()
      *
      * @since  2019-02-10
      */
@@ -31,7 +31,7 @@ class MoveToCest
 
         $stream = new Stream('php://memory', 'w+b');
 
-        $stream->write('Cardoe Framework');
+        $stream->write('Phalcon Framework');
 
         $file   = new UploadedFile($stream, 0);
         $target = $I->getNewFileName();
@@ -49,7 +49,7 @@ class MoveToCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: moveTo() - upload error
+     * Tests Phalcon\Http\Message\UploadedFile :: moveTo() - upload error
      *
      * @since  2019-02-10
      */
@@ -64,7 +64,7 @@ class MoveToCest
             function () use ($I) {
                 $stream = new Stream('php://memory', 'w+b');
 
-                $stream->write('Cardoe Framework');
+                $stream->write('Phalcon Framework');
 
                 $target = $I->getNewFileName();
 
@@ -80,7 +80,7 @@ class MoveToCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: moveTo() - wrong path
+     * Tests Phalcon\Http\Message\UploadedFile :: moveTo() - wrong path
      *
      * @since  2019-02-10
      */
@@ -95,7 +95,7 @@ class MoveToCest
             function () use ($I) {
                 $stream = new Stream('php://memory', 'w+b');
 
-                $stream->write('Cardoe Framework');
+                $stream->write('Phalcon Framework');
 
                 $file = new UploadedFile($stream, 0);
 
@@ -105,7 +105,7 @@ class MoveToCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: moveTo() - already moved
+     * Tests Phalcon\Http\Message\UploadedFile :: moveTo() - already moved
      *
      * @since  2019-02-10
      */
@@ -120,7 +120,7 @@ class MoveToCest
             function () use ($I) {
                 $stream = new Stream('php://memory', 'w+b');
 
-                $stream->write('Cardoe Framework');
+                $stream->write('Phalcon Framework');
 
                 $file = new UploadedFile($stream, 0);
 

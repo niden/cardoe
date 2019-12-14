@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
 
-use Cardoe\Http\Message\ServerRequest;
-use Cardoe\Http\Message\UploadedFile;
+use Phalcon\Http\Message\ServerRequest;
+use Phalcon\Http\Message\UploadedFile;
 use InvalidArgumentException;
 use UnitTester;
 
 class WithUploadedFilesCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: withUploadedFiles()
+     * Tests Phalcon\Http\Message\ServerRequest :: withUploadedFiles()
      *
      * @since  2019-02-10
      */
@@ -42,7 +42,7 @@ class WithUploadedFilesCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: withUploadedFiles() -
+     * Tests Phalcon\Http\Message\ServerRequest :: withUploadedFiles() -
      * exception
      *
      * @since  2019-02-10

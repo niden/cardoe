@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Response;
+namespace Phalcon\Test\Unit\Http\Message\Response;
 
-use Cardoe\Http\Message\Response;
+use Phalcon\Http\Message\Response;
 use InvalidArgumentException;
 use UnitTester;
 
 class GetStatusCodeCest
 {
     /**
-     * Tests Cardoe\Http\Message\Response :: getStatusCode()
+     * Tests Phalcon\Http\Message\Response :: getStatusCode()
      *
      * @since  2019-03-09
      */
@@ -35,7 +35,7 @@ class GetStatusCodeCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: getStatusCode() - exception
+     * Tests Phalcon\Http\Message\Response :: getStatusCode() - exception
      *
      * @since  2019-03-09
      */

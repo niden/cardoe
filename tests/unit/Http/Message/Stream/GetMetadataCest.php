@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
 
-use Cardoe\Http\Message\Stream;
-use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
+use Phalcon\Http\Message\Stream;
+use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use Codeception\Example;
 use UnitTester;
 
@@ -21,7 +21,7 @@ use function dataDir;
 class GetMetadataCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata()
+     * Tests Phalcon\Http\Message\Stream :: getMetadata()
      *
      * @since  2019-02-10
      */
@@ -49,7 +49,7 @@ class GetMetadataCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata() - by key
+     * Tests Phalcon\Http\Message\Stream :: getMetadata() - by key
      *
      * @dataProvider getExamples
      *
@@ -67,7 +67,7 @@ class GetMetadataCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata() - invalid handle
+     * Tests Phalcon\Http\Message\Stream :: getMetadata() - invalid handle
      *
      * @since        2019-02-10
      */

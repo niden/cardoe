@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ResponseFactory;
+namespace Phalcon\Test\Unit\Http\Message\ResponseFactory;
 
-use Cardoe\Http\Message\ResponseFactory;
+use Phalcon\Http\Message\ResponseFactory;
 use Psr\Http\Message\ResponseInterface;
 use UnitTester;
 
 class CreateResponseCest
 {
     /**
-     * Tests Cardoe\Http\Message\ResponseFactory :: createResponse()
+     * Tests Phalcon\Http\Message\ResponseFactory :: createResponse()
      *
      * @since  2019-02-10
      */

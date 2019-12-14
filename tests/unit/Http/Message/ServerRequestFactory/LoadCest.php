@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,12 +9,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequestFactory;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequestFactory;
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\ServerRequestFactory;
-use Cardoe\Http\Message\UploadedFile;
-use Cardoe\Test\Fixtures\Http\Message\ServerRequestFactoryFixture;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\ServerRequestFactory;
+use Phalcon\Http\Message\UploadedFile;
+use Phalcon\Test\Fixtures\Http\Message\ServerRequestFactoryFixture;
 use Codeception\Example;
 use Psr\Http\Message\ServerRequestInterface;
 use UnitTester;
@@ -22,7 +22,7 @@ use UnitTester;
 class LoadCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load()
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load()
      *
      * @since  2019-02-09
      */
@@ -37,7 +37,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - header host
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - header host
      * prefixed
      *
      * @since  2019-02-09
@@ -72,7 +72,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - header host
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - header host
      * prefixed
      *
      * @since  2019-02-09
@@ -97,7 +97,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - header host
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - header host
      * array prefixed
      *
      * @since  2019-02-09
@@ -121,7 +121,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - IIS path
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - IIS path
      * name/port prefixed
      *
      * @since        2019-02-09
@@ -143,7 +143,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - original path
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - original path
      * info name/port prefixed
      *
      * @since        2019-02-09
@@ -164,7 +164,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - server header
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - server header
      *
      * @since        2019-02-09
      */
@@ -189,7 +189,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - server
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - server
      * name/port prefixed
      *
      * @dataProvider getServerNameExamples
@@ -219,7 +219,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - server
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - server
      * prefixed
      *
      * @since  2019-02-09
@@ -252,7 +252,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - files
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - files
      * prefixed
      *
      * @since  2019-02-09
@@ -313,7 +313,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - files
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - files
      * exception prefixed
      *
      * @since  2019-02-09
@@ -344,7 +344,7 @@ class LoadCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: load() - scheme https
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - scheme https
      * prefixed
      *
      * @since  2019-02-09

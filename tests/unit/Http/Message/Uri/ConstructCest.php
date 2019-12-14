@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
 
-use Cardoe\Http\Message\Uri;
+use Phalcon\Http\Message\Uri;
 use Psr\Http\Message\UriInterface;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: __construct()
+     * Tests Phalcon\Http\Message\Uri :: __construct()
      *
      * @since  2019-02-09
      */

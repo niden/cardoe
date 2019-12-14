@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequestFactory;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequestFactory;
 
-use Cardoe\Http\Message\ServerRequestFactory;
+use Phalcon\Http\Message\ServerRequestFactory;
 use Psr\Http\Message\ServerRequestInterface;
 use UnitTester;
 
 class CreateServerRequestCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequestFactory :: createServerRequest()
+     * Tests Phalcon\Http\Message\ServerRequestFactory :: createServerRequest()
      *
      * @since  2019-02-09
      */

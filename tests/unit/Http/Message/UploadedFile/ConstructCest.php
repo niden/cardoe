@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\UploadedFile;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\UploadedFile;
 use Codeception\Example;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
@@ -23,7 +23,7 @@ use function fopen;
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: __construct()
+     * Tests Phalcon\Http\Message\UploadedFile :: __construct()
      *
      * @since  2019-02-10
      */
@@ -44,7 +44,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: __construct() - $resource
+     * Tests Phalcon\Http\Message\UploadedFile :: __construct() - $resource
      *
      * @since  2019-02-10
      */
@@ -65,7 +65,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: __construct() - stream
+     * Tests Phalcon\Http\Message\UploadedFile :: __construct() - stream
      * exception
      *
      * @dataProvider getStreamExamples
@@ -87,7 +87,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: __construct() - error
+     * Tests Phalcon\Http\Message\UploadedFile :: __construct() - error
      * exception
      *
      * @since  2019-02-18

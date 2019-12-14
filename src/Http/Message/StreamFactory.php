@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\Message;
+namespace Phalcon\Http\Message;
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 

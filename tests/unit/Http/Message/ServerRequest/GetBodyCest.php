@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
 
-use Cardoe\Http\Message\ServerRequest;
-use Cardoe\Http\Message\Stream;
+use Phalcon\Http\Message\ServerRequest;
+use Phalcon\Http\Message\Stream;
 use UnitTester;
 
 class GetBodyCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: getBody()
+     * Tests Phalcon\Http\Message\ServerRequest :: getBody()
      *
      * @since  2019-02-10
      */
@@ -39,7 +39,7 @@ class GetBodyCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: getBody() - empty
+     * Tests Phalcon\Http\Message\ServerRequest :: getBody() - empty
      *
      * @since  2019-02-10
      */

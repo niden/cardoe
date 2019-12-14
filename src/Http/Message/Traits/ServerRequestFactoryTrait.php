@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,13 +9,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Http\Message\Traits;
+namespace Phalcon\Http\Message\Traits;
 
-use Cardoe\Collection\Collection;
-use Cardoe\Helper\Arr;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\UploadedFile;
-use Cardoe\Http\Message\Uri;
+use Phalcon\Collection;
+use Phalcon\Helper\Arr;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\UploadedFile;
+use Phalcon\Http\Message\Uri;
 use Psr\Http\Message\UploadedFileInterface;
 
 use function explode;
@@ -33,7 +33,7 @@ use function substr;
 /**
  * Trait ServerRequestFactoryTrait
  *
- * @package Cardoe\Http\Message\Traits
+ * @package Phalcon\Http\Message\Traits
  */
 trait ServerRequestFactoryTrait
 {

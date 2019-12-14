@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
 
-use Cardoe\Http\Message\Uri;
+use Phalcon\Http\Message\Uri;
 use Codeception\Example;
 use InvalidArgumentException;
 use UnitTester;
@@ -19,7 +19,7 @@ use UnitTester;
 class WithQueryCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: withQuery()
+     * Tests Phalcon\Http\Message\Uri :: withQuery()
      *
      * @dataProvider getExamples
      *
@@ -48,7 +48,7 @@ class WithQueryCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: withQuery() - exception no string
+     * Tests Phalcon\Http\Message\Uri :: withQuery() - exception no string
      *
      * @dataProvider getExceptions
      *
@@ -73,7 +73,7 @@ class WithQueryCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: withQuery() - exception with fragment
+     * Tests Phalcon\Http\Message\Uri :: withQuery() - exception with fragment
      *
      * @since        2019-02-07
      */

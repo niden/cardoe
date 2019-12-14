@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
 
-use Cardoe\Http\Message\ServerRequest;
+use Phalcon\Http\Message\ServerRequest;
 use UnitTester;
 
 class WithAddedHeaderCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: withAddedHeader()
+     * Tests Phalcon\Http\Message\ServerRequest :: withAddedHeader()
      *
      * @since  2019-02-10
      */
@@ -47,7 +47,7 @@ class WithAddedHeaderCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: withAddedHeader() - merge
+     * Tests Phalcon\Http\Message\ServerRequest :: withAddedHeader() - merge
      *
      * @since  2019-02-10
      */
