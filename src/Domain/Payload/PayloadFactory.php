@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -18,10 +18,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Domain\Payload;
+namespace Phalcon\Domain\Payload;
 
 /**
- * Cardoe\Domain\Payload\PayloadFactory
+ * Phalcon\Domain\Payload\PayloadFactory
  *
  * Factory to create payload objects
  */

@@ -1,25 +1,28 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Unit\Domain\Payload\Payload;
+namespace Phalcon\Test\Unit\Domain\Payload\Payload;
 
-use Cardoe\Domain\Payload\Status;
+use Phalcon\Domain\Payload\Status;
 use UnitTester;
 
 class StatusCest
 {
     /**
-     * Unit Tests Cardoe\Domain\Payload\Status :: constants
+     * Unit Tests Phalcon\Domain\Payload\Status :: constants
      *
-     * @since  2019-06-07
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-05-24
      */
     public function httpPayloadPayloadStatus(UnitTester $I)
     {
