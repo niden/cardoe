@@ -1,9 +1,11 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -11,16 +13,18 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Traits;
 
+use Phalcon\Config;
 use Phalcon\Config\Adapter\Grouped;
 use Phalcon\Config\Adapter\Ini;
 use Phalcon\Config\Adapter\Json;
 use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
-use Phalcon\Config;
 use Phalcon\Config\Exception;
 use UnitTester;
 
 use function dataDir;
+use function is_array;
+use function sprintf;
 
 trait ConfigTrait
 {
@@ -28,7 +32,7 @@ trait ConfigTrait
      * @var array
      */
     protected $config = [
-        'phalcon'      => [
+        'phalcon'     => [
             'baseuri' => '/phalcon/',
         ],
         'models'      => [
@@ -69,6 +73,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkConstruct(UnitTester $I, string $adapter = '')
@@ -108,8 +113,12 @@ trait ConfigTrait
      *
      * @param string $adapter
      *
-     * @return Grouped|Ini|Json|Php|Yaml|Config
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
+     *
+     * @return Config|Ini|Json|Php|Yaml
      * @throws Exception
+     * @throws \Phalcon\Factory\Exception
      */
     private function getConfig(string $adapter = '')
     {
@@ -202,6 +211,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: get()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkGet(UnitTester $I, string $adapter = '')
@@ -224,6 +234,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: getPathDelimiter()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkGetPathDelimiter(UnitTester $I, string $adapter = '')
@@ -260,6 +271,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: merge() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-06-19
      */
     private function checkMergeException(UnitTester $I, string $adapter = '')
@@ -285,6 +297,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: offsetExists()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkOffsetExists(UnitTester $I, string $adapter = '')
@@ -306,6 +319,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: offsetGet()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkOffsetGet(UnitTester $I, string $adapter = '')
@@ -328,6 +342,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: offsetSet()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkOffsetSet(UnitTester $I, string $adapter = '')
@@ -352,6 +367,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: offsetUnset()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkOffsetUnset(UnitTester $I, string $adapter = '')
@@ -408,6 +424,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: path() - default
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkPathDefault(UnitTester $I, string $adapter = '')
@@ -430,6 +447,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: setPathDelimiter()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkSetPathDelimiter(UnitTester $I, string $adapter = '')
@@ -468,6 +486,7 @@ trait ConfigTrait
     /**
      * Tests Phalcon\Config\Adapter\* :: toArray()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     private function checkToArray(UnitTester $I, string $adapter = '')

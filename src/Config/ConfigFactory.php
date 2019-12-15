@@ -41,7 +41,12 @@ class ConfigFactory extends AbstractFactory
     /**
      * Load a config to create a new instance
      *
-     * @param Config|array|string $config
+     * @param string|array|\Phalcon\Config $config = [
+     *      'adapter' => 'ini',
+     *      'filePath' => 'config.ini',
+     *      'mode' => null,
+     *      'callbacks' => null
+     *      ]
      *
      * @return object
      * @throws Exception
@@ -49,13 +54,26 @@ class ConfigFactory extends AbstractFactory
      */
     public function load($config): object
     {
-        $config = $this->checkConfigFile($config);
-        $config = $this->checkConfigObject($config);
+        if (is_string($config)) {
+            $oldConfig = $config;
+            $extension = pathinfo($config, PATHINFO_EXTENSION);
+
+            $this->checkOptionsExtension($extension);
+
+            $config = [
+                "adapter"  => $extension,
+                "filePath" => $oldConfig,
+            ];
+        }
+
+        if (is_object($config) && $config instanceof Config) {
+            $config = $config->toArray();
+        }
 
         $this
-            ->checkConfigIsArray($config)
-            ->checkFilePath($config)
-            ->checkAdapter($config)
+            ->checkOptionsIsArray($config)
+            ->checkOptionsFilePath($config)
+            ->checkOptionsAdapter($config)
         ;
 
         $adapter = strtolower($config["adapter"]);
@@ -66,11 +84,7 @@ class ConfigFactory extends AbstractFactory
             $first = $first . "." . lcfirst($adapter);
         }
 
-        if ("ini" === $adapter) {
-            $second = Arr::get($config, "mode", 1);
-        } elseif ("yaml" === $adapter) {
-            $second = Arr::get($config, "callbacks", []);
-        }
+        $second = $this->checkSecond($config, $adapter);
 
         return $this->newInstance($adapter, $first, $second);
     }
@@ -118,57 +132,32 @@ class ConfigFactory extends AbstractFactory
     }
 
     /**
-     * @param array $config
+     * @param mixed $extension
      *
-     * @return ConfigFactory
      * @throws Exception
      */
-    private function checkAdapter(array $config): ConfigFactory
-    {
-        if (true !== isset($config["adapter"])) {
-            throw new Exception(
-                "You must provide 'adapter' option in factory config parameter."
-            );
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $config
-     *
-     * @return array|string
-     * @throws Exception
-     */
-    private function checkConfigFile($config)
-    {
-        if (is_string($config)) {
-            $oldConfig = $config;
-            $extension = pathinfo($config, PATHINFO_EXTENSION);
-            $this->checkExtension($extension);
-
-            $config = [
-                "adapter"  => $extension,
-                "filePath" => $oldConfig,
-            ];
-        }
-
-        return $config;
-    }
-
-    /**
-     * @param string $extension
-     *
-     * @return ConfigFactory
-     * @throws Exception
-     */
-    private function checkExtension(string $extension): ConfigFactory
+    private function checkOptionsExtension($extension): void
     {
         if (empty($extension)) {
             throw new Exception(
                 "You need to provide the extension in the file path"
             );
         }
+    }
+
+    /**
+     * @param $config
+     *
+     * @return ConfigFactory
+     * @throws Exception
+     */
+    private function checkOptionsIsArray($config): ConfigFactory
+    {
+        if (!is_array($config)) {
+            throw new Exception(
+                "Config must be array or Phalcon\\Config object"
+            );
+        }
 
         return $this;
     }
@@ -179,9 +168,9 @@ class ConfigFactory extends AbstractFactory
      * @return ConfigFactory
      * @throws Exception
      */
-    private function checkFilePath(array $config): ConfigFactory
+    private function checkOptionsFilePath(array $config): ConfigFactory
     {
-        if (true !== isset($config["filePath"])) {
+        if (!isset($config["filePath"])) {
             throw new Exception(
                 "You must provide 'filePath' option in factory config parameter."
             );
@@ -191,16 +180,16 @@ class ConfigFactory extends AbstractFactory
     }
 
     /**
-     * @param $config
+     * @param array $config
      *
      * @return ConfigFactory
      * @throws Exception
      */
-    private function checkConfigIsArray($config): ConfigFactory
+    private function checkOptionsAdapter(array $config): ConfigFactory
     {
-        if (true !== is_array($config)) {
+        if (!isset($config["adapter"])) {
             throw new Exception(
-                "Config must be array or Phalcon\\Config\\Config object"
+                "You must provide 'adapter' option in factory config parameter."
             );
         }
 
@@ -208,19 +197,21 @@ class ConfigFactory extends AbstractFactory
     }
 
     /**
-     * @param mixed $config
+     * @param array  $config
+     * @param string $adapter
      *
-     * @return array
+     * @return mixed|null
      */
-    private function checkConfigObject($config): array
+    private function checkSecond(array $config, string $adapter)
     {
-        if (
-            is_object($config) &&
-            $config instanceof Config
-        ) {
-            $config = $config->toArray();
+        $second = null;
+
+        if ("ini" === $adapter) {
+            $second = Arr::get($config, "mode", 1);
+        } elseif ("yaml" === $adapter) {
+            $second = Arr::get($config, "callbacks", []);
         }
 
-        return $config;
+        return $second;
     }
 }

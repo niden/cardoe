@@ -16,24 +16,38 @@ mb_substitute_character('none');
 
 clearstatcache();
 
-$root = dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR;
-define('APP_PATH', $root);
 define('APP_DATA', dataDir());
+define('APP_PATH', codecept_root_dir());
+define('APP_PATH_OUTPUT', outputDir());
 
-unset($root);
-
+/**
+ * Tests data directory
+ *
+ * @param string $fileName
+ *
+ * @return string
+ */
 function dataDir(string $fileName = ''): string
 {
     return codecept_data_dir() . $fileName;
 }
 
 
+/**
+ * Tests output log directory
+ *
+ * @param string $fileName
+ *
+ * @return string
+ */
 function logsDir(string $fileName = ''): string
 {
     return codecept_output_dir() . 'tests/logs/' . $fileName;
 }
 
 /**
+ * Tests output directory
+ *
  * @param string $fileName
  *
  * @return string
@@ -79,6 +93,9 @@ function getOptionsRedis(): array
     ];
 }
 
+/**
+ * Create directories if they are not there
+ */
 $folders = [
     'logs',
     'stream',

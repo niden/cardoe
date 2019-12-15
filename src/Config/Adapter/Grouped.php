@@ -15,7 +15,7 @@ use Phalcon\Config;
 use Phalcon\Config\ConfigFactory;
 use Phalcon\Config\Exception;
 use Phalcon\Factory\Exception as ExceptionAlias;
-use function is_array;
+
 use function is_string;
 
 class Grouped extends Config
@@ -57,21 +57,33 @@ class Grouped extends Config
                 $configInstance["adapter"] = $defaultAdapter;
             }
 
-            if (is_array($configInstance["adapter"])) {
-                if (!isset($configInstance["config"])) {
-                    throw new Exception(
-                        "To use 'array' adapter you have to specify " .
-                        "the 'config' as an array."
-                    );
-                }
-
-                $configArray    = $configInstance["config"];
-                $configInstance = new Config($configArray);
+            if ("array" === $configInstance["adapter"]) {
+                $configInstance = $this->checkOptionsArray($configInstance);
             } else {
                 $configInstance = (new ConfigFactory())->load($configInstance);
             }
 
             $this->merge($configInstance);
         }
+    }
+
+    /**
+     * @param array $configInstance
+     *
+     * @return Config
+     * @throws Exception
+     */
+    private function checkOptionsArray(array $configInstance): Config
+    {
+        if (!isset($configInstance["config"])) {
+            throw new Exception(
+                "To use 'array' adapter you have to specify " .
+                "the 'config' as an array."
+            );
+        }
+
+        $configArray = $configInstance["config"];
+
+        return new Config($configArray);
     }
 }

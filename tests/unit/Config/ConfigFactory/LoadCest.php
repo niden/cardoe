@@ -23,6 +23,7 @@ use UnitTester;
 use function dataDir;
 use function hash;
 
+use function var_dump;
 use const APP_PATH;
 
 class LoadCest
