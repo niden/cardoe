@@ -9,8 +9,8 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Http\JWT\Signer;
+namespace Phalcon\Http\JWT\Encoder;
 
-abstract class AbstractSigner implements SignerInterface
+abstract class AbstractEncoder implements EncoderInterface
 {
 }

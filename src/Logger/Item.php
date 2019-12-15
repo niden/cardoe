@@ -52,18 +52,18 @@ class Item
     /**
      * Item constructor.
      *
-     * @param string     $message
-     * @param string     $name
-     * @param int        $type
-     * @param int        $time
-     * @param array|null $context
+     * @param string $message
+     * @param string $name
+     * @param int    $type
+     * @param int    $time
+     * @param array  $context
      */
     public function __construct(
         string $message,
         string $name,
         int $type,
         int $time = 0,
-        array $context = null
+        array $context = []
     ) {
         $this->message = $message;
         $this->name    = $name;

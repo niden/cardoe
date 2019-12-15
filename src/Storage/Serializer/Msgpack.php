@@ -24,11 +24,6 @@ use const E_WARNING;
 class Msgpack extends AbstractSerializer
 {
     /**
-     * @var bool
-     */
-    private $warning = false;
-
-    /**
      * Serializes data
      *
      * @return string|null
@@ -49,10 +44,10 @@ class Msgpack extends AbstractSerializer
      */
     public function unserialize($data): void
     {
-        $this->warning = false;
+        $warning = false;
         set_error_handler(
-            function ($number, $message, $file, $line, $context) {
-                $this->warning = true;
+            function ($number, $message, $file, $line, $context) use (&$warning) {
+                $warning = true;
             },
             E_WARNING
         );
@@ -61,7 +56,7 @@ class Msgpack extends AbstractSerializer
 
         restore_error_handler();
 
-        if ($this->warning) {
+        if ($warning) {
             $this->data = null;
         }
     }

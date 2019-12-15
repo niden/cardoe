@@ -11,16 +11,16 @@ declare(strict_types=1);
 
 namespace Phalcon\Http\JWT;
 
+use Phalcon\Http\JWT\Encoder\EncoderInterface;
 use Phalcon\Http\JWT\Exceptions\ValidateException;
-use Phalcon\Http\JWT\Signer\SignerInterface;
 
 /**
  * Class Builder
  *
- * @property array           $claims
- * @property array           $jose
- * @property string          $passphrase
- * @property SignerInterface $signer
+ * @property array            $claims
+ * @property array            $jose
+ * @property string           $passphrase
+ * @property EncoderInterface $signer
  *
  * @link https://tools.ietf.org/html/rfc7519
  */
@@ -42,9 +42,9 @@ class Builder
     private $passphrase;
 
     /**
-     * @var SignerInterface
+     * @var EncoderInterface
      */
-    private $signer;
+    private $encoder;
 
     /**
      * Builder constructor.
@@ -137,7 +137,7 @@ class Builder
      * interpretation of audience values is generally application specific.
      * Use of this claim is OPTIONAL.
      *
-     * @param $audience
+     * @param array|string $audience
      *
      * @return Builder
      */

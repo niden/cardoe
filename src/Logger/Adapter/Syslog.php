@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Adapter;
 
+use LogicException;
 use Phalcon\Helper\Arr;
+use Phalcon\Logger;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
-use Phalcon\Logger;
-use LogicException;
 
 use const LOG_ERR;
 use const LOG_ODELAY;

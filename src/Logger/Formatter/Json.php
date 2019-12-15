@@ -12,12 +12,10 @@ declare(strict_types=1);
 namespace Phalcon\Logger\Formatter;
 
 use Phalcon\Logger\Item;
+use Phalcon\Helper\Json as JsonHelper;
 
 use function date;
 use function is_array;
-use function json_encode;
-
-use const PHP_EOL;
 
 /**
  * Phalcon\Logger\Formatter\Json
@@ -71,7 +69,7 @@ class Json extends AbstractFormatter
             $message = $item->getMessage();
         }
 
-        return json_encode(
+        return JsonHelper::encode(
             [
                 "type"      => $item->getName(),
                 "message"   => $message,

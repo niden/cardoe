@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Serializer;
 
-use Phalcon\Helper\Json as JsonHelper;
 use InvalidArgumentException;
 use JsonSerializable;
+use Phalcon\Helper\Json as JsonHelper;
 
 /**
  * Class Json

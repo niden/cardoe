@@ -48,7 +48,7 @@ class Json
      *
      * @return mixed
      *
-     * @throws \InvalidArgumentException if the JSON cannot be decoded.
+     * @throws InvalidArgumentException if the JSON cannot be decoded.
      * @link http://www.php.net/manual/en/function.json-decode.php
      */
     final public static function decode(
@@ -88,9 +88,9 @@ class Json
      * @param int   $options Bitmask of JSON decode options.
      * @param int   $depth   Recursion depth.
      *
-     * @return mixed
+     * @return string
      *
-     * @throws \InvalidArgumentException if the JSON cannot be encoded.
+     * @throws InvalidArgumentException if the JSON cannot be encoded.
      * @link http://www.php.net/manual/en/function.json-encode.php
      */
     final public static function encode(

@@ -11,12 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Http\Message\Traits;
 
-use Phalcon\Helper\Number;
-use Phalcon\Http\Message\Exception\InvalidArgumentException;
-
-use function is_int;
-use function is_string;
-
 /**
  * Trait ResponseTrait
  *

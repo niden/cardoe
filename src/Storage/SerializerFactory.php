@@ -13,12 +13,6 @@ namespace Phalcon\Storage;
 
 use Phalcon\Factory\AbstractFactory;
 use Phalcon\Factory\Exception;
-use Phalcon\Storage\Serializer\Base64;
-use Phalcon\Storage\Serializer\Igbinary;
-use Phalcon\Storage\Serializer\Json;
-use Phalcon\Storage\Serializer\Msgpack;
-use Phalcon\Storage\Serializer\None;
-use Phalcon\Storage\Serializer\Php;
 use Phalcon\Storage\Serializer\SerializerInterface;
 
 /**
@@ -48,12 +42,9 @@ class SerializerFactory extends AbstractFactory
     {
         $this->checkService($name);
 
-        if (!isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition();
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition();
     }
 
     /**
@@ -62,12 +53,12 @@ class SerializerFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "base64"   => Base64::class,
-            "igbinary" => Igbinary::class,
-            "json"     => Json::class,
-            "msgpack"  => Msgpack::class,
-            "none"     => None::class,
-            "php"      => Php::class,
+            "base64"   => 'Phalcon\Storage\Serializer\Base64',
+            "igbinary" => 'Phalcon\Storage\Serializer\Igbinary',
+            "json"     => 'Phalcon\Storage\Serializer\Json',
+            "msgpack"  => 'Phalcon\Storage\Serializer\Msgpack',
+            "none"     => 'Phalcon\Storage\Serializer\None',
+            "php"      => 'Phalcon\Storage\Serializer\Php',
         ];
     }
 }

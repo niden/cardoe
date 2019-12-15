@@ -11,17 +11,16 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
+use DateTime;
 use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
-use DateInterval;
-use DateTime;
 
 use function is_object;
-use function var_dump;
 
 /**
  * Class AbstractAdapter
@@ -80,10 +79,10 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * AbstractAdapter constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    protected function __construct(SerializerFactory $factory = null, array $options = [])
+    protected function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
@@ -312,7 +311,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     protected function initSerializer(): void
     {
-        if (null === $this->serializer && null === $this->serializerFactory) {
+        if (null === $this->serializer) {
             throw new Exception("A valid serializer is required");
         }
 

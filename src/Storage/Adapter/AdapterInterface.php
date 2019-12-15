@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
+
 /**
  * Interface for Phalcon\Logger adapters
  */
@@ -93,9 +95,9 @@ interface AdapterInterface
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
      */

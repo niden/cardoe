@@ -72,7 +72,7 @@ $allClasses     = get_declared_classes();
 $phalconClasses = [];
 
 foreach ($allClasses as $class) {
-    if ('Phalcon\\' === substr($class, 0, 7)) {
+    if ('Phalcon\\' === substr($class, 0, 8)) {
         $phalconClasses[] = $class;
     }
 }

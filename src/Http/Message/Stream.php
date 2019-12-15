@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Http\Message;
 
+use Exception;
 use Phalcon\Helper\Arr;
 use Phalcon\Http\Message\Traits\StreamTrait;
-use Exception;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
@@ -36,6 +36,12 @@ use function strpbrk;
 
 use const E_WARNING;
 
+/**
+ * Class Stream
+ *
+ * @property resource|null   $handle
+ * @property resource|string $stream
+ */
 class Stream implements StreamInterface
 {
     use StreamTrait;
@@ -49,11 +55,6 @@ class Stream implements StreamInterface
      * @var resource|string
      */
     private $stream;
-
-    /**
-     * @var bool
-     */
-    private $warning = false;
 
     /**
      * Stream constructor.
@@ -293,12 +294,13 @@ class Stream implements StreamInterface
      */
     public function setStream($stream, string $mode = 'rb'): void
     {
-        $handle = $stream;
+        $warning = false;
+        $handle  = $stream;
         if (is_string($stream)) {
             set_error_handler(
-                function ($error) {
+                function ($error) use (&$warning) {
                     if ($error === E_WARNING) {
-                        $this->warning = true;
+                        $warning = true;
                     }
                 }
             );
@@ -309,7 +311,7 @@ class Stream implements StreamInterface
         }
 
         if (
-            $this->warning ||
+            $warning ||
             !is_resource($handle) ||
             'stream' !== get_resource_type($handle)
         ) {

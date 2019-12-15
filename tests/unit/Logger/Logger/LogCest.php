@@ -18,7 +18,6 @@ use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Adapter\Syslog;
 use UnitTester;
 
-use function date;
 use function logsDir;
 use function sprintf;
 

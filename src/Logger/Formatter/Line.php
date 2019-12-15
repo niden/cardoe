@@ -18,8 +18,6 @@ use function is_array;
 use function str_replace;
 use function strpos;
 
-use const PHP_EOL;
-
 /**
  * Phalcon\Logger\Formatter\Line
  *

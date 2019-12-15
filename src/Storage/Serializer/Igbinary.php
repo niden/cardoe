@@ -25,11 +25,6 @@ use const E_WARNING;
 class Igbinary extends AbstractSerializer
 {
     /**
-     * @var bool
-     */
-    private $warning = false;
-
-    /**
      * Serializes data
      *
      * @return string
@@ -40,7 +35,12 @@ class Igbinary extends AbstractSerializer
             return $this->data;
         }
 
-        return igbinary_serialize($this->data);
+        $data = igbinary_serialize($this->data);
+        if (false === $data) {
+            $data = "";
+        }
+
+        return $data;
     }
 
     /**
@@ -50,10 +50,10 @@ class Igbinary extends AbstractSerializer
      */
     public function unserialize($data): void
     {
-        $this->warning = false;
+        $warning = false;
         set_error_handler(
-            function ($number, $message, $file, $line, $context) {
-                $this->warning = true;
+            function ($number, $message, $file, $line, $context) use (&$warning) {
+                $warning = true;
             },
             E_WARNING
         );
@@ -62,7 +62,7 @@ class Igbinary extends AbstractSerializer
 
         restore_error_handler();
 
-        if ($this->warning) {
+        if ($warning) {
             $this->data = null;
         }
     }

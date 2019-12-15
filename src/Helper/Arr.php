@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Helper;
 
-use stdClass;
-
 use function array_chunk;
 use function array_filter;
 use function array_keys;
@@ -67,9 +65,9 @@ class Arr
      */
     final public static function filter(array $collection, $method = null): array
     {
-        if (null === $method || !is_callable($method))  {
+        if (null === $method || !is_callable($method)) {
             return $collection;
-    }
+        }
 
         return array_filter($collection, $method);
     }
@@ -94,7 +92,7 @@ class Arr
      * Returns the key of the first element of the collection. If a callable
      * is passed, the element returned is the first that validates true
      *
-     * @param array    $collection
+     * @param array         $collection
      * @param callable|null $method
      *
      * @return mixed
@@ -109,7 +107,8 @@ class Arr
     }
 
     /**
-     * Flattens an array up to the one level depth, unless `$deep` is set to `true`
+     * Flattens an array up to the one level depth, unless `$deep` is set to
+     * `true`
      *
      * @param array $collection
      * @param bool  $deep
@@ -316,7 +315,8 @@ class Arr
      */
     final public static function set(
         array $collection,
-        $value, $index = null
+        $value,
+        $index = null
     ): array {
         if (null === $index) {
             $collection[] = $value;
@@ -365,7 +365,7 @@ class Arr
     {
         return [
             array_keys($collection),
-            array_values($collection)
+            array_values($collection),
         ];
     }
 

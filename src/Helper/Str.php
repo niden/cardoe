@@ -28,6 +28,7 @@ use function strrev;
 use function substr;
 use function substr_compare;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
 
@@ -126,8 +127,8 @@ class Str
     }
 
     /**
-     * Removes a number from a string or decrements that number if it already is defined.
-     * defined
+     * Removes a number from a string or decrements that number if it already
+     * is defined. defined
      *
      * ```php
      * use Phalcon\Helper\Str;
@@ -216,6 +217,7 @@ class Str
             $ignoreCase
         );
     }
+
     /**
      * Returns the first string there is between the strings from the
      * parameter start and end.

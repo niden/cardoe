@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon;
 
+use DateInterval;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Exception\InvalidArgumentException;
-use DateInterval;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 

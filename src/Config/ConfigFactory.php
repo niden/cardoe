@@ -42,11 +42,11 @@ class ConfigFactory extends AbstractFactory
      * Load a config to create a new instance
      *
      * @param string|array|\Phalcon\Config $config = [
-     *      'adapter' => 'ini',
-     *      'filePath' => 'config.ini',
-     *      'mode' => null,
-     *      'callbacks' => null
-     *      ]
+     *                                             'adapter' => 'ini',
+     *                                             'filePath' => 'config.ini',
+     *                                             'mode' => null,
+     *                                             'callbacks' => null
+     *                                             ]
      *
      * @return object
      * @throws Exception
@@ -78,7 +78,6 @@ class ConfigFactory extends AbstractFactory
 
         $adapter = strtolower($config["adapter"]);
         $first   = $config["filePath"];
-        $second  = null;
 
         if (!strpos($first, ".")) {
             $first = $first . "." . lcfirst($adapter);
@@ -146,7 +145,7 @@ class ConfigFactory extends AbstractFactory
     }
 
     /**
-     * @param $config
+     * @param mixed $config
      *
      * @return ConfigFactory
      * @throws Exception

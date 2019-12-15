@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Config\Adapter;
 
 use Phalcon\Config;
+use Phalcon\Helper\Json as JsonHelper;
 
 class Json extends Config
 {
@@ -23,7 +24,7 @@ class Json extends Config
     public function __construct(string $filePath)
     {
         parent::__construct(
-            json_decode(
+            JsonHelper::decode(
                 file_get_contents($filePath),
                 true
             )

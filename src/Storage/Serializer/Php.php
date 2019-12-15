@@ -26,11 +26,6 @@ use function unserialize;
 class Php extends AbstractSerializer
 {
     /**
-     * @var bool
-     */
-    private $warning = false;
-
-    /**
      * Serializes data
      *
      * @return string
@@ -60,10 +55,10 @@ class Php extends AbstractSerializer
                 );
             }
 
-            $this->warning = false;
+            $warning = false;
             set_error_handler(
-                function ($number, $message, $file, $line, $context) {
-                    $this->warning = true;
+                function ($number, $message, $file, $line, $context) use (&$warning) {
+                    $warning = true;
                 },
                 E_NOTICE
             );
@@ -72,7 +67,7 @@ class Php extends AbstractSerializer
 
             restore_error_handler();
 
-            if ($this->warning) {
+            if ($warning) {
                 $this->data = null;
             }
         }

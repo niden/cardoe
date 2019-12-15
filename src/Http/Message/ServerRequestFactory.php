@@ -13,25 +13,15 @@ namespace Phalcon\Http\Message;
 
 use Phalcon\Collection;
 use Phalcon\Helper\Arr;
-use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Traits\ServerRequestFactoryTrait;
 use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
 use function apache_request_headers;
-use function explode;
 use function function_exists;
-use function implode;
-use function is_array;
-use function is_string;
-use function ltrim;
 use function parse_str;
-use function preg_match;
-use function preg_replace;
 use function str_replace;
-use function strlen;
 use function substr;
 
 class ServerRequestFactory implements ServerRequestFactoryInterface

@@ -74,10 +74,6 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
-      - name: Getting Ocular
-        run: |
-          wget https://scrutinizer-ci.com/ocular.phar
-
       - name: Run Unit Tests
         run: |
           vendor/bin/codecept build
@@ -85,7 +81,7 @@ jobs:
 
       - name: Upload Unit Coverage to Scrutinizer
         run: |
-          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
 # Removing for now until we start the database interactions
 #

@@ -14,7 +14,7 @@ namespace Phalcon\Storage\Serializer;
 /**
  * Class AbstractSerializer
  *
- * @package Phalcon\Storage\Serializer
+ * @property mixed|null $data
  */
 abstract class AbstractSerializer implements SerializerInterface
 {

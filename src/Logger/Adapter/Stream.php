@@ -22,6 +22,7 @@ use function fwrite;
 use function is_resource;
 use function sprintf;
 use function strpos;
+
 use const PHP_EOL;
 
 /**
@@ -128,7 +129,7 @@ class Stream extends AbstractAdapter
         }
 
         $formatter        = $this->getFormatter();
-        $formattedMessage = (string) $formatter->format($item). PHP_EOL;
+        $formattedMessage = (string) $formatter->format($item) . PHP_EOL;
 
         fwrite($this->handler, $formattedMessage);
     }

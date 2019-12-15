@@ -11,14 +11,16 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
 use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use DateInterval;
 
 /**
  * Redis adapter
+ *
+ * @property array $options
  */
 class Redis extends AbstractAdapter
 {
@@ -30,10 +32,10 @@ class Redis extends AbstractAdapter
     /**
      * Redis constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here

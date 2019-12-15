@@ -151,8 +151,8 @@ class Loader
         }
 
         $directories = $this->processDirectories($directories, $ds);
-        $source = ($prepend) ? $directories : $this->namespaces[$namespace];
-        $target = ($prepend) ? $this->namespaces[$namespace] : $directories;
+        $source      = ($prepend) ? $directories : $this->namespaces[$namespace];
+        $target      = ($prepend) ? $this->namespaces[$namespace] : $directories;
 
         $this->namespaces[$namespace] = array_unique(
             array_merge($source, $target)

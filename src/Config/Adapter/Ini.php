@@ -43,15 +43,8 @@ class Ini extends Config
             $mode = INI_SCANNER_RAW;
         }
 
-        $iniConfig = parse_ini_file(
-            $filePath,
-            true,
-            $mode
-        );
-
-        $this->checkIni($iniConfig, $filePath);
-
-        $config = [];
+        $config    = [];
+        $iniConfig = $this->checkIni($filePath, $mode);
         foreach ($iniConfig as $section => $directives) {
             if (is_array($directives)) {
                 $sections = $this->parseSections($directives);
@@ -74,9 +67,9 @@ class Ini extends Config
      * We have to cast values manually because parse_ini_file() has a poor
      * implementation.
      *
-     * @param array | string $ini
+     * @param array|string $ini
      *
-     * @return bool|float|int|null
+     * @return array|bool|float|int|null|string
      */
     protected function cast($ini)
     {
@@ -145,13 +138,20 @@ class Ini extends Config
     }
 
     /**
-     * @param mixed  $iniConfig
      * @param string $filePath
+     * @param int    $mode
      *
+     * @return array
      * @throws Exception
      */
-    private function checkIni($iniConfig, string $filePath): void
+    private function checkIni(string $filePath, int $mode): array
     {
+        $iniConfig = parse_ini_file(
+            $filePath,
+            true,
+            $mode
+        );
+
         if (false === $iniConfig) {
             throw new Exception(
                 "Configuration file " .
@@ -159,6 +159,8 @@ class Ini extends Config
                 " cannot be loaded"
             );
         }
+
+        return $iniConfig;
     }
 
     /**

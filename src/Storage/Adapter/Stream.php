@@ -11,14 +11,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
+use FilesystemIterator;
+use Iterator;
 use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use DateInterval;
-use FilesystemIterator;
-use Iterator;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
@@ -45,21 +45,17 @@ class Stream extends AbstractAdapter
     protected $options = [];
 
     /**
-     * @var bool
-     */
-    private $warning = false;
-
-    /**
      * Stream constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
+        /** @var string $storageDir */
         $storageDir = Arr::get($options, "storageDir", "");
         if (empty($storageDir)) {
             throw new Exception(
@@ -190,11 +186,12 @@ class Stream extends AbstractAdapter
         $directory = $this->getDir();
         $iterator  = $this->getIterator($directory);
 
+        /** @var FilesystemIterator $file */
         foreach ($iterator as $file) {
-            if ($file->isFile()) {
-                $key = str_replace($directory, "", $file->getPathName());
-                $key = strrchr($key, "/");
-                $key = $this->prefix . str_replace("/", "", $key);
+            if ($file->isFile() && false !== $file->getPathname()) {
+                $key     = str_replace($directory, "", $file->getPathName());
+                $key     = strrchr($key, "/");
+                $key     = $this->prefix . str_replace("/", "", $key);
                 $files[] = $key;
             }
         }
@@ -331,16 +328,16 @@ class Stream extends AbstractAdapter
      */
     private function getPayload(string $filepath): array
     {
+        $warning = false;
         $payload = file_get_contents($filepath);
 
         if (false === $payload) {
             return [];
         }
 
-        $this->warning = false;
         set_error_handler(
-            function ($number, $message, $file, $line, $context) {
-                $this->warning = true;
+            function ($number, $message, $file, $line, $context) use (&$warning) {
+                $warning = true;
             },
             E_NOTICE
         );
@@ -349,7 +346,7 @@ class Stream extends AbstractAdapter
 
         restore_error_handler();
 
-        if ($this->warning || !is_array($payload)) {
+        if ($warning || !is_array($payload)) {
             return [];
         }
 

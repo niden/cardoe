@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -49,6 +49,11 @@ class Base64
             $input .= str_repeat("=", 4 - $remainder);
         }
 
-        return base64_decode(strtr($input, "-_", "+/"));
+        $data = base64_decode(strtr($input, "-_", "+/"));
+        if (false === $data) {
+            $data = "";
+        }
+
+        return $data;
     }
 }

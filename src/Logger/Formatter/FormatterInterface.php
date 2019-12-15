@@ -25,7 +25,7 @@ interface FormatterInterface
      *
      * @param Item $item
      *
-     * @return string|array
+     * @return string
      */
     public function format(Item $item);
 }

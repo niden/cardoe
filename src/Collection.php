@@ -13,10 +13,10 @@ namespace Phalcon;
 
 use ArrayAccess;
 use ArrayIterator;
-use Phalcon\Helper\Json;
 use Countable;
 use IteratorAggregate;
 use JsonSerializable;
+use Phalcon\Helper\Json;
 use Serializable;
 use Traversable;
 
@@ -41,7 +41,7 @@ use function strtolower;
  * @property array $data
  * @property bool  $insensitive
  * @property array $lowerKeys
-*/
+ */
 class Collection implements
     ArrayAccess,
     Countable,

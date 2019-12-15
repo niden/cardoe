@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Http\JWT\Signer\Hmac;
+namespace Phalcon\Http\JWT\Encoder;
 
+use Phalcon\Http\JWT\Encoder\EncoderInterface;
 use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
-use Phalcon\Http\JWT\Signer\SignerInterface;
 
 use function hash_equals;
 use function hash_hmac;
@@ -22,7 +22,7 @@ use function hash_hmac;
  *
  * @property string $algo
  */
-class Hmac implements SignerInterface
+class Hmac implements EncoderInterface
 {
     /**
      * @var string
@@ -52,16 +52,18 @@ class Hmac implements SignerInterface
     }
 
     /**
-     * Returns the algorithm name
+     * Return the algorithm used
      *
      * @return string
      */
-    public function getAlgo(): string
+    public function getAlgorithm(): string
     {
         return $this->algo;
     }
 
     /**
+     * Sign a payload using the passphrase
+     *
      * @param string $payload
      * @param string $passphrase
      *
@@ -73,30 +75,29 @@ class Hmac implements SignerInterface
     }
 
     /**
-     * @param string $hash
+     * Verify a passed source with a payload and passphrase
+     *
+     * @param string $source
      * @param string $payload
      * @param string $passphrase
      *
      * @return bool
      */
-    public function verify(string $hash, string $payload, string $passphrase): bool
+    public function verify(string $source, string $payload, string $passphrase): bool
     {
-        return hash_equals($hash, $this->getHash($payload, $passphrase));
+        return hash_equals($source, $this->getHash($payload, $passphrase));
     }
 
     /**
+     * Calculates a hash from the passed parameters
+     *
      * @param string $payload
      * @param string $passphrase
      *
      * @return string
      */
-    public function getHash(string $payload, string $passphrase): string
+    private function getHash(string $payload, string $passphrase): string
     {
-        return hash_hmac(
-            $this->getAlgo(),
-            $payload,
-            $passphrase,
-            true
-        );
+        return hash_hmac($this->getAlgorithm(), $payload, $passphrase, true);
     }
 }

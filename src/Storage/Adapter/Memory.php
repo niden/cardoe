@@ -11,16 +11,17 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
 use Phalcon\Collection;
 use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use DateInterval;
 
 /**
  * Memory adapter
  *
  * @property Collection $data
+ * @property array      $options
  */
 class Memory extends AbstractAdapter
 {
@@ -37,13 +38,13 @@ class Memory extends AbstractAdapter
     /**
      * Memory constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here

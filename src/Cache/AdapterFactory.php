@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -12,22 +12,19 @@ declare(strict_types=1);
 namespace Phalcon\Cache;
 
 use Phalcon\Cache\Adapter\AdapterInterface;
-use Phalcon\Cache\Adapter\Apcu;
-use Phalcon\Cache\Adapter\Libmemcached;
-use Phalcon\Cache\Adapter\Memory;
-use Phalcon\Cache\Adapter\Redis;
-use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Factory\AbstractFactory;
 use Phalcon\Factory\Exception;
 use Phalcon\Storage\SerializerFactory;
 
 /**
  * Factory to create Cache adapters
+ *
+ * @property SerializerFactory|null $serializerFactory
  */
 class AdapterFactory extends AbstractFactory
 {
     /**
-     * @var SerializerFactory
+     * @var SerializerFactory|null
      */
     private $serializerFactory;
 
@@ -57,12 +54,9 @@ class AdapterFactory extends AbstractFactory
     {
         $this->checkService($name);
 
-        if (!isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition($this->serializerFactory, $options);
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition($this->serializerFactory, $options);
     }
 
     /**
@@ -71,11 +65,11 @@ class AdapterFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "apcu"         => Apcu::class,
-            "libmemcached" => Libmemcached::class,
-            "memory"       => Memory::class,
-            "redis"        => Redis::class,
-            "stream"       => Stream::class,
+            "apcu"         => 'Phalcon\Cache\Adapter\Apcu',
+            "libmemcached" => 'Phalcon\Cache\Adapter\Libmemcached',
+            "memory"       => 'Phalcon\Cache\Adapter\Memory',
+            "redis"        => 'Phalcon\Cache\Adapter\Redis',
+            "stream"       => 'Phalcon\Cache\Adapter\Stream',
         ];
     }
 }

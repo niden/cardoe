@@ -11,13 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
-use Phalcon\Factory\Exception as ExceptionAlias;
-use Phalcon\Helper\Arr;
-use Phalcon\Helper\Str;
-use Phalcon\Storage\Exception;
-use Phalcon\Storage\SerializerFactory;
 use DateInterval;
 use Memcached;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 
 /**
  * Libmemcached adapter
@@ -34,10 +33,10 @@ class Libmemcached extends AbstractAdapter
     /**
      * Libmemcached constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         if (!isset($options["servers"])) {
             $options["servers"] = [

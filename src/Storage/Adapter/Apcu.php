@@ -12,10 +12,10 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use APCuIterator;
+use DateInterval;
 use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
-use DateInterval;
 
 use function is_object;
 
@@ -34,13 +34,13 @@ class Apcu extends AbstractAdapter
     /**
      * Apcu constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
@@ -97,14 +97,14 @@ class Apcu extends AbstractAdapter
      */
     public function delete(string $key): bool
     {
-        return apcu_delete($this->getPrefixedKey($key));
+        return (bool) apcu_delete($this->getPrefixedKey($key));
     }
 
     /**
      * Reads data from the adapter
      *
-     * @param string $key
-     * @param null   $defaultValue
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
