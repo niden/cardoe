@@ -57,12 +57,7 @@ class Grouped extends Config
                 $configInstance["adapter"] = $defaultAdapter;
             }
 
-            if ("array" === $configInstance["adapter"]) {
-                $configInstance = $this->checkOptionsArray($configInstance);
-            } else {
-                $configInstance = (new ConfigFactory())->load($configInstance);
-            }
-
+            $configInstance = $this->getConfigObject($configInstance);
             $this->merge($configInstance);
         }
     }
@@ -85,5 +80,23 @@ class Grouped extends Config
         $configArray = $configInstance["config"];
 
         return new Config($configArray);
+    }
+
+    /**
+     * @param array $configInstance
+     *
+     * @return Config
+     * @throws Exception
+     * @throws ExceptionAlias
+     */
+    private function getConfigObject(array $configInstance): Config
+    {
+        if ("array" === $configInstance["adapter"]) {
+            $configInstance = $this->checkOptionsArray($configInstance);
+        } else {
+            $configInstance = (new ConfigFactory())->load($configInstance);
+        }
+
+        return $configInstance;
     }
 }

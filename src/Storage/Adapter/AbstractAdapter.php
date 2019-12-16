@@ -87,10 +87,10 @@ abstract class AbstractAdapter implements AdapterInterface
         /**
          * Lets set some defaults and options here
          */
+        $this->serializerFactory = $factory;
         $this->defaultSerializer = Arr::get($options, "defaultSerializer", "Php");
         $this->lifetime          = Arr::get($options, "lifetime", 3600);
         $this->serializer        = Arr::get($options, "serializer", null);
-        $this->serializerFactory = $factory;
 
         if (isset($options["prefix"])) {
             $this->prefix = $options["prefix"];
@@ -311,10 +311,6 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     protected function initSerializer(): void
     {
-        if (null === $this->serializer) {
-            throw new Exception("A valid serializer is required");
-        }
-
         if (!is_object($this->serializer)) {
             $className        = strtolower($this->defaultSerializer);
             $this->serializer = $this->serializerFactory->newInstance($className);

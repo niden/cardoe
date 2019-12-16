@@ -14,6 +14,7 @@ namespace Phalcon\Config\Adapter;
 use Phalcon\Config;
 use Phalcon\Config\Exception;
 
+use function array_flip;
 use function basename;
 use function call_user_func_array;
 use function is_array;
@@ -82,20 +83,25 @@ class Ini extends Config
         }
 
         // Decode true
-        $ini      = (string) $ini;
-        $lowerIni = strtolower($ini);
+        $ini         = (string) $ini;
+        $lowerIni    = strtolower($ini);
 
-        switch ($lowerIni) {
-            case "true":
-            case "yes":
-            case "on":
-                return true;
-            case "false":
-            case "no":
-            case "off":
-                return false;
-            case "null":
-                return null;
+        /**
+         * Using values as keys so as to use `isset`
+         */
+        $trueValues  = ["true" => 1, "yes" => 1, "on" => 1];
+        $falseValues = ["false" => 1, "no" => 1, "off" => 1];
+
+        if (isset($trueValues[$lowerIni])) {
+            return true;
+        }
+
+        if (isset($falseValues[$lowerIni])) {
+            return false;
+        }
+
+        if ("null" === $lowerIni) {
+            return null;
         }
 
         // Decode float/int
