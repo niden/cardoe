@@ -258,7 +258,9 @@ class Builder
     public function setPassphrase(string $passphrase): Builder
     {
         if (!$this->checkPassphrase($passphrase)) {
-            throw new ValidateException('Invalid passphrase');
+            throw new ValidateException(
+                'Invalid passphrase (too weak)'
+            );
         }
 
         $this->passphrase = $passphrase;
