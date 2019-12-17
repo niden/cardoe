@@ -26,48 +26,55 @@ use Throwable;
  * Phalcon\Domain\Payload\Payload
  *
  * Holds the payload
+ *
+ * @property Throwable $exception
+ * @property mixed     $extras
+ * @property mixed     $input
+ * @property mixed     $messages
+ * @property mixed     $status
+ * @property mixed     $output
  */
 class Payload implements PayloadInterface
 {
     /**
      * Exception if any
      *
-     * @$Throwable
+     * @var Throwable|null
      */
     protected $exception;
 
     /**
      * Extra information
      *
-     * @$mixed
+     * @var mixed
      */
     protected $extras;
 
     /**
      * Input
      *
-     * @$mixed
+     * @var mixed
      */
     protected $input;
 
     /**
      * Messages
      *
-     * @$mixed
+     * @var mixed
      */
     protected $messages;
 
     /**
      * Status
      *
-     * @$mixed
+     * @var mixed
      */
     protected $status;
 
     /**
      * Output
      *
-     * @$mixed
+     * @var mixed
      */
     protected $output;
 

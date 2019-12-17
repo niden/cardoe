@@ -162,5 +162,4 @@ class Unit extends Module
             $property->getValue($obj)
         );
     }
-
 }

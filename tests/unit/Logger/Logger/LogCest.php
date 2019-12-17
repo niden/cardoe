@@ -157,7 +157,7 @@ class LogCest
             $I->dontSeeInThisFile($expected);
         }
 
-//        $I->safeDeleteFile($fileName);
+        $I->safeDeleteFile($fileName);
     }
 
     /**
