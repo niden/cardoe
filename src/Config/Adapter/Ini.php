@@ -87,21 +87,20 @@ class Ini extends Config
         $lowerIni    = strtolower($ini);
 
         /**
-         * Using values as keys so as to use `isset`
+         * Map of values
          */
-        $trueValues  = ["true" => 1, "yes" => 1, "on" => 1];
-        $falseValues = ["false" => 1, "no" => 1, "off" => 1];
+        $map = [
+            "true"  => true,
+            "yes"   => true,
+            "on"    => true,
+            "false" => false,
+            "no"    => false,
+            "off"   => false,
+            "null"  => null,
+        ];
 
-        if (isset($trueValues[$lowerIni])) {
-            return true;
-        }
-
-        if (isset($falseValues[$lowerIni])) {
-            return false;
-        }
-
-        if ("null" === $lowerIni) {
-            return null;
+        if (isset($map[$lowerIni])) {
+            return $map[$lowerIni];
         }
 
         // Decode float/int
