@@ -9,10 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Http\JWT\Encoder;
+namespace Phalcon\Http\JWT\Signer;
 
-interface EncoderInterface
+interface SignerInterface
 {
+    /**
+     * Return the value that is used for the "alg" header
+     *
+     * @return string
+     */
+    public function getAlgHeader(): string;
+
     /**
      * Return the algorithm used
      *

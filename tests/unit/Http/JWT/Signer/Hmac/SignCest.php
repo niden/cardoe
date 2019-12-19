@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\Http\JWT\Encoder\Hmac;
+namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
-use Phalcon\Http\JWT\Encoder\Hmac;
+use Phalcon\Http\JWT\Signer\Hmac;
 use UnitTester;
 
 use function hash_hmac;
@@ -19,21 +19,21 @@ use function hash_hmac;
 class SignCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Encoder\Hmac :: sign()
+     * Unit Tests Phalcon\Http\JWT\Signer\Hmac :: sign()
      *
      * @since  2019-12-15
      */
-    public function httpJWTEncoderHmacSign(UnitTester $I)
+    public function httpJWTSignerHmacSign(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Encoder\Hmac - sign()');
+        $I->wantToTest('Http\JWT\Signer\Hmac - sign()');
 
-        $encoder = new Hmac();
+        $signer = new Hmac();
 
         $payload    = 'test payload';
         $passphrase = '12345';
 
         $expected   = hash_hmac('sha512', $payload, $passphrase, true);
-        $actual     = $encoder->sign($payload, $passphrase);
+        $actual     = $signer->sign($payload, $passphrase);
         $I->assertEquals($expected, $actual);
     }
 }

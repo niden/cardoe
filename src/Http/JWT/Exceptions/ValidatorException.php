@@ -14,7 +14,7 @@ namespace Phalcon\Http\JWT\Exceptions;
 use Exception;
 use Throwable;
 
-class ValidateException extends Exception implements Throwable
+class ValidatorException extends Exception implements Throwable
 {
 
 }

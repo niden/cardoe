@@ -9,42 +9,42 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\Http\JWT\Encoder\Hmac;
+namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
-use Phalcon\Http\JWT\Encoder\Hmac;
+use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Encoder\Hmac :: __construct()
+     * Unit Tests Phalcon\Http\JWT\Signer\Hmac :: __construct()
      *
      * @since  2019-12-15
      */
-    public function httpJWTEncoderHmacConstruct(UnitTester $I)
+    public function httpJWTSignerHmacConstruct(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Encoder\Hmac - __construct()');
+        $I->wantToTest('Http\JWT\Signer\Hmac - __construct()');
 
-        $encoder = new Hmac();
-        $I->assertInstanceOf(Hmac::class, $encoder);
+        $signer = new Hmac();
+        $I->assertInstanceOf(Hmac::class, $signer);
     }
 
     /**
-     * Unit Tests Phalcon\Http\JWT\Encoder\Hmac :: __construct() - exception
+     * Unit Tests Phalcon\Http\JWT\Signer\Hmac :: __construct() - exception
      *
      * @since  2019-12-15
      */
-    public function httpJWTEncoderHmacConstructException(UnitTester $I)
+    public function httpJWTSignerHmacConstructException(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Encoder\Hmac - __construct() - exception');
+        $I->wantToTest('Http\JWT\Signer\Hmac - __construct() - exception');
 
         $I->expectThrowable(
             new UnsupportedAlgorithmException(
                 'Unsupported HMAC algorithm'
             ),
             function () {
-                $encoder = new Hmac('unknown');
+                $signer = new Hmac('unknown');
             }
         );
     }

@@ -18,8 +18,9 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Domain\Payload;
+namespace Phalcon\Domain;
 
+use Phalcon\Domain\Payload\PayloadInterface;
 use Throwable;
 
 /**

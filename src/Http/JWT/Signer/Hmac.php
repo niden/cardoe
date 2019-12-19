@@ -9,26 +9,19 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Http\JWT\Encoder;
+namespace Phalcon\Http\JWT\Signer;
 
-use Phalcon\Http\JWT\Encoder\EncoderInterface;
 use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
 
 use function hash_equals;
 use function hash_hmac;
+use function str_replace;
 
 /**
- * Class AbstractHmac
- *
- * @property string $algo
+ * Class Hmac
  */
-class Hmac implements EncoderInterface
+class Hmac extends AbstractSigner
 {
-    /**
-     * @var string
-     */
-    protected $algo = "sha512";
-
     /**
      * Hmac constructor.
      *
@@ -38,11 +31,13 @@ class Hmac implements EncoderInterface
      */
     public function __construct(string $algo = "sha512")
     {
-        if (
-            "sha512" !== $algo &&
-            "sha384" !== $algo &&
-            "sha256" !== $algo
-        ) {
+        $supported = [
+            "sha512" => 1,
+            "sha384" => 1,
+            "sha256" => 1,
+        ];
+
+        if (!isset($supported[$algo])) {
             throw new UnsupportedAlgorithmException(
                 "Unsupported HMAC algorithm"
             );
@@ -52,13 +47,13 @@ class Hmac implements EncoderInterface
     }
 
     /**
-     * Return the algorithm used
+     * Return the value that is used for the "alg" header
      *
      * @return string
      */
-    public function getAlgorithm(): string
+    public function getAlgHeader(): string
     {
-        return $this->algo;
+        return "HS" . str_replace("sha", "", $this->algo);
     }
 
     /**

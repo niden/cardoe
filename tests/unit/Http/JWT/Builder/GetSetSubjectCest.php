@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
+use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class GetSetSubjectCest
@@ -25,7 +26,8 @@ class GetSetSubjectCest
     {
         $I->wantToTest('Http\JWT\Builder - getSubject()/setSubject()');
 
-        $builder = new Builder();
+        $validator = new Validator();
+        $builder   = new Builder($validator);
 
         $I->assertNull($builder->getSubject());
 

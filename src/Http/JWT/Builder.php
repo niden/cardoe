@@ -11,28 +11,30 @@ declare(strict_types=1);
 
 namespace Phalcon\Http\JWT;
 
-use Phalcon\Http\JWT\Encoder\EncoderInterface;
-use Phalcon\Http\JWT\Exceptions\ValidateException;
+use Phalcon\Collection;
+use Phalcon\Http\JWT\Signer\SignerInterface;
+use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Token\Enum;
 
 /**
  * Class Builder
  *
- * @property array            $claims
- * @property array            $jose
- * @property string           $passphrase
- * @property EncoderInterface $signer
+ * @property Collection  $claims
+ * @property Collection  $jose
+ * @property string      $passphrase
+ * @property Validator   $validator
  *
  * @link https://tools.ietf.org/html/rfc7519
  */
 class Builder
 {
     /**
-     * @var array
+     * @var Collection
      */
     private $claims;
 
     /**
-     * @var array
+     * @var Collection
      */
     private $jose;
 
@@ -42,72 +44,17 @@ class Builder
     private $passphrase;
 
     /**
-     * @var EncoderInterface
+     * @var Validator
      */
-    private $encoder;
+    private $validator;
 
     /**
      * Builder constructor.
      */
-    public function __construct()
+    public function __construct(Validator $validator)
     {
+        $this->validator = $validator;
         $this->init();
-    }
-
-    /**
-     * @return mixed|null
-     */
-    public function getAudience()
-    {
-        return $this->claims["aud"] ?? null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getExpirationTime(): ?int
-    {
-        return $this->claims["exp"] ?? null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getId(): ?string
-    {
-        return $this->claims["jti"] ?? null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getIssuedAt(): ?int
-    {
-        return $this->claims["iat"] ?? null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getIssuer(): ?string
-    {
-        return $this->claims["iss"] ?? null;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getNotBefore(): ?int
-    {
-        return $this->claims["nbf"] ?? null;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getSubject(): ?string
-    {
-        return $this->claims["sub"] ?? null;
     }
 
     /**
@@ -115,13 +62,80 @@ class Builder
      */
     public function init(): Builder
     {
-        $this->claims = [];
-        $this->jose   = [
-            "typ" => "JTT",
-            "alg" => "none",
-        ];
+        $this->passphrase = "";
+        $this->claims     = new Collection();
+        $this->jose       = new Collection(
+            [
+                Enum::TYPE => "JTT",
+                Enum::ALGO => "none",
+            ]
+        );
 
         return $this;
+    }
+
+    /**
+     * @return array|string
+     */
+    public function getAudience()
+    {
+        return $this->claims->get(Enum::AUDIENCE);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getExpirationTime(): ?int
+    {
+        return $this->claims->get(Enum::EXPIRATION_TIME, null, "int");
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getId(): ?string
+    {
+        return $this->claims->get(Enum::ID, null, "string");
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getIssuedAt(): ?int
+    {
+        return $this->claims->get(Enum::ISSUED_AT, null, "int");
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIssuer(): ?string
+    {
+        return $this->claims->get(Enum::ISSUER, null, "string");
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getNotBefore(): ?int
+    {
+        return $this->claims->get(Enum::NOT_BEFORE, null, "int");
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSubject(): ?string
+    {
+        return $this->claims->get(Enum::SUBJECT, null, "string");
+    }
+
+    /**
+     * @return string
+     */
+    public function getPassphrase(): string
+    {
+        return $this->passphrase;
     }
 
     /**
@@ -140,10 +154,17 @@ class Builder
      * @param array|string $audience
      *
      * @return Builder
+     * @throws ValidatorException
      */
     public function setAudience($audience): Builder
     {
-        return $this->setClaim("aud", $audience);
+        if (!$this->validator->audience($audience)) {
+            throw new ValidatorException(
+                "Invalid Audience"
+            );
+        }
+
+        return $this->setClaim(Enum::AUDIENCE, $audience);
     }
 
     /**
@@ -158,10 +179,17 @@ class Builder
      * @param int $timestamp
      *
      * @return Builder
+     * @throws ValidatorException
      */
     public function setExpirationTime(int $timestamp): Builder
     {
-        return $this->setClaim("exp", $timestamp);
+        if (!$this->validator->expiration($timestamp)) {
+            throw new ValidatorException(
+                "Invalid Expiration Time"
+            );
+        }
+
+        return $this->setClaim(Enum::EXPIRATION_TIME, $timestamp);
     }
 
     /**
@@ -177,10 +205,11 @@ class Builder
      * @param string $id
      *
      * @return Builder
+     * @throws ValidatorException
      */
     public function setId(string $id): Builder
     {
-        return $this->setClaim("jti", $id);
+        return $this->setClaim(Enum::ID, $id);
     }
 
     /**
@@ -195,7 +224,7 @@ class Builder
      */
     public function setIssuedAt(int $timestamp): Builder
     {
-        return $this->setClaim("iat", $timestamp);
+        return $this->setClaim(Enum::ISSUED_AT, $timestamp);
     }
 
     /**
@@ -210,7 +239,7 @@ class Builder
      */
     public function setIssuer(string $issuer): Builder
     {
-        return $this->setClaim("iss", $issuer);
+        return $this->setClaim(Enum::ISSUER, $issuer);
     }
 
     /**
@@ -225,10 +254,17 @@ class Builder
      * @param int $timestamp
      *
      * @return Builder
+     * @throws ValidatorException
      */
     public function setNotBefore(int $timestamp): Builder
     {
-        return $this->setClaim("nbf", $timestamp);
+        if (!$this->validator->notBefore($timestamp)) {
+            throw new ValidatorException(
+                "Invalid Not Before"
+            );
+        }
+
+        return $this->setClaim(Enum::NOT_BEFORE, $timestamp);
     }
 
     /**
@@ -246,48 +282,26 @@ class Builder
      */
     public function setSubject(string $subject): Builder
     {
-        return $this->setClaim("sub", $subject);
+        return $this->setClaim(Enum::SUBJECT, $subject);
     }
 
     /**
      * @param string $passphrase
      *
      * @return Builder
-     * @throws ValidateException
+     * @throws ValidatorException
      */
     public function setPassphrase(string $passphrase): Builder
     {
-        if (!$this->checkPassphrase($passphrase)) {
-            throw new ValidateException(
-                'Invalid passphrase (too weak)'
+        if (!$this->validator->passphrase($passphrase)) {
+            throw new ValidatorException(
+                "Invalid passphrase (too weak)"
             );
         }
 
         $this->passphrase = $passphrase;
 
         return $this;
-    }
-
-    /**
-     * The passphrase must be more than 16 characters, contain an upper case
-     * letter, lower case letter, a number and a special character *&!@%^#$.
-     *
-     * @param string $passphrase
-     *
-     * @return bool
-     */
-    private function checkPassphrase(string $passphrase): bool
-    {
-        if (
-            !preg_match(
-                '/^.*(?=.{12,}+)(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[*&!@%^#\$]+).*$/',
-                $passphrase
-            )
-        ) {
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -300,7 +314,7 @@ class Builder
      */
     private function setClaim(string $name, $value): Builder
     {
-        $this->claims[$name] = $value;
+        $this->claims->set($name, $value);
 
         return $this;
     }

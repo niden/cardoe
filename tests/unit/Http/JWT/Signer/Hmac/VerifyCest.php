@@ -9,9 +9,9 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\Http\JWT\Encoder\Hmac;
+namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
-use Phalcon\Http\JWT\Encoder\Hmac;
+use Phalcon\Http\JWT\Signer\Hmac;
 use UnitTester;
 
 use function hash_hmac;
@@ -19,21 +19,21 @@ use function hash_hmac;
 class VerifyCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Encoder\Hmac :: verify()
+     * Unit Tests Phalcon\Http\JWT\Signer\Hmac :: verify()
      *
      * @since  2019-12-15
      */
-    public function httpJWTEncoderHmacVerify(UnitTester $I)
+    public function httpJWTSignerHmacVerify(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Encoder\Hmac - verify()');
+        $I->wantToTest('Http\JWT\Signer\Hmac - verify()');
 
-        $encoder = new Hmac();
+        $signer = new Hmac();
 
         $payload    = 'test payload';
         $passphrase = '12345';
 
         $hash   = hash_hmac('sha512', $payload, $passphrase, true);
-        $actual = $encoder->verify($hash, $payload, $passphrase);
+        $actual = $signer->verify($hash, $payload, $passphrase);
         $I->assertTrue($actual);
     }
 }

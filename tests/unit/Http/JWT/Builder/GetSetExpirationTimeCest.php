@@ -12,12 +12,15 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
+use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class GetSetExpirationTimeCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Builder :: getExpirationTime()/setExpirationTime()
+     * Unit Tests Phalcon\Http\JWT\Builder ::
+     * getExpirationTime()/setExpirationTime()
      *
      * @since  2019-12-15
      */
@@ -25,13 +28,37 @@ class GetSetExpirationTimeCest
     {
         $I->wantToTest('Http\JWT\Builder - getExpirationTime()/setExpirationTime()');
 
-        $builder = new Builder();
+        $validator = new Validator();
+        $builder   = new Builder($validator);
 
         $I->assertNull($builder->getExpirationTime());
 
-        $return = $builder->setExpirationTime(4);
+        $future = strtotime("now") + 1000;
+        $return = $builder->setExpirationTime($future);
         $I->assertInstanceOf(Builder::class, $return);
 
-        $I->assertEquals(4, $builder->getExpirationTime());
+        $I->assertEquals($future, $builder->getExpirationTime());
+    }
+
+    /**
+     * Unit Tests Phalcon\Http\JWT\Builder ::
+     * getExpirationTime()/setExpirationTime() - exception
+     *
+     * @since  2019-12-15
+     */
+    public function httpJWTBuilderGetSetExpirationTimeException(UnitTester $I)
+    {
+        $I->wantToTest('Http\JWT\Builder - getExpirationTime()/setExpirationTime() - exception');
+
+        $I->expectThrowable(
+            new ValidatorException(
+                "Invalid Expiration Time"
+            ),
+            function () {
+                $validator = new Validator();
+                $builder   = new Builder($validator);
+                $return    = $builder->setExpirationTime(4);
+            }
+        );
     }
 }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
+use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class ConstructCest
@@ -19,13 +20,14 @@ class ConstructCest
     /**
      * Unit Tests Phalcon\Http\JWT\Builder :: __construct()
      *
-     * @since  2019-12-15
+     * @since  2019-12-19
      */
     public function httpJWTBuilderConstruct(UnitTester $I)
     {
         $I->wantToTest('Http\JWT\Builder - __construct()');
 
-        $builder = new Builder();
+        $validator = new Validator();
+        $builder   = new Builder($validator);
 
         $I->assertInstanceOf(Builder::class, $builder);
     }
