@@ -39,7 +39,7 @@ class Validator
     }
 
     /**
-     * @param int $expiration
+     * @param int $timestamp
      *
      * @return bool
      */

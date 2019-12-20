@@ -21,8 +21,9 @@ class Enum
     /**
      * Headers
      */
-    public const TYPE = "typ";
-    public const ALGO = "alg";
+    public const TYPE         = "typ";
+    public const ALGO         = "alg";
+    public const CONTENT_TYPE = "cty";
 
     /**
      * Claims

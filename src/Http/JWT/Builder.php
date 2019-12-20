@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace Phalcon\Http\JWT;
 
 use Phalcon\Collection;
+use Phalcon\Helper\Base64;
+use Phalcon\Helper\Json;
 use Phalcon\Http\JWT\Signer\SignerInterface;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Token\Enum;
@@ -19,10 +21,11 @@ use Phalcon\Http\JWT\Token\Enum;
 /**
  * Class Builder
  *
- * @property Collection  $claims
- * @property Collection  $jose
- * @property string      $passphrase
- * @property Validator   $validator
+ * @property Collection      $claims
+ * @property Collection      $jose
+ * @property string          $passphrase
+ * @property SignerInterface $signer
+ * @property Validator       $validator
  *
  * @link https://tools.ietf.org/html/rfc7519
  */
@@ -44,17 +47,32 @@ class Builder
     private $passphrase;
 
     /**
+     * @var SignerInterface
+     */
+    private $signer;
+
+    /**
      * @var Validator
      */
     private $validator;
 
     /**
      * Builder constructor.
+     *
+     * @param SignerInterface $signer
+     * @param Validator       $validator
      */
-    public function __construct(Validator $validator)
-    {
-        $this->validator = $validator;
+    public function __construct(
+        SignerInterface $signer,
+        Validator $validator
+    ) {
         $this->init();
+        $this->signer    = $signer;
+        $this->validator = $validator;
+        $this->jose->set(
+            Enum::ALGO,
+            $this->signer->getAlgHeader()
+        );
     }
 
     /**
@@ -66,7 +84,7 @@ class Builder
         $this->claims     = new Collection();
         $this->jose       = new Collection(
             [
-                Enum::TYPE => "JTT",
+                Enum::TYPE => "JWT",
                 Enum::ALGO => "none",
             ]
         );
@@ -83,11 +101,35 @@ class Builder
     }
 
     /**
+     * @return array
+     */
+    public function getClaims(): array
+    {
+        return $this->claims->toArray();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContentType(): ?string
+    {
+        return $this->jose->get(Enum::CONTENT_TYPE, null, "string");
+    }
+
+    /**
      * @return int|null
      */
     public function getExpirationTime(): ?int
     {
         return $this->claims->get(Enum::EXPIRATION_TIME, null, "int");
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeaders(): array
+    {
+        return $this->jose->toArray();
     }
 
     /**
@@ -131,6 +173,33 @@ class Builder
     }
 
     /**
+     * @return Token
+     * @throws ValidatorException
+     */
+    public function getToken(): Token
+    {
+        if (empty($this->passphrase)) {
+            throw new ValidatorException(
+                "Invalid passphrase (empty)"
+            );
+        }
+
+        $header = Json::encode($this->getHeaders());
+        $claims = Json::encode($this->getClaims());
+        $signed = $this->signer->sign(
+            $header . "." . $claims,
+            $this->passphrase
+        );
+
+        $token = Base64::encodeUrl($header) . "."
+               . Base64::encodeUrl($claims) . "."
+               . Base64::encodeUrl($signed)
+        ;
+
+        return new Token($token, $this->passphrase);
+    }
+
+    /**
      * @return string
      */
     public function getPassphrase(): string
@@ -165,6 +234,20 @@ class Builder
         }
 
         return $this->setClaim(Enum::AUDIENCE, $audience);
+    }
+
+    /**
+     * Sets the content type header 'cty'
+     *
+     * @param string $contentType
+     *
+     * @return Builder
+     */
+    public function setContentType(string $contentType): Builder
+    {
+        $this->jose->set(Enum::CONTENT_TYPE, $contentType);
+
+        return $this;
     }
 
     /**

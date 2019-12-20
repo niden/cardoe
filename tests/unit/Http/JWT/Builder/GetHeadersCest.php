@@ -16,21 +16,25 @@ use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
-class ConstructCest
+class GetHeadersCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Builder :: __construct()
+     * Unit Tests Phalcon\Http\JWT\Builder :: getHeaders()
      *
      * @since  2019-12-19
      */
-    public function httpJWTBuilderConstruct(UnitTester $I)
+    public function httpJWTBuilderGetHeaders(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Builder - __construct()');
+        $I->wantToTest('Http\JWT\Builder - getHeaders()');
 
         $signer    = new Hmac();
         $validator = new Validator();
         $builder   = new Builder($signer, $validator);
 
-        $I->assertInstanceOf(Builder::class, $builder);
+        $expected = [
+            'alg' => $signer->getAlgHeader(),
+            'typ' => 'JWT',
+        ];
+        $I->assertEquals($expected, $builder->getHeaders());
     }
 }

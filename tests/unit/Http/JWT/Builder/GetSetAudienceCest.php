@@ -13,6 +13,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
@@ -27,8 +28,9 @@ class GetSetAudienceCest
     {
         $I->wantToTest('Http\JWT\Builder - getAudience()/setAudience()');
 
+        $signer    = new Hmac();
         $validator = new Validator();
-        $builder   = new Builder($validator);
+        $builder   = new Builder($signer, $validator);
 
         $I->assertNull($builder->getAudience());
 
@@ -57,8 +59,9 @@ class GetSetAudienceCest
                 "Invalid Audience"
             ),
             function () {
+                $signer    = new Hmac();
                 $validator = new Validator();
-                $builder   = new Builder($validator);
+                $builder   = new Builder($signer, $validator);
                 $return    = $builder->setAudience(1234);
             }
         );

@@ -13,6 +13,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
@@ -27,8 +28,9 @@ class GetSetNotBeforeCest
     {
         $I->wantToTest('Http\JWT\Builder - getNotBefore()/setNotBefore()');
 
+        $signer    = new Hmac();
         $validator = new Validator();
-        $builder   = new Builder($validator);
+        $builder   = new Builder($signer, $validator);
 
         $I->assertNull($builder->getNotBefore());
 
@@ -52,8 +54,9 @@ class GetSetNotBeforeCest
                 "Invalid Not Before"
             ),
             function () {
+                $signer    = new Hmac();
                 $validator = new Validator();
-                $builder   = new Builder($validator);
+                $builder   = new Builder($signer, $validator);
                 $future    = strtotime("now") + 1000;
                 $return    = $builder->setNotBefore($future);
             }

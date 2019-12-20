@@ -16,21 +16,24 @@ use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
-class ConstructCest
+class GetSetContentTypeCest
 {
     /**
-     * Unit Tests Phalcon\Http\JWT\Builder :: __construct()
+     * Unit Tests Phalcon\Http\JWT\Builder :: getContentType()/setContentType()
      *
      * @since  2019-12-19
      */
-    public function httpJWTBuilderConstruct(UnitTester $I)
+    public function httpJWTBuilderGetSetContentType(UnitTester $I)
     {
-        $I->wantToTest('Http\JWT\Builder - __construct()');
+        $I->wantToTest('Http\JWT\Builder - getContentType()/setContentType()');
 
         $signer    = new Hmac();
         $validator = new Validator();
         $builder   = new Builder($signer, $validator);
 
-        $I->assertInstanceOf(Builder::class, $builder);
+        $I->assertNull($builder->getContentType());
+
+        $builder->setContentType('abcde');
+        $I->assertEquals('abcde', $builder->getContentType());
     }
 }

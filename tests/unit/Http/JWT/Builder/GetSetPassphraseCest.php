@@ -13,6 +13,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
@@ -23,14 +24,15 @@ class GetSetPassphraseCest
      *
      * @throws ValidatorException
      * @since  2019-12-19
-     *
      */
     public function httpJWTBuilderGetSetPassphrase(UnitTester $I)
     {
         $I->wantToTest('Http\JWT\Builder - getPassphrase()/setPassphrase()');
 
-        $validator  = new Validator();
-        $builder    = new Builder($validator);
+        $signer    = new Hmac();
+        $validator = new Validator();
+        $builder   = new Builder($signer, $validator);
+
         $passphrase = '6U#5xK!uFmUtwRZ3SCLjC*K%i8f@4MNE';
         $return     = $builder->setPassphrase($passphrase);
         $I->assertInstanceOf(Builder::class, $return);
@@ -51,8 +53,9 @@ class GetSetPassphraseCest
                 'Invalid passphrase (too weak)'
             ),
             function () {
+                $signer    = new Hmac();
                 $validator = new Validator();
-                $builder   = new Builder($validator);
+                $builder   = new Builder($signer, $validator);
                 $builder->setPassphrase('1234');
             }
         );
