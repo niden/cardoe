@@ -82,14 +82,12 @@ class Ini extends Config
             return $ini;
         }
 
-        // Decode true
-        $ini         = (string) $ini;
-        $lowerIni    = strtolower($ini);
-
         /**
          * Map of values
          */
-        $map = [
+        $ini      = (string) $ini;
+        $lowerIni = strtolower($ini);
+        $map      = [
             "true"  => true,
             "yes"   => true,
             "on"    => true,
@@ -99,7 +97,7 @@ class Ini extends Config
             "null"  => null,
         ];
 
-        if (isset($map[$lowerIni])) {
+        if (array_key_exists($lowerIni, $map)) {
             return $map[$lowerIni];
         }
 

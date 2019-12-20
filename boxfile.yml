@@ -14,7 +14,6 @@ run.config:
       - iconv
       - json
       - mbstring
-#      - memcached
       - pdo
       - pdo_mysql
       - pdo_pgsql
@@ -26,6 +25,7 @@ run.config:
       - xmlwriter
       - zip
       - zlib
+      - memcached
       - session
       - igbinary
       - redis

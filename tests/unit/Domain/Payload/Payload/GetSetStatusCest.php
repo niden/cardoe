@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Domain\Payload\Payload;
 
-use Phalcon\Domain\Payload\Payload;
+use Phalcon\Domain\Payload;
 use Phalcon\Domain\Payload\Status;
 use UnitTester;
 

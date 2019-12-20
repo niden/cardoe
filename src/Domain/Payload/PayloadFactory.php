@@ -20,6 +20,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Domain\Payload;
 
+use Phalcon\Domain\Payload;
+
 /**
  * Phalcon\Domain\Payload\PayloadFactory
  *
