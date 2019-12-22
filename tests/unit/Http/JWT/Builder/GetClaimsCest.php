@@ -21,7 +21,7 @@ class GetClaimsCest
     /**
      * Unit Tests Phalcon\Http\JWT\Builder :: getClaims()
      *
-     * @since  2019-12-19
+     * @since  2019-12-22
      */
     public function httpJWTBuilderGetClaims(UnitTester $I)
     {
@@ -31,27 +31,6 @@ class GetClaimsCest
         $validator = new Validator();
         $builder   = new Builder($signer, $validator);
 
-        $future = strtotime("now") + 1000;
-        $builder
-            ->setAudience('audience')
-            ->setExpirationTime($future)
-            ->setId('id')
-            ->setIssuedAt(8)
-            ->setIssuer('issuer')
-            ->setNotBefore(4)
-            ->setSubject('subject')
-        ;
-
-        $expected = [
-            'aud' => 'audience',
-            'exp' => $future,
-            'jti' => 'id',
-            'iat' => 8,
-            'iss' => 'issuer',
-            'nbf' => 4,
-            'sub' => 'subject',
-        ];
-        $actual   = $builder->getClaims();
-        $I->assertEquals($expected, $actual);
+        $I->assertEmpty($builder->getClaims());
     }
 }

@@ -37,7 +37,7 @@ class GetSetAudienceCest
         $return = $builder->setAudience('audience');
         $I->assertInstanceOf(Builder::class, $return);
 
-        $I->assertEquals('audience', $builder->getAudience());
+        $I->assertEquals(['audience'], $builder->getAudience());
 
         $return = $builder->setAudience(['audience']);
         $I->assertInstanceOf(Builder::class, $return);

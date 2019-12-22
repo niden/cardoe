@@ -14,6 +14,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Signer\Hmac;
+use Phalcon\Http\JWT\Token\Token;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
@@ -28,7 +29,30 @@ class GetTokenCest
     {
         $I->wantToTest('Http\JWT\Builder - getToken()');
 
-        $I->skipTest('Need implementation');
+        $signer    = new Hmac();
+        $validator = new Validator();
+        $builder   = new Builder($signer, $validator);
+
+        $expiry = strtotime('+1 day');
+        $issued = strtotime('now');
+        $notBefore = strtotime('-1 day');
+        $passphrase = '&vsJBETaizP3A3VX&TPMJUqi48fJEgN7';
+        $token = $builder
+            ->setAudience('my-audience')
+            ->setExpirationTime($expiry)
+            ->setIssuer('Phalcon JWT')
+            ->setIssuedAt($issued)
+            ->setId('PH-JWT')
+            ->setNotBefore($notBefore)
+            ->setSubject('Mary had a little lamb')
+            ->setPassphrase($passphrase)
+            ->getToken()
+        ;
+
+        $I->assertInstanceOf(Token::class, $token);
+
+        $parts = explode('.', $token->getToken());
+        $I->assertCount(3, $parts);
     }
 
     /**

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
+use Phalcon\Helper\Base64;
 use Phalcon\Http\JWT\Signer\Hmac;
 use UnitTester;
 
