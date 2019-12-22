@@ -28,11 +28,11 @@ class Enum
     /**
      * Claims
      */
-    public const AUDIENCE        = 'aud';
-    public const EXPIRATION_TIME = 'exp';
-    public const ID              = 'jti';
-    public const ISSUED_AT       = 'iat';
-    public const ISSUER          = 'iss';
-    public const NOT_BEFORE      = 'nbf';
-    public const SUBJECT         = 'sub';
+    public const AUDIENCE        = "aud";
+    public const EXPIRATION_TIME = "exp";
+    public const ID              = "jti";
+    public const ISSUED_AT       = "iat";
+    public const ISSUER          = "iss";
+    public const NOT_BEFORE      = "nbf";
+    public const SUBJECT         = "sub";
 }

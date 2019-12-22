@@ -14,6 +14,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Signer\Hmac;
+use Phalcon\Http\JWT\Signer\None;
 use Phalcon\Http\JWT\Token\Token;
 use Phalcon\Http\JWT\Validator;
 use UnitTester;
@@ -30,6 +31,7 @@ class GetTokenCest
         $I->wantToTest('Http\JWT\Builder - getToken()');
 
         $signer    = new Hmac();
+        $signer    = new None();
         $validator = new Validator();
         $builder   = new Builder($signer, $validator);
 

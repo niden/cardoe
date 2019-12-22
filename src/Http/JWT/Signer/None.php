@@ -23,7 +23,7 @@ class None implements SignerInterface
      */
     public function getAlgHeader(): string
     {
-        return "None";
+        return "none";
     }
 
     /**

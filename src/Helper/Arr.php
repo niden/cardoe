@@ -198,7 +198,7 @@ class Arr
      */
     final public static function has(array $collection, $index): bool
     {
-        return isset($collection[$index]);
+        return array_key_exists($index, $collection);
     }
 
     /**

@@ -26,6 +26,6 @@ class GetAlgHeaderCest
         $I->wantToTest('Http\JWT\Signer\None - getAlgHeader()');
 
         $signer = new None();
-        $I->assertEquals('None', $signer->getAlgHeader());
+        $I->assertEquals('none', $signer->getAlgHeader());
     }
 }
