@@ -17,6 +17,9 @@ use Phalcon\Helper\Json;
 use Phalcon\Http\JWT\Signer\SignerInterface;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Token\Enum;
+use Phalcon\Http\JWT\Token\Item;
+use Phalcon\Http\JWT\Token\Signature;
+use Phalcon\Http\JWT\Token\Token;
 
 /**
  * Class Builder
@@ -184,19 +187,18 @@ class Builder
             );
         }
 
-        $header = Json::encode($this->getHeaders());
-        $claims = Json::encode($this->getClaims());
-        $signed = $this->signer->sign(
-            $header . "." . $claims,
+        $encodedClaims    = Base64::encodeUrl(Json::encode($this->getClaims()));
+        $claims           = new Item($this->getClaims(), $encodedClaims);
+        $encodedHeaders   = Base64::encodeUrl(Json::encode($this->getHeaders()));
+        $headers          = new Item($this->getHeaders(), $encodedHeaders);
+        $signatureHash    = $this->signer->sign(
+            $encodedHeaders . "." . $encodedClaims,
             $this->passphrase
         );
+        $encodedSignature = Base64::encodeUrl($signatureHash);
+        $signature        = new Signature($signatureHash, $encodedSignature);
 
-        $token = Base64::encodeUrl($header) . "."
-               . Base64::encodeUrl($claims) . "."
-               . Base64::encodeUrl($signed)
-        ;
-
-        return new Token($token, $this->passphrase);
+        return new Token($claims, $headers, $signature);
     }
 
     /**
@@ -231,6 +233,10 @@ class Builder
             throw new ValidatorException(
                 "Invalid Audience"
             );
+        }
+
+        if (is_string($audience)) {
+            $audience = [$audience];
         }
 
         return $this->setClaim(Enum::AUDIENCE, $audience);
