@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
 
+use InvalidArgumentException;
 use Phalcon\Http\Message\ServerRequest;
 use Phalcon\Http\Message\UploadedFile;
-use InvalidArgumentException;
 use UnitTester;
 
 class GetUploadedFilesCest

@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
+use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Signer\Hmac;
-use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class GetSetPassphraseCest
@@ -23,15 +23,15 @@ class GetSetPassphraseCest
      * Unit Tests Phalcon\Http\JWT\Builder :: getPassphrase()/setPassphrase()
      *
      * @throws ValidatorException
+     * @throws UnsupportedAlgorithmException
      * @since  2019-12-19
      */
     public function httpJWTBuilderGetSetPassphrase(UnitTester $I)
     {
         $I->wantToTest('Http\JWT\Builder - getPassphrase()/setPassphrase()');
 
-        $signer    = new Hmac();
-        $validator = new Validator();
-        $builder   = new Builder($signer, $validator);
+        $signer  = new Hmac();
+        $builder = new Builder($signer);
 
         $passphrase = '6U#5xK!uFmUtwRZ3SCLjC*K%i8f@4MNE';
         $return     = $builder->setPassphrase($passphrase);
@@ -53,9 +53,8 @@ class GetSetPassphraseCest
                 'Invalid passphrase (too weak)'
             ),
             function () {
-                $signer    = new Hmac();
-                $validator = new Validator();
-                $builder   = new Builder($signer, $validator);
+                $signer  = new Hmac();
+                $builder = new Builder($signer);
                 $builder->setPassphrase('1234');
             }
         );

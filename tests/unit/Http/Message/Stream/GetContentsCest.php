@@ -14,7 +14,6 @@ namespace Phalcon\Test\Unit\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use RuntimeException;
 use UnitTester;
-
 use function dataDir;
 
 class GetContentsCest

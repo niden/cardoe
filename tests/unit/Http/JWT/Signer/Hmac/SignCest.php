@@ -11,10 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
-use Phalcon\Helper\Base64;
 use Phalcon\Http\JWT\Signer\Hmac;
 use UnitTester;
-
 use function hash_hmac;
 
 class SignCest
@@ -33,8 +31,8 @@ class SignCest
         $payload    = 'test payload';
         $passphrase = '12345';
 
-        $expected   = hash_hmac('sha512', $payload, $passphrase, true);
-        $actual     = $signer->sign($payload, $passphrase);
+        $expected = hash_hmac('sha512', $payload, $passphrase, true);
+        $actual   = $signer->sign($payload, $passphrase);
         $I->assertEquals($expected, $actual);
     }
 }

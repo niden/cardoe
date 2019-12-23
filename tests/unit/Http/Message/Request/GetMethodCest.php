@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\Request;
 
-use Phalcon\Http\Message\Request;
 use InvalidArgumentException;
+use Phalcon\Http\Message\Request;
 use UnitTester;
 
 class GetMethodCest

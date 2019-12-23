@@ -11,11 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\Stream;
 
+use Codeception\Example;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
-use Codeception\Example;
 use UnitTester;
-
 use function dataDir;
 
 class GetMetadataCest

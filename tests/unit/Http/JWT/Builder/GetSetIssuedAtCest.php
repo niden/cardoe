@@ -13,7 +13,6 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Signer\Hmac;
-use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class GetSetIssuedAtCest
@@ -27,9 +26,8 @@ class GetSetIssuedAtCest
     {
         $I->wantToTest('Http\JWT\Builder - getIssuedAt()/setIssuedAt()');
 
-        $signer    = new Hmac();
-        $validator = new Validator();
-        $builder   = new Builder($signer, $validator);
+        $signer  = new Hmac();
+        $builder = new Builder($signer);
 
         $I->assertNull($builder->getIssuedAt());
 

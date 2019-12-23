@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Http\JWT\Signer\None;
 
 use Phalcon\Http\JWT\Signer\None;
-use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
 use UnitTester;
 
 class ConstructCest

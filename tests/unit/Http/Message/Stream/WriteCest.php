@@ -15,7 +15,6 @@ use Phalcon\Http\Message\Stream;
 use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use RuntimeException;
 use UnitTester;
-
 use function logsDir;
 
 class WriteCest

@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\Stream;
 
-use Phalcon\Http\Message\Stream;
 use Codeception\Example;
+use Phalcon\Http\Message\Stream;
 use UnitTester;
-
 use function dataDir;
 use function logsDir;
 

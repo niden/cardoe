@@ -14,7 +14,6 @@ namespace Phalcon\Test\Unit\Http\JWT\Builder;
 use Phalcon\Http\JWT\Builder;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
 use Phalcon\Http\JWT\Signer\Hmac;
-use Phalcon\Http\JWT\Validator;
 use UnitTester;
 
 class GetSetExpirationTimeCest
@@ -29,9 +28,8 @@ class GetSetExpirationTimeCest
     {
         $I->wantToTest('Http\JWT\Builder - getExpirationTime()/setExpirationTime()');
 
-        $signer    = new Hmac();
-        $validator = new Validator();
-        $builder   = new Builder($signer, $validator);
+        $signer  = new Hmac();
+        $builder = new Builder($signer);
 
         $I->assertNull($builder->getExpirationTime());
 
@@ -57,10 +55,9 @@ class GetSetExpirationTimeCest
                 "Invalid Expiration Time"
             ),
             function () {
-                $signer    = new Hmac();
-                $validator = new Validator();
-                $builder   = new Builder($signer, $validator);
-                $return    = $builder->setExpirationTime(4);
+                $signer  = new Hmac();
+                $builder = new Builder($signer);
+                $return  = $builder->setExpirationTime(4);
             }
         );
     }

@@ -30,7 +30,7 @@ class SignCest
         $payload    = 'test payload';
         $passphrase = '12345';
 
-        $actual     = $signer->sign($payload, $passphrase);
+        $actual = $signer->sign($payload, $passphrase);
         $I->assertEmpty($actual);
     }
 }

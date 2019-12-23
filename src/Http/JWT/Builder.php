@@ -14,8 +14,8 @@ namespace Phalcon\Http\JWT;
 use Phalcon\Collection;
 use Phalcon\Helper\Base64;
 use Phalcon\Helper\Json;
-use Phalcon\Http\JWT\Signer\SignerInterface;
 use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Signer\SignerInterface;
 use Phalcon\Http\JWT\Token\Enum;
 use Phalcon\Http\JWT\Token\Item;
 use Phalcon\Http\JWT\Token\Signature;
@@ -28,7 +28,6 @@ use Phalcon\Http\JWT\Token\Token;
  * @property Collection      $jose
  * @property string          $passphrase
  * @property SignerInterface $signer
- * @property Validator       $validator
  *
  * @link https://tools.ietf.org/html/rfc7519
  */
@@ -55,23 +54,15 @@ class Builder
     private $signer;
 
     /**
-     * @var Validator
-     */
-    private $validator;
-
-    /**
      * Builder constructor.
      *
      * @param SignerInterface $signer
-     * @param Validator       $validator
      */
     public function __construct(
-        SignerInterface $signer,
-        Validator $validator
+        SignerInterface $signer
     ) {
         $this->init();
-        $this->signer    = $signer;
-        $this->validator = $validator;
+        $this->signer = $signer;
         $this->jose->set(
             Enum::ALGO,
             $this->signer->getAlgHeader()
@@ -198,7 +189,7 @@ class Builder
         $encodedSignature = Base64::encodeUrl($signatureHash);
         $signature        = new Signature($signatureHash, $encodedSignature);
 
-        return new Token($claims, $headers, $signature);
+        return new Token($headers, $claims, $signature);
     }
 
     /**
@@ -229,7 +220,7 @@ class Builder
      */
     public function setAudience($audience): Builder
     {
-        if (!$this->validator->audience($audience)) {
+        if (!is_string($audience) && !is_array($audience)) {
             throw new ValidatorException(
                 "Invalid Audience"
             );
@@ -272,7 +263,7 @@ class Builder
      */
     public function setExpirationTime(int $timestamp): Builder
     {
-        if (!$this->validator->expiration($timestamp)) {
+        if ($timestamp < time()) {
             throw new ValidatorException(
                 "Invalid Expiration Time"
             );
@@ -294,7 +285,6 @@ class Builder
      * @param string $id
      *
      * @return Builder
-     * @throws ValidatorException
      */
     public function setId(string $id): Builder
     {
@@ -347,7 +337,7 @@ class Builder
      */
     public function setNotBefore(int $timestamp): Builder
     {
-        if (!$this->validator->notBefore($timestamp)) {
+        if ($timestamp > time()) {
             throw new ValidatorException(
                 "Invalid Not Before"
             );
@@ -382,7 +372,12 @@ class Builder
      */
     public function setPassphrase(string $passphrase): Builder
     {
-        if (!$this->validator->passphrase($passphrase)) {
+        if (
+        !preg_match(
+            "/^.*(?=.{12,}+)(?=.*[0-9]+)(?=.*[A-Z]+)(?=.*[a-z]+)(?=.*[*&!@%^#\$]+).*$/",
+            $passphrase
+        )
+        ) {
             throw new ValidatorException(
                 "Invalid passphrase (too weak)"
             );

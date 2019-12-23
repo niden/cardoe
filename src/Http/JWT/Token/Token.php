@@ -55,18 +55,19 @@ class Token
     }
 
     /**
-     * @return array
+     * @return Item
      */
-    public function getClaims(): array
+    public function getClaims(): Item
     {
-        return $this->claims->getPayload();
+        return $this->claims;
     }
+
     /**
-     * @return array
+     * @return Item
      */
-    public function getHeaders(): array
+    public function getHeaders(): Item
     {
-        return $this->jose->getPayload();
+        return $this->jose;
     }
 
     /**
@@ -90,70 +91,6 @@ class Token
      */
     public function getToken(): string
     {
-        return $this->getPayload() . "."  . $this->getSignature();
-    }
-
-    /**
-     * @param string $audience
-     *
-     * @return bool
-     */
-    public function isForAudience(string $audience): bool
-    {
-        return in_array($audience, $this->claims->get(Enum::AUDIENCE, []));
-    }
-
-    /**
-     * @param int $timestamp
-     *
-     * @return bool
-     */
-    public function isExpired(int $timestamp): bool
-    {
-        if (!$this->claims->has(Enum::EXPIRATION_TIME)) {
-            return false;
-        }
-
-        return $timestamp > (int) $this->claims->get(Enum::EXPIRATION_TIME);
-    }
-
-    /**
-     * @param string $id
-     *
-     * @return bool
-     */
-    public function isIdentifiedBy(string $id): bool
-    {
-        return $id === (string) $this->claims->get(Enum::ID);
-    }
-
-    /**
-     * @param int $timestamp
-     *
-     * @return bool
-     */
-    public function isIssuedBefore(int $timestamp): bool
-    {
-        return $timestamp >= (int) $this->claims->get(Enum::ISSUED_AT);
-    }
-
-    /**
-     * @param string $issuer
-     *
-     * @return bool
-     */
-    public function isIssuedBy(string $issuer): bool
-    {
-        return $issuer === (string) $this->claims->get(Enum::ISSUER);
-    }
-
-    /**
-     * @param int $timestamp
-     *
-     * @return bool
-     */
-    public function isIssuedNotBefore(int $timestamp): bool
-    {
-        return $timestamp >= (int) $this->claims->get(Enum::NOT_BEFORE);
+        return $this->getPayload() . "." . $this->getSignature();
     }
 }

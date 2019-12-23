@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\JWT\Signer\Hmac;
 
-use Phalcon\Http\JWT\Signer\Hmac;
 use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
+use Phalcon\Http\JWT\Signer\Hmac;
 use UnitTester;
 
 class ConstructCest

@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\Response;
 
-use Phalcon\Http\Message\Response;
 use InvalidArgumentException;
+use Phalcon\Http\Message\Response;
 use UnitTester;
 
 class GetStatusCodeCest

@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\Stream;
 
-use Phalcon\Http\Message\Stream;
 use Codeception\Example;
+use Phalcon\Http\Message\Stream;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 use stdClass;

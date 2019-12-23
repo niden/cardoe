@@ -11,13 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
 
+use Codeception\Example;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\UploadedFile;
-use Codeception\Example;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use UnitTester;
-
 use function fopen;
 
 class ConstructCest

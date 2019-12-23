@@ -11,11 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\Message\ServerRequestFactory;
 
+use Codeception\Example;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\ServerRequestFactory;
 use Phalcon\Http\Message\UploadedFile;
 use Phalcon\Test\Fixtures\Http\Message\ServerRequestFactoryFixture;
-use Codeception\Example;
 use Psr\Http\Message\ServerRequestInterface;
 use UnitTester;
 

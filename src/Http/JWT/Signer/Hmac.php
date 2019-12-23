@@ -11,9 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Http\JWT\Signer;
 
-use Phalcon\Helper\Base64;
 use Phalcon\Http\JWT\Exceptions\UnsupportedAlgorithmException;
-
 use function hash_equals;
 use function hash_hmac;
 use function str_replace;

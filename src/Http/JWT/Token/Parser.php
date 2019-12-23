@@ -16,6 +16,9 @@ use Phalcon\Helper\Arr;
 use Phalcon\Helper\Base64;
 use Phalcon\Helper\Json;
 
+/**
+ * Class Parser
+ */
 class Parser
 {
     /**

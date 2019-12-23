@@ -16,9 +16,7 @@ use Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\UploadedFile;
 use Psr\Http\Message\StreamInterface;
 use UnitTester;
-
 use function outputDir;
-
 use const UPLOAD_ERR_CANT_WRITE;
 
 class GetStreamCest

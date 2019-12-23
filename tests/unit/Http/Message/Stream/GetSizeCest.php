@@ -14,7 +14,6 @@ namespace Phalcon\Test\Unit\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
-
 use function dataDir;
 use function filesize;
 
