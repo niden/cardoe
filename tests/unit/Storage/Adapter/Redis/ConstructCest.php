@@ -15,7 +15,6 @@ namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
 
 use Phalcon\Storage\Adapter\AdapterInterface;
 use Phalcon\Storage\Adapter\Redis;
-use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;

@@ -120,12 +120,12 @@ class ParseCest
         $I->wantToTest('Http\JWT\Token\Parser - parse() - aud not an array');
 
         $tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9."
-                     . "eyJhdWQiOiJteS1hdWRpZW5jZSIsImV4cCI6MTU3NzE1NDg5"
-                     . "NiwiaXNzIjoiUGhhbGNvbiBKV1QiLCJpYXQiOjE1NzcwNjg0O"
-                     . "TYsImp0aSI6IlBILUpXVCIsIm5iZiI6MTU3Njk4MjA5Niwic3"
-                     . "ViIjoiTWFyeSBoYWQgYSBsaXR0bGUgbGFtYiJ9."
-                     . "Dg33cVxxCit5Tq7TTG14DNe8eb_B94OtSIb_KGjVhdIeFyrI8D"
-                     . "xZyjDfbwsyyk2LVCUVe01k1bbudjjPr-l_wA";
+            . "eyJhdWQiOiJteS1hdWRpZW5jZSIsImV4cCI6MTU3NzE1NDg5"
+            . "NiwiaXNzIjoiUGhhbGNvbiBKV1QiLCJpYXQiOjE1NzcwNjg0O"
+            . "TYsImp0aSI6IlBILUpXVCIsIm5iZiI6MTU3Njk4MjA5Niwic3"
+            . "ViIjoiTWFyeSBoYWQgYSBsaXR0bGUgbGFtYiJ9."
+            . "Dg33cVxxCit5Tq7TTG14DNe8eb_B94OtSIb_KGjVhdIeFyrI8D"
+            . "xZyjDfbwsyyk2LVCUVe01k1bbudjjPr-l_wA";
 
         $parser    = new Parser();
         $token     = $parser->parse($tokenString);

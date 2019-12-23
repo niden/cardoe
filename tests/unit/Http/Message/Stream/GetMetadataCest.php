@@ -15,6 +15,7 @@ use Codeception\Example;
 use Phalcon\Http\Message\Stream;
 use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
+
 use function dataDir;
 
 class GetMetadataCest

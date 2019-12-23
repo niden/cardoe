@@ -15,6 +15,7 @@ use Codeception\Example;
 use InvalidArgumentException;
 use Phalcon\Http\Message\Uri;
 use UnitTester;
+
 use function sprintf;
 
 class WithPortCest

@@ -50,16 +50,17 @@ abstract class AbstractFormatter implements FormatterInterface
 
     /**
      * Returns the date formatted for the logger.
-     * @todo Not using the set time from the Item since we have interface
-     * misalignment which will break semver This will change in the future
      *
      * @return string
      * @throws Exception
+     * @todo Not using the set time from the Item since we have interface
+     *       misalignment which will break semver This will change in the future
+     *
      */
     protected function getFormattedDate(): string
     {
         $timezone = date_default_timezone_get();
-        $date = new DateTimeImmutable("now", new DateTimeZone($timezone));
+        $date     = new DateTimeImmutable("now", new DateTimeZone($timezone));
 
         return $date->format($this->dateFormat);
     }

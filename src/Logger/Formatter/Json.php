@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Formatter;
 
-use Phalcon\Logger\Item;
 use Phalcon\Helper\Json as JsonHelper;
+use Phalcon\Logger\Item;
 
-use function date;
 use function is_array;
 
 /**

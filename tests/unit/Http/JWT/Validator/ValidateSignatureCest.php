@@ -32,7 +32,7 @@ class ValidateSignatureCest
         $I->wantToTest('Http\JWT\Validator - validateSignature()');
 
         $signer     = new Hmac();
-        $builder = new Builder($signer);
+        $builder    = new Builder($signer);
         $expiry     = strtotime('+1 day');
         $issued     = strtotime('now');
         $notBefore  = strtotime('-1 day');
@@ -48,7 +48,7 @@ class ValidateSignatureCest
             ->setSubject('Mary had a little lamb')
             ->setPassphrase($passphrase)
             ->getToken()
-            ;
+        ;
 
         $validator = new Validator($token);
         $I->assertInstanceOf(Validator::class, $validator);
@@ -76,7 +76,7 @@ class ValidateSignatureCest
             function () use ($token, $I) {
                 $signer     = new Hmac();
                 $passphrase = '123456';
-                $validator = new Validator($token);
+                $validator  = new Validator($token);
                 $I->assertInstanceOf(Validator::class, $validator);
 
                 $I->assertInstanceOf(

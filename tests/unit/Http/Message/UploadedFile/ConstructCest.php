@@ -17,6 +17,7 @@ use Phalcon\Http\Message\UploadedFile;
 use Psr\Http\Message\UploadedFileInterface;
 use stdClass;
 use UnitTester;
+
 use function fopen;
 
 class ConstructCest

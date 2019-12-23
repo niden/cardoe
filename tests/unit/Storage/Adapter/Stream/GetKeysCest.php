@@ -94,7 +94,7 @@ class GetKeysCest
             $serializer,
             [
                 'storageDir' => outputDir(),
-                'prefix'   => 'basePrefix-',
+                'prefix'     => 'basePrefix-',
             ]
         );
 
