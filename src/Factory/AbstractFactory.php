@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Factory;
+declare(strict_types=1);
+
+namespace Phalcon\Factory;
 
 /**
  * Class AbstractFactory
  *
- * @package Cardoe\Factory
+ * @property array $mapper
  */
 abstract class AbstractFactory
 {
@@ -22,11 +22,6 @@ abstract class AbstractFactory
      * @var array
      */
     protected $mapper = [];
-
-    /**
-     * @var array
-     */
-    protected $services = [];
 
     /**
      * Checks if a service exists and throws an exception
@@ -59,7 +54,6 @@ abstract class AbstractFactory
 
         foreach ($adapters as $name => $service) {
             $this->mapper[$name] = $service;
-            unset($this->services[$name]);
         }
     }
 }

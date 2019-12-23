@@ -1,25 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Helper;
+declare(strict_types=1);
+
+namespace Phalcon\Helper;
 
 use function array_merge;
-use function count;
 use function count_chars;
 use function explode;
 use function implode;
 use function ltrim;
-use function mb_strtolower;
-use function mb_strtoupper;
-use function mb_substr;
 use function mt_rand;
 use function pathinfo;
 use function preg_match_all;
@@ -32,22 +28,23 @@ use function strrev;
 use function substr;
 use function substr_compare;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
 
 /**
- * Cardoe\Helper\Str
+ * Phalcon\Helper\Str
  *
  * This class offers quick string functions throughout the framework
  */
 class Str
 {
-    const RANDOM_ALNUM    = 0;
-    const RANDOM_ALPHA    = 1;
-    const RANDOM_DISTINCT = 5;
-    const RANDOM_HEXDEC   = 2;
-    const RANDOM_NOZERO   = 4;
-    const RANDOM_NUMERIC  = 3;
+    public const RANDOM_ALNUM    = 0;
+    public const RANDOM_ALPHA    = 1;
+    public const RANDOM_DISTINCT = 5;
+    public const RANDOM_HEXDEC   = 2;
+    public const RANDOM_NOZERO   = 4;
+    public const RANDOM_NUMERIC  = 3;
 
     /**
      * Concatenates strings using the separator only once without duplication in
@@ -71,11 +68,11 @@ class Str
         $suffix = '';
         $data   = [];
 
-        if (true === self::startsWith($first, $separator)) {
+        if (self::startsWith($first, $separator)) {
             $prefix = $separator;
         }
 
-        if (true === self::endsWith($last, $separator)) {
+        if (self::endsWith($last, $separator)) {
             $suffix = $separator;
         }
 
@@ -85,60 +82,6 @@ class Str
         }
 
         return $prefix . implode($separator, $data) . $suffix;
-    }
-
-    /**
-     * Check if a string starts with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function startsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            0,
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
-    }
-
-    /**
-     * Check if a string ends with a given string
-     *
-     * @param string $haystack
-     * @param string $needle
-     * @param bool   $ignoreCase
-     *
-     * @return bool
-     */
-    final public static function endsWith(
-        string $haystack,
-        string $needle,
-        bool $ignoreCase = true
-    ): bool {
-        if ('' === $haystack) {
-            return false;
-        }
-
-        return substr_compare(
-            $haystack,
-            $needle,
-            -strlen($needle),
-            strlen($needle),
-            $ignoreCase
-        ) === 0;
     }
 
     /**
@@ -174,13 +117,45 @@ class Str
     ): string {
         $substr = mb_substr($text, 1);
 
-        if (true === $upperRest) {
+        if ($upperRest) {
             $suffix = mb_strtoupper($substr, $encoding);
         } else {
             $suffix = $substr;
         }
 
         return mb_strtolower(mb_substr($text, 0, 1), $encoding) . $suffix;
+    }
+
+    /**
+     * Removes a number from a string or decrements that number if it already
+     * is defined. defined
+     *
+     * ```php
+     * use Phalcon\Helper\Str;
+     *
+     * echo Str::decrement("a_1");    // "a"
+     * echo Str::decrement("a_2");  // "a_1"
+     * ```
+     *
+     * @param string $text
+     * @param string $separator
+     *
+     * @return string
+     */
+    final public static function decrement(string $text, string $separator = "_"): string
+    {
+        $number = 0;
+        $parts  = explode($separator, $text);
+
+        if (isset($parts[1])) {
+            $number = $parts[1];
+            $number--;
+            if ($number <= 0) {
+                return $parts[0];
+            }
+        }
+
+        return $parts[0] . $separator . $number;
     }
 
     /**
@@ -214,6 +189,33 @@ class Str
     final public static function dirSeparator(string $directory): string
     {
         return rtrim($directory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+    }
+
+    /**
+     * Check if a string ends with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function endsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return 0 === substr_compare(
+            $haystack,
+            $needle,
+            -strlen($needle),
+            strlen($needle),
+            $ignoreCase
+        );
     }
 
     /**
@@ -263,7 +265,11 @@ class Str
      */
     final public static function includes(string $haystack, string $needle): bool
     {
-        return (bool) mb_strpos($haystack, $needle);
+        if (function_exists("mb_strpos")) {
+            return false !== mb_strpos($haystack, $needle);
+        } else {
+            return false !== strpos($haystack, $needle);
+        }
     }
 
     /**
@@ -408,6 +414,33 @@ class Str
         $result = preg_replace('#(?<!:)//+#', '/', $text);
 
         return (null === $result) ? '' : $result;
+    }
+
+    /**
+     * Check if a string starts with a given string
+     *
+     * @param string $haystack
+     * @param string $needle
+     * @param bool   $ignoreCase
+     *
+     * @return bool
+     */
+    final public static function startsWith(
+        string $haystack,
+        string $needle,
+        bool $ignoreCase = true
+    ): bool {
+        if ('' === $haystack) {
+            return false;
+        }
+
+        return 0 === substr_compare(
+            $haystack,
+            $needle,
+            0,
+            strlen($needle),
+            $ignoreCase
+        );
     }
 
     /**

@@ -1,20 +1,21 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Apcu;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\ApcuTrait;
+namespace Phalcon\Test\Unit\Storage\Adapter\Apcu;
+
+use Phalcon\Storage\Adapter\Apcu;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\ApcuTrait;
 use UnitTester;
 
 class IncrementCest
@@ -22,9 +23,9 @@ class IncrementCest
     use ApcuTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Apcu :: increment()
+     * Tests Phalcon\Storage\Adapter\Apcu :: increment()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterApcuIncrement(UnitTester $I)

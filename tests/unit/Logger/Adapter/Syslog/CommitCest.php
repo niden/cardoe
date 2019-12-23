@@ -1,24 +1,28 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Syslog;
+declare(strict_types=1);
 
-use Cardoe\Logger\Adapter\Syslog;
-use Cardoe\Logger\Exception;
+namespace Phalcon\Test\Unit\Logger\Adapter\Syslog;
+
+use Phalcon\Logger\Adapter\Syslog;
+use Phalcon\Logger\Exception;
 use UnitTester;
 
 class CommitCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Syslog :: commit()
+     * Tests Phalcon\Logger\Adapter\Syslog :: commit()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerAdapterSyslogCommit(UnitTester $I)
@@ -43,8 +47,9 @@ class CommitCest
     }
 
     /**
-     * Tests Cardoe\Logger\Adapter\Syslog :: commit() - no transaction
+     * Tests Phalcon\Logger\Adapter\Syslog :: commit() - no transaction
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerAdapterSyslogCommitNoTransaction(UnitTester $I)

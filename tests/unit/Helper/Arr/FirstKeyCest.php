@@ -1,30 +1,34 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
+
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class FirstKeyCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: firstKey()
+     * Tests Phalcon\Helper\Arr :: firstKey()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrFirstKey(UnitTester $I)
     {
         $I->wantToTest('Helper\Arr - firstKey()');
         $collection = [
-            1 => 'Cardoe',
+            1 => 'Phalcon',
             3 => 'Framework',
         ];
 
@@ -34,15 +38,16 @@ class FirstKeyCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: firstKey() - function
+     * Tests Phalcon\Helper\Arr :: firstKey() - function
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-07
      */
     public function helperArrFirstKeyFunction(UnitTester $I)
     {
         $I->wantToTest('Helper\Arr - firstKey() - function');
         $collection = [
-            1 => 'Cardoe',
+            1 => 'Phalcon',
             3 => 'Framework',
         ];
 

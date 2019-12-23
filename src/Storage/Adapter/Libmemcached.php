@@ -1,21 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Arr;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Storage\Adapter;
+
 use DateInterval;
 use Memcached;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 
 /**
  * Libmemcached adapter
@@ -32,10 +33,10 @@ class Libmemcached extends AbstractAdapter
     /**
      * Libmemcached constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         if (!isset($options["servers"])) {
             $options["servers"] = [
@@ -145,21 +146,11 @@ class Libmemcached extends AbstractAdapter
                 ];
                 $client   = array_merge($failover, $client);
 
-                if (!$connection->setOptions($client)) {
-                    throw new Exception(
-                        "Cannot set Memcached client options"
-                    );
-                }
-
-                if (!$connection->addServers($servers)) {
-                    throw new Exception(
-                        "Cannot connect to the Memcached server(s)"
-                    );
-                }
-
-                if (!empty($saslUser)) {
-                    $connection->setSaslAuthData($saslUser, $saslPass);
-                }
+                $this
+                    ->setOptions($connection, $client)
+                    ->setServers($connection, $servers)
+                    ->setSasl($connection, $saslUser, $saslPass)
+                ;
             }
 
             $this->setSerializer($connection);
@@ -173,15 +164,18 @@ class Libmemcached extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $keys = $this->getAdapter()->getAllKeys();
-
-        return (!$keys) ? [] : $keys;
+        return $this->getFilteredKeys(
+            $this->getAdapter()->getAllKeys(),
+            $prefix
+        );
     }
 
     /**
@@ -239,6 +233,40 @@ class Libmemcached extends AbstractAdapter
     }
 
     /**
+     * @param Memcached $connection
+     * @param array     $client
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setOptions(Memcached $connection, array $client): Libmemcached
+    {
+        if (!$connection->setOptions($client)) {
+            throw new Exception(
+                "Cannot set Memcached client options"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param string    $saslUser
+     * @param string    $saslPass
+     *
+     * @return Libmemcached
+     */
+    private function setSasl(Memcached $connection, string $saslUser, string $saslPass): Libmemcached
+    {
+        if (!empty($saslUser)) {
+            $connection->setSaslAuthData($saslUser, $saslPass);
+        }
+
+        return $this;
+    }
+
+    /**
      * Checks the serializer. If it is a supported one it is set, otherwise
      * the custom one is set.
      *
@@ -263,5 +291,23 @@ class Libmemcached extends AbstractAdapter
         } else {
             $this->initSerializer();
         }
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param array     $servers
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setServers(Memcached $connection, array $servers): Libmemcached
+    {
+        if (!$connection->addServers($servers)) {
+            throw new Exception(
+                "Cannot connect to the Memcached server(s)"
+            );
+        }
+
+        return $this;
     }
 }

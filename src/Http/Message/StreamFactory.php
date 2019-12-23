@@ -1,19 +1,20 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
+namespace Phalcon\Http\Message;
+
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
+
 use function fopen;
 use function fwrite;
 use function get_resource_type;
@@ -73,8 +74,10 @@ final class StreamFactory implements StreamFactoryInterface
      */
     public function createStreamFromResource($phpResource): StreamInterface
     {
-        if (!is_resource($phpResource) ||
-            'stream' !== get_resource_type($phpResource)) {
+        if (
+            !is_resource($phpResource) ||
+            'stream' !== get_resource_type($phpResource)
+        ) {
             throw new InvalidArgumentException(
                 'Invalid stream provided'
             );

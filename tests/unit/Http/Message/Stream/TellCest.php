@@ -1,24 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception;
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
+
+use Phalcon\Http\Message\Stream;
 use RuntimeException;
 use UnitTester;
 
 class TellCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: tell()
+     * Tests Phalcon\Http\Message\Stream :: tell()
      *
      * @since  2019-02-10
      */
@@ -36,7 +36,7 @@ class TellCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: tell() - detached
+     * Tests Phalcon\Http\Message\Stream :: tell() - detached
      *
      * @since  2019-02-10
      */

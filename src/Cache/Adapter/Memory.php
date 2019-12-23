@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Cache\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\AdapterInterface as CacheAdapterInterface;
-use Cardoe\Storage\Adapter\Memory as StorageMemory;
+namespace Phalcon\Cache\Adapter;
+
+use Phalcon\Cache\Adapter\AdapterInterface as CacheAdapterInterface;
+use Phalcon\Storage\Adapter\Memory as StorageMemory;
 
 /**
  * Memory adapter

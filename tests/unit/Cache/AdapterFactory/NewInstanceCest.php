@@ -1,28 +1,30 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\AdapterFactory;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Cache\AdapterFactory;
 
 use Codeception\Example;
-use Cardoe\Cache\Adapter\Apcu;
-use Cardoe\Cache\Adapter\Libmemcached;
-use Cardoe\Cache\Adapter\Memory;
-use Cardoe\Cache\Adapter\Redis;
-use Cardoe\Cache\Adapter\Stream;
-use Cardoe\Cache\AdapterFactory;
-use Cardoe\Factory\Exception;
-use Cardoe\Storage\SerializerFactory;
+use Phalcon\Cache\Adapter\Apcu;
+use Phalcon\Cache\Adapter\Libmemcached;
+use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Cache\Adapter\Redis;
+use Phalcon\Cache\Adapter\Stream;
+use Phalcon\Cache\AdapterFactory;
+use Phalcon\Factory\Exception;
+use Phalcon\Storage\Serializer\Json;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
-use Cardoe\Storage\Serializer\Json;
+
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
 use function outputDir;
@@ -30,14 +32,14 @@ use function outputDir;
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Cache\AdapterFactory :: newInstance()
+     * Tests Phalcon\Cache\AdapterFactory :: newInstance()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-05-04
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterFactoryNewInstance(UnitTester $I, Example $example)
     {
@@ -54,7 +56,7 @@ class NewInstanceCest
         );
 
         // Given `serializer` parameter
-        $adapter = new AdapterFactory();
+        $adapter = new AdapterFactory($serializer);
         $service = $adapter->newInstance($example[0], $example[3]);
 
         $I->assertInstanceOf(
@@ -64,12 +66,12 @@ class NewInstanceCest
     }
 
     /**
-     * Tests Cardoe\Storage\SerializerFactory :: newInstance() - exception
+     * Tests Phalcon\Storage\SerializerFactory :: newInstance() - exception
      *
      * @throws Exception
      * @since  2019-05-04
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {
@@ -88,9 +90,9 @@ class NewInstanceCest
 
     private function getExamples(): array
     {
-        $jsonSerializer = new Json();
+        $jsonSerializer        = new Json();
         $optionsWithSerializer = [
-            'serializer' => $jsonSerializer
+            'serializer' => $jsonSerializer,
         ];
         return [
             [
@@ -109,13 +111,13 @@ class NewInstanceCest
                 'memory',
                 Memory::class,
                 [],
-                $optionsWithSerializer
+                $optionsWithSerializer,
             ],
             [
                 'redis',
                 Redis::class,
                 getOptionsRedis(),
-                array_merge(getOptionsRedis(), $optionsWithSerializer)
+                array_merge(getOptionsRedis(), $optionsWithSerializer),
             ],
             [
                 'stream',

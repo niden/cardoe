@@ -1,18 +1,19 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message\Traits;
+declare(strict_types=1);
 
-use Cardoe\Helper\Str;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
+namespace Phalcon\Http\Message\Traits;
+
+use Phalcon\Helper\Str;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+
 use function array_keys;
 use function explode;
 use function implode;
@@ -23,7 +24,7 @@ use function rawurlencode;
 /**
  * PSR-7 Uri
  *
- * @package Cardoe\Http\Message
+ * @package Phalcon\Http\Message
  */
 trait UriTrait
 {

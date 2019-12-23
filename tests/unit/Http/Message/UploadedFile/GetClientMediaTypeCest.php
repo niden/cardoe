@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\UploadedFile;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
+
+use Phalcon\Http\Message\UploadedFile;
 use UnitTester;
 
 class GetClientMediaTypeCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getClientMediaType()
+     * Tests Phalcon\Http\Message\UploadedFile :: getClientMediaType()
      *
      * @since  2019-02-10
      */

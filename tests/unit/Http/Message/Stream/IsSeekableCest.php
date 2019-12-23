@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Http\Message\Stream;
 
 use Codeception\Example;
-use Cardoe\Http\Message\Stream;
-use function logsDir;
+use Phalcon\Http\Message\Stream;
 use UnitTester;
+use function dataDir;
+use function logsDir;
 
 class IsSeekableCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: isSeekable()
+     * Tests Phalcon\Http\Message\Stream :: isSeekable()
      *
      * @dataProvider getExamples
      *
@@ -39,7 +41,7 @@ class IsSeekableCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: isSeekable() - with "x"
+     * Tests Phalcon\Http\Message\Stream :: isSeekable() - with "x"
      *
      * @dataProvider getExamplesX
      *

@@ -1,28 +1,33 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
+
+use Phalcon\Collection;
+use Phalcon\Test\Fixtures\Helper\JsonFixture;
 use UnitTester;
 
 class JsonSerializeCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: jsonSerialize()
+     * Tests Phalcon\Collection :: jsonSerialize()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionJsonSerialize(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - jsonSerialize()');
+        $I->wantToTest('Collection - jsonSerialize()');
 
         $data = [
             'one'   => 'two',
@@ -34,6 +39,29 @@ class JsonSerializeCest
 
         $I->assertEquals(
             $data,
+            $collection->jsonSerialize()
+        );
+
+        $data = [
+            'one'    => 'two',
+            'three'  => 'four',
+            'five'   => 'six',
+            'object' => new JsonFixture(),
+        ];
+
+        $expected = [
+            'one'    => 'two',
+            'three'  => 'four',
+            'five'   => 'six',
+            'object' => [
+                'one' => 'two'
+            ],
+        ];
+
+        $collection = new Collection($data);
+
+        $I->assertEquals(
+            $expected,
             $collection->jsonSerialize()
         );
     }

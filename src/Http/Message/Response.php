@@ -1,21 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Traits\CommonTrait;
-use Cardoe\Http\Message\Traits\MessageTrait;
-use Cardoe\Http\Message\Traits\ResponseTrait;
+namespace Phalcon\Http\Message;
+
+use Phalcon\Helper\Number;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\MessageTrait;
+use Phalcon\Http\Message\Traits\ResponseTrait;
 use Psr\Http\Message\ResponseInterface;
+
+use function is_int;
 use function is_string;
 
 /**
@@ -101,7 +104,6 @@ final class Response implements ResponseInterface
         return $this->statusCode;
     }
 
-
     /**
      * Return an instance with the specified status code and, optionally,
      * reason phrase.
@@ -129,6 +131,35 @@ final class Response implements ResponseInterface
         $newInstance->processCode($code, $reasonPhrase);
 
         return $newInstance;
+    }
+
+    /**
+     * Checks if a code is integer or string
+     *
+     * @param mixed $code
+     */
+    private function checkCodeType($code): void
+    {
+        if (!is_int($code) && !is_string($code)) {
+            throw new InvalidArgumentException(
+                'Invalid status code; it must be an integer or string'
+            );
+        }
+    }
+
+    /**
+     * Checks if a code is integer or string
+     *
+     * @param int $code
+     */
+    private function checkCodeValue(int $code): void
+    {
+        if (true !== Number::between($code, 100, 599)) {
+            throw new InvalidArgumentException(
+                "Invalid status code '" . $code .
+                "', (allowed values 100-599)"
+            );
+        }
     }
 
     /**

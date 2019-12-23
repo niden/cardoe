@@ -1,28 +1,30 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Stream;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Stream;
+
+use Phalcon\Cache\Adapter\Stream;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 
 class GetPrefixCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: getPrefix()
+     * Tests Phalcon\Cache\Adapter\Stream :: getPrefix()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function cacheAdapterStreamGetSetPrefix(UnitTester $I)
@@ -34,7 +36,7 @@ class GetPrefixCest
             $serializer,
             [
                 'storageDir' => outputDir(),
-                'prefix'   => 'my-prefix',
+                'prefix'     => 'my-prefix',
             ]
         );
 
@@ -44,9 +46,9 @@ class GetPrefixCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: getPrefix() - default
+     * Tests Phalcon\Cache\Adapter\Stream :: getPrefix() - default
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function cacheAdapterStreamGetSetPrefixDefault(UnitTester $I)
@@ -56,7 +58,7 @@ class GetPrefixCest
         $serializer = new SerializerFactory();
         $adapter    = new Stream($serializer, ['storageDir' => outputDir()]);
 
-        $expected = 'phstrm-';
+        $expected = 'ph-strm';
         $actual   = $adapter->getPrefix();
         $I->assertEquals($expected, $actual);
     }

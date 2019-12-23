@@ -1,26 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by cardoe-api and AuraPHP
+ *
  * @link    https://github.com/cardoe/cardoe-api
  * @license https://github.com/cardoe/cardoe-api/blob/master/LICENSE
  * @link    https://github.com/auraphp/Aura.Payload
  * @license https://github.com/auraphp/Aura.Payload/blob/3.x/LICENSE
  *
- * @see Original inspiration for the https://github.com/cardoe/cardoe-api
+ * @see     Original inspiration for the https://github.com/cardoe/cardoe-api
  */
 
-namespace Cardoe\Domain\Payload;
+declare(strict_types=1);
+
+namespace Phalcon\Domain\Payload;
 
 /**
- * Cardoe\Domain\Payload\PayableInterface
+ * Phalcon\Domain\Payload\PayableInterface
  *
  * This interface is used for consumers
  */

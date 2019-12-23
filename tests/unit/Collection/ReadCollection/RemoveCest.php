@@ -1,36 +1,40 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+declare(strict_types=1);
 
-use Cardoe\Collection\Exception;
-use Cardoe\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
+
+use Phalcon\Collection\Exception;
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class RemoveCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: remove()
+     * Tests Phalcon\Collection\ReadOnly :: remove()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionRemove(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - remove()');
+        $I->wantToTest('ReadOnly - remove()');
 
         $data       = [
             'one'   => 'two',
             'three' => 'four',
             'five'  => 'six',
         ];
-        $collection = new ReadCollection($data);
+        $collection = new ReadOnly($data);
 
         $I->expectThrowable(
             new Exception('The object is read only'),

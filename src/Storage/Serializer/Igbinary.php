@@ -1,32 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Serializer;
+declare(strict_types=1);
+
+namespace Phalcon\Storage\Serializer;
 
 use function igbinary_unserialize;
 use function restore_error_handler;
 use function set_error_handler;
+
 use const E_WARNING;
 
 /**
  * Class Igbinary
  *
- * @package Cardoe\Storage\Serializer
+ * @package Phalcon\Storage\Serializer
  */
 class Igbinary extends AbstractSerializer
 {
-    /**
-     * @var bool
-     */
-    private $warning = false;
-
     /**
      * Serializes data
      *
@@ -38,7 +35,12 @@ class Igbinary extends AbstractSerializer
             return $this->data;
         }
 
-        return igbinary_serialize($this->data);
+        $data = igbinary_serialize($this->data);
+        if (false === $data) {
+            $data = "";
+        }
+
+        return $data;
     }
 
     /**
@@ -48,10 +50,10 @@ class Igbinary extends AbstractSerializer
      */
     public function unserialize($data): void
     {
-        $this->warning = false;
+        $warning = false;
         set_error_handler(
-            function ($number, $message, $file, $line, $context) {
-                $this->warning = true;
+            function ($number, $message, $file, $line, $context) use (&$warning) {
+                $warning = true;
             },
             E_WARNING
         );
@@ -60,7 +62,7 @@ class Igbinary extends AbstractSerializer
 
         restore_error_handler();
 
-        if ($this->warning) {
+        if ($warning) {
             $this->data = null;
         }
     }

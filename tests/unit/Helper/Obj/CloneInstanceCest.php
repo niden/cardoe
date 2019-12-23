@@ -1,24 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Number;
+declare(strict_types=1);
 
-use Cardoe\Helper\Number;
-use Cardoe\Helper\Obj;
+namespace Phalcon\Test\Unit\Helper\Number;
+
+use Phalcon\Helper\Obj;
 use stdClass;
 use UnitTester;
 
 class CloneInstanceCest
 {
     /**
-     * Tests Cardoe\Helper\Number :: between()
+     * Tests Phalcon\Helper\Number :: between()
      *
      * @since  2019-06-15
      */
@@ -26,7 +26,7 @@ class CloneInstanceCest
     {
         $I->wantToTest('Helper\Obj - cloneInstance()');
 
-        $instance = new stdClass();
+        $instance      = new stdClass();
         $instance->one = 'two';
         $instance->two = 'three';
 

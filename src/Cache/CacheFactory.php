@@ -1,18 +1,18 @@
 <?php
 
-declare(strict_types=1);
-
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Cache;
+declare(strict_types=1);
 
-use Cardoe\Config;
-use Cardoe\Factory\Exception as ExceptionAlias;
+namespace Phalcon\Cache;
+
+use Phalcon\Cache;
+use Phalcon\Factory\Exception as ExceptionAlias;
 
 /**
  * Creates a new Cache class

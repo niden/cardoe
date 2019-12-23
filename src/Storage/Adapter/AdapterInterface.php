@@ -1,17 +1,20 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
+
+namespace Phalcon\Storage\Adapter;
+
+use DateInterval;
 
 /**
- * Interface for Cardoe\Logger adapters
+ * Interface for Phalcon\Logger adapters
  */
 interface AdapterInterface
 {
@@ -58,8 +61,12 @@ interface AdapterInterface
 
     /**
      * Returns all the keys stored
+     *
+     * @param string $prefix
+     *
+     * @return array
      */
-    public function getKeys(): array;
+    public function getKeys(string $prefix = ""): array;
 
     /**
      * Returns the prefix for the keys
@@ -88,9 +95,9 @@ interface AdapterInterface
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
      */

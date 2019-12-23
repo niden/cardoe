@@ -2,38 +2,32 @@ run.config:
   engine: php
   engine.config:
     runtime: php-7.3
-    document_root: tests/testbed
+#    document_root: tests/testbed
     extensions:
       - apcu
       - ctype
       - curl
       - dom
       - fileinfo
-      - gd
       - gmp
       - gettext
-      - imagick
       - iconv
-      - igbinary
       - json
       - mbstring
-      - memcached
-      - phar
       - pdo
       - pdo_mysql
       - pdo_pgsql
       - pdo_sqlite
-      - session
       - simplexml
-      - sodium
       - tokenizer
       - yaml
-      - zephir_parser
       - xml
       - xmlwriter
       - zip
       - zlib
-      - mongodb
+      - memcached
+      - session
+      - igbinary
       - redis
     zend_extensions:
       - opcache
@@ -46,7 +40,6 @@ run.config:
     - autoconf
     - mysql-client
     #    - postgresql94-client
-    - re2c
     - sqlite3
   extra_steps:
     #===========================================================================
@@ -70,7 +63,6 @@ run.config:
     - echo -e 'extension=msgpack.so' >> "/data/etc/php/dev_php.ini"
     #===========================================================================
     # Options for session, opcache and apcu
-    - echo -e 'session.save_path="/tmp"' >> "/data/etc/php/dev_php.ini"
     - echo -e 'opcache.enable_cli=1' >> "/data/etc/php/dev_php.ini"
     - echo -e 'apc.enabled=1' >> "/data/etc/php/dev_php.ini"
     - echo -e 'apc.enable_cli=1' >> "/data/etc/php/dev_php.ini"
@@ -78,8 +70,11 @@ run.config:
 data.memcached:
   image: nanobox/memcached:1.4
 
-data.mongodb:
-  image: mongo:4.0
+data.mysql:
+  image: nanobox/mysql:5.7
+
+data.postgres:
+  image: nanobox/postgresql:9.5
 
 data.redis :
   image : nanobox/redis:3.2

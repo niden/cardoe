@@ -1,22 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Formatter;
+declare(strict_types=1);
 
-use Cardoe\Logger\Item;
+namespace Phalcon\Logger\Formatter;
+
+use Phalcon\Logger\Item;
 
 /**
- * Cardoe\Logger\FormatterInterface
+ * Phalcon\Logger\FormatterInterface
  *
- * This interface must be implemented by formatters in Cardoe\Logger
+ * This interface must be implemented by formatters in Phalcon\Logger
  */
 interface FormatterInterface
 {
@@ -25,7 +25,7 @@ interface FormatterInterface
      *
      * @param Item $item
      *
-     * @return string|array
+     * @return string
      */
     public function format(Item $item);
 }

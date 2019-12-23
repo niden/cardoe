@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
+
+use Phalcon\Http\Message\Stream;
 use UnitTester;
 
 class EofCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: eof()
+     * Tests Phalcon\Http\Message\Stream :: eof()
      *
      * @since  2019-02-10
      */
@@ -35,7 +36,7 @@ class EofCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: eof() - detached stream
+     * Tests Phalcon\Http\Message\Stream :: eof() - detached stream
      *
      * @since  2019-02-10
      */
@@ -51,7 +52,7 @@ class EofCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: eof() - not at eof
+     * Tests Phalcon\Http\Message\Stream :: eof() - not at eof
      *
      * @since  2019-02-10
      */

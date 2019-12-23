@@ -1,22 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Serializer;
+declare(strict_types=1);
+
+namespace Phalcon\Storage\Serializer;
 
 use InvalidArgumentException;
 use JsonSerializable;
+use Phalcon\Helper\Json as JsonHelper;
 
 /**
  * Class Json
  *
- * @package Cardoe\Storage\Serializer
+ * @package Phalcon\Storage\Serializer
  */
 class Json extends AbstractSerializer
 {
@@ -29,8 +31,8 @@ class Json extends AbstractSerializer
     {
         if (is_object($this->data) && !($this->data instanceof JsonSerializable)) {
             throw new InvalidArgumentException(
-                "Data for JSON serializer cannot be of type object " .
-                "without implementing JsonSerializable"
+                "Data for the JSON serializer cannot be of type 'object' " .
+                "without implementing 'JsonSerializable'"
             );
         }
 
@@ -38,7 +40,7 @@ class Json extends AbstractSerializer
             return $this->data;
         }
 
-        return json_encode($this->data);
+        return JsonHelper::encode($this->data);
     }
 
     /**
@@ -48,6 +50,6 @@ class Json extends AbstractSerializer
      */
     public function unserialize($data): void
     {
-        $this->data = json_decode($data);
+        $this->data = JsonHelper::decode($data);
     }
 }

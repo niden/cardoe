@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Response;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Response;
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Response;
+
+use Phalcon\Http\Message\Response;
+use Phalcon\Http\Message\Stream;
 use UnitTester;
 
 class GetBodyCest
 {
     /**
-     * Tests Cardoe\Http\Message\Response :: getBody()
+     * Tests Phalcon\Http\Message\Response :: getBody()
      *
      * @since  2019-03-09
      */
@@ -39,7 +40,7 @@ class GetBodyCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: getBody() - empty
+     * Tests Phalcon\Http\Message\Response :: getBody() - empty
      *
      * @since  2019-03-09
      */

@@ -1,25 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Syslog;
+declare(strict_types=1);
 
-use Cardoe\Logger\Adapter\Syslog;
-use Cardoe\Logger\Formatter\FormatterInterface;
-use Cardoe\Logger\Formatter\Line;
+namespace Phalcon\Test\Unit\Logger\Adapter\Syslog;
+
+use Phalcon\Logger\Adapter\Syslog;
+use Phalcon\Logger\Formatter\FormatterInterface;
+use Phalcon\Logger\Formatter\Line;
 use UnitTester;
 
 class SetFormatterCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Syslog :: setFormatter()
+     * Tests Phalcon\Logger\Adapter\Syslog :: setFormatter()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerAdapterSyslogSetFormatter(UnitTester $I)

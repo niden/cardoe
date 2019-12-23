@@ -1,22 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Logger\Adapter\Stream;
+namespace Phalcon\Test\Unit\Logger\Adapter\Stream;
+
+use Phalcon\Logger\Adapter\Stream;
 use UnitTester;
 
 class BeginCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Stream :: begin()
+     * Tests Phalcon\Logger\Adapter\Stream :: begin()
      */
     public function loggerAdapterStreamBegin(UnitTester $I)
     {

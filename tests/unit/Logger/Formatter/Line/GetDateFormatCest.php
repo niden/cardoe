@@ -1,35 +1,38 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Line;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\Line;
+namespace Phalcon\Test\Unit\Logger\Formatter\Line;
+
+use Phalcon\Logger\Formatter\Line;
 use UnitTester;
 
 class GetDateFormatCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: getDateFormat()
+     * Tests Phalcon\Logger\Formatter\Line :: getDateFormat()
      */
     public function loggerFormatterLineGetDateFormat(UnitTester $I)
     {
         $I->wantToTest('Logger\Formatter\Line - getDateFormat()');
         $formatter = new Line();
 
-        $expected = 'D, d M y H:i:s O';
+        $expected = 'c';
         $actual   = $formatter->getDateFormat();
         $I->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: getDateFormat() - custom
+     * Tests Phalcon\Logger\Formatter\Line :: getDateFormat() - custom
      */
     public function loggerFormatterLineGetDateFormatCustom(UnitTester $I)
     {

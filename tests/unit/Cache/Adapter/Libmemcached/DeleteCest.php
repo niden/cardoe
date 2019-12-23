@@ -1,21 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Libmemcached;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Libmemcached;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+namespace Phalcon\Test\Unit\Cache\Adapter\Libmemcached;
+
+use Phalcon\Cache\Adapter\Libmemcached;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class DeleteCest
@@ -23,9 +25,9 @@ class DeleteCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: delete()
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: delete()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterLibmemcachedDelete(UnitTester $I)
@@ -56,9 +58,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: delete() - twice
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: delete() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterLibmemcachedDeleteTwice(UnitTester $I)
@@ -89,9 +91,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Libmemcached :: delete() - unknown
+     * Tests Phalcon\Cache\Adapter\Libmemcached :: delete() - unknown
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterLibmemcachedDeleteUnknown(UnitTester $I)

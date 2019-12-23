@@ -1,18 +1,19 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Autoload\Loader;
+declare(strict_types=1);
 
-use Cardoe\Autoload\Exception;
-use Cardoe\Autoload\Loader;
-use Cardoe\Test\Fixtures\Traits\LoaderTrait;
+namespace Phalcon\Test\Unit\Autoload\Loader;
+
+use Phalcon\Autoload\Exception;
+use Phalcon\Autoload\Loader;
+use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
 
 class GetAddSetNamespacesCest
@@ -20,7 +21,7 @@ class GetAddSetNamespacesCest
     use LoaderTrait;
 
     /**
-     * Tests Cardoe\Autoload\Loader ::
+     * Tests Phalcon\Autoload\Loader ::
      * getNamespaces()/addNamespace()/setNamespace()
      *
      * @throws Exception
@@ -39,8 +40,8 @@ class GetAddSetNamespacesCest
 
         $loader->setNamespaces(
             [
-                'Cardoe\Loader'   => '/path/to/loader',
-                'Cardoe\Provider' => [
+                'Phalcon\Loader'   => '/path/to/loader',
+                'Phalcon\Provider' => [
                     '/path/to/provider/source',
                     '/path/to/provider/target',
                 ],
@@ -48,10 +49,10 @@ class GetAddSetNamespacesCest
         );
         $I->assertEquals(
             [
-                'Cardoe\Loader\\'   => [
+                'Phalcon\Loader\\'   => [
                     '/path/to/loader/',
                 ],
-                'Cardoe\Provider\\' => [
+                'Phalcon\Provider\\' => [
                     '/path/to/provider/source/',
                     '/path/to/provider/target/',
                 ],
@@ -70,27 +71,27 @@ class GetAddSetNamespacesCest
 
         $loader
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/loader'
             )
             ->addNamespace(
-                'Cardoe\Provider',
+                'Phalcon\Provider',
                 [
                     '/path/to/provider/source',
                     '/path/to/provider/target',
                 ]
             )
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/loader'
             )
         ;
         $I->assertEquals(
             [
-                'Cardoe\Loader\\'   => [
+                'Phalcon\Loader\\'   => [
                     '/path/to/loader/',
                 ],
-                'Cardoe\Provider\\' => [
+                'Phalcon\Provider\\' => [
                     '/path/to/provider/source/',
                     '/path/to/provider/target/',
                 ],
@@ -109,26 +110,26 @@ class GetAddSetNamespacesCest
 
         $loader
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/loader'
             )
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/provider/source'
             )
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/provider/target',
                 true
             )
             ->addNamespace(
-                'Cardoe\Loader',
+                'Phalcon\Loader',
                 '/path/to/provider/source'
             )
         ;
         $I->assertEquals(
             [
-                'Cardoe\Loader\\' => [
+                'Phalcon\Loader\\' => [
                     '/path/to/provider/target/',
                     '/path/to/loader/',
                     '/path/to/provider/source/',
@@ -139,7 +140,7 @@ class GetAddSetNamespacesCest
     }
 
     /**
-     * Tests Cardoe\Autoload\Loader ::
+     * Tests Phalcon\Autoload\Loader ::
      * getNamespaces()/addNamespace()/setNamespace() - exception
      *
      * @since  2018-11-13
@@ -157,7 +158,7 @@ class GetAddSetNamespacesCest
             function () {
                 $loader = new Loader();
                 $loader
-                    ->addNamespace('Cardoe\Loader', 1234);
+                    ->addNamespace('Phalcon\Loader', 1234);
             }
         );
     }

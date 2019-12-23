@@ -1,27 +1,28 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFile;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Stream;
-use Cardoe\Http\Message\UploadedFile;
-use function outputDir;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFile;
+
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Stream;
+use Phalcon\Http\Message\UploadedFile;
 use Psr\Http\Message\StreamInterface;
 use UnitTester;
+use function outputDir;
 use const UPLOAD_ERR_CANT_WRITE;
 
 class GetStreamCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getStream()
+     * Tests Phalcon\Http\Message\UploadedFile :: getStream()
      *
      * @since  2019-02-10
      */
@@ -42,7 +43,7 @@ class GetStreamCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getStream() - string
+     * Tests Phalcon\Http\Message\UploadedFile :: getStream() - string
      *
      * @since  2019-02-10
      */
@@ -61,7 +62,7 @@ class GetStreamCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getStream() - exception
+     * Tests Phalcon\Http\Message\UploadedFile :: getStream() - exception
      *
      * @since  2019-02-10
      */
@@ -88,7 +89,8 @@ class GetStreamCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\UploadedFile :: getStream() - exception already moved
+     * Tests Phalcon\Http\Message\UploadedFile :: getStream() - exception
+     * already moved
      *
      * @since  2019-02-10
      */
@@ -102,7 +104,7 @@ class GetStreamCest
             ),
             function () use ($I) {
                 $stream = new Stream('php://memory', 'w+b');
-                $stream->write('Cardoe Framework');
+                $stream->write('Phalcon Framework');
 
                 $file   = new UploadedFile($stream, 0);
                 $target = $I->getNewFileName();

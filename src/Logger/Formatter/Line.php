@@ -1,27 +1,30 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Formatter;
+declare(strict_types=1);
 
-use Cardoe\Logger\Item;
+namespace Phalcon\Logger\Formatter;
+
+use Phalcon\Logger\Item;
+
 use function date;
 use function is_array;
 use function str_replace;
 use function strpos;
-use const PHP_EOL;
 
 /**
- * Cardoe\Logger\Formatter\Line
+ * Phalcon\Logger\Formatter\Line
  *
  * Formats messages using an one-line string
+ *
+ * @property string $dateFormat
+ * @property string $format
  */
 class Line extends AbstractFormatter
 {
@@ -47,7 +50,7 @@ class Line extends AbstractFormatter
      */
     public function __construct(
         string $format = "[%date%][%type%] %message%",
-        string $dateFormat = "D, d M y H:i:s O"
+        string $dateFormat = "c"
     ) {
         $this->format     = $format;
         $this->dateFormat = $dateFormat;
@@ -101,7 +104,7 @@ class Line extends AbstractFormatter
             $format = str_replace("%type%", $item->getName(), $format);
         }
 
-        $format = str_replace("%message%", $item->getMessage(), $format) . PHP_EOL;
+        $format = str_replace("%message%", $item->getMessage(), $format);
 
         if (is_array($item->getContext())) {
             return $this->interpolate(

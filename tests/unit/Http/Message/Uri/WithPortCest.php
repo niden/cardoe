@@ -1,26 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
+
 use Codeception\Example;
 use InvalidArgumentException;
-use stdClass;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 use function sprintf;
 
 class WithPortCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: withPort()
+     * Tests Phalcon\Http\Message\Uri :: withPort()
      *
      * @dataProvider getExamples
      *
@@ -55,7 +55,7 @@ class WithPortCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: withPort() - exception no string
+     * Tests Phalcon\Http\Message\Uri :: withPort() - exception no string
      *
      * @dataProvider getExceptions
      *

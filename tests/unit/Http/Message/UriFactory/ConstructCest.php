@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\UriFactory;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\UriFactory;
+namespace Phalcon\Test\Unit\Http\UriFactory;
+
+use Phalcon\Http\Message\UriFactory;
 use Psr\Http\Message\UriFactoryInterface;
 use UnitTester;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Http\Message\UriFactory :: __construct()
+     * Tests Phalcon\Http\Message\UriFactory :: __construct()
      *
      * @since  2019-02-07
      */

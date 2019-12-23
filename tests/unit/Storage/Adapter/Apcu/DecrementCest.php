@@ -1,21 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Apcu;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Storage\Adapter\Apcu;
 
 use Exception;
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\ApcuTrait;
+use Phalcon\Storage\Adapter\Apcu;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\ApcuTrait;
 use UnitTester;
 
 class DecrementCest
@@ -23,12 +24,12 @@ class DecrementCest
     use ApcuTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Apcu :: decrement()
+     * Tests Phalcon\Storage\Adapter\Apcu :: decrement()
      *
      * @throws Exception
      * @since  2019-03-31
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterApcuDecrement(UnitTester $I)
     {

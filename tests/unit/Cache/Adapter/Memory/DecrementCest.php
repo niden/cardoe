@@ -1,27 +1,28 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Memory;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Memory;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Memory;
+
+use Phalcon\Cache\Adapter\Memory;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 class DecrementCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Memory :: decrement()
+     * Tests Phalcon\Cache\Adapter\Memory :: decrement()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterMemoryDecrement(UnitTester $I)

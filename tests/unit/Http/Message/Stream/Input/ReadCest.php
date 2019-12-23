@@ -1,21 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream\Input;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Http\Message\Stream\Input;
 
 use UnitTester;
 
 class ReadCest
 {
     /**
-     * Unit Tests Cardoe\Http\Message\Stream\Input :: read()
+     * Unit Tests Phalcon\Http\Message\Stream\Input :: read()
      *
      * @since  2019-05-25
      */

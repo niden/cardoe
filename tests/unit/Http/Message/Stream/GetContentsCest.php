@@ -1,23 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
+
+use Phalcon\Http\Message\Stream;
 use RuntimeException;
 use UnitTester;
+use function dataDir;
 
 class GetContentsCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: getContents()
+     * Tests Phalcon\Http\Message\Stream :: getContents()
      *
      * @since  2019-02-10
      */
@@ -37,7 +39,7 @@ class GetContentsCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getContents() - from position
+     * Tests Phalcon\Http\Message\Stream :: getContents() - from position
      *
      * @since  2019-02-10
      */
@@ -57,7 +59,7 @@ class GetContentsCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getContents() - exception
+     * Tests Phalcon\Http\Message\Stream :: getContents() - exception
      *
      * @since  2019-02-10
      */

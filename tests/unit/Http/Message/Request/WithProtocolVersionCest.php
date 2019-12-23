@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Request;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Request;
+namespace Phalcon\Test\Unit\Http\Message\Request;
+
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Request;
 use UnitTester;
 
 class WithProtocolVersionCest
 {
     /**
-     * Tests Cardoe\Http\Message\Request :: withProtocolVersion()
+     * Tests Phalcon\Http\Message\Request :: withProtocolVersion()
      *
      * @since  2019-02-10
      */
@@ -43,7 +44,8 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - unsupported protocol
+     * Tests Phalcon\Http\Message\Request :: withProtocolVersion() - unsupported
+     * protocol
      *
      * @since  2019-02-10
      */
@@ -64,7 +66,8 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withProtocolVersion() - empty protocol
+     * Tests Phalcon\Http\Message\Request :: withProtocolVersion() - empty
+     * protocol
      *
      * @since  2019-02-10
      */

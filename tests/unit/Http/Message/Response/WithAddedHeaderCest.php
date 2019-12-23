@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Response;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Response;
+namespace Phalcon\Test\Unit\Http\Message\Response;
+
+use Phalcon\Http\Message\Response;
 use UnitTester;
 
 class WithAddedHeaderCest
 {
     /**
-     * Tests Cardoe\Http\Message\Response :: withAddedHeader()
+     * Tests Phalcon\Http\Message\Response :: withAddedHeader()
      *
      * @since  2019-03-09
      */
@@ -26,7 +27,7 @@ class WithAddedHeaderCest
         $data        = [
             'Accept' => ['text/html'],
         ];
-        $response     = new Response('php://memory', 200, $data);
+        $response    = new Response('php://memory', 200, $data);
         $newInstance = $response->withAddedHeader('Cache-Control', ['max-age=0']);
 
         $I->assertNotEquals($response, $newInstance);
@@ -46,7 +47,7 @@ class WithAddedHeaderCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: withAddedHeader() - merge
+     * Tests Phalcon\Http\Message\Response :: withAddedHeader() - merge
      *
      * @since  2019-03-09
      */
@@ -55,7 +56,7 @@ class WithAddedHeaderCest
         $data        = [
             'Accept' => ['text/html'],
         ];
-        $response     = new Response('php://memory', 200, $data);
+        $response    = new Response('php://memory', 200, $data);
         $newInstance = $response->withAddedHeader('Accept', ['text/json']);
 
         $I->assertNotEquals($response, $newInstance);

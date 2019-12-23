@@ -1,27 +1,28 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Memory;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Memory;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Storage\Adapter\Memory;
+
+use Phalcon\Storage\Adapter\Memory;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 class DeleteCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Memory :: delete()
+     * Tests Phalcon\Storage\Adapter\Memory :: delete()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterMemoryDelete(UnitTester $I)
@@ -44,9 +45,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Memory :: delete() - twice
+     * Tests Phalcon\Storage\Adapter\Memory :: delete() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterMemoryDeleteTwice(UnitTester $I)
@@ -69,9 +70,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Memory :: delete() - unknown
+     * Tests Phalcon\Storage\Adapter\Memory :: delete() - unknown
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterMemoryDeleteUnknown(UnitTester $I)

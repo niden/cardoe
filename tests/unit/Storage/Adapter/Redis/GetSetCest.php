@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
 
 use Codeception\Example;
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use stdClass;
 use UnitTester;
+
 use function array_merge;
 use function getOptionsRedis;
 use function uniqid;
@@ -28,14 +30,14 @@ class GetSetCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get()
+     * Tests Phalcon\Storage\Adapter\Redis :: get()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-03-31
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterRedisGetSet(UnitTester $I, Example $example)
     {
@@ -63,10 +65,10 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get() - persistent
+     * Tests Phalcon\Storage\Adapter\Redis :: get() - persistent
      *
      * @throws Exception
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      *
      * @since  2019-03-31
      */
@@ -101,10 +103,10 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get() - wrong index
+     * Tests Phalcon\Storage\Adapter\Redis :: get() - wrong index
      *
      * @since  2019-03-31
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterRedisGetSetWrongIndex(UnitTester $I)
     {
@@ -131,10 +133,10 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get() - failed auth
+     * Tests Phalcon\Storage\Adapter\Redis :: get() - failed auth
      *
      * @since  2019-03-31
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterRedisGetSetFailedAuth(UnitTester $I)
     {
@@ -161,12 +163,12 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get()/set() - custom serializer
+     * Tests Phalcon\Storage\Adapter\Redis :: get()/set() - custom serializer
      *
      * @throws Exception
      * @since  2019-04-29
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterRedisGetSetCustomSerializer(UnitTester $I)
     {
@@ -185,7 +187,7 @@ class GetSetCest
         );
 
         $key    = 'cache-data';
-        $source = 'Cardoe Framework';
+        $source = 'Phalcon Framework';
 
         $I->assertTrue(
             $adapter->set($key, $source)

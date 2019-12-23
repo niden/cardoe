@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
+
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class LastCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: last()
+     * Tests Phalcon\Helper\Arr :: last()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperArrLast(UnitTester $I)
@@ -25,7 +29,7 @@ class LastCest
         $I->wantToTest('Helper\Arr - last()');
 
         $collection = [
-            'Cardoe',
+            'Phalcon',
             'Framework',
         ];
 
@@ -36,8 +40,9 @@ class LastCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: last() - function
+     * Tests Phalcon\Helper\Arr :: last() - function
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperArrLastFunction(UnitTester $I)
@@ -45,7 +50,7 @@ class LastCest
         $I->wantToTest('Helper\Arr - last() - function');
 
         $collection = [
-            'Cardoe',
+            'Phalcon',
             'Framework',
         ];
 
@@ -57,7 +62,7 @@ class LastCest
         );
 
         $I->assertEquals(
-            'Cardoe',
+            'Phalcon',
             $actual
         );
     }

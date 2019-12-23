@@ -1,30 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\AdapterInterface;
-use Cardoe\Cache\Adapter\Stream;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Stream;
+
+use Phalcon\Cache\Adapter\AdapterInterface;
+use Phalcon\Cache\Adapter\Stream;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 
 class ConstructCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: __construct()
+     * Tests Phalcon\Cache\Adapter\Stream :: __construct()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function cacheAdapterStreamConstruct(UnitTester $I)
@@ -41,9 +43,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: __construct() - exception
+     * Tests Phalcon\Cache\Adapter\Stream :: __construct() - exception
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function cacheAdapterStreamConstructException(UnitTester $I)

@@ -1,29 +1,33 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Serializer\Igbinary;
+declare(strict_types=1);
 
-use Cardoe\Storage\Serializer\Igbinary;
+namespace Phalcon\Test\Unit\Storage\Serializer\Igbinary;
+
+use Phalcon\Storage\Serializer\Igbinary;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
+
 use function igbinary_serialize;
 
 class SerializeCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\Igbinary :: serialize()
+     * Tests Phalcon\Storage\Serializer\Igbinary :: serialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerIgbinarySerialize(UnitTester $I, Example $example)
@@ -70,13 +74,13 @@ class SerializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
-                igbinary_serialize('Cardoe Framework'),
+                'Phalcon Framework',
+                igbinary_serialize('Phalcon Framework'),
             ],
             [
                 'array',
-                ['Cardoe Framework'],
-                igbinary_serialize(['Cardoe Framework']),
+                ['Phalcon Framework'],
+                igbinary_serialize(['Phalcon Framework']),
             ],
             [
                 'object',

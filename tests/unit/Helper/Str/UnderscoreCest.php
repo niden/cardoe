@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Str;
+declare(strict_types=1);
 
-use Cardoe\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
+
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class UnderscoreCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: underscore()
+     * Tests Phalcon\Helper\Str :: underscore()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrUnderscore(UnitTester $I)
@@ -35,8 +39,8 @@ class UnderscoreCest
         $actual   = Str::underscore(' look behind ');
         $I->assertEquals($expected, $actual);
 
-        $expected = 'Awesome_Cardoe';
-        $actual   = Str::underscore(" \t Awesome \t  \t Cardoe ");
+        $expected = 'Awesome_Phalcon';
+        $actual   = Str::underscore(" \t Awesome \t  \t Phalcon ");
         $I->assertEquals($expected, $actual);
     }
 }

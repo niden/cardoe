@@ -1,29 +1,31 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Stream;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Storage\Adapter\Stream;
+
+use Phalcon\Storage\Adapter\Stream;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 use function uniqid;
 
 class ClearCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: clear()
+     * Tests Phalcon\Storage\Adapter\Stream :: clear()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterStreamClear(UnitTester $I)
@@ -61,12 +63,14 @@ class ClearCest
         $I->assertFalse(
             $adapter->has($key2)
         );
+
+        $I->safeDeleteDirectory(outputDir('ph-strm'));
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: clear() - twice
+     * Tests Phalcon\Storage\Adapter\Stream :: clear() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterStreamClearTwice(UnitTester $I)
@@ -97,5 +101,7 @@ class ClearCest
 
         $actual = $adapter->clear();
         $I->assertTrue($actual);
+
+        $I->safeDeleteDirectory(outputDir('ph-strm'));
     }
 }

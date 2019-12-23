@@ -1,25 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Domain\Payload\Payload;
+declare(strict_types=1);
 
-use Cardoe\Domain\Payload\Payload;
-use Cardoe\Domain\Payload\Status;
+namespace Phalcon\Test\Unit\Domain\Payload\Payload;
+
+use Phalcon\Domain\Payload;
+use Phalcon\Domain\Payload\Status;
 use UnitTester;
 
 class GetSetStatusCest
 {
     /**
-     * Unit Tests Cardoe\Domain\Payload\Payload :: getStatus()/setStatus()
+     * Unit Tests Phalcon\Domain\Payload\Payload :: getStatus()/setStatus()
      *
-     * @since  2019-06-07
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-05-24
      */
     public function httpPayloadPayloadGetStatus(UnitTester $I)
     {

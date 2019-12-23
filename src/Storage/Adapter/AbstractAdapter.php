@@ -1,28 +1,31 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Arr;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\Serializer\SerializerInterface;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Storage\Adapter;
+
 use DateInterval;
 use DateTime;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Helper\Str;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\Serializer\SerializerInterface;
+use Phalcon\Storage\SerializerFactory;
+
 use function is_object;
 
 /**
  * Class AbstractAdapter
  *
- * @package Cardoe\Storage\Adapter
+ * @package Phalcon\Storage\Adapter
  *
  * @property mixed               $adapter
  * @property string              $defaultSerializer
@@ -76,18 +79,18 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * AbstractAdapter constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    protected function __construct(SerializerFactory $factory = null, array $options = [])
+    protected function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
          */
+        $this->serializerFactory = $factory;
         $this->defaultSerializer = Arr::get($options, "defaultSerializer", "Php");
         $this->lifetime          = Arr::get($options, "lifetime", 3600);
         $this->serializer        = Arr::get($options, "serializer", null);
-        $this->serializerFactory = $factory;
 
         if (isset($options["prefix"])) {
             $this->prefix = $options["prefix"];
@@ -148,9 +151,11 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Returns all the keys stored
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    abstract public function getKeys(): array;
+    abstract public function getKeys(string $prefix = ""): array;
 
     /**
      * Returns the prefix
@@ -198,6 +203,29 @@ abstract class AbstractAdapter implements AdapterInterface
     public function setDefaultSerializer(string $serializer): void
     {
         $this->defaultSerializer = $serializer;
+    }
+
+    /**
+     * Filters the keys array based on global and passed prefix
+     *
+     * @param mixed  $keys
+     * @param string $prefix
+     *
+     * @return array
+     */
+    protected function getFilteredKeys($keys, string $prefix): array
+    {
+        $results = [];
+        $pattern = $this->prefix . $prefix;
+        $keys    = !$keys ? [] : $keys;
+
+        foreach ($keys as $key) {
+            if (Str::startsWith($key, $pattern)) {
+                $results[] = $key;
+            }
+        }
+
+        return $results;
     }
 
     /**
@@ -283,10 +311,6 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     protected function initSerializer(): void
     {
-        if (null === $this->serializer && null === $this->serializerFactory) {
-            throw new Exception("A valid serializer is required");
-        }
-
         if (!is_object($this->serializer)) {
             $className        = strtolower($this->defaultSerializer);
             $this->serializer = $this->serializerFactory->newInstance($className);

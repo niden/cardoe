@@ -1,19 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
+
+declare(strict_types=1);
 
 /**
  * @todo Until I figure this approach, this stays here and can be used for other
  *       tests in this namespace
  */
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Syslog {
+namespace Phalcon\Test\Unit\Logger\Adapter\Syslog {
     function syslog($level, $message)
     {
     }
@@ -23,16 +26,17 @@ namespace Cardoe\Test\Unit\Logger\Adapter\Syslog {
         return true;
     }
 
-    use Cardoe\Logger\Adapter\Syslog;
-    use Cardoe\Logger\Item;
-    use Cardoe\Logger\Logger;
+    use Phalcon\Logger;
+    use Phalcon\Logger\Adapter\Syslog;
+    use Phalcon\Logger\Item;
     use UnitTester;
 
     class AddCest
     {
         /**
-         * Tests Cardoe\Logger\Adapter\Syslog :: add()
+         * Tests Phalcon\Logger\Adapter\Syslog :: add()
          *
+         * @author Phalcon Team <team@phalcon.io>
          * @since  2018-11-13
          */
         public function loggerAdapterSyslogAdd(UnitTester $I)

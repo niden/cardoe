@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Response;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Response;
+namespace Phalcon\Test\Unit\Http\Message\Response;
+
+use Phalcon\Http\Message\Response;
 use UnitTester;
 
 class GetProtocolVersionCest
 {
     /**
-     * Tests Cardoe\Http\Message\Response :: getProtocolVersion()
+     * Tests Phalcon\Http\Message\Response :: getProtocolVersion()
      *
      * @since  2019-03-05
      */

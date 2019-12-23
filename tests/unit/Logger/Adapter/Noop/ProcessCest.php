@@ -1,25 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Adapter\Noop;
+declare(strict_types=1);
 
-use Cardoe\Logger\Adapter\Noop;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Adapter\Noop;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Noop;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class ProcessCest
 {
     /**
-     * Tests Cardoe\Logger\Adapter\Noop :: process()
+     * Tests Phalcon\Logger\Adapter\Noop :: process()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerAdapterNoopProcess(UnitTester $I)

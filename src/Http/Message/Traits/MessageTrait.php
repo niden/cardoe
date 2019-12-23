@@ -1,20 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message\Traits;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Http\Message\Traits;
+
+use Phalcon\Collection;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Stream;
 use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
+
 use function array_merge;
 use function implode;
 use function is_array;
@@ -22,7 +24,6 @@ use function is_numeric;
 use function is_resource;
 use function is_string;
 use function preg_match;
-use Psr\Http\Message\UriInterface;
 
 /**
  * Common methods
@@ -303,9 +304,11 @@ trait MessageTrait
      */
     protected function checkHeaderHost(Collection $collection): Collection
     {
-        if (true === $collection->has('host') &&
+        if (
+            $collection->has('host') &&
             true !== empty($this->uri) &&
-            '' !== $this->uri->getHost()) {
+            '' !== $this->uri->getHost()
+        ) {
             $host = $this->getUriHost($this->uri);
 
             $collection->set('Host', [$host]);
@@ -330,8 +333,10 @@ trait MessageTrait
      */
     private function checkHeaderName($name): void
     {
-        if (!is_string($name) ||
-            !preg_match("/^[a-zA-Z0-9'`#$%&*+.^_|~!-]+$/", $name)) {
+        if (
+            !is_string($name) ||
+            !preg_match("/^[a-zA-Z0-9'`#$%&*+.^_|~!-]+$/", $name)
+        ) {
             throw new InvalidArgumentException(
                 'Invalid header name ' . $name
             );
@@ -393,8 +398,10 @@ trait MessageTrait
 
         $value = (string) $value;
 
-        if (preg_match("#(?:(?:(?<!\r)\n)|(?:\r(?!\n))|(?:\r\n(?![ \t])))#", $value) ||
-            preg_match("/[^\x09\x0a\x0d\x20-\x7E\x80-\xFE]/", $value)) {
+        if (
+            preg_match("#(?:(?:(?<!\r)\n)|(?:\r(?!\n))|(?:\r\n(?![ \t])))#", $value) ||
+            preg_match("/[^\x09\x0a\x0d\x20-\x7E\x80-\xFE]/", $value)
+        ) {
             throw new InvalidArgumentException('Invalid header value');
         }
     }
@@ -414,7 +421,7 @@ trait MessageTrait
             $values = [$values];
         }
 
-        if (true === empty($values)) {
+        if (empty($values)) {
             throw new InvalidArgumentException(
                 'Invalid header value: must be a string or ' .
                 'array of strings; cannot be an empty array'
@@ -511,7 +518,7 @@ trait MessageTrait
         } else {
             if (!($headers instanceof Collection)) {
                 throw new InvalidArgumentException(
-                    'Headers needs to be either an array or instance of Cardoe\Collection'
+                    'Headers needs to be either an array or instance of Phalcon\Collection'
                 );
             }
 

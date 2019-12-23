@@ -1,29 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage;
+declare(strict_types=1);
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception;
-use Cardoe\Storage\Serializer\Base64;
-use Cardoe\Storage\Serializer\Igbinary;
-use Cardoe\Storage\Serializer\Json;
-use Cardoe\Storage\Serializer\Msgpack;
-use Cardoe\Storage\Serializer\None;
-use Cardoe\Storage\Serializer\Php;
-use Cardoe\Storage\Serializer\SerializerInterface;
+namespace Phalcon\Storage;
+
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception;
+use Phalcon\Storage\Serializer\SerializerInterface;
 
 /**
  * Class SerializerFactory
  *
- * @package Cardoe\Storage
+ * @package Phalcon\Storage
  */
 class SerializerFactory extends AbstractFactory
 {
@@ -47,12 +42,9 @@ class SerializerFactory extends AbstractFactory
     {
         $this->checkService($name);
 
-        if (!isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition();
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition();
     }
 
     /**
@@ -61,12 +53,12 @@ class SerializerFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "base64"   => Base64::class,
-            "igbinary" => Igbinary::class,
-            "json"     => Json::class,
-            "msgpack"  => Msgpack::class,
-            "none"     => None::class,
-            "php"      => Php::class,
+            "base64"   => 'Phalcon\Storage\Serializer\Base64',
+            "igbinary" => 'Phalcon\Storage\Serializer\Igbinary',
+            "json"     => 'Phalcon\Storage\Serializer\Json',
+            "msgpack"  => 'Phalcon\Storage\Serializer\Msgpack',
+            "none"     => 'Phalcon\Storage\Serializer\None',
+            "php"      => 'Phalcon\Storage\Serializer\Php',
         ];
     }
 }

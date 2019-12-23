@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
+
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class GetFragmentCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: getFragment()
+     * Tests Phalcon\Http\Message\Uri :: getFragment()
      *
      * @since  2019-02-09
      */
@@ -32,7 +33,7 @@ class GetFragmentCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: getFragment() - empty
+     * Tests Phalcon\Http\Message\Uri :: getFragment() - empty
      *
      * @since  2019-02-07
      */

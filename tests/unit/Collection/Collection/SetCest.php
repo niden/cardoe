@@ -1,28 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
+
+use Phalcon\Collection;
 use UnitTester;
 
 class SetCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: set()
+     * Tests Phalcon\Collection :: set()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionSet(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - set()');
+        $I->wantToTest('Collection - set()');
 
         $collection = new Collection();
 
@@ -33,10 +37,10 @@ class SetCest
             $collection->get('three')
         );
 
-        $collection->three = 'Cardoe';
+        $collection->three = 'Phalcon';
 
         $I->assertEquals(
-            'Cardoe',
+            'Phalcon',
             $collection->get('three')
         );
 

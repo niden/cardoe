@@ -1,30 +1,33 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Serializer\Msgpack;
+declare(strict_types=1);
 
-use Cardoe\Storage\Serializer\Msgpack;
+namespace Phalcon\Test\Unit\Storage\Serializer\Msgpack;
+
+use Phalcon\Storage\Serializer\Msgpack;
 use UnitTester;
 
 class GetDataCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\Msgpack :: getData()
+     * Tests Phalcon\Storage\Serializer\Msgpack :: getData()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-30
      */
     public function storageSerializerMsgpackGetData(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Msgpack - getData()');
-        $data       = ['Cardoe Framework'];
+        $data       = ['Phalcon Framework'];
         $serializer = new Msgpack($data);
 
         $expected = $data;

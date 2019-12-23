@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Stream;
+namespace Phalcon\Http\Message\Stream;
+
+use Phalcon\Http\Message\Stream;
 use RuntimeException;
 
 /**
@@ -56,7 +56,7 @@ class Input extends Stream
      */
     public function __toString(): string
     {
-        if (true === $this->eof) {
+        if ($this->eof) {
             return $this->data;
         }
 
@@ -68,16 +68,16 @@ class Input extends Stream
     /**
      * Returns the remaining contents in a string
      *
-     * @throws RuntimeException if unable to read.
-     * @throws RuntimeException if error occurs while reading.
-     *
      * @param int $length
      *
      * @return string
+     * @throws RuntimeException if unable to read.
+     * @throws RuntimeException if error occurs while reading.
+     *
      */
     public function getContents(int $length = -1): string
     {
-        if (true === $this->eof) {
+        if ($this->eof) {
             return $this->data;
         }
 
@@ -86,7 +86,7 @@ class Input extends Stream
 
         $this->data = $data;
 
-        if (-1 === $length || true === $this->eof()) {
+        if (-1 === $length || $this->eof()) {
             $this->eof = true;
         }
 
@@ -116,7 +116,7 @@ class Input extends Stream
             $this->data = $data;
         }
 
-        if (true === $this->eof()) {
+        if ($this->eof()) {
             $this->eof = true;
         }
 

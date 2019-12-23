@@ -1,24 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
+
 use Codeception\Example;
 use InvalidArgumentException;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class WithHostCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: withHost()
+     * Tests Phalcon\Http\Message\Uri :: withHost()
      *
      * @since  2019-02-09
      */
@@ -48,7 +49,7 @@ class WithHostCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: withHost() - exception no string
+     * Tests Phalcon\Http\Message\Uri :: withHost() - exception no string
      *
      * @dataProvider getExamples
      *

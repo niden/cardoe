@@ -1,21 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Stream;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Stream;
+
+use Phalcon\Cache\Adapter\Stream;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function file_put_contents;
 use function outputDir;
 use function sleep;
@@ -23,12 +25,12 @@ use function sleep;
 class GetSetCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: set()
+     * Tests Phalcon\Cache\Adapter\Stream :: set()
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterStreamSet(UnitTester $I)
     {
@@ -37,26 +39,26 @@ class GetSetCest
         $serializer = new SerializerFactory();
         $adapter    = new Stream($serializer, ['storageDir' => outputDir()]);
 
-        $data   = 'Cardoe Framework';
+        $data   = 'Phalcon Framework';
         $result = $adapter->set('test-key', $data);
         $I->assertTrue($result);
 
-        $target = outputDir() . 'phstrm-/te/st/-k/';
+        $target = outputDir() . 'ph-strm/te/st/-k/';
         $I->amInPath($target);
         $I->openFile('test-key');
-        $expected = 's:3:"ttl";i:3600;s:7:"content";s:24:"s:16:"Cardoe Framework";";}';
+        $expected = 's:3:"ttl";i:3600;s:7:"content";s:25:"s:17:"Phalcon Framework";";}';
 
         $I->seeInThisFile($expected);
         $I->safeDeleteFile($target . 'test-key');
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: get()
+     * Tests Phalcon\Cache\Adapter\Stream :: get()
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterStreamGet(UnitTester $I)
     {
@@ -65,12 +67,12 @@ class GetSetCest
         $serializer = new SerializerFactory();
         $adapter    = new Stream($serializer, ['storageDir' => outputDir()]);
 
-        $target = outputDir() . 'phstrm-/te/st/-k/';
-        $data   = 'Cardoe Framework';
+        $target = outputDir() . 'ph-strm/te/st/-k/';
+        $data   = 'Phalcon Framework';
         $result = $adapter->set('test-key', $data);
         $I->assertTrue($result);
 
-        $expected = 'Cardoe Framework';
+        $expected = 'Phalcon Framework';
         $actual   = $adapter->get('test-key');
         $I->assertNotNull($actual);
         $I->assertEquals($expected, $actual);
@@ -79,12 +81,12 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: get() - errors
+     * Tests Phalcon\Cache\Adapter\Stream :: get() - errors
      *
      * @throws Exception
      * @since  2019-04-24
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function cacheAdapterStreamGetErrors(UnitTester $I)
     {
@@ -93,7 +95,7 @@ class GetSetCest
         $serializer = new SerializerFactory();
         $adapter    = new Stream($serializer, ['storageDir' => outputDir()]);
 
-        $target = outputDir() . 'phstrm-/te/st/-k/';
+        $target = outputDir() . 'ph-strm/te/st/-k/';
 
         // Unknown key
         $expected = 'test';
@@ -109,7 +111,7 @@ class GetSetCest
         $I->assertEquals($expected, $actual);
 
         // Expiry
-        $data   = 'Cardoe Framework';
+        $data   = 'Phalcon Framework';
         $result = $adapter->set('test-key', $data, 1);
         $I->assertTrue($result);
 

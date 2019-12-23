@@ -1,24 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Request;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Request;
+namespace Phalcon\Test\Unit\Http\Message\Request;
+
 use Codeception\Example;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Request;
 use UnitTester;
 
 class WithHeaderCest
 {
     /**
-     * Tests Cardoe\Http\Message\Request :: withHeader()
+     * Tests Phalcon\Http\Message\Request :: withHeader()
      *
      * @since  2019-02-10
      */
@@ -42,7 +43,6 @@ class WithHeaderCest
         $I->assertNotEquals($request, $newInstance);
 
 
-
         $expected = [
             'Accept' => ['text/html'],
         ];
@@ -51,7 +51,6 @@ class WithHeaderCest
             $expected,
             $request->getHeaders()
         );
-
 
 
         $expected = [
@@ -66,7 +65,7 @@ class WithHeaderCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withHeader() - exception
+     * Tests Phalcon\Http\Message\Request :: withHeader() - exception
      *
      * @since  2019-02-10
      */
@@ -92,11 +91,11 @@ class WithHeaderCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Request :: withHeader() - exception value
+     * Tests Phalcon\Http\Message\Request :: withHeader() - exception value
      *
      * @dataProvider getExamples
      *
-     * @since  2019-02-10
+     * @since        2019-02-10
      */
     public function httpMessageRequestWithHeaderExceptionValue(UnitTester $I, Example $example)
     {

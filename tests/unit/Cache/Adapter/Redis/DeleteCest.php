@@ -1,21 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Redis;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Redis;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+namespace Phalcon\Test\Unit\Cache\Adapter\Redis;
+
+use Phalcon\Cache\Adapter\Redis;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
+
 use function getOptionsRedis;
 
 class DeleteCest
@@ -23,9 +25,9 @@ class DeleteCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Cache\Adapter\Redis :: delete()
+     * Tests Phalcon\Cache\Adapter\Redis :: delete()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterRedisDelete(UnitTester $I)
@@ -48,9 +50,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Redis :: delete() - twice
+     * Tests Phalcon\Cache\Adapter\Redis :: delete() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterRedisDeleteTwice(UnitTester $I)
@@ -73,9 +75,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Cache\Adapter\Redis :: delete() - unknown
+     * Tests Phalcon\Cache\Adapter\Redis :: delete() - unknown
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function cacheAdapterRedisDeleteUnknown(UnitTester $I)

@@ -1,26 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Stream\Input;
-use Cardoe\Http\Message\Traits\CommonTrait;
-use Cardoe\Http\Message\Traits\MessageTrait;
-use Cardoe\Http\Message\Traits\RequestTrait;
+namespace Phalcon\Http\Message;
+
+use Phalcon\Collection;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Stream\Input;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\MessageTrait;
+use Phalcon\Http\Message\Traits\RequestTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
+
 use function is_array;
 use function is_object;
 
@@ -194,8 +195,8 @@ final class ServerRequest implements ServerRequestInterface
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
      *
-     * @param string        $name
-     * @param mixed|null    $defaultValue
+     * @param string     $name
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -464,8 +465,10 @@ final class ServerRequest implements ServerRequestInterface
             if (is_array($file)) {
                 $this->checkUploadedFiles($file);
             } else {
-                if (!(is_object($file) &&
-                    $file instanceof UploadedFileInterface)) {
+                if (
+                    !(is_object($file) &&
+                    $file instanceof UploadedFileInterface)
+                ) {
                     throw new InvalidArgumentException(
                         'Invalid uploaded file'
                     );

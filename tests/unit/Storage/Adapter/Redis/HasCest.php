@@ -1,21 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
+
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
+
 use function getOptionsRedis;
 
 class HasCest
@@ -23,9 +25,9 @@ class HasCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: get()
+     * Tests Phalcon\Storage\Adapter\Redis :: get()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
     public function storageAdapterRedisGetSetHas(UnitTester $I)

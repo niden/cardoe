@@ -1,26 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Link;
+declare(strict_types=1);
+
+namespace Phalcon\Link;
 
 use Psr\Link\LinkInterface;
 use Psr\Link\LinkProviderInterface;
 use Traversable;
+
 use function in_array;
 use function spl_object_hash;
 
 /**
  * Class LinkProvider
  *
- * @package Cardoe\Link
+ * @package Phalcon\Link
  *
  * @property LinkInterface[] $links
  */
@@ -73,7 +74,7 @@ class LinkProvider implements LinkProviderInterface
         $links = [];
         foreach ($this->links as $link) {
             $rels = $link->getRels();
-            if (true === in_array($rel, $rels)) {
+            if (in_array($rel, $rels)) {
                 $links[] = $link;
             }
         }

@@ -1,29 +1,31 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Stream;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Adapter\Stream;
+
+use Phalcon\Cache\Adapter\Stream;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 use function uniqid;
 
 class HasCest
 {
     /**
-     * Tests Cardoe\Cache\Adapter\Stream :: has()
+     * Tests Phalcon\Cache\Adapter\Stream :: has()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function cacheAdapterStreamHas(UnitTester $I)

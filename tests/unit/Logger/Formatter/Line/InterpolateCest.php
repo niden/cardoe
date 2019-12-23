@@ -1,25 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Line;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\Line;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Formatter\Line;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Formatter\Line;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class InterpolateCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: interpolate()
+     * Tests Phalcon\Logger\Formatter\Line :: interpolate()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterLineInterpolate(UnitTester $I)
@@ -40,8 +44,9 @@ class InterpolateCest
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: interpolate() - format
+     * Tests Phalcon\Logger\Formatter\Line :: interpolate() - format
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterLineInterpolateFormat(UnitTester $I)
@@ -66,15 +71,19 @@ class InterpolateCest
             $context
         );
 
-        $expected = sprintf('[%s][debug] The sky is blue', date('D, d M y H:i:s O', $time)) . PHP_EOL;
+        $expected = sprintf(
+            '[%s][debug] The sky is blue',
+            date('c', $time)
+        );
 
         $I->assertEquals(
             $expected,
             $formatter->format($item)
         );
     }
+
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: interpolate() - empty
+     * Tests Phalcon\Logger\Formatter\Line :: interpolate() - empty
      */
     public function loggerFormatterLineInterpolateEmpty(UnitTester $I)
     {

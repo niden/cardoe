@@ -1,20 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+declare(strict_types=1);
 
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Formatter\Json;
-use Cardoe\Logger\Logger;
-use Cardoe\Test\Fixtures\Traits\LoggerTrait;
+namespace Phalcon\Test\Unit\Logger\Logger;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Formatter\Json;
+use Phalcon\Test\Fixtures\Traits\LoggerTrait;
 use Psr\Log\LoggerInterface;
 use UnitTester;
 
@@ -23,7 +26,7 @@ class ConstructCest
     use LoggerTrait;
 
     /**
-     * Tests Cardoe\Logger :: __construct() - implement PSR
+     * Tests Phalcon\Logger :: __construct() - implement PSR
      */
     public function loggerConstructImplementPsr(UnitTester $I)
     {
@@ -38,8 +41,9 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - constants
+     * Tests Phalcon\Logger :: __construct() - constants
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerConstructConstants(UnitTester $I)
@@ -58,23 +62,17 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - file with json formatter
+     * Tests Phalcon\Logger :: __construct() - file with json formatter
      */
     public function loggerConstructStreamWithJsonConstants(UnitTester $I)
     {
         $I->wantToTest('Logger - __construct() - file with json formatter');
 
-        $fileName = $I->getNewFileName('log', 'log');
-
+        $fileName   = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
 
-        $adapter = new Stream(
-            $outputPath . $fileName
-        );
-
-        $adapter->setFormatter(
-            new Json()
-        );
+        $adapter = new Stream($outputPath . $fileName);
+        $adapter->setFormatter(new Json());
 
         $logger = new Logger(
             'my-logger',
@@ -83,48 +81,45 @@ class ConstructCest
             ]
         );
 
-        $time = time();
-
         $logger->debug('This is a message');
-
-        $logger->log(
-            Logger::ERROR,
-            'This is an error'
-        );
-
+        $logger->log(Logger::ERROR, 'This is an error');
         $logger->error('This is another error');
 
         $I->amInPath($outputPath);
         $I->openFile($fileName);
 
         $expected = sprintf(
-            '{"type":"debug","message":"This is a message","timestamp":"%s"}' . PHP_EOL .
-            '{"type":"error","message":"This is an error","timestamp":"%s"}' . PHP_EOL .
-            '{"type":"error","message":"This is another error","timestamp":"%s"}',
-            date('D, d M y H:i:s O', $time),
-            date('D, d M y H:i:s O', $time),
-            date('D, d M y H:i:s O', $time)
+            '"type":"debug","message":"This is a message","timestamp":"%s',
+            date('Y-m-d')
         );
-
         $I->seeInThisFile($expected);
 
+        $expected = sprintf(
+            '"type":"error","message":"This is an error","timestamp":"%s',
+            date('Y-m-d')
+        );
+        $I->seeInThisFile($expected);
+
+        $expected = sprintf(
+            '"type":"error","message":"This is another error","timestamp":"%s',
+            date('Y-m-d')
+        );
+        $I->seeInThisFile($expected);
         $I->safeDeleteFile(
             $outputPath . $fileName
         );
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - read only mode exception
+     * Tests Phalcon\Logger :: __construct() - read only mode exception
      */
     public function loggerConstructStreamReadOnlyModeException(UnitTester $I)
     {
         $I->wantToTest('Logger - __construct() - read only mode exception');
 
-        $fileName = $I->getNewFileName('log', 'log');
-
+        $fileName   = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
-
-        $file = $outputPath . $fileName;
+        $file       = $outputPath . $fileName;
 
         $I->expectThrowable(
             new Exception('Adapter cannot be opened in read mode'),
@@ -140,7 +135,7 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Logger :: __construct() - no adapter exception
+     * Tests Phalcon\Logger :: __construct() - no adapter exception
      */
     public function loggerConstructNoAdapterException(UnitTester $I)
     {

@@ -1,38 +1,39 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage;
+declare(strict_types=1);
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Storage\Adapter\AdapterInterface;
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\Adapter\Memory;
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\Adapter\Stream;
+namespace Phalcon\Storage;
 
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Adapter\AdapterInterface;
+
+/**
+ * Class AdapterFactory
+ *
+ * @property SerializerFactory $serializerFactory
+ */
 class AdapterFactory extends AbstractFactory
 {
     /**
-     * @var SerializerFactory
+     * @var SerializerFactory|null
      */
     private $serializerFactory;
 
     /**
      * AdapterFactory constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $services
+     * @param SerializerFactory $factory
+     * @param array             $services
      */
-    public function __construct(SerializerFactory $factory = null, array $services = [])
+    public function __construct(SerializerFactory $factory, array $services = [])
     {
         $this->serializerFactory = $factory;
 
@@ -52,12 +53,9 @@ class AdapterFactory extends AbstractFactory
     {
         $this->checkService($name);
 
-        if (!isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition($this->serializerFactory, $options);
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition($this->serializerFactory, $options);
     }
 
     /**
@@ -66,11 +64,11 @@ class AdapterFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "apcu"         => Apcu::class,
-            "libmemcached" => Libmemcached::class,
-            "memory"       => Memory::class,
-            "redis"        => Redis::class,
-            "stream"       => Stream::class,
+            "apcu"         => 'Phalcon\Storage\Adapter\Apcu',
+            "libmemcached" => 'Phalcon\Storage\Adapter\Libmemcached',
+            "memory"       => 'Phalcon\Storage\Adapter\Memory',
+            "redis"        => 'Phalcon\Storage\Adapter\Redis',
+            "stream"       => 'Phalcon\Storage\Adapter\Stream',
         ];
     }
 }

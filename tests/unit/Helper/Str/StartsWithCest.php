@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Str;
+declare(strict_types=1);
 
-use Cardoe\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
+
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class StartsWithCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: startsWith()
+     * Tests Phalcon\Helper\Str :: startsWith()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrStartsWith(UnitTester $I)
@@ -34,8 +38,9 @@ class StartsWithCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: startsWith() - empty strings
+     * Tests Phalcon\Helper\Str :: startsWith() - empty strings
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrStartsWithEmpty(UnitTester $I)
@@ -46,8 +51,9 @@ class StartsWithCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: startsWith() - finding an empty string
+     * Tests Phalcon\Helper\Str :: startsWith() - finding an empty string
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrStartsWithEmptySearchString(UnitTester $I)
@@ -59,8 +65,9 @@ class StartsWithCest
 
 
     /**
-     * Tests Cardoe\Helper\Str :: startsWith() - case insensitive flag
+     * Tests Phalcon\Helper\Str :: startsWith() - case insensitive flag
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrStartsWithCaseInsensitive(UnitTester $I)
@@ -77,8 +84,9 @@ class StartsWithCest
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: startsWith() - case sensitive flag
+     * Tests Phalcon\Helper\Str :: startsWith() - case sensitive flag
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperStrStartsWithCaseSensitive(UnitTester $I)

@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Storage\Adapter\Libmemcached;
 
 use DateInterval;
 use Exception;
-use Cardoe\Storage\Adapter\AdapterInterface;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Storage\Adapter\Libmemcached;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Storage\Adapter\AdapterInterface;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Storage\Adapter\Libmemcached;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class ConstructCest
@@ -26,9 +28,9 @@ class ConstructCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: __construct()
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: __construct()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
     public function storageAdapterLibmemcachedConstruct(UnitTester $I)
@@ -54,10 +56,10 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: __construct() - empty
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: __construct() - empty
      * options
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
     public function storageAdapterLibmemcachedConstructEmptyOptions(UnitTester $I)
@@ -84,13 +86,13 @@ class ConstructCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: __construct() - getTtl
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: __construct() - getTtl
      * options
      *
      * @throws Exception
      * @since  2019-04-09
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterLibmemcachedConstructGetTtl(UnitTester $I)
     {

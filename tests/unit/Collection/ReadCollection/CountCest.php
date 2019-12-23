@@ -1,28 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+declare(strict_types=1);
 
-use Cardoe\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
+
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class CountCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: count()
+     * Tests Phalcon\Collection\ReadOnly :: count()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionCount(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - count()');
+        $I->wantToTest('ReadOnly - count()');
 
         $data = [
             'one'   => 'two',
@@ -30,7 +34,7 @@ class CountCest
             'five'  => 'six',
         ];
 
-        $collection = new ReadCollection($data);
+        $collection = new ReadOnly($data);
 
         $I->assertCount(
             3,

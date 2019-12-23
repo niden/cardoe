@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Link\EvolvableLinkProvider;
+declare(strict_types=1);
 
-use Cardoe\Link\EvolvableLinkProvider;
-use Cardoe\Link\Link;
+namespace Phalcon\Test\Unit\Link\EvolvableLinkProvider;
+
+use Phalcon\Link\EvolvableLinkProvider;
+use Phalcon\Link\Link;
 use UnitTester;
+
 use function spl_object_hash;
 
 class WithLinkCest
 {
     /**
-     * Tests Cardoe\Link\EvolvableLinkProvider :: withLink()
+     * Tests Phalcon\Link\EvolvableLinkProvider :: withLink()
      *
      * @since  2019-06-15
      */

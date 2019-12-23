@@ -1,26 +1,28 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Formatter;
+declare(strict_types=1);
 
-use Cardoe\Logger\Item;
+namespace Phalcon\Logger\Formatter;
+
+use Phalcon\Logger\Item;
+use Phalcon\Helper\Json as JsonHelper;
+
 use function date;
 use function is_array;
-use function json_encode;
-use const PHP_EOL;
 
 /**
- * Cardoe\Logger\Formatter\Json
+ * Phalcon\Logger\Formatter\Json
  *
  * Formats messages using JSON encoding
+ *
+ * @property string $dateFormat
  */
 class Json extends AbstractFormatter
 {
@@ -36,7 +38,7 @@ class Json extends AbstractFormatter
      *
      * @param string $dateFormat
      */
-    public function __construct(string $dateFormat = "D, d M y H:i:s O")
+    public function __construct(string $dateFormat = "c")
     {
         $this->dateFormat = $dateFormat;
     }
@@ -67,13 +69,13 @@ class Json extends AbstractFormatter
             $message = $item->getMessage();
         }
 
-        return json_encode(
+        return JsonHelper::encode(
             [
-                    "type"      => $item->getName(),
-                    "message"   => $message,
-                    "timestamp" => date($this->dateFormat, $item->getTime()),
-                ]
-        ) . PHP_EOL;
+                "type"      => $item->getName(),
+                "message"   => $message,
+                "timestamp" => date($this->dateFormat, $item->getTime()),
+            ]
+        );
     }
 
     /**

@@ -1,20 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
+
+namespace Phalcon\Storage\Adapter;
 
 use APCuIterator;
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
 use DateInterval;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+
 use function is_object;
 
 /**
@@ -32,13 +34,13 @@ class Apcu extends AbstractAdapter
     /**
      * Apcu constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
@@ -95,14 +97,14 @@ class Apcu extends AbstractAdapter
      */
     public function delete(string $key): bool
     {
-        return apcu_delete($this->getPrefixedKey($key));
+        return (bool) apcu_delete($this->getPrefixedKey($key));
     }
 
     /**
      * Reads data from the adapter
      *
-     * @param string $key
-     * @param null   $defaultValue
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -126,16 +128,18 @@ class Apcu extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $pattern = "/^" . $this->prefix . "/";
+        $pattern = "/^" . $this->prefix . $prefix . "/";
         $apc     = new APCuIterator($pattern);
         $results = [];
 
         if (!is_object($apc)) {
-            return $$results;
+            return $results;
         }
 
         foreach ($apc as $item) {

@@ -1,22 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+namespace Phalcon\Logger\Adapter;
+
 use LogicException;
-use function is_array;
+use Phalcon\Helper\Arr;
+use Phalcon\Logger;
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Item;
+
 use const LOG_ERR;
 use const LOG_ODELAY;
 use const LOG_USER;
@@ -24,7 +24,11 @@ use const LOG_USER;
 /**
  * Class Syslog
  *
- * @package Cardoe\Logger\Adapter
+ * @property string $defaultFormatter
+ * @property int    $facility
+ * @property string $name
+ * @property bool   $opened
+ * @property int    $option
  */
 class Syslog extends AbstractAdapter
 {
@@ -33,7 +37,7 @@ class Syslog extends AbstractAdapter
      *
      * @var string
      */
-    protected $defaultFormatter = "Syslog";
+    protected $defaultFormatter = "Line";
 
     /**
      * @var int
@@ -91,12 +95,7 @@ class Syslog extends AbstractAdapter
     {
         $formatter = $this->getFormatter();
         $message   = $formatter->format($item);
-
-        if (!is_array($message)) {
-            throw new Exception("The formatted message is not valid");
-        }
-
-        $result = openlog($this->name, $this->option, $this->facility);
+        $result    = openlog($this->name, $this->option, $this->facility);
 
         if (!$result) {
             throw new LogicException(
@@ -109,19 +108,19 @@ class Syslog extends AbstractAdapter
         }
 
         $this->opened = true;
-        $level        = $this->logLevelToSyslog($message[1]);
+        $level        = $this->logLevelToSyslog($item->getType());
 
-        syslog($level, $message[1]);
+        syslog($level, $message);
     }
 
     /**
      * Translates a Logger level to a Syslog level
      *
-     * @param string $level
+     * @param int $level
      *
      * @return int
      */
-    private function logLevelToSyslog(string $level): int
+    private function logLevelToSyslog(int $level): int
     {
         $levels = [
             Logger::ALERT     => LOG_ALERT,

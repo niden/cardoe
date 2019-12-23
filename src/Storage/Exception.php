@@ -1,21 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage;
+declare(strict_types=1);
+
+namespace Phalcon\Storage;
 
 use Throwable;
 
 /**
- * Cardoe\Storage\Exception
+ * Phalcon\Storage\Exception
  *
- * Exceptions thrown in Cardoe\Storage will use this class
+ * Exceptions thrown in Phalcon\Storage will use this class
  *
  */
 class Exception extends \Exception implements Throwable

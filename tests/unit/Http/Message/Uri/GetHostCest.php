@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Uri;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Uri;
+
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class GetHostCest
 {
     /**
-     * Tests Cardoe\Http\Message\Uri :: getHost()
+     * Tests Phalcon\Http\Message\Uri :: getHost()
      *
      * @since  2019-02-09
      */
@@ -33,7 +34,7 @@ class GetHostCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Uri :: getHost() - empty
+     * Tests Phalcon\Http\Message\Uri :: getHost() - empty
      *
      * @since  2019-02-07
      */

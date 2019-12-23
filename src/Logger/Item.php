@@ -1,21 +1,26 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger;
+declare(strict_types=1);
+
+namespace Phalcon\Logger;
 
 /**
- * Cardoe\Logger\Item
+ * Phalcon\Logger\Item
  *
  * Represents each item in a logging transaction
  *
+ * @property array  $context
+ * @property string $message
+ * @property string $name
+ * @property int    $time
+ * @property int    $type
  */
 class Item
 {
@@ -35,45 +40,42 @@ class Item
     protected $name;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $time;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $type;
 
     /**
      * Item constructor.
      *
-     * @param string     $message
-     * @param string     $name
-     * @param int        $type
-     * @param int        $time
-     * @param array|null $context
+     * @param string $message
+     * @param string $name
+     * @param int    $type
+     * @param int    $time
+     * @param array  $context
      */
     public function __construct(
         string $message,
         string $name,
         int $type,
         int $time = 0,
-        $context = null
+        array $context = []
     ) {
         $this->message = $message;
         $this->name    = $name;
         $this->type    = $type;
         $this->time    = $time;
-
-        if (is_array($context)) {
-            $this->context = $context;
-        }
+        $this->context = $context;
     }
 
     /**
      * @return array|null
      */
-    public function getContext()
+    public function getContext(): ?array
     {
         return $this->context;
     }

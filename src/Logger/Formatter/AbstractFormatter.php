@@ -1,22 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Formatter;
+declare(strict_types=1);
+
+namespace Phalcon\Logger\Formatter;
 
 use function is_array;
 
 /**
  * Class AbstractFormatter
  *
- * @package Cardoe\Logger\Formatter
+ * @package Phalcon\Logger\Formatter
  */
 abstract class AbstractFormatter implements FormatterInterface
 {

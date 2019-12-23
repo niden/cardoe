@@ -1,102 +1,49 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Str;
+declare(strict_types=1);
 
-use Cardoe\Helper\Str;
+namespace Phalcon\Test\Unit\Helper\Str;
+
+use Phalcon\Helper\Str;
 use UnitTester;
 
 class IncrementCest
 {
     /**
-     * Tests Cardoe\Helper\Str :: increment() - string
+     * Tests Phalcon\Helper\Str :: increment()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
+     * @dataProvider strProvider
      */
-    public function helperStrIncrementSimpleString(UnitTester $I)
+    public function helperStrIncrementSimpleString(UnitTester $I, \Codeception\Example $example)
     {
-        $I->wantToTest('Helper\Str - increment() - string');
-        $source   = 'file';
-        $expected = 'file_1';
-        $actual   = Str::increment($source);
-        $I->assertEquals($expected, $actual);
+        $I->wantToTest('Helper\Str - increment()');
+        $actual   = Str::increment($example['source'], $example['separator']);
+        $I->assertEquals($example['expected'], $actual);
     }
 
     /**
-     * Tests Cardoe\Helper\Str :: increment() - already incremented string
-     *
-     * @since  2019-04-06
+     * @return array
      */
-    public function helperStrIncrementAlreadyIncremented(UnitTester $I)
+    protected function strProvider()
     {
-        $I->wantToTest('Helper\Str - increment() - already incremented string');
-        $source   = 'file_1';
-        $expected = 'file_2';
-        $actual   = Str::increment($source);
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Cardoe\Helper\Str :: increment() - already incremented string
-     * twice
-     *
-     * @since  2019-04-06
-     */
-    public function helperStrIncrementAlreadyIncrementedTwice(UnitTester $I)
-    {
-        $I->wantToTest('Helper\Str - increment() - already incremented string twice');
-        $source   = 'file_2';
-        $expected = 'file_3';
-        $actual   = Str::increment($source);
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Cardoe\Helper\Str :: increment() - string with underscore
-     *
-     * @since  2019-04-06
-     */
-    public function helperStrIncrementStringWithUnderscore(UnitTester $I)
-    {
-        $I->wantToTest('Helper\Str - increment() - string with underscore');
-        $source   = 'file_';
-        $expected = 'file_1';
-        $actual   = Str::increment($source);
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Cardoe\Helper\Str :: increment() - string with a space at the end
-     *
-     * @since  2019-04-06
-     */
-    public function helperStrIncrementStringWithSpace(UnitTester $I)
-    {
-        $I->wantToTest('Helper\Str - increment() - string with a space at the end');
-        $source   = 'file ';
-        $expected = 'file _1';
-        $actual   = Str::increment($source);
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Cardoe\Helper\Str :: increment() - different separator
-     *
-     * @since  2019-04-06
-     */
-    public function helperStrIncrementStringWithDifferentSeparator(UnitTester $I)
-    {
-        $I->wantToTest('Helper\Str - increment() - string with different separator');
-        $source   = 'file';
-        $expected = 'file-1';
-        $actual   = Str::increment($source, '-');
-        $I->assertEquals($expected, $actual);
+        return [
+            ['source' => "file", 'expected' => "file_1", "separator" => "_"],
+            ['source' => "file_1", 'expected' => "file_2", "separator" => "_"],
+            ['source' => "file_2", 'expected' => "file_3", "separator" => "_"],
+            ['source' => "file_", 'expected' => "file_1", "separator" => "_"],
+            ['source' => "file ", 'expected' => "file _1", "separator" => "_"],
+            ['source' => "file", 'expected' => "file-1", "separator" => "-"],
+        ];
     }
 }

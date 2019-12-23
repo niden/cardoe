@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\ServerRequest;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\ServerRequest;
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\ServerRequest;
+
+use Phalcon\Http\Message\ServerRequest;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class WithUriCest
 {
     /**
-     * Tests Cardoe\Http\Message\ServerRequest :: withUri()
+     * Tests Phalcon\Http\Message\ServerRequest :: withUri()
      *
      * @since  2019-02-10
      */

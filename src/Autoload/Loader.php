@@ -1,15 +1,15 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Autoload;
+declare(strict_types=1);
+
+namespace Phalcon\Autoload;
 
 use function array_merge;
 use function array_unique;
@@ -25,12 +25,13 @@ use function str_replace;
 use function strrpos;
 use function substr;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
  * Class Logger
  *
- * @package Cardoe\Autoload
+ * @package Phalcon\Autoload
  *
  * @property array $classes
  * @property array $debug
@@ -41,12 +42,35 @@ use const DIRECTORY_SEPARATOR;
  */
 class Loader
 {
-    protected $classes      = [];
-    protected $debug        = [];
-    protected $extensions   = [];
-    protected $files        = [];
+    /**
+     * @var array
+     */
+    protected $classes = [];
+
+    /**
+     * @var array
+     */
+    protected $debug = [];
+
+    /**
+     * @var array
+     */
+    protected $extensions = [];
+
+    /**
+     * @var array
+     */
+    protected $files = [];
+
+    /**
+     * @var bool
+     */
     protected $isRegistered = false;
-    protected $namespaces   = [];
+
+    /**
+     * @var array
+     */
+    protected $namespaces = [];
 
     /**
      * Loader constructor.
@@ -103,9 +127,9 @@ class Loader
     }
 
     /**
-     * @param string       $namespace
-     * @param string|array $directories
-     * @param bool         $prepend
+     * @param string $namespace
+     * @param mixed  $directories
+     * @param bool   $prepend
      *
      * @return Loader
      * @throws Exception
@@ -115,32 +139,20 @@ class Loader
         $directories,
         bool $prepend = false
     ): Loader {
-        $ns = '\\';
-        $ds = DIRECTORY_SEPARATOR;
 
-        $namespace = trim($namespace, $ns) . $ns;
-
-        if (is_string($directories)) {
-            $directories = [$directories];
-        }
-
-        if (!is_array($directories)) {
-            throw new Exception(
-                'The directories parameter is not a string or array'
-            );
-        }
+        $ns          = '\\';
+        $ds          = DIRECTORY_SEPARATOR;
+        $namespace   = trim($namespace, $ns) . $ns;
+        $directories = $this->checkDirectories($directories);
 
         // initialize the namespace prefix array if needed
         if (!isset($this->namespaces[$namespace])) {
             $this->namespaces[$namespace] = [];
         }
 
-        foreach ($directories as $key => $directory) {
-            $directories[$key] = rtrim($directory, $ds) . $ds;
-        }
-
-        $source = ($prepend) ? $directories                  : $this->namespaces[$namespace];
-        $target = ($prepend) ? $this->namespaces[$namespace] : $directories;
+        $directories = $this->processDirectories($directories, $ds);
+        $source      = ($prepend) ? $directories : $this->namespaces[$namespace];
+        $target      = ($prepend) ? $this->namespaces[$namespace] : $directories;
 
         $this->namespaces[$namespace] = array_unique(
             array_merge($source, $target)
@@ -196,7 +208,7 @@ class Loader
 
             $file = $this->loadFile($namespace, $remainder);
             if (false !== $file) {
-                $this->debug[] = "Namespace: " . $namespace . " - " .$file;
+                $this->debug[] = "Namespace: " . $namespace . " - " . $file;
 
                 return $file;
             }
@@ -420,12 +432,48 @@ class Loader
      */
     protected function requireFile(string $file): bool
     {
-        if (true === file_exists($file)) {
+        if (file_exists($file)) {
             require $file;
 
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @param mixed $directories
+     *
+     * @return array
+     * @throws Exception
+     */
+    private function checkDirectories($directories): array
+    {
+        if (!is_string($directories) && !is_array($directories)) {
+            throw new Exception(
+                'The directories parameter is not a string or array'
+            );
+        }
+
+        if (is_string($directories)) {
+            $directories = [$directories];
+        }
+
+        return $directories;
+    }
+
+    /**
+     * @param array  $directories
+     * @param string $ds
+     *
+     * @return array
+     */
+    private function processDirectories(array $directories, string $ds): array
+    {
+        foreach ($directories as $key => $directory) {
+            $directories[$key] = rtrim($directory, $ds) . $ds;
+        }
+
+        return $directories;
     }
 }

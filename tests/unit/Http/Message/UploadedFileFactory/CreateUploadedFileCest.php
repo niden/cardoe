@@ -1,24 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\UploadedFileFactory;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Stream;
-use Cardoe\Http\Message\UploadedFileFactory;
+namespace Phalcon\Test\Unit\Http\Message\UploadedFileFactory;
+
+use Phalcon\Http\Message\Stream;
+use Phalcon\Http\Message\UploadedFileFactory;
 use Psr\Http\Message\UploadedFileInterface;
 use UnitTester;
 
 class CreateUploadedFileCest
 {
     /**
-     * Tests Cardoe\Http\Message\UploadedFileFactory :: createUploadedFile()
+     * Tests Phalcon\Http\Message\UploadedFileFactory :: createUploadedFile()
      *
      * @since  2019-02-10
      */

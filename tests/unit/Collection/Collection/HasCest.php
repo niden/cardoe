@@ -1,28 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
+
+use Phalcon\Collection;
 use UnitTester;
 
 class HasCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: has()
+     * Tests Phalcon\Collection :: has()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionHas(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - has()');
+        $I->wantToTest('Collection - has()');
 
         $data = [
             'one'   => 'two',
@@ -66,13 +70,14 @@ class HasCest
     }
 
     /**
-     * Tests Cardoe\Collection\Collection :: has() - sensitive
+     * Tests Phalcon\Collection :: has() - sensitive
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionHasSensitive(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - has()');
+        $I->wantToTest('Collection - has()');
 
         $data = [
             'one'   => 'two',

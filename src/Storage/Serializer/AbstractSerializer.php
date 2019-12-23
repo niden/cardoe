@@ -1,19 +1,20 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Serializer;
+declare(strict_types=1);
+
+namespace Phalcon\Storage\Serializer;
 
 /**
  * Class AbstractSerializer
  *
- * @package Cardoe\Storage\Serializer
+ * @property mixed|null $data
  */
 abstract class AbstractSerializer implements SerializerInterface
 {

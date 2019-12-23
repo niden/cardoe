@@ -1,21 +1,22 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
-use Cardoe\Http\Message\Traits\StreamTrait;
+namespace Phalcon\Http\Message;
+
 use Exception;
+use Phalcon\Helper\Arr;
+use Phalcon\Http\Message\Traits\StreamTrait;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+
 use function fclose;
 use function feof;
 use function fopen;
@@ -32,8 +33,15 @@ use function set_error_handler;
 use function stream_get_contents;
 use function stream_get_meta_data;
 use function strpbrk;
+
 use const E_WARNING;
 
+/**
+ * Class Stream
+ *
+ * @property resource|null   $handle
+ * @property resource|string $stream
+ */
 class Stream implements StreamInterface
 {
     use StreamTrait;
@@ -47,11 +55,6 @@ class Stream implements StreamInterface
      * @var resource|string
      */
     private $stream;
-
-    /**
-     * @var bool
-     */
-    private $warning = false;
 
     /**
      * Stream constructor.
@@ -88,8 +91,8 @@ class Stream implements StreamInterface
     public function __toString(): string
     {
         try {
-            if (true === $this->isReadable()) {
-                if (true === $this->isSeekable()) {
+            if ($this->isReadable()) {
+                if ($this->isSeekable()) {
                     $this->rewind();
                 }
 
@@ -291,12 +294,13 @@ class Stream implements StreamInterface
      */
     public function setStream($stream, string $mode = 'rb'): void
     {
-        $handle = $stream;
+        $warning = false;
+        $handle  = $stream;
         if (is_string($stream)) {
             set_error_handler(
-                function ($error) {
+                function ($error) use (&$warning) {
                     if ($error === E_WARNING) {
-                        $this->warning = true;
+                        $warning = true;
                     }
                 }
             );
@@ -306,7 +310,8 @@ class Stream implements StreamInterface
             restore_error_handler();
         }
 
-        if ($this->warning ||
+        if (
+            $warning ||
             !is_resource($handle) ||
             'stream' !== get_resource_type($handle)
         ) {

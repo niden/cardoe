@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Storage\Adapter\Libmemcached;
 
 use Codeception\Example;
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Storage\Adapter\Libmemcached;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use stdClass;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class GetSetCest
@@ -26,14 +28,14 @@ class GetSetCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: get()/set()
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: get()/set()
      *
      * @dataProvider getExamples
      *
      * @throws Exception
      * @since        2019-03-31
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterLibmemcachedGetSet(UnitTester $I, Example $example)
     {
@@ -61,13 +63,13 @@ class GetSetCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: get()/set() - custom
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: get()/set() - custom
      * serializer
      *
      * @throws Exception
      * @since  2019-04-29
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function storageAdapterLibmemcachedGetSetCustomSerializer(UnitTester $I)
     {
@@ -86,7 +88,7 @@ class GetSetCest
         );
 
         $key    = 'cache-data';
-        $source = 'Cardoe Framework';
+        $source = 'Phalcon Framework';
 
         $I->assertTrue(
             $adapter->set($key, $source)

@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
+
 use Codeception\Example;
-use Cardoe\Http\Message\Stream;
+use Phalcon\Http\Message\Stream;
+use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
+use function dataDir;
 
 class GetMetadataCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata()
+     * Tests Phalcon\Http\Message\Stream :: getMetadata()
      *
      * @since  2019-02-10
      */
@@ -46,7 +48,7 @@ class GetMetadataCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata() - by key
+     * Tests Phalcon\Http\Message\Stream :: getMetadata() - by key
      *
      * @dataProvider getExamples
      *
@@ -64,17 +66,17 @@ class GetMetadataCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getMetadata() - invalid handle
+     * Tests Phalcon\Http\Message\Stream :: getMetadata() - invalid handle
      *
      * @since        2019-02-10
      */
     public function httpMessageStreamGetMetadataInvalidHandle(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - getMetadata() - invalid handle');
-        $stream   = new StreamFixture('php://memory', 'rb');
+        $stream = new StreamFixture('php://memory', 'rb');
         $stream->setHandle(null);
 
-        $actual   = $stream->getMetadata();
+        $actual = $stream->getMetadata();
         $I->assertNull($actual);
     }
 

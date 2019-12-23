@@ -1,28 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\Collection;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
+namespace Phalcon\Test\Unit\Collection\Collection;
+
+use Phalcon\Collection;
 use UnitTester;
 
 class ClearCest
 {
     /**
-     * Tests Cardoe\Collection\Collection :: clear()
+     * Tests Phalcon\Collection :: clear()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionClear(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - clear()');
+        $I->wantToTest('Collection - clear()');
 
         $data = [
             'one'   => 'two',

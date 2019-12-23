@@ -1,29 +1,30 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Cache\Cache;
+declare(strict_types=1);
 
-use Cardoe\Cache\Cache;
-use Cardoe\Cache\Adapter\AdapterInterface;
-use Cardoe\Cache\AdapterFactory;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Cache\Cache;
+
+use Phalcon\Cache;
+use Phalcon\Cache\Adapter\AdapterInterface;
+use Phalcon\Cache\AdapterFactory;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
 
 class GetAdapterCest
 {
     /**
-     * Tests Cardoe\Cache :: getAdapter()
+     * Tests Phalcon\Cache :: getAdapter()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
     public function cacheCacheGetAdapter(UnitTester $I)

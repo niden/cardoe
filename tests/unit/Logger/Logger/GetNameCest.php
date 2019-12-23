@@ -1,22 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Logger;
+declare(strict_types=1);
 
-use Cardoe\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Logger;
+
+use Phalcon\Logger;
 use UnitTester;
 
 class GetNameCest
 {
     /**
-     * Tests Cardoe\Logger :: getName()
+     * Tests Phalcon\Logger :: getName()
      */
     public function loggerGetName(UnitTester $I)
     {

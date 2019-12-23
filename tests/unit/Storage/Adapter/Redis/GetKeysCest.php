@@ -1,21 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Redis;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Redis;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\RedisTrait;
+namespace Phalcon\Test\Unit\Storage\Adapter\Redis;
+
+use Phalcon\Storage\Adapter\Redis;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use UnitTester;
+
 use function getOptionsRedis;
 
 class GetKeysCest
@@ -23,9 +25,9 @@ class GetKeysCest
     use RedisTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Redis :: getKeys()
+     * Tests Phalcon\Storage\Adapter\Redis :: getKeys()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
     public function storageAdapterRedisGetKeys(UnitTester $I)
@@ -35,24 +37,33 @@ class GetKeysCest
         $serializer = new SerializerFactory();
         $adapter    = new Redis($serializer, getOptionsRedis());
 
-        $actual = $adapter->clear();
-        $I->assertTrue($actual);
+        $I->assertTrue($adapter->clear());
 
-        $key = 'key-1';
-        $adapter->set($key, 'test');
-        $actual = $adapter->has($key);
-        $I->assertTrue($actual);
+        $adapter->set('key-1', 'test');
+        $adapter->set('key-2', 'test');
+        $adapter->set('one-1', 'test');
+        $adapter->set('one-2', 'test');
 
-        $key = 'key-2';
-        $adapter->set($key, 'test');
-        $actual = $adapter->has($key);
-        $I->assertTrue($actual);
+        $I->assertTrue($adapter->has('key-1'));
+        $I->assertTrue($adapter->has('key-2'));
+        $I->assertTrue($adapter->has('one-1'));
+        $I->assertTrue($adapter->has('one-2'));
 
         $expected = [
             'ph-reds-key-1',
             'ph-reds-key-2',
+            'ph-reds-one-1',
+            'ph-reds-one-2',
         ];
         $actual   = $adapter->getKeys();
+        sort($actual);
+        $I->assertEquals($expected, $actual);
+
+        $expected = [
+            'ph-reds-one-1',
+            'ph-reds-one-2',
+        ];
+        $actual   = $adapter->getKeys("one");
         sort($actual);
         $I->assertEquals($expected, $actual);
     }

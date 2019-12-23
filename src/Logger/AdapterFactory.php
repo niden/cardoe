@@ -1,27 +1,27 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger;
+declare(strict_types=1);
 
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as FactoryException;
-use Cardoe\Logger\Adapter\AdapterInterface;
-use Cardoe\Logger\Adapter\Noop;
-use Cardoe\Logger\Adapter\Stream;
-use Cardoe\Logger\Adapter\Syslog;
+namespace Phalcon\Logger;
+
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as FactoryException;
+use Phalcon\Logger\Adapter\AdapterInterface;
+use Phalcon\Logger\Adapter\Noop;
+use Phalcon\Logger\Adapter\Stream;
+use Phalcon\Logger\Adapter\Syslog;
 
 /**
  * Class AdapterFactory
  *
- * @package Cardoe\Logger
+ * @package Phalcon\Logger
  */
 class AdapterFactory extends AbstractFactory
 {
@@ -52,12 +52,9 @@ class AdapterFactory extends AbstractFactory
     ): AdapterInterface {
         $this->checkService($name);
 
-        if (!isset($this->services[$name])) {
-            $definition            = $this->mapper[$name];
-            $this->services[$name] = new $definition($fileName, $options);
-        }
+        $definition = $this->mapper[$name];
 
-        return $this->services[$name];
+        return new $definition($fileName, $options);
     }
 
     /**

@@ -1,29 +1,36 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Arr;
-use Cardoe\Helper\Str;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Storage\Adapter;
+
 use DateInterval;
 use FilesystemIterator;
 use Iterator;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Helper\Str;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-use const E_WARNING;
+
+use function str_replace;
+use function strrchr;
 
 /**
  * Stream adapter
+ *
+ * @property string $storageDir
+ * @property array  $options
+ * @property bool   $warning
  */
 class Stream extends AbstractAdapter
 {
@@ -38,21 +45,17 @@ class Stream extends AbstractAdapter
     protected $options = [];
 
     /**
-     * @var bool
-     */
-    private $warning = false;
-
-    /**
      * Stream constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
+        /** @var string $storageDir */
         $storageDir = Arr::get($options, "storageDir", "");
         if (empty($storageDir)) {
             throw new Exception(
@@ -64,7 +67,7 @@ class Stream extends AbstractAdapter
          * Lets set some defaults and options here
          */
         $this->storageDir = Str::dirSeparator($storageDir);
-        $this->prefix     = "phstrm-";
+        $this->prefix     = "ph-strm";
         $this->options    = $options;
 
         parent::__construct($factory, $options);
@@ -172,21 +175,28 @@ class Stream extends AbstractAdapter
 
     /**
      * Stores data in the adapter
+     *
+     * @param string $prefix
+     *
+     * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        $results   = [];
-        $directory = Str::dirSeparator($this->storageDir);
+        $files     = [];
+        $directory = $this->getDir();
         $iterator  = $this->getIterator($directory);
 
+        /** @var FilesystemIterator $file */
         foreach ($iterator as $file) {
-            if ($file->isFile()) {
-                $split     = explode("/", $file->getPathName());
-                $results[] = $this->prefix . Arr::last($split);
+            if ($file->isFile() && false !== $file->getPathname()) {
+                $key     = str_replace($directory, "", $file->getPathName());
+                $key     = strrchr($key, "/");
+                $key     = $this->prefix . str_replace("/", "", $key);
+                $files[] = $key;
             }
         }
 
-        return $results;
+        return $this->getFilteredKeys($files, $prefix);
     }
 
     /**
@@ -270,12 +280,12 @@ class Stream extends AbstractAdapter
      */
     private function getDir(string $key = ""): string
     {
-        $dirPrefix   = $this->storageDir . $this->prefix;
+        $dirPrefix   = Str::dirSeparator($this->storageDir . $this->prefix);
         $dirFromFile = Str::dirFromFile(
             str_replace($this->prefix, "", $key)
         );
 
-        return Str::dirSeparator($dirPrefix) . $dirFromFile;
+        return Str::dirSeparator($dirPrefix . $dirFromFile);
     }
 
     /**
@@ -318,16 +328,16 @@ class Stream extends AbstractAdapter
      */
     private function getPayload(string $filepath): array
     {
+        $warning = false;
         $payload = file_get_contents($filepath);
 
         if (false === $payload) {
             return [];
         }
 
-        $this->warning = false;
         set_error_handler(
-            function ($number, $message, $file, $line, $context) {
-                $this->warning = true;
+            function ($number, $message, $file, $line, $context) use (&$warning) {
+                $warning = true;
             },
             E_NOTICE
         );
@@ -336,7 +346,7 @@ class Stream extends AbstractAdapter
 
         restore_error_handler();
 
-        if ($this->warning || !is_array($payload)) {
+        if ($warning || !is_array($payload)) {
             return [];
         }
 

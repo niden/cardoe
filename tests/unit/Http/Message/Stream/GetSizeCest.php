@@ -1,25 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Stream;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Stream;
-use Cardoe\Test\Fixtures\Http\Message\StreamFixture;
-use function dataDir;
-use function fopen;
+namespace Phalcon\Test\Unit\Http\Message\Stream;
+
+use Phalcon\Http\Message\Stream;
+use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
+use function dataDir;
+use function filesize;
 
 class GetSizeCest
 {
     /**
-     * Tests Cardoe\Http\Message\Stream :: getSize()
+     * Tests Phalcon\Http\Message\Stream :: getSize()
      *
      * @since  2019-02-10
      */
@@ -34,7 +35,7 @@ class GetSizeCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getSize() - invalid stream
+     * Tests Phalcon\Http\Message\Stream :: getSize() - invalid stream
      *
      * @since  2019-02-10
      */
@@ -48,17 +49,17 @@ class GetSizeCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Stream :: getSize() - invalid handle
+     * Tests Phalcon\Http\Message\Stream :: getSize() - invalid handle
      *
      * @since  2019-02-10
      */
     public function httpMessageStreamGetSizeInvalidHandle(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - getSize() - invalid');
-        $stream   = new StreamFixture('php://memory', 'rb');
+        $stream = new StreamFixture('php://memory', 'rb');
         $stream->setHandle(null);
 
-        $actual   = $stream->getSize();
+        $actual = $stream->getSize();
         $I->assertNull($actual);
     }
 }

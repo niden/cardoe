@@ -1,30 +1,34 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Serializer\Json;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
-use Cardoe\Storage\Serializer\Json;
+namespace Phalcon\Test\Unit\Storage\Serializer\Json;
+
+use Phalcon\Collection;
+use Phalcon\Storage\Serializer\Json;
 use Codeception\Example;
 use InvalidArgumentException;
 use UnitTester;
+
 use function json_encode;
 
 class SerializeCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\Json :: serialize()
+     * Tests Phalcon\Storage\Serializer\Json :: serialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerJsonSerialize(UnitTester $I, Example $example)
@@ -38,9 +42,9 @@ class SerializeCest
     }
 
     /**
-     * Tests Cardoe\Storage\Serializer\Json :: serialize() - object
+     * Tests Phalcon\Storage\Serializer\Json :: serialize() - object
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-11-11
      */
     public function storageSerializerJsonSerializeObject(UnitTester $I)
@@ -67,9 +71,9 @@ class SerializeCest
     }
 
     /**
-     * Tests Cardoe\Storage\Serializer\Json :: serialize() - error
+     * Tests Phalcon\Storage\Serializer\Json :: serialize() - error
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerJsonSerializeError(UnitTester $I)
@@ -78,7 +82,8 @@ class SerializeCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Data for JSON serializer cannot be of type object without implementing JsonSerializable'
+                "Data for the JSON serializer cannot be of type 'object' " .
+                "without implementing 'JsonSerializable'"
             ),
             function () {
                 $example      = new \stdClass();
@@ -123,13 +128,13 @@ class SerializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
-                '"Cardoe Framework"',
+                'Phalcon Framework',
+                '"Phalcon Framework"',
             ],
             [
                 'array',
-                ['Cardoe Framework'],
-                '["Cardoe Framework"]',
+                ['Phalcon Framework'],
+                '["Phalcon Framework"]',
             ],
         ];
     }

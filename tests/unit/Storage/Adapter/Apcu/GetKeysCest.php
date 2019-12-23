@@ -1,20 +1,21 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Apcu;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Apcu;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\ApcuTrait;
+namespace Phalcon\Test\Unit\Storage\Adapter\Apcu;
+
+use Phalcon\Storage\Adapter\Apcu;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\ApcuTrait;
 use UnitTester;
 
 class GetKeysCest
@@ -22,9 +23,9 @@ class GetKeysCest
     use ApcuTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Apcu :: getKeys()
+     * Tests Phalcon\Storage\Adapter\Apcu :: getKeys()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
     public function storageAdapterApcuGetKeys(UnitTester $I)
@@ -34,23 +35,33 @@ class GetKeysCest
         $serializer = new SerializerFactory();
         $adapter    = new Apcu($serializer);
 
-        $adapter->clear();
+        $I->assertTrue($adapter->clear());
 
-        $key = 'key-1';
-        $adapter->set($key, 'test');
-        $actual = $adapter->has($key);
-        $I->assertTrue($actual);
+        $adapter->set('key-1', 'test');
+        $adapter->set('key-2', 'test');
+        $adapter->set('one-1', 'test');
+        $adapter->set('one-2', 'test');
 
-        $key = 'key-2';
-        $adapter->set($key, 'test');
-        $actual = $adapter->has($key);
-        $I->assertTrue($actual);
+        $I->assertTrue($adapter->has('key-1'));
+        $I->assertTrue($adapter->has('key-2'));
+        $I->assertTrue($adapter->has('one-1'));
+        $I->assertTrue($adapter->has('one-2'));
 
         $expected = [
             'ph-apcu-key-1',
             'ph-apcu-key-2',
+            'ph-apcu-one-1',
+            'ph-apcu-one-2',
         ];
         $actual   = $adapter->getKeys();
+        sort($actual);
+        $I->assertEquals($expected, $actual);
+
+        $expected = [
+            'ph-apcu-one-1',
+            'ph-apcu-one-2',
+        ];
+        $actual   = $adapter->getKeys("one");
         sort($actual);
         $I->assertEquals($expected, $actual);
     }

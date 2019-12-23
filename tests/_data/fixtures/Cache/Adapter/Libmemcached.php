@@ -1,21 +1,22 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Fixtures\Cache\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Cache\Adapter\Libmemcached as CacheLibmemcached;
+namespace Phalcon\Test\Fixtures\Cache\Adapter;
+
+use Phalcon\Cache\Adapter\Libmemcached as CacheLibmemcached;
 
 /**
- * Cardoe\Test\Fixtures\Cache\Adapter
+ * Phalcon\Test\Fixtures\Cache\Adapter
  *
  * Libmemcached adapter fixture
  */

@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
+
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class FlattenCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: flatten()
+     * Tests Phalcon\Helper\Arr :: flatten()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperArrFlatten(UnitTester $I)
@@ -33,8 +37,9 @@ class FlattenCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: flatten() - deep
+     * Tests Phalcon\Helper\Arr :: flatten() - deep
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-06
      */
     public function helperArrFlattenDeep(UnitTester $I)

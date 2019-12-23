@@ -1,26 +1,31 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\AdapterFactory;
+declare(strict_types=1);
 
-use Cardoe\Factory\Exception;
-use function outputDir;
-use Cardoe\Logger\Adapter\AdapterInterface;
-use Cardoe\Logger\AdapterFactory;
+namespace Phalcon\Test\Unit\Logger\AdapterFactory;
+
+use Phalcon\Logger\Adapter\AdapterInterface;
+use Phalcon\Logger\AdapterFactory;
+use Phalcon\Factory\Exception;
 use UnitTester;
+
+use function outputDir;
 
 class NewInstanceCest
 {
     /**
-     * Tests Cardoe\Logger\AdapterFactory :: newInstance()
+     * Tests Phalcon\Logger\AdapterFactory :: newInstance()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-20
      */
     public function loggerAdapterFactoryNewInstance(UnitTester $I)
@@ -29,15 +34,16 @@ class NewInstanceCest
 
         $fileName = $I->getNewFileName();
         $fileName = outputDir('tests/logs/' . $fileName);
-        $factory = new AdapterFactory();
+        $factory  = new AdapterFactory();
 
         $logger = $factory->newInstance('stream', $fileName);
         $I->assertInstanceOf(AdapterInterface::class, $logger);
     }
 
     /**
-     * Tests Cardoe\Logger\AdapterFactory :: newInstance() - exception
+     * Tests Phalcon\Logger\AdapterFactory :: newInstance() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-20
      */
     public function loggerAdapterFactoryNewInstanceException(UnitTester $I)

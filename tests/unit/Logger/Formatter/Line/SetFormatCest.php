@@ -1,22 +1,25 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Line;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\Line;
+namespace Phalcon\Test\Unit\Logger\Formatter\Line;
+
+use Phalcon\Logger\Formatter\Line;
 use UnitTester;
 
 class SetFormatCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Line :: setFormat()
+     * Tests Phalcon\Logger\Formatter\Line :: setFormat()
      */
     public function loggerFormatterLineSetFormat(UnitTester $I)
     {

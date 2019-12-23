@@ -1,17 +1,18 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Autoload\Loader;
+declare(strict_types=1);
 
-use Cardoe\Autoload\Loader;
-use Cardoe\Test\Fixtures\Traits\LoaderTrait;
+namespace Phalcon\Test\Unit\Autoload\Loader;
+
+use Phalcon\Autoload\Loader;
+use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
 
 class GetAddSetFilesCest
@@ -19,7 +20,7 @@ class GetAddSetFilesCest
     use LoaderTrait;
 
     /**
-     * Tests Cardoe\Autoload\Loader :: getFiles()/addFile()/setFile()
+     * Tests Phalcon\Autoload\Loader :: getFiles()/addFile()/setFile()
      *
      * @since  2018-11-13
      */

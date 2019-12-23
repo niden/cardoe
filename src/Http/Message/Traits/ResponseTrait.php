@@ -1,58 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message\Traits;
+declare(strict_types=1);
 
-use Cardoe\Helper\Number;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Psr\Http\Message\ResponseInterface;
-use function is_int;
-use function is_string;
+namespace Phalcon\Http\Message\Traits;
 
 /**
  * Trait ResponseTrait
  *
- * @package Cardoe\Http\Message\Traits
+ * @package Phalcon\Http\Message\Traits
  */
 trait ResponseTrait
 {
-    /**
-     * Checks if a code is integer or string
-     *
-     * @param mixed $code
-     */
-    private function checkCodeType($code): void
-    {
-        if (!is_int($code) && !is_string($code)) {
-            throw new InvalidArgumentException(
-                'Invalid status code; it must be an integer or string'
-            );
-        }
-    }
-
-    /**
-     * Checks if a code is integer or string
-     *
-     * @param int $code
-     */
-    private function checkCodeValue(int $code): void
-    {
-        if (true !== Number::between($code, 100, 599)) {
-            throw new InvalidArgumentException(
-                "Invalid status code '" . $code .
-                "', (allowed values 100-599)"
-            );
-        }
-    }
-
     /**
      * Returns the list of status codes available
      */

@@ -1,25 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Json;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\Json;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
+namespace Phalcon\Test\Unit\Logger\Formatter\Json;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Formatter\Json;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class InterpolateCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Json :: interpolate()
+     * Tests Phalcon\Logger\Formatter\Json :: interpolate()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterJsonInterpolate(UnitTester $I)
@@ -40,8 +44,9 @@ class InterpolateCest
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Json :: interpolate() - format
+     * Tests Phalcon\Logger\Formatter\Json :: interpolate() - format
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterJsonInterpolateFormat(UnitTester $I)
@@ -66,9 +71,8 @@ class InterpolateCest
         );
 
         $expected = sprintf(
-            '{"type":"debug","message":"The sky is blue","timestamp":"%s"}%s',
-            date('D, d M y H:i:s O', $time),
-            PHP_EOL
+            '{"type":"debug","message":"The sky is blue","timestamp":"%s"}',
+            date('c', $time)
         );
 
         $I->assertEquals(

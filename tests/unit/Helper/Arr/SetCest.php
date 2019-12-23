@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Helper\Arr;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
+namespace Phalcon\Test\Unit\Helper\Arr;
+
+use Phalcon\Helper\Arr;
 use UnitTester;
 
 class SetCest
 {
     /**
-     * Tests Cardoe\Helper\Arr :: set() - numeric
+     * Tests Phalcon\Helper\Arr :: set() - numeric
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function helperArrSetNumeric(UnitTester $I)
@@ -27,18 +31,19 @@ class SetCest
         $collection = [];
 
         $expected = [
-            1 => 'Cardoe',
+            1 => 'Phalcon',
         ];
 
         $I->assertEquals(
             $expected,
-            Arr::set($collection, 'Cardoe', 1)
+            Arr::set($collection, 'Phalcon', 1)
         );
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: set() - string
+     * Tests Phalcon\Helper\Arr :: set() - string
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function helperArrSetString(UnitTester $I)
@@ -58,8 +63,9 @@ class SetCest
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: set() - no index
+     * Tests Phalcon\Helper\Arr :: set() - no index
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function helperArrSetNoIndex(UnitTester $I)
@@ -69,18 +75,19 @@ class SetCest
         $collection = [];
 
         $expected = [
-            0 => 'Cardoe',
+            0 => 'Phalcon',
         ];
 
         $I->assertEquals(
             $expected,
-            Arr::set($collection, 'Cardoe')
+            Arr::set($collection, 'Phalcon')
         );
     }
 
     /**
-     * Tests Cardoe\Helper\Arr :: set() - overwrite
+     * Tests Phalcon\Helper\Arr :: set() - overwrite
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function helperArrSetOverwride(UnitTester $I)
@@ -88,7 +95,7 @@ class SetCest
         $I->wantToTest('Helper\Arr - set() - overwrite');
 
         $collection = [
-            1 => 'Cardoe',
+            1 => 'Phalcon',
         ];
 
         $expected = [

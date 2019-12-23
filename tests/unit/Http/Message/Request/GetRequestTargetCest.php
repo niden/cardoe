@@ -1,23 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Request;
+declare(strict_types=1);
 
-use Cardoe\Http\Message\Request;
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Test\Unit\Http\Message\Request;
+
+use Phalcon\Http\Message\Request;
+use Phalcon\Http\Message\Uri;
 use UnitTester;
 
 class GetRequestTargetCest
 {
     /**
-     * Tests Cardoe\Http\Message\Request :: getRequestTarget()
+     * Tests Phalcon\Http\Message\Request :: getRequestTarget()
      *
      * @since  2019-02-10
      */

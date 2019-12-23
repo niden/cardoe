@@ -1,29 +1,33 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
+ *
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Serializer\Php;
+declare(strict_types=1);
 
-use Cardoe\Storage\Serializer\Php;
+namespace Phalcon\Test\Unit\Storage\Serializer\Php;
+
+use Phalcon\Storage\Serializer\Php;
 use Codeception\Example;
 use stdClass;
 use UnitTester;
+
 use function serialize;
 
 class SerializeCest
 {
     /**
-     * Tests Cardoe\Storage\Serializer\Php :: serialize()
+     * Tests Phalcon\Storage\Serializer\Php :: serialize()
      *
      * @dataProvider getExamples
      *
-     * @author       Cardoe Team <team@phalcon.io>
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
     public function storageSerializerPhpSerialize(UnitTester $I, Example $example)
@@ -70,13 +74,13 @@ class SerializeCest
             ],
             [
                 'string',
-                'Cardoe Framework',
-                serialize('Cardoe Framework'),
+                'Phalcon Framework',
+                serialize('Phalcon Framework'),
             ],
             [
                 'array',
-                ['Cardoe Framework'],
-                serialize(['Cardoe Framework']),
+                ['Phalcon Framework'],
+                serialize(['Phalcon Framework']),
             ],
             [
                 'object',

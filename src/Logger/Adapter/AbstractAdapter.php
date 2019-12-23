@@ -1,24 +1,24 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Logger\Exception;
-use Cardoe\Logger\Formatter\FormatterInterface;
-use Cardoe\Logger\Item;
+namespace Phalcon\Logger\Adapter;
+
+use Phalcon\Logger\Exception;
+use Phalcon\Logger\Formatter\FormatterInterface;
+use Phalcon\Logger\Item;
 
 /**
  * Class AbstractAdapter
  *
- * @package Cardoe\Logger\Adapter
+ * @package Phalcon\Logger\Adapter
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
@@ -57,7 +57,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function __destruct()
     {
-        if (true === $this->inTransaction) {
+        if ($this->inTransaction) {
             $this->commit();
         }
 
@@ -120,8 +120,8 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getFormatter(): FormatterInterface
     {
-        if (!is_object($this->formatter)) {
-            $className = "Cardoe\\Logger\\Formatter\\" . $this->defaultFormatter;
+        if (null === $this->formatter) {
+            $className = "Phalcon\\Logger\\Formatter\\" . $this->defaultFormatter;
 
             $this->formatter = new $className();
         }

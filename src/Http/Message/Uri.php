@@ -1,22 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message;
+declare(strict_types=1);
 
-use Cardoe\Helper\Arr;
-use Cardoe\Helper\Str;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Traits\CommonTrait;
-use Cardoe\Http\Message\Traits\UriTrait;
+namespace Phalcon\Http\Message;
+
+use Phalcon\Helper\Arr;
+use Phalcon\Helper\Str;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\UriTrait;
 use Psr\Http\Message\UriInterface;
+
 use function parse_url;
 use function rawurlencode;
 use function strpos;
@@ -25,7 +26,7 @@ use function strtolower;
 /**
  * PSR-7 Uri
  *
- * @package Cardoe\Http\Message
+ * @package Phalcon\Http\Message
  */
 final class Uri implements UriInterface
 {
@@ -356,8 +357,10 @@ final class Uri implements UriInterface
     {
         $this->checkStringParameter($path);
 
-        if (false !== strpos($path, '?') ||
-            false !== strpos($path, '#')) {
+        if (
+            false !== strpos($path, '?') ||
+            false !== strpos($path, '#')
+        ) {
             throw new InvalidArgumentException(
                 'Path cannot contain a query string or fragment'
             );

@@ -1,26 +1,29 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Logger\Formatter\Json;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\Json;
-use Cardoe\Logger\Item;
-use Cardoe\Logger\Logger;
-use const PHP_EOL;
+namespace Phalcon\Test\Unit\Logger\Formatter\Json;
+
+use Phalcon\Logger;
+use Phalcon\Logger\Formatter\Json;
+use Phalcon\Logger\Item;
 use UnitTester;
 
 class FormatCest
 {
     /**
-     * Tests Cardoe\Logger\Formatter\Json :: format()
+     * Tests Phalcon\Logger\Formatter\Json :: format()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterJsonFormat(UnitTester $I)
@@ -39,9 +42,8 @@ class FormatCest
         );
 
         $expected = sprintf(
-            '{"type":"debug","message":"log message","timestamp":"%s"}%s',
-            date('D, d M y H:i:s O', $time),
-            PHP_EOL
+            '{"type":"debug","message":"log message","timestamp":"%s"}',
+            date('c', $time)
         );
 
         $I->assertEquals(
@@ -51,8 +53,9 @@ class FormatCest
     }
 
     /**
-     * Tests Cardoe\Logger\Formatter\Json :: format() -custom
+     * Tests Phalcon\Logger\Formatter\Json :: format() -custom
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function loggerFormatterJsonFormatCustom(UnitTester $I)
@@ -71,9 +74,8 @@ class FormatCest
         );
 
         $expected = sprintf(
-            '{"type":"debug","message":"log message","timestamp":"%s"}%s',
-            date('YmdHis', $time),
-            PHP_EOL
+            '{"type":"debug","message":"log message","timestamp":"%s"}',
+            date('YmdHis', $time)
         );
 
         $I->assertEquals(

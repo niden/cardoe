@@ -1,28 +1,32 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Collection\ReadCollection;
+declare(strict_types=1);
 
-use Cardoe\Collection\ReadCollection;
+namespace Phalcon\Test\Unit\Collection\ReadOnly;
+
+use Phalcon\Collection\ReadOnly;
 use UnitTester;
 
 class HasCest
 {
     /**
-     * Tests Cardoe\Collection\ReadCollection :: has()
+     * Tests Phalcon\Collection\ReadOnly :: has()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionHas(UnitTester $I)
     {
-        $I->wantToTest('Collection\ReadCollection - has()');
+        $I->wantToTest('Collection - has()');
 
         $data = [
             'one'   => 'two',
@@ -30,7 +34,7 @@ class HasCest
             'five'  => 'six',
         ];
 
-        $collection = new ReadCollection($data);
+        $collection = new ReadOnly($data);
 
         $I->assertTrue(
             $collection->has('three')
@@ -66,13 +70,14 @@ class HasCest
     }
 
     /**
-     * Tests Cardoe\Collection\ReadCollection :: has() - sensitive
+     * Tests Phalcon\Collection\ReadOnly :: has() - sensitive
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2018-11-13
      */
     public function collectionHasSensitive(UnitTester $I)
     {
-        $I->wantToTest('Collection\Collection - has()');
+        $I->wantToTest('Collection - has()');
 
         $data = [
             'one'   => 'two',
@@ -80,7 +85,7 @@ class HasCest
             'five'  => 'six',
         ];
 
-        $collection = new ReadCollection($data, false);
+        $collection = new ReadOnly($data, false);
 
         $I->assertTrue(
             $collection->has('three')

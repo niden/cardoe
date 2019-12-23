@@ -1,30 +1,31 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Http\Message\Response;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Http\Message\Response;
 
 use InvalidArgumentException;
-use Cardoe\Http\Message\Response;
+use Phalcon\Http\Message\Response;
 use UnitTester;
 
 class WithProtocolVersionCest
 {
     /**
-     * Tests Cardoe\Http\Message\Response :: withProtocolVersion()
+     * Tests Phalcon\Http\Message\Response :: withProtocolVersion()
      *
      * @since  2019-03-09
      */
     public function httpMessageResponseWithProtocolVersion(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Response - withProtocolVersion()');
-        $response     = new Response();
+        $response    = new Response();
         $newInstance = $response->withProtocolVersion('2.0');
 
         $I->assertNotEquals($response, $newInstance);
@@ -39,7 +40,7 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Cardoe\Http\Message\Response :: withProtocolVersion() - exception
+     * Tests Phalcon\Http\Message\Response :: withProtocolVersion() - exception
      *
      * @since  2019-03-09
      */

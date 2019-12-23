@@ -1,22 +1,24 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Libmemcached;
+declare(strict_types=1);
+
+namespace Phalcon\Test\Unit\Storage\Adapter\Libmemcached;
 
 use Memcached;
-use Cardoe\Storage\Adapter\Libmemcached;
-use Cardoe\Storage\SerializerFactory;
-use Cardoe\Test\Fixtures\Traits\LibmemcachedTrait;
+use Phalcon\Storage\Adapter\Libmemcached;
+use Phalcon\Storage\SerializerFactory;
+use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use UnitTester;
+
 use function getOptionsLibmemcached;
 
 class GetAdapterCest
@@ -24,9 +26,9 @@ class GetAdapterCest
     use LibmemcachedTrait;
 
     /**
-     * Tests Cardoe\Storage\Adapter\Libmemcached :: getAdapter()
+     * Tests Phalcon\Storage\Adapter\Libmemcached :: getAdapter()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-14
      */
     public function storageAdapterLibmemcachedGetAdapter(UnitTester $I)

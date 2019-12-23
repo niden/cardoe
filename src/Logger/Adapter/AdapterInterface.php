@@ -1,23 +1,23 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Logger\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Logger\Formatter\FormatterInterface;
-use Cardoe\Logger\Item;
+namespace Phalcon\Logger\Adapter;
+
+use Phalcon\Logger\Formatter\FormatterInterface;
+use Phalcon\Logger\Item;
 
 /**
- * Cardoe\Logger\AdapterInterface
+ * Phalcon\Logger\AdapterInterface
  *
- * Interface for Cardoe\Logger adapters
+ * Interface for Phalcon\Logger adapters
  */
 interface AdapterInterface
 {
@@ -57,6 +57,14 @@ interface AdapterInterface
      * @return FormatterInterface
      */
     public function getFormatter(): FormatterInterface;
+
+    /**
+     * Returns the whether the logger is currently in an active transaction or
+     * not
+     *
+     * @return bool
+     */
+    public function inTransaction(): bool;
 
     /**
      * Processes the message in the adapter

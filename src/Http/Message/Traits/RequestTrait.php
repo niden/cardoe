@@ -1,20 +1,21 @@
 <?php
 
-declare(strict_types=1);
-
 /**
-* This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Http\Message\Traits;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
-use Cardoe\Http\Message\Exception\InvalidArgumentException;
-use Cardoe\Http\Message\Uri;
+namespace Phalcon\Http\Message\Traits;
+
+use Phalcon\Collection;
+use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Uri;
 use Psr\Http\Message\UriInterface;
+
 use function is_string;
 use function preg_match;
 
@@ -103,7 +104,7 @@ trait RequestTrait
                 $requestTarget .= '?' . $this->uri->getQuery();
             }
 
-            if (true === empty($requestTarget)) {
+            if (empty($requestTarget)) {
                 $requestTarget = '/';
             }
         }
@@ -225,6 +226,7 @@ trait RequestTrait
     }
 
     abstract protected function checkHeaderHost(Collection $collection): Collection;
+
     abstract protected function cloneInstance($element, string $property);
 
     /**
@@ -248,9 +250,11 @@ trait RequestTrait
             'TRACE'   => 1,
         ];
 
-        if (!(!empty($method) &&
+        if (
+            !(!empty($method) &&
             is_string($method) &&
-            isset($methods[$method]))) {
+            isset($methods[$method]))
+        ) {
             throw new InvalidArgumentException(
                 'Invalid or unsupported method ' . $method
             );
@@ -262,7 +266,7 @@ trait RequestTrait
     /**
      * Sets a valid Uri
      *
-     * @param UriInterface|string|null $uri
+     * @param mixed $uri
      *
      * @return UriInterface
      */

@@ -1,22 +1,23 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Link\EvolvableLink;
+declare(strict_types=1);
 
-use Cardoe\Link\EvolvableLink;
+namespace Phalcon\Test\Unit\Link\EvolvableLink;
+
+use Phalcon\Link\EvolvableLink;
 use UnitTester;
 
 class WithoutRelCest
 {
     /**
-     * Tests Cardoe\Link\Link :: withoutRel()
+     * Tests Phalcon\Link\Link :: withoutRel()
      *
      * @since  2019-06-15
      */

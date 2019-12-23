@@ -1,24 +1,26 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Helper\Arr;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Storage\Adapter;
+
 use DateInterval;
-use function var_dump;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Helper\Arr;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 
 /**
  * Redis adapter
+ *
+ * @property array $options
  */
 class Redis extends AbstractAdapter
 {
@@ -30,10 +32,10 @@ class Redis extends AbstractAdapter
     /**
      * Redis constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
@@ -135,23 +137,11 @@ class Redis extends AbstractAdapter
                 $result       = $connection->pconnect($host, $port, $this->lifetime, $persistentid);
             }
 
-            if (!$result) {
-                throw new Exception(
-                    "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
-                );
-            }
-
-            if (!empty($auth) && !$connection->auth($auth)) {
-                throw new Exception(
-                    "Failed to authenticate with the Redis server"
-                );
-            }
-
-            if ($index > 0 && !$connection->select($index)) {
-                throw new Exception(
-                    "Redis server selected database failed"
-                );
-            }
+            $this
+                ->checkConnect($result, $host, $port)
+                ->checkAuth($auth, $connection)
+                ->checkIndex($index, $connection)
+            ;
 
             $connection->setOption(\Redis::OPT_PREFIX, $this->prefix);
 
@@ -165,13 +155,18 @@ class Redis extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        return $this->getAdapter()->keys("*");
+        return $this->getFilteredKeys(
+            $this->getAdapter()->keys("*"),
+            $prefix
+        );
     }
 
     /**
@@ -222,6 +217,61 @@ class Redis extends AbstractAdapter
             $this->getTtl($ttl)
         )
             ;
+    }
+
+    /**
+     * @param string $auth
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkAuth($auth, \Redis $connection): Redis
+    {
+        if (!empty($auth) && !$connection->auth($auth)) {
+            throw new Exception(
+                "Failed to authenticate with the Redis server"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param bool   $result
+     * @param string $host
+     * @param int    $port
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkConnect(bool $result, string $host, int $port): Redis
+    {
+        if (!$result) {
+            throw new Exception(
+                "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param int    $index
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkIndex(int $index, \Redis $connection): Redis
+    {
+        if ($index > 0 && !$connection->select($index)) {
+            throw new Exception(
+                "Redis server selected database failed"
+            );
+        }
+
+        return $this;
     }
 
     /**

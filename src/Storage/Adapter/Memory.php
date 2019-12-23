@@ -1,23 +1,27 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Storage\Adapter;
+declare(strict_types=1);
 
-use Cardoe\Collection\Collection;
-use Cardoe\Factory\Exception as ExceptionAlias;
-use Cardoe\Storage\Exception;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Storage\Adapter;
+
 use DateInterval;
+use Phalcon\Collection;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Exception;
+use Phalcon\Storage\SerializerFactory;
 
 /**
  * Memory adapter
+ *
+ * @property Collection $data
+ * @property array      $options
  */
 class Memory extends AbstractAdapter
 {
@@ -34,13 +38,13 @@ class Memory extends AbstractAdapter
     /**
      * Memory constructor.
      *
-     * @param SerializerFactory|null $factory
-     * @param array                  $options
+     * @param SerializerFactory $factory
+     * @param array             $options
      *
      * @throws Exception
      * @throws ExceptionAlias
      */
-    public function __construct(SerializerFactory $factory = null, array $options = [])
+    public function __construct(SerializerFactory $factory, array $options = [])
     {
         /**
          * Lets set some defaults and options here
@@ -134,11 +138,16 @@ class Memory extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
+     * @param string $prefix
+     *
      * @return array
      */
-    public function getKeys(): array
+    public function getKeys(string $prefix = ""): array
     {
-        return array_keys($this->data->toArray());
+        return $this->getFilteredKeys(
+            $this->data->getKeys(),
+            $prefix
+        );
     }
 
     /**

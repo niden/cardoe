@@ -1,28 +1,30 @@
 <?php
-declare(strict_types=1);
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
- * (c) Cardoe Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-namespace Cardoe\Test\Unit\Storage\Adapter\Stream;
+declare(strict_types=1);
 
-use Cardoe\Storage\Adapter\Stream;
-use Cardoe\Storage\SerializerFactory;
+namespace Phalcon\Test\Unit\Storage\Adapter\Stream;
+
+use Phalcon\Storage\Adapter\Stream;
+use Phalcon\Storage\SerializerFactory;
 use UnitTester;
+
 use function outputDir;
 
 class DeleteCest
 {
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: delete()
+     * Tests Phalcon\Storage\Adapter\Stream :: delete()
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function storageAdapterStreamDelete(UnitTester $I)
@@ -56,9 +58,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: delete() - twice
+     * Tests Phalcon\Storage\Adapter\Stream :: delete() - twice
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function storageAdapterStreamDeleteTwice(UnitTester $I)
@@ -92,9 +94,9 @@ class DeleteCest
     }
 
     /**
-     * Tests Cardoe\Storage\Adapter\Stream :: delete() - unknown
+     * Tests Phalcon\Storage\Adapter\Stream :: delete() - unknown
      *
-     * @author Cardoe Team <team@phalcon.io>
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
     public function storageAdapterStreamDeleteUnknown(UnitTester $I)
