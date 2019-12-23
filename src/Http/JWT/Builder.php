@@ -190,17 +190,6 @@ class Builder
         $signature        = new Signature($signatureHash, $encodedSignature);
 
         return new Token($headers, $claims, $signature);
-
-        return new Plain(
-            new DataSet($headers, $encodedHeaders),
-            new DataSet($this->claims, $encodedClaims),
-            new Signature($signature, $encodedSignature)
-        );
-
-
-
-
-
     }
 
     /**
