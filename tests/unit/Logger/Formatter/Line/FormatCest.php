@@ -83,4 +83,34 @@ class FormatCest
             $formatter->format($item)
         );
     }
+
+    /**
+     * Tests Phalcon\Logger\Formatter\Line :: format() -custom with miliseconds
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-12-23
+     */
+    public function loggerFormatterLineFormatCustomWithMiliseconds(UnitTester $I)
+    {
+        $I->wantToTest('Logger\Formatter\Line - format() - custom - with milliseconds');
+
+        $formatter = new Line(
+            '%message%-[%type%]-%date%',
+            'U.u'
+        );
+
+        $item = new Item(
+            'log message',
+            'debug',
+            Logger::DEBUG,
+            time()
+        );
+
+        $result = $formatter->format($item);
+        $parts  = explode('-', $result);
+        $parts  = explode('.', $parts[2]);
+        $I->assertCount(2, $parts);
+        $I->assertGreaterThan(0, (int) $parts[0]);
+        $I->assertGreaterThan(0, (int) $parts[1]);
+    }
 }

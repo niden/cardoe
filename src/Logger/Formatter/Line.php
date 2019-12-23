@@ -89,10 +89,7 @@ class Line extends AbstractFormatter
         if (false !== strpos($format, "%date%")) {
             $format = str_replace(
                 "%date%",
-                date(
-                    $this->dateFormat,
-                    $item->getTime()
-                ),
+                $this->getFormattedDate(),
                 $format
             );
         }
