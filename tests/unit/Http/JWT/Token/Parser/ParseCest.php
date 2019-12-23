@@ -14,6 +14,7 @@ namespace Phalcon\Test\Unit\Http\JWT\Token\Parser;
 use Phalcon\Http\JWT\Signer\None;
 use Phalcon\Http\JWT\Token\Item;
 use Phalcon\Http\JWT\Token\Parser;
+use Phalcon\Http\JWT\Token\Signature;
 use Phalcon\Test\Fixtures\Traits\JWTTrait;
 use UnitTester;
 
@@ -39,7 +40,7 @@ class ParseCest
 
         $I->assertInstanceOf(Item::class, $headers);
         $I->assertInstanceOf(Item::class, $claims);
-        $I->assertIsString($signature);
+        $I->assertInstanceOf(Signature::class, $signature);
 
         $I->assertTrue($headers->has("typ"));
         $I->assertTrue($headers->has("alg"));
@@ -82,7 +83,7 @@ class ParseCest
 
         $I->assertInstanceOf(Item::class, $headers);
         $I->assertInstanceOf(Item::class, $claims);
-        $I->assertIsString($signature);
+        $I->assertInstanceOf(Signature::class, $signature);
 
         $I->assertTrue($headers->has("typ"));
         $I->assertTrue($headers->has("alg"));
@@ -106,7 +107,7 @@ class ParseCest
         $I->assertEquals($token->getClaims()->get('nbf'), $claims->get("nbf"));
         $I->assertEquals("Mary had a little lamb", $claims->get("sub"));
 
-        $I->assertEmpty($signature);
+        $I->assertEmpty($signature->getEncoded());
     }
 
     /**
@@ -134,7 +135,7 @@ class ParseCest
 
         $I->assertInstanceOf(Item::class, $headers);
         $I->assertInstanceOf(Item::class, $claims);
-        $I->assertIsString($signature);
+        $I->assertInstanceOf(Signature::class, $signature);
 
         $I->assertTrue($headers->has("typ"));
         $I->assertTrue($headers->has("alg"));

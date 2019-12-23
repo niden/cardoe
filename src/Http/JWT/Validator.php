@@ -172,7 +172,13 @@ class Validator
      */
     public function validateSignature(SignerInterface $signer, string $passphrase): Validator
     {
-        if (!$signer->verify($this->token->getSignature(), $this->token->getPayload(), $passphrase)) {
+        if (
+            !$signer->verify(
+                $this->token->getSignature()->getHash(),
+                $this->token->getPayload(),
+                $passphrase
+            )
+        ) {
             throw new ValidatorException(
                 "Validation: the signature does not match"
             );

@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Formatter;
 
+use DateTimeImmutable;
+use DateTimeZone;
+use Exception;
+
 use function is_array;
 
 /**
@@ -43,15 +47,19 @@ abstract class AbstractFormatter implements FormatterInterface
 
         return $message;
     }
+
     /**
      * Returns the date formatted for the logger.
      * @todo Not using the set time from the Item since we have interface
      * misalignment which will break semver This will change in the future
+     *
+     * @return string
+     * @throws Exception
      */
     protected function getFormattedDate(): string
     {
         $timezone = date_default_timezone_get();
-        $date = new \DateTimeImmutable("now", new \DateTimeZone($timezone));
+        $date = new DateTimeImmutable("now", new DateTimeZone($timezone));
 
         return $date->format($this->dateFormat);
     }

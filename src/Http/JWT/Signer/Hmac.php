@@ -65,7 +65,7 @@ class Hmac extends AbstractSigner
      */
     public function sign(string $payload, string $passphrase): string
     {
-        return $this->getHash($payload, $passphrase);
+        return hash_hmac($this->getAlgorithm(), $payload, $passphrase, true);
     }
 
     /**
@@ -79,19 +79,6 @@ class Hmac extends AbstractSigner
      */
     public function verify(string $source, string $payload, string $passphrase): bool
     {
-        return hash_equals($source, $this->getHash($payload, $passphrase));
-    }
-
-    /**
-     * Calculates a hash from the passed parameters
-     *
-     * @param string $payload
-     * @param string $passphrase
-     *
-     * @return string
-     */
-    private function getHash(string $payload, string $passphrase): string
-    {
-        return hash_hmac($this->getAlgorithm(), $payload, $passphrase, true);
+        return hash_equals($source, $this->sign($payload, $passphrase));
     }
 }
