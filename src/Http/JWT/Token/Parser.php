@@ -30,7 +30,7 @@ class Parser
      */
     public function parse(string $token): Token
     {
-        [$encodedClaims, $encodedHeaders, $encodedSignature] = $this->parseToken($token);
+        [$encodedHeaders, $encodedClaims, $encodedSignature] = $this->parseToken($token);
 
         $headers   = $this->decodeHeaders($encodedHeaders);
         $claims    = $this->decodeClaims($encodedClaims);

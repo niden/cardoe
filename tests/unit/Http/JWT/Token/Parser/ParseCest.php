@@ -30,7 +30,9 @@ class ParseCest
     {
         $I->wantToTest('Http\JWT\Token\Parser - parse()');
 
-        $token     = $this->newToken();
+        $source    = $this->newToken();
+        $parser    = new Parser();
+        $token     = $parser->parse($source->getToken());
         $headers   = $token->getHeaders();
         $claims    = $token->getClaims();
         $signature = $token->getSignature();
@@ -71,7 +73,9 @@ class ParseCest
     {
         $I->wantToTest('Http\JWT\Token\Parser - parse() - no signature');
 
-        $token     = $this->newToken(None::class);
+        $source    = $this->newToken(None::class);
+        $parser    = new Parser();
+        $token     = $parser->parse($source->getToken());
         $headers   = $token->getHeaders();
         $claims    = $token->getClaims();
         $signature = $token->getSignature();
@@ -114,7 +118,16 @@ class ParseCest
     {
         $I->wantToTest('Http\JWT\Token\Parser - parse() - aud not an array');
 
-        $token     = $this->newToken(None::class);
+        $tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9."
+                     . "eyJhdWQiOiJteS1hdWRpZW5jZSIsImV4cCI6MTU3NzE1NDg5"
+                     . "NiwiaXNzIjoiUGhhbGNvbiBKV1QiLCJpYXQiOjE1NzcwNjg0O"
+                     . "TYsImp0aSI6IlBILUpXVCIsIm5iZiI6MTU3Njk4MjA5Niwic3"
+                     . "ViIjoiTWFyeSBoYWQgYSBsaXR0bGUgbGFtYiJ9."
+                     . "Dg33cVxxCit5Tq7TTG14DNe8eb_B94OtSIb_KGjVhdIeFyrI8D"
+                     . "xZyjDfbwsyyk2LVCUVe01k1bbudjjPr-l_wA";
+
+        $parser    = new Parser();
+        $token     = $parser->parse($tokenString);
         $headers   = $token->getHeaders();
         $claims    = $token->getClaims();
         $signature = $token->getSignature();
@@ -127,7 +140,7 @@ class ParseCest
         $I->assertTrue($headers->has("alg"));
 
         $I->assertEquals("JWT", $headers->get("typ"));
-        $I->assertEquals("none", $headers->get("alg"));
+        $I->assertEquals("HS512", $headers->get("alg"));
 
         $I->assertTrue($claims->has("aud"));
         $I->assertTrue($claims->has("exp"));
@@ -144,8 +157,6 @@ class ParseCest
         $I->assertEquals("Phalcon JWT", $claims->get("iss"));
         $I->assertEquals($token->getClaims()->get('nbf'), $claims->get("nbf"));
         $I->assertEquals("Mary had a little lamb", $claims->get("sub"));
-
-        $I->assertEmpty($signature);
     }
 
     /**
@@ -163,8 +174,8 @@ class ParseCest
                 "Invalid Claims (not an array)"
             ),
             function () {
-                $tokenString = "Im9uZSI."
-                    . "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9."
+                $tokenString = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9."
+                    . "Im9uZSI."
                     . "cbY2T8Wty9ejBnDuvivja3BelmRx1Z_YRlaLlFkv0EkXA"
                     . "873JhKg_rbU6MdhsTXa9fmFGSvc87x-5HvUD1kMWA";
 
@@ -189,11 +200,11 @@ class ParseCest
                 "Invalid Header (not an array)"
             ),
             function () {
-                $tokenString = "eyJhdWQiOlsibXktYXVkaWVuY2UiXSwiZXhwIjoxNTc3MTQwNjI"
+                $tokenString = "Im9uZXR3byI."
+                    . "eyJhdWQiOlsibXktYXVkaWVuY2UiXSwiZXhwIjoxNTc3MTQwNjI"
                     . "yLCJpc3MiOiJQaGFsY29uIEpXVCIsImlhdCI6MTU3NzA1NDIyMiw"
                     . "ianRpIjoiUEgtSldUIiwibmJmIjoxNTc2OTY3ODIyLCJzdWIiOiJN"
                     . "YXJ5IGhhZCBhIGxpdHRsZSBsYW1iIn0."
-                    . "Im9uZXR3byI."
                     . "8wA9TNxo7BufOGtpih5j2DHebuF5YbCuptSZC_UL35WrQisOv2Mx"
                     . "EcI7fkz4z2YYKavLKKKUPFPsLuYsZ3cFRw";
 
