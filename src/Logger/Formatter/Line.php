@@ -13,7 +13,6 @@ namespace Phalcon\Logger\Formatter;
 
 use Phalcon\Logger\Item;
 
-use function date;
 use function is_array;
 use function str_replace;
 use function strpos;

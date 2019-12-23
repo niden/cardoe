@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Storage\Serializer\Json;
 
-use Phalcon\Storage\Serializer\Json;
 use Codeception\Example;
+use Phalcon\Storage\Serializer\Json;
 use stdClass;
 use UnitTester;
 
