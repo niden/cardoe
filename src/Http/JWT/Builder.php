@@ -213,7 +213,7 @@ class Builder
      * interpretation of audience values is generally application specific.
      * Use of this claim is OPTIONAL.
      *
-     * @param array|string $audience
+     * @param mixed $audience
      *
      * @return Builder
      * @throws ValidatorException

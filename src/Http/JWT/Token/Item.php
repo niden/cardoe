@@ -58,6 +58,6 @@ class Item extends AbstractItem
      */
     public function has(string $name): bool
     {
-        return array_key_exists($name, $this->data['payload']);
+        return isset($this->data['payload'][$name]);
     }
 }
