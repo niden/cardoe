@@ -11,7 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Info\Adapter;
 
-
 use Phalcon\DM\Pdo\Connection\ConnectionInterface;
 
 class MysqlAdapter extends AbstractAdapter

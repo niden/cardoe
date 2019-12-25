@@ -1,4 +1,4 @@
-name: Phalcon
+name: Testing Suite
 on: [push, pull_request]
 
 jobs:
