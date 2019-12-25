@@ -90,7 +90,7 @@ jobs:
 
       - name: Upload Integration MySQL Coverage to Scrutinizer
         run: |
-          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
       - name: Run Integration Tests - Sqlite
         run: |
@@ -98,4 +98,4 @@ jobs:
 
       - name: Upload Integration Sqlite Coverage to Scrutinizer
         run: |
-          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
