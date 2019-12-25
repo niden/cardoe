@@ -9,6 +9,7 @@ jobs:
       max-parallel: 3
       matrix:
         operating-system: [ubuntu-latest]
+        # Disabling Windows for now
         # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
         php-versions: ['7.3', '7.4']
     name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
@@ -17,7 +18,7 @@ jobs:
         image: mysql:5.7
         env:
           MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: password
+          MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: gonano
         ports:
           - 3306
@@ -83,20 +84,18 @@ jobs:
         run: |
           php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
-# Removing for now until we start the database interactions
-#
-#      - name: Run Integration Tests - MySQL
-#        run: |
-#          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
-#
-#      - name: Upload Integration MySQL Coverage to Scrutinizer
-#        run: |
-#          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
-#
-#      - name: Run Integration Tests - Sqlite
-#        run: |
-#          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
-#
-#      - name: Upload Integration Sqlite Coverage to Scrutinizer
-#        run: |
-#          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+      - name: Run Integration Tests - MySQL
+        run: |
+          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
+
+      - name: Upload Integration MySQL Coverage to Scrutinizer
+        run: |
+          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+
+      - name: Run Integration Tests - Sqlite
+        run: |
+          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
+
+      - name: Upload Integration Sqlite Coverage to Scrutinizer
+        run: |
+          php ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
