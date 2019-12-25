@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Pdo\ConnectionLocator;
-use Cardoe\DM\Table\TableLocator;
+use Phalcon\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Table\TableLocator;
 
 class MapperLocator
 {

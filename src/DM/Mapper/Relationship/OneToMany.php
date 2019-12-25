@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper\Relationship;
+namespace Phalcon\DM\Mapper\Relationship;
 
-use Cardoe\DM\Mapper\Record;
-use Cardoe\DM\Mapper\RecordSet;
+use Phalcon\DM\Mapper\Record;
+use Phalcon\DM\Mapper\RecordSet;
 use SplObjectStorage;
 
 class OneToMany extends DeletableRelationship

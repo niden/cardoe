@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use BadMethodCallException;
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\Test\Fixtures\DM\Pdo\ConnectionFixture;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\Test\Fixtures\DM\Pdo\ConnectionFixture;
 use IntegrationTester;
 
 class UnderscoreCallCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: __call()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: __call()
      *
      * @since  2019-12-11
      */
@@ -39,7 +39,7 @@ class UnderscoreCallCest
     }
 
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: __call() - exception
+     * Integration Tests Phalcon\DM\Pdo\Connection :: __call() - exception
      *
      * @since  2019-12-11
      */
@@ -49,7 +49,7 @@ class UnderscoreCallCest
 
         $I->expectThrowable(
             new BadMethodCallException(
-                "Class 'Cardoe\DM\Pdo\Connection' does not have a method 'unknown'"
+                "Class 'Phalcon\DM\Pdo\Connection' does not have a method 'unknown'"
             ),
             function () use ($I) {
                 /** @var Connection $connection */

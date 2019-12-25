@@ -10,15 +10,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Mapper\Relationship\ManyToMany;
-use Cardoe\DM\Mapper\Relationship\ManyToOne;
-use Cardoe\DM\Mapper\Relationship\ManyToOneVariant;
-use Cardoe\DM\Mapper\Relationship\OneToMany;
-use Cardoe\DM\Mapper\Relationship\OneToOne;
-use Cardoe\DM\Mapper\Relationship\OneToOneBidi;
-use Cardoe\DM\Mapper\Relationship\Relationship;
+use Phalcon\DM\Mapper\Relationship\ManyToMany;
+use Phalcon\DM\Mapper\Relationship\ManyToOne;
+use Phalcon\DM\Mapper\Relationship\ManyToOneVariant;
+use Phalcon\DM\Mapper\Relationship\OneToMany;
+use Phalcon\DM\Mapper\Relationship\OneToOne;
+use Phalcon\DM\Mapper\Relationship\OneToOneBidi;
+use Phalcon\DM\Mapper\Relationship\Relationship;
 use SplObjectStorage;
 
 abstract class MapperRelationships

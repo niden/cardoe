@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -14,9 +14,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Pdo\Parser;
+namespace Phalcon\DM\Pdo\Parser;
 
-use Cardoe\DM\Pdo\Exception\MissingParameter;
+use Phalcon\DM\Pdo\Exception\MissingParameter;
 
 /**
  * Parsing/rebuilding functionality for all drivers.

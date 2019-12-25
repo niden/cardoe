@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,16 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\DM\Pdo\Parser\SqliteParser;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Parser\SqliteParser;
 use IntegrationTester;
 
 class GetSetParserCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: getParser()/setParser()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: getParser()/setParser()
      *
      * @since  2019-12-11
      */
@@ -31,7 +31,7 @@ class GetSetParserCest
         $adapter    = $I->getAdapter();
 
         $I->assertInstanceOf(
-            sprintf('Cardoe\DM\Pdo\Parser\%sParser', $adapter),
+            sprintf('Phalcon\DM\Pdo\Parser\%sParser', $adapter),
             $connection->getParser()
         );
 
@@ -42,7 +42,7 @@ class GetSetParserCest
     }
 
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: getParser()/setParser() default
+     * Integration Tests Phalcon\DM\Pdo\Connection :: getParser()/setParser() default
      *
      * @since  2019-12-11
      */

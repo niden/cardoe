@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Table\Row;
+use Phalcon\DM\Table\Row;
 use JsonSerializable;
 use SplObjectStorage;
 

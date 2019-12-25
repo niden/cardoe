@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Query\Delete;
-use Cardoe\DM\Query\Insert;
-use Cardoe\DM\Query\Update;
+use Phalcon\DM\Query\Delete;
+use Phalcon\DM\Query\Insert;
+use Phalcon\DM\Query\Update;
 use PDOStatement;
 
 abstract class MapperEvents

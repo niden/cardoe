@@ -10,12 +10,12 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Mapper\Identity;
-use Cardoe\DM\Mapper\Relationships;
-use Cardoe\DM\Table\Row;
-use Cardoe\DM\Table\Table;
+use Phalcon\DM\Mapper\Identity;
+use Phalcon\DM\Mapper\Relationships;
+use Phalcon\DM\Table\Row;
+use Phalcon\DM\Table\Table;
 use SplObjectStorage;
 
 abstract class Mapper

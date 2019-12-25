@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper\Relationship;
+namespace Phalcon\DM\Mapper\Relationship;
 
-use Cardoe\DM\Mapper\MapperSelect;
+use Phalcon\DM\Mapper\MapperSelect;
 
 class ForeignSimple
 {

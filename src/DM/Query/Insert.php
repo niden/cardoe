@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query;
+namespace Phalcon\DM\Query;
 
 class Insert extends Query
 {

@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Query\QueryFactory;
-use Cardoe\DM\Table\TableQueryFactory;
+use Phalcon\DM\Query\QueryFactory;
+use Phalcon\DM\Table\TableQueryFactory;
 
 class MapperQueryFactory extends TableQueryFactory
 {

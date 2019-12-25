@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query\Clause;
+namespace Phalcon\DM\Query\Clause;
 
 trait Limit
 {

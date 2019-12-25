@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,11 +9,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Info;
+namespace Phalcon\DM\Info;
 
-use Cardoe\DM\Pdo\Connection\ConnectionInterface;
-use Cardoe\Factory\AbstractFactory;
-use Cardoe\Factory\Exception as FactoryException;
+use Phalcon\DM\Pdo\Connection\ConnectionInterface;
+use Phalcon\Factory\AbstractFactory;
+use Phalcon\Factory\Exception as FactoryException;
 
 /**
  * Class AdapterFactory
@@ -64,10 +64,10 @@ class InfoFactory extends AbstractFactory
     protected function getAdapters(): array
     {
         return [
-            "mysql"  => "Cardoe\\DM\\Info\\Adapter\\MysqlAdapter",
-            "pgsql"  => "Cardoe\\DM\\Info\\Adapter\\PgsqlAdapter",
-            "sqlite" => "Cardoe\\DM\\Info\\Adapter\\SqliteAdapter",
-            "sqlsrv" => "Cardoe\\DM\\Info\\Adapter\\SqlsrvAdapter",
+            "mysql"  => "Phalcon\\DM\\Info\\Adapter\\MysqlAdapter",
+            "pgsql"  => "Phalcon\\DM\\Info\\Adapter\\PgsqlAdapter",
+            "sqlite" => "Phalcon\\DM\\Info\\Adapter\\SqliteAdapter",
+            "sqlsrv" => "Phalcon\\DM\\Info\\Adapter\\SqlsrvAdapter",
         ];
     }
 }

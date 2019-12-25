@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Table;
+namespace Phalcon\DM\Table;
 
 class Exception extends \Exception
 {

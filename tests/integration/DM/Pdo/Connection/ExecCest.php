@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
 
 class ExecCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: exec()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: exec()
      *
      * @since  2019-12-11
      */

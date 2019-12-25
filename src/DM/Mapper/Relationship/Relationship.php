@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper\Relationship;
+namespace Phalcon\DM\Mapper\Relationship;
 
-use Cardoe\DM\Mapper\MapperSelect;
-use Cardoe\DM\Mapper\Record;
+use Phalcon\DM\Mapper\MapperSelect;
+use Phalcon\DM\Mapper\Record;
 use SplObjectStorage;
 
 abstract class Relationship

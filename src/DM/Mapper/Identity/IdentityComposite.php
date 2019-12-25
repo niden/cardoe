@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper\Identity;
+namespace Phalcon\DM\Mapper\Identity;
 
-use Cardoe\DM\Mapper\Exception;
-use Cardoe\DM\Table\Row;
+use Phalcon\DM\Mapper\Exception;
+use Phalcon\DM\Table\Row;
 use SplObjectStorage;
 
 class IdentityComposite extends IdentityMap

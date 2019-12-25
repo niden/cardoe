@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper;
+namespace Phalcon\DM\Mapper;
 
-use Cardoe\DM\Table\TableSelect;
+use Phalcon\DM\Table\TableSelect;
 
 abstract class MapperSelect extends TableSelect
 {

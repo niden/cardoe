@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Table;
+namespace Phalcon\DM\Table;
 
-use Cardoe\DM\Query\QueryFactory;
+use Phalcon\DM\Query\QueryFactory;
 
 class TableQueryFactory
 {

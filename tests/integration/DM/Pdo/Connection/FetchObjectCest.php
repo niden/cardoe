@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\Test\Fixtures\Resultset;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\Test\Fixtures\Resultset;
 use IntegrationTester;
 use stdClass;
 
 class FetchObjectCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: fetchObject()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: fetchObject()
      *
      * @since  2019-12-11
      */
@@ -46,7 +46,7 @@ class FetchObjectCest
     }
 
     /**
-     * Tests Cardoe\DM\Pdo\Connection :: fetchObject() - ctor
+     * Tests Phalcon\DM\Pdo\Connection :: fetchObject() - ctor
      *
      * @since  2019-11-16
      */

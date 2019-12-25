@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query;
+namespace Phalcon\DM\Query;
 
-use Cardoe\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Connection;
 
 abstract class Query
 {
@@ -40,7 +40,7 @@ abstract class Query
         $this->connection = $connection;
         $this->bind       = $bind;
 
-        $quoter       = 'Cardoe\\DM\\Query\\Quoter\\'
+        $quoter       = 'Phalcon\\DM\\Query\\Quoter\\'
             . ucfirst($this->connection->getDriverName())
             . 'Quoter';
         $this->quoter = new $quoter();

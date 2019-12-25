@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Orm\Transaction;
+namespace Phalcon\DM\Orm\Transaction;
 
-use Cardoe\DM\Mapper\Mapper;
-use Cardoe\DM\Mapper\Record;
+use Phalcon\DM\Mapper\Mapper;
+use Phalcon\DM\Mapper\Record;
 
 /**
  * Auto-begins a transaction on read or write, but does not commit or roll back.

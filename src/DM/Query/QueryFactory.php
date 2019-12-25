@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query;
+namespace Phalcon\DM\Query;
 
-use Cardoe\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Connection;
 
 class QueryFactory
 {

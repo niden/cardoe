@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query\Quoter;
+namespace Phalcon\DM\Query\Quoter;
 
 class PgsqlQuoter extends Quoter
 {

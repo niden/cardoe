@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,17 +9,17 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection\Decorated;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection\Decorated;
 
-use Cardoe\DM\Pdo\Connection\Decorated;
-use Cardoe\DM\Pdo\Profiler\Profiler;
+use Phalcon\DM\Pdo\Connection\Decorated;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
 use PDO;
 
 class ConstructCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection\Decorated :: __construct()
+     * Integration Tests Phalcon\DM\Pdo\Connection\Decorated :: __construct()
      *
      * @since  2019-12-12
      */

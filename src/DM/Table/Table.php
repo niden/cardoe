@@ -10,14 +10,14 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Table;
+namespace Phalcon\DM\Table;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\DM\Pdo\ConnectionLocator;
-use Cardoe\DM\Query\Delete;
-use Cardoe\DM\Query\Insert;
-use Cardoe\DM\Query\QueryFactory;
-use Cardoe\DM\Query\Update;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Query\Delete;
+use Phalcon\DM\Query\Insert;
+use Phalcon\DM\Query\QueryFactory;
+use Phalcon\DM\Query\Update;
 use PDOStatement;
 
 abstract class Table

@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Mapper\Relationship;
+namespace Phalcon\DM\Mapper\Relationship;
 
-use Cardoe\DM\Mapper\Exception;
-use Cardoe\DM\Mapper\MapperLocator;
-use Cardoe\DM\Mapper\MapperSelect;
-use Cardoe\DM\Mapper\Record;
-use Cardoe\DM\Mapper\RecordSet;
+use Phalcon\DM\Mapper\Exception;
+use Phalcon\DM\Mapper\MapperLocator;
+use Phalcon\DM\Mapper\MapperSelect;
+use Phalcon\DM\Mapper\Record;
+use Phalcon\DM\Mapper\RecordSet;
 use SplObjectStorage;
 
 class ManyToMany extends RegularRelationship

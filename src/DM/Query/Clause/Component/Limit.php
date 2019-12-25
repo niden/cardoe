@@ -10,7 +10,7 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query\Clause\Component;
+namespace Phalcon\DM\Query\Clause\Component;
 
 class Limit
 {

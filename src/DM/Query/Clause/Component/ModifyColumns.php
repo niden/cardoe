@@ -10,10 +10,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query\Clause\Component;
+namespace Phalcon\DM\Query\Clause\Component;
 
-use Cardoe\DM\Query\Bind;
-use Cardoe\DM\Query\Quoter\Quoter;
+use Phalcon\DM\Query\Bind;
+use Phalcon\DM\Query\Quoter\Quoter;
 
 abstract class ModifyColumns extends Component
 {

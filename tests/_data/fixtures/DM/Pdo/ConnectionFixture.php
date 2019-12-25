@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Fixtures\DM\Pdo;
+namespace Phalcon\Test\Fixtures\DM\Pdo;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\DM\Pdo\Profiler\ProfilerInterface;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 class ConnectionFixture extends Connection
 {

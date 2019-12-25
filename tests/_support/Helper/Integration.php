@@ -2,8 +2,8 @@
 
 namespace Helper;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\Test\Fixtures\Migrations\Setup;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\Test\Fixtures\Migrations\Setup;
 use Codeception\TestInterface;
 
 use function date;

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
@@ -9,15 +9,15 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Profiler\Profiler;
+namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
-use Cardoe\DM\Pdo\Profiler\Profiler;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
 
 class IsSetActiveCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Profiler\Profiler :: isActive()/setActive()
+     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: isActive()/setActive()
      *
      * @since  2019-12-11
      */

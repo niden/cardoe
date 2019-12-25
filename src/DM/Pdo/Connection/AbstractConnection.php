@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the Cardoe Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -14,13 +14,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Pdo\Connection;
+namespace Phalcon\DM\Pdo\Connection;
 
 use BadMethodCallException;
-use Cardoe\DM\Pdo\Exception\CannotBindValue;
-use Cardoe\DM\Pdo\Parser\ParserInterface;
-use Cardoe\DM\Pdo\Parser\SqliteParser;
-use Cardoe\DM\Pdo\Profiler\ProfilerInterface;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
+use Phalcon\DM\Pdo\Parser\ParserInterface;
+use Phalcon\DM\Pdo\Parser\SqliteParser;
+use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
 use PDOStatement;
 
@@ -837,7 +837,7 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     protected function newParser(string $driver): ParserInterface
     {
-        $class = sprintf("Cardoe\DM\Pdo\Parser\%sParser", ucfirst($driver));
+        $class = sprintf("Phalcon\DM\Pdo\Parser\%sParser", ucfirst($driver));
         if (!class_exists($class)) {
             $class = SqliteParser::class;
         }

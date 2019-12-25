@@ -10,9 +10,9 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Query\Clause\Component;
+namespace Phalcon\DM\Query\Clause\Component;
 
-use Cardoe\DM\Query\Bind;
+use Phalcon\DM\Query\Bind;
 
 class Conditions extends Component
 {

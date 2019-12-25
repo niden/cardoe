@@ -10,13 +10,13 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Orm;
+namespace Phalcon\DM\Orm;
 
-use Cardoe\DM\Mapper\MapperLocator;
-use Cardoe\DM\Mapper\MapperQueryFactory;
-use Cardoe\DM\Orm\Transaction\AutoCommit;
-use Cardoe\DM\Pdo\ConnectionLocator;
-use Cardoe\DM\Table\TableLocator;
+use Phalcon\DM\Mapper\MapperLocator;
+use Phalcon\DM\Mapper\MapperQueryFactory;
+use Phalcon\DM\Orm\Transaction\AutoCommit;
+use Phalcon\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Table\TableLocator;
 
 class AtlasBuilder
 {

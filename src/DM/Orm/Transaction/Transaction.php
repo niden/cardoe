@@ -10,11 +10,11 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Orm\Transaction;
+namespace Phalcon\DM\Orm\Transaction;
 
-use Cardoe\DM\Mapper\Mapper;
-use Cardoe\DM\Mapper\Record;
-use Cardoe\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Mapper\Mapper;
+use Phalcon\DM\Mapper\Record;
+use Phalcon\DM\Pdo\ConnectionLocator;
 
 abstract class Transaction
 {

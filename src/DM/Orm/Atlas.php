@@ -10,18 +10,18 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\DM\Orm;
+namespace Phalcon\DM\Orm;
 
-use Cardoe\DM\Mapper\Mapper;
-use Cardoe\DM\Mapper\MapperLocator;
-use Cardoe\DM\Mapper\MapperQueryFactory;
-use Cardoe\DM\Mapper\MapperSelect;
-use Cardoe\DM\Mapper\Record;
-use Cardoe\DM\Mapper\RecordSet;
-use Cardoe\DM\Orm\Transaction\AutoCommit;
-use Cardoe\DM\Orm\Transaction\Transaction;
-use Cardoe\DM\Pdo\ConnectionLocator;
-use Cardoe\DM\Table\TableLocator;
+use Phalcon\DM\Mapper\Mapper;
+use Phalcon\DM\Mapper\MapperLocator;
+use Phalcon\DM\Mapper\MapperQueryFactory;
+use Phalcon\DM\Mapper\MapperSelect;
+use Phalcon\DM\Mapper\Record;
+use Phalcon\DM\Mapper\RecordSet;
+use Phalcon\DM\Orm\Transaction\AutoCommit;
+use Phalcon\DM\Orm\Transaction\Transaction;
+use Phalcon\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Table\TableLocator;
 
 class Atlas
 {

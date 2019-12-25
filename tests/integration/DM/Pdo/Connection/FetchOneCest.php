@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Cardoe Framework.
+* This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -9,10 +9,10 @@
 
 declare(strict_types=1);
 
-namespace Cardoe\Test\Integration\DM\Pdo\Connection;
+namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Cardoe\DM\Pdo\Connection;
-use Cardoe\DM\Pdo\Exception\CannotBindValue;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Codeception\Example;
 use IntegrationTester;
 use stdClass;
@@ -20,7 +20,7 @@ use stdClass;
 class FetchOneCest
 {
     /**
-     * Integration Tests Cardoe\DM\Pdo\Connection :: fetchOne()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: fetchOne()
      *
      * @since  2019-12-11
      */
@@ -52,7 +52,7 @@ class FetchOneCest
     }
 
     /**
-     * Tests Cardoe\DM\Pdo\Connection :: fetchOne() - no result
+     * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - no result
      *
      * @since  2019-11-16
      */
@@ -78,7 +78,7 @@ class FetchOneCest
     }
 
     /**
-     * Tests Cardoe\DM\Pdo\Connection :: fetchOne() - bind types
+     * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - bind types
      *
      * @dataProvider getBindTypes
      * @since  2019-11-16
@@ -103,7 +103,7 @@ class FetchOneCest
     }
 
     /**
-     * Tests Cardoe\DM\Pdo\Connection :: fetchOne() - bind types exception
+     * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - bind types exception
      *
      * @since  2019-11-16
      */
