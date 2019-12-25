@@ -15,7 +15,6 @@ declare(strict_types=1);
  * @todo Until I figure this approach, this stays here and can be used for other
  *       tests in this namespace
  */
-declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Logger\Adapter\Syslog {
     function syslog($level, $message)
@@ -44,7 +43,7 @@ namespace Phalcon\Test\Unit\Logger\Adapter\Syslog {
         {
             $I->wantToTest('Logger\Adapter\Syslog - add()');
 
-            $streamName = getNewFileName('log', 'log');
+            $streamName = $I->getNewFileName('log', 'log');
 
             $adapter = new Syslog($streamName);
 

@@ -30,7 +30,7 @@ class WriteCest
     public function httpMessageStreamWrite(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - write()');
-        $fileName = getNewFileName();
+        $fileName = $I->getNewFileName();
         $fileName = logsDir($fileName);
         $stream   = new Stream($fileName, 'wb');
 
@@ -61,7 +61,7 @@ class WriteCest
                 'A valid resource is required.'
             ),
             function () use ($I) {
-                $fileName = getNewFileName();
+                $fileName = $I->getNewFileName();
                 $fileName = logsDir($fileName);
                 $stream   = new Stream($fileName, 'wb');
                 $stream->detach();
@@ -80,7 +80,7 @@ class WriteCest
     {
         $I->wantToTest('Http\Message\Stream - write() - exception not writable');
 
-        $fileName = getNewFileName();
+        $fileName = $I->getNewFileName();
         $fileName = logsDir($fileName);
         $stream   = new StreamFixture($fileName, 'wb');
 

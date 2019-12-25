@@ -26,6 +26,6 @@ class GetContentsCest
     {
         $I->wantToTest('Http\Message\Stream\Input - getContents()');
 
-        skipTest('Need implementation');
+        $I->skipTest('Need implementation');
     }
 }

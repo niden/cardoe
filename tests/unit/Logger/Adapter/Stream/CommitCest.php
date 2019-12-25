@@ -25,7 +25,7 @@ class CommitCest
     public function loggerAdapterStreamCommit(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - commit()');
-        $fileName   = getNewFileName('log', 'log');
+        $fileName   = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
@@ -39,7 +39,7 @@ class CommitCest
         $actual = $adapter->inTransaction();
         $I->assertFalse($actual);
 
-        safeDeleteFile($outputPath . $fileName);
+        $I->safeDeleteFile($outputPath . $fileName);
     }
 
     /**
@@ -48,7 +48,7 @@ class CommitCest
     public function loggerAdapterStreamCommitNoTransaction(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - commit() - no transaction');
-        $fileName   = getNewFileName('log', 'log');
+        $fileName   = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
 
         try {
@@ -64,6 +64,6 @@ class CommitCest
             $I->assertEquals($expected, $actual);
         }
 
-        safeDeleteFile($outputPath . $fileName);
+        $I->safeDeleteFile($outputPath . $fileName);
     }
 }

@@ -19,8 +19,6 @@ use UnitTester;
 
 use function dataDir;
 
-use function dataDir;
-
 class GetContentsCest
 {
     /**

@@ -26,7 +26,7 @@ class CloseCest
     public function loggerAdapterStreamClose(UnitTester $I)
     {
         $I->wantToTest('Logger\Adapter\Stream - close()');
-        $fileName   = getNewFileName('log', 'log');
+        $fileName   = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter    = new Stream($outputPath . $fileName);
 
@@ -41,6 +41,6 @@ class CloseCest
         $I->openFile($fileName);
         $I->seeInThisFile('Message 1');
 
-        safeDeleteFile($outputPath . $fileName);
+        $I->safeDeleteFile($outputPath . $fileName);
     }
 }

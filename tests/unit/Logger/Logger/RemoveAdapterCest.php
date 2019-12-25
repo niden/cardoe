@@ -27,8 +27,8 @@ class RemoveAdapterCest
     {
         $I->wantToTest('Logger - removeAdapter()');
 
-        $fileName1  = getNewFileName('log', 'log');
-        $fileName2  = getNewFileName('log', 'log');
+        $fileName1  = $I->getNewFileName('log', 'log');
+        $fileName2  = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
@@ -50,8 +50,8 @@ class RemoveAdapterCest
         $adapters = $logger->getAdapters();
         $I->assertCount($expected, $adapters);
 
-        safeDeleteFile($outputPath . $fileName1);
-        safeDeleteFile($outputPath . $fileName2);
+        $I->safeDeleteFile($outputPath . $fileName1);
+        $I->safeDeleteFile($outputPath . $fileName2);
     }
 
     /**
@@ -61,7 +61,7 @@ class RemoveAdapterCest
     {
         $I->wantToTest('Logger - removeAdapter() - unknown');
 
-        $fileName1  = getNewFileName('log', 'log');
+        $fileName1  = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
 
         try {
@@ -85,6 +85,6 @@ class RemoveAdapterCest
             $I->assertEquals($expected, $actual);
         }
 
-        safeDeleteFile($outputPath . $fileName1);
+        $I->safeDeleteFile($outputPath . $fileName1);
     }
 }

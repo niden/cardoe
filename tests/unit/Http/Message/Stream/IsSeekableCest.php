@@ -56,7 +56,7 @@ class IsSeekableCest
             'Http\Message\Stream - isSeekable() with "x" - ' . $example[0]
         );
 
-        $fileName = getNewFileName();
+        $fileName = $I->getNewFileName();
         $fileName = logsDir($fileName);
 
         $stream = new Stream($fileName, $example[0]);

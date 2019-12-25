@@ -30,7 +30,7 @@ class SetFormatterCest
     {
         $I->wantToTest('Logger\Adapter\Syslog - setFormatter()');
 
-        $streamName = getNewFileName('log', 'log');
+        $streamName = $I->getNewFileName('log', 'log');
 
         $adapter = new Syslog($streamName);
 

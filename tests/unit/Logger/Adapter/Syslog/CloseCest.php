@@ -28,7 +28,7 @@ class CloseCest
     {
         $I->wantToTest('Logger\Adapter\Syslog - close()');
 
-        $streamName = getNewFileName('log', 'log');
+        $streamName = $I->getNewFileName('log', 'log');
 
         $adapter = new Syslog($streamName);
 

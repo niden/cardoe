@@ -26,8 +26,8 @@ class ExcludeAdaptersCest
     {
         $I->wantToTest('Logger - excludeAdapters()');
 
-        $fileName1  = getNewFileName('log', 'log');
-        $fileName2  = getNewFileName('log', 'log');
+        $fileName1  = $I->getNewFileName('log', 'log');
+        $fileName2  = $I->getNewFileName('log', 'log');
         $outputPath = logsDir();
         $adapter1   = new Stream($outputPath . $fileName1);
         $adapter2   = new Stream($outputPath . $fileName2);
@@ -69,7 +69,7 @@ class ExcludeAdaptersCest
         $I->openFile($fileName2);
         $I->dontSeeInThisFile('Goodbye');
 
-        safeDeleteFile($fileName1);
-        safeDeleteFile($fileName2);
+        $I->safeDeleteFile($fileName1);
+        $I->safeDeleteFile($fileName2);
     }
 }
