@@ -13,7 +13,6 @@ namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
-use function var_dump;
 
 class FetchColCest
 {
