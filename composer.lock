@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "914999beaa7cc9d27f13704568958fcb",
+    "content-hash": "7c90921ce915c8e373ca1ac9f7b96fb2",
     "packages": [
         {
             "name": "pds/skeleton",
@@ -489,51 +489,6 @@
             "time": "2019-01-16T14:22:17+00:00"
         },
         {
-            "name": "codacy/coverage",
-            "version": "1.4.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/codacy/php-codacy-coverage.git",
-                "reference": "4988cd098db4d578681bfd3176071931ad475150"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/codacy/php-codacy-coverage/zipball/4988cd098db4d578681bfd3176071931ad475150",
-                "reference": "4988cd098db4d578681bfd3176071931ad475150",
-                "shasum": ""
-            },
-            "require": {
-                "gitonomy/gitlib": ">=1.0",
-                "php": ">=5.3.3",
-                "symfony/console": "~2.5|~3.0|~4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~6.5"
-            },
-            "bin": [
-                "bin/codacycoverage"
-            ],
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jakob Pupke",
-                    "email": "jakob.pupke@gmail.com"
-                }
-            ],
-            "description": "Sends PHP test coverage information to Codacy.",
-            "homepage": "https://github.com/codacy/php-codacy-coverage",
-            "time": "2018-03-22T16:43:39+00:00"
-        },
-        {
             "name": "codeception/codeception",
             "version": "3.1.2",
             "source": {
@@ -862,68 +817,6 @@
                 "webdriver"
             ],
             "time": "2019-06-13T08:02:18+00:00"
-        },
-        {
-            "name": "gitonomy/gitlib",
-            "version": "v1.2.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/gitonomy/gitlib.git",
-                "reference": "a0bea921266ad1c9626d712e7f8687dcc08ca528"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/gitonomy/gitlib/zipball/a0bea921266ad1c9626d712e7f8687dcc08ca528",
-                "reference": "a0bea921266ad1c9626d712e7f8687dcc08ca528",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.6 || ^7.0",
-                "symfony/process": "^3.4|^4.0|^5.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^5.7|^6.5|^7.0",
-                "psr/log": "^1.0"
-            },
-            "suggest": {
-                "psr/log": "Required to use loggers for reporting of execution"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Gitonomy\\Git\\": "src/Gitonomy/Git/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Graham Campbell",
-                    "email": "graham@alt-three.com"
-                },
-                {
-                    "name": "Julien Didier",
-                    "email": "genzo.wm@gmail.com"
-                },
-                {
-                    "name": "Grégoire Pineau",
-                    "email": "lyrixx@lyrixx.info"
-                },
-                {
-                    "name": "Alexandre Salomé",
-                    "email": "alexandre.salome@gmail.com"
-                }
-            ],
-            "description": "Library for accessing git",
-            "homepage": "http://gitonomy.com",
-            "time": "2019-12-08T12:42:25+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
