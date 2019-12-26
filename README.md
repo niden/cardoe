@@ -3,7 +3,7 @@ ADR Test Bed
 
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat-square)](https://github.com/php-pds/skeleton)
 
-### Implemented
+## Implemented
 
 | Standard                                                                  | Description            |
 |---------------------------------------------------------------------------|------------------------|
@@ -16,9 +16,9 @@ ADR Test Bed
 | ![PSR-16](https://img.shields.io/badge/PSR-16-blue.svg?style=flat-square) | `Phalcon\Cache`        |
 | ![PSR-17](https://img.shields.io/badge/PSR-17-blue.svg?style=flat-square) | `Phalcon\Http\Message` |
 
-### To do
-- PSR-6   Caching Interface
-- PSR-11  Container Interface
-- PSR-14  Event Dispatcher
-- PSR-15  HTTP Handlers
-- PSR-18  HTTP Client
+## To do
+- PSR-6 Caching Interface
+- PSR-11 Container Interface
+- PSR-14 Event Dispatcher
+- PSR-15 HTTP Handlers
+- PSR-18 HTTP Client
