@@ -3,7 +3,8 @@ ADR Test Bed
 
 [![PDS Skeleton](https://img.shields.io/badge/pds-skeleton-blue.svg?style=flat-square)](https://github.com/php-pds/skeleton)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/196dff09b06b46958ff9dd205e74c537)](https://www.codacy.com/manual/niden/cardoe?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=niden/cardoe&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/196dff09b06b46958ff9dd205e74c537)](https://www.codacy.com/manual/niden/cardoe?utm_source=github.com&utm_medium=referral&utm_content=niden/cardoe&utm_campaign=Badge_Coverage)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/niden/cardoe/badges/quality-score.png?b=orm-dm)](https://scrutinizer-ci.com/g/niden/cardoe/?branch=orm-dm)
+[![Code Coverage](https://scrutinizer-ci.com/g/niden/cardoe/badges/coverage.png?b=orm-dm)](https://scrutinizer-ci.com/g/niden/cardoe/?branch=orm-dm)
 
 ## Implemented
 
