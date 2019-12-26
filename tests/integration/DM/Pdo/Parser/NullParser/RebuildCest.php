@@ -12,18 +12,27 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\DM\Pdo\Parser\NullParser;
 
 use IntegrationTester;
+use Phalcon\DM\Pdo\Parser\NullParser;
+use Phalcon\Test\Fixtures\Traits\DMPdoParserTrait;
 
 class RebuildCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\NullParser :: rebuild()
+     * Integration Tests Phalcon\DM\Pdo\Parser\NullParser :: rebuild() - backticks
      *
-     * @since  2019-12-11
+     * @since  2019-12-25
      */
-    public function dMPdoParserNullParserRebuild(IntegrationTester $I)
+    public function dMPdoParserNullParserRebuildBackticks(IntegrationTester $I)
     {
         $I->wantToTest('DM\Pdo\Parser\NullParser - rebuild()');
 
-        $I->skipTest('Need implementation');
+        $parser = new NullParser();
+
+        $sql        = 'select `single quote``s :id``';
+        $parameters = ['id' => ['one', 'two']];
+
+        [$statement, $values] = $parser->rebuild($sql, $parameters);
+        $I->assertEquals($sql, $statement);
+        $I->assertEquals($parameters, $values);
     }
 }
