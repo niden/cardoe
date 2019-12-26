@@ -77,7 +77,7 @@ jobs:
 
       - name: Run Unit Tests
         run: |
-          export CODACY_PROJECT_TOKEN=${{ secrets.CODACY_PROJECT_TOKEN }}
+          export CODACY_PROJECT_TOKEN={{ secrets.CODACY_PROJECT_TOKEN }}
           vendor/bin/codecept build
           vendor/bin/codecept run unit --coverage --coverage-xml
 
