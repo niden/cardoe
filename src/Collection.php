@@ -142,14 +142,6 @@ class Collection implements
 
     /**
      * Get the element from the collection
-     *
-     * @param string     $element
-     * @param mixed|null $defaultValue
-     *
-     * @return mixed
-     */
-    /**
-     * Get the element from the collection
      */
     /**
      * @param string      $element
