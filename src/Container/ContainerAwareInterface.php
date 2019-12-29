@@ -21,7 +21,6 @@ interface ContainerAwareInterface
      * @return ContainerInterface
      */
     public function getContainer(): ContainerInterface;
-        var_dump($instanceOf);
 
     /**
      * Sets the container
