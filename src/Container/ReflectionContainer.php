@@ -39,10 +39,11 @@ class ReflectionContainer extends AbstractResolver implements ContainerInterface
      * @param string $id Identifier of the entry to look for.
      * @param array  $arguments
      *
-     * @throws NotFoundExceptionInterface  No entry was found for **this** identifier.
+     * @return mixed Entry.
      * @throws ContainerExceptionInterface Error while retrieving the entry.
      *
-     * @return mixed Entry.
+     * @throws NotFoundExceptionInterface  No entry was found for **this**
+     *                                     identifier.
      * @throws ReflectionException
      */
     public function get($id, array $arguments = [])
@@ -77,11 +78,12 @@ class ReflectionContainer extends AbstractResolver implements ContainerInterface
     }
 
     /**
-     * Returns true if the container can return an entry for the given identifier.
-     * Returns false otherwise.
+     * Returns true if the container can return an entry for the given
+     * identifier. Returns false otherwise.
      *
-     * `has($id)` returning true does not mean that `get($id)` will not throw an exception.
-     * It does however mean that `get($id)` will not throw a `NotFoundExceptionInterface`.
+     * `has($id)` returning true does not mean that `get($id)` will not throw
+     * an exception. It does however mean that `get($id)` will not throw a
+     * `NotFoundExceptionInterface`.
      *
      * @param string $id Identifier of the entry to look for.
      *
