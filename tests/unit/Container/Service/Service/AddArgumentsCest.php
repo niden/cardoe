@@ -17,25 +17,31 @@ use Phalcon\Test\Fixtures\Container\ThreeClass;
 use Phalcon\Test\Fixtures\Container\TwoClass;
 use UnitTester;
 
-class AddArgumentCest
+class AddArgumentsCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Service :: addArgument()
+     * Unit Tests Phalcon\Container\Service\Service :: addArguments()
      *
      * @since  2019-12-28
      */
-    public function containerServiceServiceAddArgument(UnitTester $I)
+    public function containerServiceServiceAddArguments(UnitTester $I)
     {
-        $I->wantToTest('Container\Service\Service - addArgument()');
+        $I->wantToTest('Container\Service\Service - addArguments()');
 
         $service = new Service(
             'threeService',
             new ThreeClass()
         );
-        $actual = $service->addArgument(new TwoClass());
+        $actual = $service->addArguments(
+            [
+                new TwoClass(),
+                "optional set"
+            ]
+        );
         $I->assertInstanceOf(Service::class, $actual);
 
         $actual = $service->resolveService();
         $I->assertInstanceOf(OneClass::class, $actual);
+        $I->assertEquals("optional set", $actual->optional);
     }
 }
