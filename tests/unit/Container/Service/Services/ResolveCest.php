@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Service\Services;
 
+use Phalcon\Container;
+use Phalcon\Container\Service\Services;
+use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
 class ResolveCest
@@ -24,6 +27,21 @@ class ResolveCest
     {
         $I->wantToTest('Container\Service\Services - resolve()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container();
+        $services  = new Services();
+        $services->setContainer($container);
+
+        $services->add('one', OneClass::class, true);
+        $services->add('two', OneClass::class);
+
+        $oneOne   = $services->resolve('one');
+        $oneTwo   = $services->resolve('one');
+        $oneThree = $services->resolve('one', true);
+        $twoOne   = $services->resolve('two');
+        $twoTwo   = $services->resolve('two');
+
+        $I->assertEquals(spl_object_hash($oneOne), spl_object_hash($oneTwo));
+        $I->assertNotEquals(spl_object_hash($oneTwo), spl_object_hash($oneThree));
+        $I->assertNotEquals(spl_object_hash($twoOne), spl_object_hash($twoTwo));
     }
 }

@@ -174,53 +174,30 @@ class Service extends AbstractResolver implements ResolverInterface, ServiceInte
      *
      * @param bool $isFresh
      *
-     * @return mixed
+     * @return mixed|object|string|null
+     * @throws ReflectionException
      */
     public function resolveService(bool $isFresh = false)
     {
-        try {
-            if ($this->isShared() && $this->resolved !== null && $isFresh === false) {
-                return $this->resolved;
-            }
-
-            $compiled = $this->compiled;
-
-            if (is_callable($compiled)) {
-                $compiled = call_user_func_array(
-                    $compiled,
-                    $this->resolveArguments($this->arguments)
-                );
-            }
-
-            if ($compiled instanceof RawInterface) {
-                $this->resolved = $compiled->get();
-
-                return $compiled->get();
-            }
-
-            if ($compiled instanceof ClassNameInterface) {
-                $compiled = $compiled->get();
-            }
-
-            if (is_string($compiled) && class_exists($compiled)) {
-                $class    = new ReflectionClass($compiled);
-                $compiled = $class->newInstanceArgs(
-                    $this->resolveArguments($this->arguments)
-                );
-            }
-
-            if (is_object($compiled)) {
-                $compiled = $this->callMethods($compiled);
-            }
-
-            $this->resolved = $compiled;
-
-            return $compiled;
-        } catch (ReflectionException $ex) {
-            throw new ContainerException(
-                "Error resolving definition " . $ex->getMessage()
-            );
+        if ($this->isShared() && $this->resolved !== null && $isFresh === false) {
+            return $this->resolved;
         }
+
+        $compiled = $this->checkCompiledCallable($this->compiled);
+
+        if ($compiled instanceof RawInterface) {
+            $this->resolved = $compiled->get();
+
+            return $compiled->get();
+        }
+
+        $compiled = $this->checkCompiledClass($compiled);
+        $compiled = $this->checkCompiledString($compiled);
+        $compiled = $this->checkCompiledObject($compiled);
+
+        $this->resolved = $compiled;
+
+        return $compiled;
     }
 
     /**
@@ -285,5 +262,71 @@ class Service extends AbstractResolver implements ResolverInterface, ServiceInte
         }
 
         return $instance;
+    }
+
+    /**
+     * @param $compiled
+     *
+     * @return mixed
+     * @throws ReflectionException
+     */
+    private function checkCompiledCallable($compiled)
+    {
+        if (is_callable($compiled)) {
+            $compiled = call_user_func_array(
+                $compiled,
+                $this->resolveArguments($this->arguments)
+            );
+        }
+
+        return $compiled;
+    }
+
+    /**
+     * @param $compiled
+     *
+     * @return string
+     */
+    private function checkCompiledClass($compiled)
+    {
+        if ($compiled instanceof ClassNameInterface) {
+            $compiled = $compiled->get();
+        }
+
+        return $compiled;
+    }
+
+    /**
+     * @param $compiled
+     *
+     * @return object
+     * @throws ReflectionException
+     */
+    private function checkCompiledObject($compiled)
+    {
+        if (is_object($compiled)) {
+            $compiled = $this->callMethods($compiled);
+        }
+
+        return $compiled;
+    }
+
+    /**
+     * @param $compiled
+     *
+     * @return object
+     * @throws ReflectionException
+     */
+    private function checkCompiledString($compiled)
+    {
+
+        if (is_string($compiled) && class_exists($compiled)) {
+            $class    = new ReflectionClass($compiled);
+            $compiled = $class->newInstanceArgs(
+                $this->resolveArguments($this->arguments)
+            );
+        }
+
+        return $compiled;
     }
 }

@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Service\Services;
 
+use Phalcon\Container;
+use Phalcon\Container\Service\Services;
+use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
 class AddCest
@@ -24,6 +27,31 @@ class AddCest
     {
         $I->wantToTest('Container\Service\Services - add()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container();
+        $services  = new Services();
+        $services->setContainer($container);
+
+        $services->add('one', OneClass::class, true);
+        $services->add('two', OneClass::class);
+
+        $oneOne = $services->get('one');
+        $oneTwo = $services->get('one');
+        $twoOne = $services->get('two');
+        $twoTwo = $services->get('two');
+
+        $I->assertEquals("one", $oneOne->getName());
+        $I->assertEquals("one", $oneTwo->getName());
+        $I->assertEquals("two", $twoOne->getName());
+        $I->assertEquals("two", $twoTwo->getName());
+
+        $I->assertEquals(
+            spl_object_hash($oneOne->resolveService()),
+            spl_object_hash($oneTwo->resolveService())
+        );
+
+        $I->assertNotEquals(
+            spl_object_hash($twoOne->resolveService()),
+            spl_object_hash($twoTwo->resolveService())
+        );
     }
 }

@@ -109,6 +109,7 @@ class ReflectionContainer extends AbstractResolver implements ContainerInterface
         }
 
         if (is_array($callable)) {
+            /** @var mixed $class */
             $class = $callable[0];
             $name  = $callable[1] ?? null;
 

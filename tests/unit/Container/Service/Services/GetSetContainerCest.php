@@ -13,27 +13,24 @@ namespace Phalcon\Test\Unit\Container\Service\Services;
 
 use Phalcon\Container;
 use Phalcon\Container\Service\Services;
-use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
-class HasCest
+class GetSetContainerCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Services :: has()
+     * Unit Tests Phalcon\Container\Service\Services :: getContainer()/setContainer()
      *
      * @since  2019-12-28
+     * @param UnitTester $I
      */
-    public function containerServiceServicesHas(UnitTester $I)
+    public function containerServiceServicesGetSetContainer(UnitTester $I)
     {
-        $I->wantToTest('Container\Service\Services - has()');
+        $I->wantToTest('Container\Service\Services - getContainer()/setContainer()');
 
         $container = new Container();
         $services  = new Services();
+
         $services->setContainer($container);
-
-        $services->add('one', OneClass::class);
-
-        $I->assertTrue($services->has('one'));
-        $I->assertFalse($services->has('unknown'));
+        $I->assertEquals($container, $services->getContainer());
     }
 }

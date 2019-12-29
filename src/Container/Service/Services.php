@@ -44,9 +44,7 @@ class Services extends AbstractContainerAware implements ServicesInterface
                 $shared     = false;
             }
 
-            if ($definition instanceof ServiceInterface) {
-                $this->add($name, $definition, $shared);
-            }
+            $this->add($name, $definition, $shared);
         }
     }
 

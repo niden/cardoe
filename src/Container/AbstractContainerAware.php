@@ -24,7 +24,7 @@ abstract class AbstractContainerAware implements ContainerAwareInterface
     /**
      * @var ContainerInterface
      */
-    protected $container;
+    protected $container = null;
 
     /**
      * Returns the container
@@ -34,7 +34,7 @@ abstract class AbstractContainerAware implements ContainerAwareInterface
      */
     public function getContainer(): ContainerInterface
     {
-        if ($this->container instanceof ContainerInterface) {
+        if (null !== $this->container) {
             return $this->container;
         }
 

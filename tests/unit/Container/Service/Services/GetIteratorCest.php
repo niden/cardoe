@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Service\Services;
 
+use Phalcon\Container;
+use Phalcon\Container\Service\Services;
+use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
 class GetIteratorCest
@@ -24,6 +27,18 @@ class GetIteratorCest
     {
         $I->wantToTest('Container\Service\Services - getIterator()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container();
+        $services = new Services(
+            [
+                'one' => [
+                    'definition' => OneClass::class,
+                    'shared'     => true,
+                ],
+                'two' => OneClass::class,
+            ]
+        );
+        $services->setContainer($container);
+
+        $I->assertCount(2, $services->getIterator());
     }
 }

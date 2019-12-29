@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Service\Services;
 
+use Phalcon\Container;
+use Phalcon\Container\Service\Service;
+use Phalcon\Container\Service\Services;
+use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
 class GetCest
@@ -24,6 +28,35 @@ class GetCest
     {
         $I->wantToTest('Container\Service\Services - get()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container();
+        $services  = new Services();
+        $services->setContainer($container);
+
+        $services->add('one', OneClass::class);
+        $I->assertTrue($services->has('one'));
+
+        $class = $services->get('one');
+        $I->assertInstanceOf(Service::class, $class);
+        $I->assertEquals("one", $class->getName());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container\Service\Services :: get() - exception
+     *
+     * @since  2019-12-28
+     */
+    public function containerServiceServicesGetException(UnitTester $I)
+    {
+        $I->wantToTest('Container\Service\Services - get() - exception');
+
+        $I->expectThrowable(
+            new Container\Exception\NotFoundException(
+                '[unknown] is not a registered definition'
+            ),
+            function () {
+                $services = new Services();
+                $services->get('unknown');
+            }
+        );
     }
 }
