@@ -11,22 +11,20 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Service;
 
-use ArrayIterator;
 use Phalcon\Container\AbstractContainerAware;
 use Phalcon\Container\Exception\NotFoundException;
-use Traversable;
 
 /**
  * Class Services
  *
- * @property ServiceInterface[] $data
+ * @property ServiceInterface[] $store
  */
 class Services extends AbstractContainerAware implements ServicesInterface
 {
     /**
      * @var ServiceInterface[]
      */
-    protected $data = [];
+    protected $store = [];
 
     /**
      * Services constructor.
@@ -63,7 +61,7 @@ class Services extends AbstractContainerAware implements ServicesInterface
             $definition = new Service($name, $definition);
         }
 
-        $this->data[$name] = $definition
+        $this->store[$name] = $definition
             ->setName($name)
             ->setShared($shared)
         ;
@@ -81,7 +79,7 @@ class Services extends AbstractContainerAware implements ServicesInterface
     public function get(string $name): ServiceInterface
     {
         if ($this->has($name)) {
-            $definition = $this->data[$name];
+            $definition = $this->store[$name];
             $definition->setContainer($this->getContainer());
 
             return $definition;
@@ -96,14 +94,6 @@ class Services extends AbstractContainerAware implements ServicesInterface
     }
 
     /**
-     * Returns the iterator of the class
-     */
-    public function getIterator(): Traversable
-    {
-        return new ArrayIterator($this->data);
-    }
-
-    /**
      * Checks if a definition exists in the internal collection
      *
      * @param string $name
@@ -112,7 +102,7 @@ class Services extends AbstractContainerAware implements ServicesInterface
      */
     public function has(string $name): bool
     {
-        return isset($this->data[$name]);
+        return isset($this->store[$name]);
     }
 
     /**
@@ -126,5 +116,13 @@ class Services extends AbstractContainerAware implements ServicesInterface
     public function resolve(string $name, bool $isFresh = false)
     {
         return $this->get($name)->resolveService($isFresh);
+    }
+
+    /**
+     * Returns the internal array
+     */
+    public function toArray(): array
+    {
+        return $this->store;
     }
 }

@@ -76,7 +76,7 @@ abstract class AbstractResolver extends AbstractContainerAware
      */
     public function resolveArguments(array $arguments): array
     {
-        $resolved  = [];
+        $resolved = [];
         foreach ($arguments as $index => $argument) {
             if ($argument instanceof RawInterface) {
                 $resolved[$index] = $argument->get();

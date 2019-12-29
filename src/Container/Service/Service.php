@@ -15,7 +15,6 @@ use Phalcon\Container\Argument\AbstractResolver;
 use Phalcon\Container\Argument\ClassNameInterface;
 use Phalcon\Container\Argument\RawInterface;
 use Phalcon\Container\Argument\ResolverInterface;
-use Phalcon\Container\Exception\ContainerException;
 use ReflectionClass;
 use ReflectionException;
 

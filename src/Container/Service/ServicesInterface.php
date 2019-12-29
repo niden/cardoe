@@ -11,13 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Service;
 
-use IteratorAggregate;
 use Phalcon\Container\ContainerAwareInterface;
 
 /**
  * Interface ServicesInterface
  */
-interface ServicesInterface extends ContainerAwareInterface, IteratorAggregate
+interface ServicesInterface extends ContainerAwareInterface
 {
     /**
      * Adds a definition
@@ -57,4 +56,9 @@ interface ServicesInterface extends ContainerAwareInterface, IteratorAggregate
      * @return mixed
      */
     public function resolve(string $name, bool $isFresh = false);
+
+    /**
+     * Returns the internal array
+     */
+    public function toArray(): array;
 }
