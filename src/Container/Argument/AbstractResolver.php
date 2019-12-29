@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Container\Argument;
 
 use Phalcon\Container\AbstractContainerAware;
+use Phalcon\Container\Exception\ContainerException;
 use Phalcon\Container\Exception\NotFoundException;
 use ReflectionException;
 use ReflectionFunctionAbstract;
@@ -71,13 +72,15 @@ abstract class AbstractResolver extends AbstractContainerAware
      * @param array $arguments
      *
      * @return array
+     * @throws ReflectionException
      */
     public function resolveArguments(array $arguments): array
     {
-        $resolved = [];
-        foreach ($arguments as $argument) {
+        $container = null;
+        $resolved  = [];
+        foreach ($arguments as $index => $argument) {
             if ($argument instanceof RawInterface) {
-                $resolved[] = $argument->get();
+                $resolved[$index] = $argument->get();
                 continue;
             }
 
@@ -86,21 +89,27 @@ abstract class AbstractResolver extends AbstractContainerAware
             }
 
             if (!is_string($argument)) {
+                $resolved[$index] = $argument;
                 continue;
             }
 
-            $container = $this->getContainer();
+            try {
+                $container = $this->getContainer();
+            } catch (ContainerException $e) {
+                if ($this instanceof ReflectionContainer) {
+                    $container = $this;
+                }
+            }
 
-            if ($container->has($argument)) {
+            if (null !== $container && $container->has($argument)) {
                 $argument = $container->get($argument);
-
 
                 if ($argument instanceof RawInterface) {
                     $argument = $argument->get();
                 }
             }
 
-            $resolved[] = $argument;
+            $resolved[$index] = $argument;
         }
 
         return $resolved;
