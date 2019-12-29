@@ -41,9 +41,9 @@ class ConstructCest
         $I->wantToTest('Container\Service\Services - __construct() - service');
 
         $container = new Container();
-        $services = new Services(
+        $services  = new Services(
             [
-                'one' => OneClass::class
+                'one' => OneClass::class,
             ]
         );
         $services->setContainer($container);
@@ -62,7 +62,7 @@ class ConstructCest
         $I->wantToTest('Container\Service\Services - __construct() - services');
 
         $container = new Container();
-        $services = new Services(
+        $services  = new Services(
             [
                 'one' => OneClass::class,
                 'two' => OneClass::class,
@@ -77,7 +77,8 @@ class ConstructCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Service\Services :: __construct() - services shared
+     * Unit Tests Phalcon\Container\Service\Services :: __construct() -
+     * services shared
      *
      * @since  2019-12-28
      */
@@ -86,7 +87,7 @@ class ConstructCest
         $I->wantToTest('Container\Service\Services - __construct() - services shared');
 
         $container = new Container();
-        $services = new Services(
+        $services  = new Services(
             [
                 'one' => [
                     'definition' => OneClass::class,
@@ -102,10 +103,10 @@ class ConstructCest
         $I->assertTrue($services->has('two'));
         $I->assertEquals("two", $services->get('two')->getName());
 
-        $oneOne   = $services->resolve('one');
-        $oneTwo   = $services->resolve('one');
-        $twoOne   = $services->resolve('two');
-        $twoTwo   = $services->resolve('two');
+        $oneOne = $services->resolve('one');
+        $oneTwo = $services->resolve('one');
+        $twoOne = $services->resolve('two');
+        $twoTwo = $services->resolve('two');
 
         $I->assertEquals(spl_object_hash($oneOne), spl_object_hash($oneTwo));
         $I->assertNotEquals(spl_object_hash($twoOne), spl_object_hash($twoTwo));

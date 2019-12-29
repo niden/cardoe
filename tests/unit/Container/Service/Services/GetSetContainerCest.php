@@ -18,10 +18,12 @@ use UnitTester;
 class GetSetContainerCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Services :: getContainer()/setContainer()
+     * Unit Tests Phalcon\Container\Service\Services ::
+     * getContainer()/setContainer()
+     *
+     * @param UnitTester $I
      *
      * @since  2019-12-28
-     * @param UnitTester $I
      */
     public function containerServiceServicesGetSetContainer(UnitTester $I)
     {

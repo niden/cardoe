@@ -32,7 +32,7 @@ class AddArgumentCest
             'threeService',
             new ThreeClass()
         );
-        $actual = $service->addArgument(new TwoClass());
+        $actual  = $service->addArgument(new TwoClass());
         $I->assertInstanceOf(Service::class, $actual);
 
         $actual = $service->resolveService();

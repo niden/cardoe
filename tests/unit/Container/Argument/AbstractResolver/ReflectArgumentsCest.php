@@ -29,14 +29,14 @@ class ReflectArgumentsCest
     {
         $I->wantToTest('Container\Argument\AbstractResolver - reflectArguments()');
 
-        $method   = new ArgumentResolverReflectArgumentsMethod();
-        $resolver = new ArgumentResolver();
+        $method    = new ArgumentResolverReflectArgumentsMethod();
+        $resolver  = new ArgumentResolver();
         $container = Stub::make(
             Container::class,
             [
                 'get' => function () {
                     return false;
-                }
+                },
             ]
         );
 

@@ -20,7 +20,8 @@ use UnitTester;
 class GetSetCompiledCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Service :: getCompiled()/setCompiled()
+     * Unit Tests Phalcon\Container\Service\Service ::
+     * getCompiled()/setCompiled()
      *
      * @since  2019-12-28
      */
@@ -38,7 +39,8 @@ class GetSetCompiledCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Service\Service :: getCompiled()/setCompiled()
+     * Unit Tests Phalcon\Container\Service\Service ::
+     * getCompiled()/setCompiled()
      *
      * @since  2019-12-28
      */

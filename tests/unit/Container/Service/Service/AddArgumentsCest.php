@@ -32,10 +32,10 @@ class AddArgumentsCest
             'threeService',
             new ThreeClass()
         );
-        $actual = $service->addArguments(
+        $actual  = $service->addArguments(
             [
                 new TwoClass(),
-                "optional set"
+                "optional set",
             ]
         );
         $I->assertInstanceOf(Service::class, $actual);

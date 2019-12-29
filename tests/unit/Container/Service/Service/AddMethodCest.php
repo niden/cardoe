@@ -29,7 +29,7 @@ class AddMethodCest
     {
         $I->wantToTest('Container\Service\Service - addMethod()');
 
-        $two = new TwoClass();
+        $two       = new TwoClass();
         $container = Stub::make(
             Container::class,
             [
@@ -42,7 +42,7 @@ class AddMethodCest
                     }
 
                     return null;
-                }
+                },
             ]
         );
 

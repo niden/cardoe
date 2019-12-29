@@ -18,7 +18,8 @@ use UnitTester;
 class GetSetContainerCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Service :: getContainer()/setContainer()
+     * Unit Tests Phalcon\Container\Service\Service ::
+     * getContainer()/setContainer()
      *
      * @since  2019-12-28
      */

@@ -26,11 +26,11 @@ class ResolveServiceCest
     /**
      * Unit Tests Phalcon\Container\Service\Service :: resolveService()
      *
-     * @since 2019-12-28
      * @param UnitTester $I
      * @param Example    $example
      *
      * @dataProvider getExample
+     * @since        2019-12-28
      */
     public function containerServiceServiceResolveService(UnitTester $I, Example $example)
     {
@@ -57,8 +57,9 @@ class ResolveServiceCest
     /**
      * Unit Tests Phalcon\Container\Service\Service :: resolveService() - shared
      *
-     * @since 2019-12-28
      * @param UnitTester $I
+     *
+     * @since 2019-12-28
      */
     public function containerServiceServiceResolveServiceShared(UnitTester $I)
     {

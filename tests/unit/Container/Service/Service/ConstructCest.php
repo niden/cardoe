@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Container\Service\Service;
 
 use Phalcon\Container\Service\Service;
+use Phalcon\Container\Service\ServiceInterface;
 use UnitTester;
 
 class ConstructCest
@@ -27,6 +28,6 @@ class ConstructCest
 
         $service = new Service('helloService');
 
-        $I->assertInstanceOf(Service::class, $service);
+        $I->assertInstanceOf(ServiceInterface::class, $service);
     }
 }

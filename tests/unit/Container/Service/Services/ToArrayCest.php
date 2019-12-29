@@ -16,19 +16,19 @@ use Phalcon\Container\Service\Services;
 use Phalcon\Test\Fixtures\Container\OneClass;
 use UnitTester;
 
-class GetIteratorCest
+class ToArrayCest
 {
     /**
-     * Unit Tests Phalcon\Container\Service\Services :: getIterator()
+     * Unit Tests Phalcon\Container\Service\Services :: toArray()
      *
      * @since  2019-12-28
      */
-    public function containerServiceServicesGetIterator(UnitTester $I)
+    public function containerServiceServicesToArray(UnitTester $I)
     {
-        $I->wantToTest('Container\Service\Services - getIterator()');
+        $I->wantToTest('Container\Service\Services - toArray()');
 
         $container = new Container();
-        $services = new Services(
+        $services  = new Services(
             [
                 'one' => [
                     'definition' => OneClass::class,
@@ -38,7 +38,7 @@ class GetIteratorCest
             ]
         );
         $services->setContainer($container);
-
-        $I->assertCount(2, $services->getIterator());
+        $I->assertIsArray($services->toArray());
+        $I->assertCount(2, $services->toArray());
     }
 }
