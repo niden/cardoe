@@ -52,10 +52,7 @@ class ResolveArgumentsCest
         $arguments = $resolver->resolveArguments($example['arguments']);
 
         $I->assertEquals($example['argument1'], $arguments[0]);
-        $I->assertEquals($example['issetArg2'], isset($arguments[1]));
-        if (isset($arguments[1])) {
-            $I->assertEquals($example['argument2'], $arguments[1]);
-        }
+        $I->assertEquals($example['argument2'], $arguments[1]);
     }
 
     /**
@@ -108,7 +105,6 @@ class ResolveArgumentsCest
                 },
                 'arguments' => ['one', 'two'],
                 'argument1' => $resolver,
-                'issetArg2' => true,
                 'argument2' => 'two',
             ],
             [
@@ -126,8 +122,7 @@ class ResolveArgumentsCest
                 },
                 'arguments' => ['one', true],
                 'argument1' => $resolver,
-                'issetArg2' => false,
-                'argument2' => 'not set',
+                'argument2' => true,
             ],
             [
                 'message'   => 'argument raw',
@@ -147,7 +142,6 @@ class ResolveArgumentsCest
                     new Raw('raw2'),
                 ],
                 'argument1' => 'raw1',
-                'issetArg2' => true,
                 'argument2' => 'raw2',
             ],
             [
@@ -168,7 +162,6 @@ class ResolveArgumentsCest
                     new ClassName('class2'),
                 ],
                 'argument1' => $class,
-                'issetArg2' => true,
                 'argument2' => 'class2',
             ],
         ];
