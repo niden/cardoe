@@ -3,36 +3,29 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * (c) Phalcon Team <team@phalcon.io>
- *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
 declare(strict_types=1);
 
-namespace Phalcon\Security\JWT;
+namespace Phalcon\Http\JWT;
 
 use Phalcon\Collection;
 use Phalcon\Helper\Base64;
 use Phalcon\Helper\Json;
-use Phalcon\Security\JWT\Exceptions\ValidatorException;
-use Phalcon\Security\JWT\Signer\SignerInterface;
-use Phalcon\Security\JWT\Token\Enum;
-use Phalcon\Security\JWT\Token\Item;
-use Phalcon\Security\JWT\Token\Signature;
-use Phalcon\Security\JWT\Token\Token;
-
-use function is_array;
-use function is_string;
-use function preg_match;
-use function time;
+use Phalcon\Http\JWT\Exceptions\ValidatorException;
+use Phalcon\Http\JWT\Signer\SignerInterface;
+use Phalcon\Http\JWT\Token\Enum;
+use Phalcon\Http\JWT\Token\Item;
+use Phalcon\Http\JWT\Token\Signature;
+use Phalcon\Http\JWT\Token\Token;
 
 /**
  * Class Builder
  *
  * @property Collection      $claims
- * @property Collection      $jose
+ * @property Collection      $headers
  * @property string          $passphrase
  * @property SignerInterface $signer
  *
@@ -48,7 +41,7 @@ class Builder
     /**
      * @var Collection
      */
-    private $jose;
+    private $headers;
 
     /**
      * @var string
@@ -70,7 +63,7 @@ class Builder
     ) {
         $this->init();
         $this->signer = $signer;
-        $this->jose->set(
+        $this->headers->set(
             Enum::ALGO,
             $this->signer->getAlgHeader()
         );
@@ -83,7 +76,7 @@ class Builder
     {
         $this->passphrase = "";
         $this->claims     = new Collection();
-        $this->jose       = new Collection(
+        $this->headers    = new Collection(
             [
                 Enum::TYPE => "JWT",
                 Enum::ALGO => "none",
@@ -114,14 +107,10 @@ class Builder
      */
     public function getContentType(): ?string
     {
-        /** @var string $result */
-        $result = $this->jose->get(
-            Enum::CONTENT_TYPE,
-            null,
-            "string"
-        );
+        /** @var string|null $contentType */
+        $contentType = $this->headers->get(Enum::CONTENT_TYPE, null, "string");
 
-        return $result;
+        return $contentType;
     }
 
     /**
@@ -129,14 +118,10 @@ class Builder
      */
     public function getExpirationTime(): ?int
     {
-        /** @var int|null $result */
-        $result = $this->claims->get(
-            Enum::EXPIRATION_TIME,
-            null,
-            "int"
-        );
+        /** @var int|null $time */
+        $time = $this->claims->get(Enum::EXPIRATION_TIME, null, "int");
 
-        return $result;
+        return $time;
     }
 
     /**
@@ -144,7 +129,7 @@ class Builder
      */
     public function getHeaders(): array
     {
-        return $this->jose->toArray();
+        return $this->headers->toArray();
     }
 
     /**
@@ -152,14 +137,10 @@ class Builder
      */
     public function getId(): ?string
     {
-        /** @var string $result */
-        $result = $this->claims->get(
-            Enum::ID,
-            null,
-            "string"
-        );
+        /** @var string|null $id */
+        $id = $this->claims->get(Enum::ID, null, "string");
 
-        return $result;
+        return $id;
     }
 
     /**
@@ -167,14 +148,10 @@ class Builder
      */
     public function getIssuedAt(): ?int
     {
-        /** @var int|null $result */
-        $result = $this->claims->get(
-            Enum::ISSUED_AT,
-            null,
-            "int"
-        );
+        /** @var int|null $time */
+        $time = $this->claims->get(Enum::ISSUED_AT, null, "int");
 
-        return $result;
+        return $time;
     }
 
     /**
@@ -182,14 +159,10 @@ class Builder
      */
     public function getIssuer(): ?string
     {
-        /** @var string|null $result */
-        $result = $this->claims->get(
-            Enum::ISSUER,
-            null,
-            "string"
-        );
+        /** @var string|null $issuer */
+        $issuer = $this->claims->get(Enum::ISSUER, null, "string");
 
-        return $result;
+        return $issuer;
     }
 
     /**
@@ -197,14 +170,10 @@ class Builder
      */
     public function getNotBefore(): ?int
     {
-        /** @var int|null $result */
-        $result = $this->claims->get(
-            Enum::NOT_BEFORE,
-            null,
-            "int"
-        );
+        /** @var int|null $time */
+        $time = $this->claims->get(Enum::NOT_BEFORE, null, "int");
 
-        return $result;
+        return $time;
     }
 
     /**
@@ -212,14 +181,10 @@ class Builder
      */
     public function getSubject(): ?string
     {
-        /** @var string|null $result */
-        $result = $this->claims->get(
-            Enum::SUBJECT,
-            null,
-            "string"
-        );
+        /** @var string|null $time */
+        $subject = $this->claims->get(Enum::SUBJECT, null, "string");
 
-        return $result;
+        return $subject;
     }
 
     /**
@@ -298,7 +263,7 @@ class Builder
      */
     public function setContentType(string $contentType): Builder
     {
-        $this->jose->set(Enum::CONTENT_TYPE, $contentType);
+        $this->headers->set(Enum::CONTENT_TYPE, $contentType);
 
         return $this;
     }
