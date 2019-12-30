@@ -3,9 +3,7 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * (c) Phalcon Team <team@phalcon.io>
- *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
@@ -14,18 +12,29 @@ declare(strict_types=1);
 namespace Phalcon\Logger\Formatter;
 
 use Exception;
-use Phalcon\Helper\Str;
 use Phalcon\Logger\Item;
 
+use function is_array;
 use function str_replace;
+use function strpos;
 
 /**
- * Class Line
+ * Phalcon\Logger\Formatter\Line
  *
+ * Formats messages using an one-line string
+ *
+ * @property string $dateFormat
  * @property string $format
  */
 class Line extends AbstractFormatter
 {
+    /**
+     * Default date format
+     *
+     * @var string
+     */
+    protected $dateFormat;
+
     /**
      * Format applied to each message
      *
@@ -48,6 +57,22 @@ class Line extends AbstractFormatter
     }
 
     /**
+     * @return string
+     */
+    public function getDateFormat(): string
+    {
+        return $this->dateFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFormat(): string
+    {
+        return $this->format;
+    }
+
+    /**
      * Applies a format to a message before sent it to the internal log
      *
      * @param Item $item
@@ -62,7 +87,7 @@ class Line extends AbstractFormatter
         /**
          * Check if the format has the %date% placeholder
          */
-        if (Str::includes($format, "%date%")) {
+        if (false !== strpos($format, "%date%")) {
             $format = str_replace(
                 "%date%",
                 $this->getFormattedDate(),
@@ -73,31 +98,43 @@ class Line extends AbstractFormatter
         /**
          * Check if the format has the %type% placeholder
          */
-        if (Str::includes($format, "%type%")) {
+        if (false !== strpos($format, "%type%")) {
             $format = str_replace("%type%", $item->getName(), $format);
         }
 
         $format = str_replace("%message%", $item->getMessage(), $format);
 
-        return $this->interpolate(
-            $format,
-            $item->getContext()
-        );
+        if (is_array($item->getContext())) {
+            return $this->interpolate(
+                $format,
+                $item->getContext()
+            );
+        }
+
+        return $format;
     }
 
     /**
-     * @return string
+     * @param string $dateFormat
+     *
+     * @return Line
      */
-    public function getFormat(): string
+    public function setDateFormat(string $dateFormat): Line
     {
-        return $this->format;
+        $this->dateFormat = $dateFormat;
+
+        return $this;
     }
 
     /**
      * @param string $format
+     *
+     * @return Line
      */
-    public function setFormat(string $format): void
+    public function setFormat(string $format): Line
     {
         $this->format = $format;
+
+        return $this;
     }
 }

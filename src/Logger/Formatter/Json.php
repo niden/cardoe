@@ -3,9 +3,7 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * (c) Phalcon Team <team@phalcon.io>
- *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
@@ -21,9 +19,18 @@ use Phalcon\Logger\Item;
  * Phalcon\Logger\Formatter\Json
  *
  * Formats messages using JSON encoding
+ *
+ * @property string $dateFormat
  */
 class Json extends AbstractFormatter
 {
+    /**
+     * Default date format
+     *
+     * @var string
+     */
+    protected $dateFormat;
+
     /**
      * Json constructor.
      *
@@ -32,6 +39,14 @@ class Json extends AbstractFormatter
     public function __construct(string $dateFormat = "c")
     {
         $this->dateFormat = $dateFormat;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateFormat(): string
+    {
+        return $this->dateFormat;
     }
 
     /**
@@ -44,10 +59,14 @@ class Json extends AbstractFormatter
      */
     public function format(Item $item): string
     {
-        $message = $this->interpolate(
-            $item->getMessage(),
-            $item->getContext()
-        );
+        if (null !== $item->getContext()) {
+            $message = $this->interpolate(
+                $item->getMessage(),
+                $item->getContext()
+            );
+        } else {
+            $message = $item->getMessage();
+        }
 
         return JsonHelper::encode(
             [
@@ -56,5 +75,17 @@ class Json extends AbstractFormatter
                 "timestamp" => $this->getFormattedDate(),
             ]
         );
+    }
+
+    /**
+     * @param string $dateFormat
+     *
+     * @return Json
+     */
+    public function setDateFormat(string $dateFormat): Json
+    {
+        $this->dateFormat = $dateFormat;
+
+        return $this;
     }
 }
