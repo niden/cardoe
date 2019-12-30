@@ -106,9 +106,13 @@ class ValueObject
      *
      * @param mixed $element
      * @param mixed $value
+     *
+     * @return ValueObject
      */
-    public function set($element, $value): void
+    public function set($element, $value): ValueObject
     {
         $this->store[$element] = $value;
+
+        return $this;
     }
 }

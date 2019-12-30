@@ -14,19 +14,35 @@ declare(strict_types=1);
 namespace Phalcon\Test\Fixtures\Container;
 
 /**
- * Class ResolveFixtureClass
+ * Class ParametersFixtureClass
  *
  * @property string $name
  */
-class ResolveFixtureClass
+class ParametersFixtureClass
 {
+    /**
+     * @var array
+     */
+    public $data;
+
+    /**
+     * @var string|null
+     */
+    public $empty = 'not null';
     /**
      * @var ParentFixtureClass
      */
     public $class;
 
-    public function __construct(ParentFixtureClass $class)
+    /**
+     * ParametersFixtureClass constructor.
+     *
+     * @param array $data
+     * @param mixed $empty
+     */
+    public function __construct(array $data, $empty)
     {
-        $this->class = $class;
+        $this->data  = $data;
+        $this->empty = null;
     }
 }

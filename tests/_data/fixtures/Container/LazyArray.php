@@ -13,20 +13,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
-/**
- * Class ResolveFixtureClass
- *
- * @property string $name
- */
-class ResolveFixtureClass
-{
-    /**
-     * @var ParentFixtureClass
-     */
-    public $class;
-
-    public function __construct(ParentFixtureClass $class)
-    {
-        $this->class = $class;
-    }
-}
+return [
+    'starship' => 'Voyager',
+];

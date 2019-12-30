@@ -13,20 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
-/**
- * Class ResolveFixtureClass
- *
- * @property string $name
- */
-class ResolveFixtureClass
-{
-    /**
-     * @var ParentFixtureClass
-     */
-    public $class;
+use Phalcon\Container\Injection\MutationInterface;
 
-    public function __construct(ParentFixtureClass $class)
+class BlueprintMutation implements MutationInterface
+{
+    public function __invoke(object $object): object
     {
-        $this->class = $class;
+        $object->setData('mutated');
+
+        return $object;
     }
 }

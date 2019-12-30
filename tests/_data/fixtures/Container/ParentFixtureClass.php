@@ -14,19 +14,24 @@ declare(strict_types=1);
 namespace Phalcon\Test\Fixtures\Container;
 
 /**
- * Class ResolveFixtureClass
+ * Class ParentFixtureClass
  *
  * @property string $name
  */
-class ResolveFixtureClass
+class ParentFixtureClass
 {
     /**
-     * @var ParentFixtureClass
+     * @var string
      */
-    public $class;
+    protected $name;
 
-    public function __construct(ParentFixtureClass $class)
+    public function __construct(string $name = 'seven')
     {
-        $this->class = $class;
+        $this->name = $name;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }

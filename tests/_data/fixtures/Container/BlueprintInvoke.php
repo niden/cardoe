@@ -13,20 +13,21 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
-/**
- * Class ResolveFixtureClass
- *
- * @property string $name
- */
-class ResolveFixtureClass
+use Phalcon\Container\Injection\LazyArray;
+
+class BlueprintInvoke
 {
     /**
-     * @var ParentFixtureClass
+     * @var LazyArray
      */
-    public $class;
+    public $store;
 
-    public function __construct(ParentFixtureClass $class)
+    public function __construct()
     {
-        $this->class = $class;
+    }
+
+    public function setData($data)
+    {
+        $this->store = $data;
     }
 }
