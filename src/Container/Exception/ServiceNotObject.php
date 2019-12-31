@@ -18,8 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Exception;
 
-use Phalcon\Container\Exception;
+use Psr\Container\ContainerExceptionInterface;
+use RuntimeException;
 
-class ServiceNotObject extends Exception
+class ServiceNotObject extends RuntimeException implements ContainerExceptionInterface
 {
 }

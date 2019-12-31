@@ -16,15 +16,15 @@ namespace Phalcon\Test\Fixtures\Container;
 /**
  * Class ParentFixtureClass
  *
- * @property int|null   $age
+ * @property mixed|null $other
  * @property string     $data
  */
 class ChildFixtureClass extends ParentFixtureClass
 {
     /**
-     * @var int
+     * @var mixed
      */
-    protected $age;
+    protected $other;
     /**
      * @var string
      */
@@ -34,20 +34,20 @@ class ChildFixtureClass extends ParentFixtureClass
      * ChildFixtureClass constructor.
      *
      * @param string   $name
-     * @param int|null $age
+     * @param mixed|null $other
      */
-    public function __construct(string $name, int $age = null)
+    public function __construct(string $name, $other = null)
     {
         parent::__construct($name);
-        $this->age  = $age;
+        $this->other = $other;
     }
 
     /**
-     * @return int|null
+     * @return mixed
      */
-    public function getAge(): ?int
+    public function getOther()
     {
-        return $this->age;
+        return $this->other;
     }
 
     /**

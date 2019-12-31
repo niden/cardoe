@@ -82,13 +82,17 @@ class ValueObject
     /**
      * @param mixed $element
      * @param array $data
+     *
+     * @return array
      */
-    public function merge($element, array $data)
+    public function merge($element, array $data): array
     {
-        $this->store[$element] = array_merge(
+        $this->store[$element] = array_replace(
             $this->get($element, []),
             $data
         );
+
+        return $this->store[$element];
     }
 
     /**
@@ -111,7 +115,11 @@ class ValueObject
      */
     public function set($element, $value): ValueObject
     {
-        $this->store[$element] = $value;
+        if (is_array($value)) {
+            $this->merge($element, $value);
+        } else {
+            $this->store[$element] = $value;
+        }
 
         return $this;
     }

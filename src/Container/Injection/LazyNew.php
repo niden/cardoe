@@ -16,11 +16,11 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Container\Exception;
+namespace Phalcon\Container\Injection;
 
-use Psr\Container\ContainerExceptionInterface;
-use RuntimeException;
-
-class ServiceNotFound extends RuntimeException implements ContainerExceptionInterface
+/**
+ * Returns a new instance of an object when invoked.
+ */
+class LazyNew extends Factory implements LazyInterface
 {
 }

@@ -91,7 +91,13 @@ final class Blueprint
         $parameters = $this->parameters;
         foreach ($parameters as $index => $parameter) {
             if ($parameter instanceof UnresolvedParameter) {
-                throw Exception::missingParam($this->className, $parameter->getName());
+                throw new MissingParameter(
+                    sprintf(
+                        "Parameter missing: %s::\$%s",
+                        $this->className,
+                        $parameter->getName()
+                    )
+                );
             }
 
             $parameters[$index] = $this->resolveLazy($parameter);
@@ -100,7 +106,13 @@ final class Blueprint
         $object = $reflectedClass->newInstanceArgs($parameters);
         foreach ($this->setters as $method => $value) {
             if (!method_exists($this->className, $method)) {
-                throw Exception::setterMethodNotFound($this->className, $method);
+                throw new SetterMethodNotFound(
+                    sprintf(
+                        "Setter method not found: %s::%s()",
+                        $this->className,
+                        $method
+                    )
+                );
             }
 
             $value = $this->resolveLazy($value);

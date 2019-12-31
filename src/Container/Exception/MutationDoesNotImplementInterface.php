@@ -18,8 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Exception;
 
-use Phalcon\Container\Exception;
+use InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
 
-class MutationDoesNotImplementInterface extends Exception
+class MutationDoesNotImplementInterface extends InvalidArgumentException implements ContainerExceptionInterface
 {
 }

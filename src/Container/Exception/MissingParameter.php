@@ -18,8 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Exception;
 
-use Phalcon\Container\Exception;
+use InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
 
-class MissingParameter extends Exception
+class MissingParameter extends InvalidArgumentException implements ContainerExceptionInterface
 {
 }
