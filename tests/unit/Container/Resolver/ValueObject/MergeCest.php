@@ -40,8 +40,6 @@ class MergeCest
 
         $I->assertEquals(
             [
-                'two',
-                'three',
                 'four',
                 'five',
             ],

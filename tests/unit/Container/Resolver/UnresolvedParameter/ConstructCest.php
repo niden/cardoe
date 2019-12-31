@@ -17,7 +17,8 @@ use UnitTester;
 class ConstructCest
 {
     /**
-     * Unit Tests Phalcon\Container\Resolver\UnresolvedParameter :: __construct()
+     * Unit Tests Phalcon\Container\Resolver\UnresolvedParameter ::
+     * __construct()
      *
      * @since  2019-12-30
      */

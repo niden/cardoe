@@ -40,7 +40,7 @@ class UnderscoreInvokeCest
             'setData' => new LazyArray(),
         ];
         $mutations  = [
-            new BlueprintMutation()
+            new BlueprintMutation(),
         ];
 
         $blueprint = new Blueprint(BlueprintInvoke::class, $parameters, $setters, $mutations);
@@ -52,7 +52,8 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - parameter exception
+     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() -
+     * parameter exception
      *
      * @since  2019-12-30
      */
@@ -62,7 +63,7 @@ class UnderscoreInvokeCest
 
         $I->expectThrowable(
             new MissingParameter(
-                'Param missing: invokeClass::$unknown'
+                'Parameter missing: invokeClass::$unknown'
             ),
             function () {
                 $parameters = [
@@ -77,7 +78,8 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - setter exception
+     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - setter
+     * exception
      *
      * @since  2019-12-30
      */
@@ -90,11 +92,11 @@ class UnderscoreInvokeCest
                 'Setter method not found: Phalcon\Test\Fixtures\Container\BlueprintInvoke::setUnknown()'
             ),
             function () {
-                $setters = [
+                $setters   = [
                     'setUnknown' => 'unknown',
                 ];
-                $blueprint  = new Blueprint(BlueprintInvoke::class, [], $setters);
-                $refection  = new ReflectionClass(BlueprintInvoke::class);
+                $blueprint = new Blueprint(BlueprintInvoke::class, [], $setters);
+                $refection = new ReflectionClass(BlueprintInvoke::class);
 
                 $blueprint($refection);
             }
@@ -102,7 +104,8 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - mutation exception
+     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - mutation
+     * exception
      *
      * @since  2019-12-30
      */
@@ -118,8 +121,8 @@ class UnderscoreInvokeCest
                 $mutations = [
                     'setData' => LazyArray::class,
                 ];
-                $blueprint  = new Blueprint('invokeClass', [], [], $mutations);
-                $refection  = new ReflectionClass(BlueprintInvoke::class);
+                $blueprint = new Blueprint('invokeClass', [], [], $mutations);
+                $refection = new ReflectionClass(BlueprintInvoke::class);
 
                 $blueprint($refection);
             }

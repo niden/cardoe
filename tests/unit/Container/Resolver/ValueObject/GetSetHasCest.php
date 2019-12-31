@@ -28,8 +28,9 @@ class GetSetHasCest
         $collection = new ValueObject();
 
         $collection->set(0, 'one');
-        $collection->set('two', 'three');
+        $return = $collection->set('two', 'three');
 
+        $I->assertInstanceOf(ValueObject::class, $return);
         $I->assertTrue($collection->has(0));
         $I->assertTrue($collection->has('two'));
         $I->assertFalse($collection->has('unknown'));
