@@ -16,21 +16,21 @@ use Phalcon\Container\Resolver\Resolver;
 use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
-class ValuesCest
+class ParametersCest
 {
     /**
-     * Unit Tests Phalcon\Container\Resolver\Resolver :: values()
+     * Unit Tests Phalcon\Container\Resolver\Resolver :: parameters()
      *
      * @since  2019-12-31
      */
-    public function containerResolverResolverValues(UnitTester $I)
+    public function containerResolverResolverParameters(UnitTester $I)
     {
-        $I->wantToTest('Container\Resolver\Resolver - values()');
+        $I->wantToTest('Container\Resolver\Resolver - parameters()');
 
         $resolver = new Resolver(new Reflector());
-        $I->assertInstanceOf(ValueObject::class, $resolver->values());
+        $I->assertInstanceOf(ValueObject::class, $resolver->parameters());
 
-        $resolver->values()->set('valueOne', 'two');
-        $I->assertEquals(1, $resolver->values()->count());
+        $resolver->parameters()->set('parameterOne', ['one' => 'two']);
+        $I->assertEquals(1, $resolver->parameters()->count());
     }
 }

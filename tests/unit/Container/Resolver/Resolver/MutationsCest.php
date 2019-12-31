@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Resolver\Resolver;
 
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
 class MutationsCest
@@ -18,12 +21,16 @@ class MutationsCest
     /**
      * Unit Tests Phalcon\Container\Resolver\Resolver :: mutations()
      *
-     * @since  2019-12-30
+     * @since  2019-12-31
      */
     public function containerResolverResolverMutations(UnitTester $I)
     {
         $I->wantToTest('Container\Resolver\Resolver - mutations()');
 
-        $I->skipTest('Need implementation');
+        $resolver = new Resolver(new Reflector());
+        $I->assertInstanceOf(ValueObject::class, $resolver->mutations());
+
+        $resolver->mutations()->set('mutationOne', ['mutation' => 'two']);
+        $I->assertEquals(1, $resolver->mutations()->count());
     }
 }

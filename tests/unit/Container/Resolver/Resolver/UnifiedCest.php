@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Resolver\Resolver;
 
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
 class UnifiedCest
@@ -18,12 +21,16 @@ class UnifiedCest
     /**
      * Unit Tests Phalcon\Container\Resolver\Resolver :: unified()
      *
-     * @since  2019-12-30
+     * @since  2019-12-31
      */
     public function containerResolverResolverUnified(UnitTester $I)
     {
         $I->wantToTest('Container\Resolver\Resolver - unified()');
 
-        $I->skipTest('Need implementation');
+        $resolver = new Resolver(new Reflector());
+        $I->assertInstanceOf(ValueObject::class, $resolver->unified());
+
+        $resolver->unified()->set('unifiedOne', ['unifiedOne' => 'two']);
+        $I->assertEquals(1, $resolver->unified()->count());
     }
 }
