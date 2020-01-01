@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Injection;
 
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Resolver\Blueprint;
 use Phalcon\Container\Resolver\Resolver;
 use ReflectionException;
@@ -84,6 +85,7 @@ class Factory
      *
      * @return object
      * @throws ReflectionException
+     * @throws NoSuchProperty
      */
     public function __invoke(...$params): object
     {
@@ -94,14 +96,16 @@ class Factory
     }
 
     /**
-     * @param Blueprint $contextualBlueprint
+     * @param Blueprint $blueprint
      *
      * @return Factory
      */
-    public function withContext(Blueprint $contextualBlueprint): self
+    public function withContext(Blueprint $blueprint): Factory
     {
-        $clone                         = clone $this;
-        $clone->contextualBlueprints[] = $contextualBlueprint;
+        $clone = clone $this;
+
+        $clone->contextualBlueprints[] = $blueprint;
+
         return $clone;
     }
 }

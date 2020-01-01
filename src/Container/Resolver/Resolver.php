@@ -105,6 +105,7 @@ class Resolver
      * @param string $class The class name to return values for.
      *
      * @return Blueprint A blueprint how to construct an object
+     * @throws NoSuchProperty
      * @throws ReflectionException
      */
     public function getUnified(string $class): Blueprint
@@ -137,11 +138,17 @@ class Resolver
         return $this->unified->get($class);
     }
 
+    /**
+     * @return ValueObject
+     */
     public function mutations(): ValueObject
     {
         return $this->mutations;
     }
 
+    /**
+     * @return ValueObject
+     */
     public function parameters(): ValueObject
     {
         return $this->parameters;
@@ -177,12 +184,9 @@ class Resolver
 
         foreach ($contextualBlueprints as $contextualBlueprint) {
             $className = $contextualBlueprint->getClassName();
+            $this->processBlueprint($className, $remember, $this);
 
-            $remember->parameters->set($className, $this->parameters->get($className, []));
-            $remember->setters->set($className, $this->setters->get($className, []));
-            $remember->mutations->set($className, $this->mutations->get($className, []));
-
-            $this->parameters->merge($className, $contextualBlueprint->getParams());
+            $this->parameters->merge($className, $contextualBlueprint->getParameters());
             $this->setters->merge($className, $contextualBlueprint->getSetters());
             $this->mutations->merge($className, $contextualBlueprint->getMutations());
 
@@ -190,16 +194,15 @@ class Resolver
         }
 
         $resolved = call_user_func(
-            $this->expandParameters($this->getUnified($blueprint->getClassName())->merge($blueprint)),
+            $this->expandParameters(
+                $this->getUnified($blueprint->getClassName())->merge($blueprint)
+            ),
             $this->reflector->getClass($blueprint->getClassName())
         );
 
         foreach ($contextualBlueprints as $contextualBlueprint) {
             $className = $contextualBlueprint->getClassName();
-
-            $this->parameters->set($className, $remember->parameters->get($className, []));
-            $this->setters->set($className, $remember->setters->get($className, []));
-            $this->mutations->set($className, $remember->mutations->get($className, []));
+            $this->processBlueprint($className, $this, $remember);
 
             if ($remember->unified->has($className)) {
                 $this->unified->set($className, $remember->unified->get($className));
@@ -211,16 +214,25 @@ class Resolver
         return $resolved;
     }
 
+    /**
+     * @return ValueObject
+     */
     public function setters(): ValueObject
     {
         return $this->setters;
     }
 
+    /**
+     * @return ValueObject
+     */
     public function unified(): ValueObject
     {
         return $this->unified;
     }
 
+    /**
+     * @return ValueObject
+     */
     public function values(): ValueObject
     {
         return $this->values;
@@ -236,6 +248,7 @@ class Resolver
      * @param array  $parent The parent unified setters.
      *
      * @return array The unified mutations.
+     * @throws NoSuchProperty
      */
     protected function getUnifiedMutations(string $class, array $parent): array
     {
@@ -276,10 +289,14 @@ class Resolver
      * @param array               $parent The parent unified params.
      *
      * @return mixed|DefaultValueParameter|UnresolvedParameter
+     * @throws NoSuchProperty
      * @throws ReflectionException
      */
-    protected function getUnifiedParameter(ReflectionParameter $rparam, string $class, array $parent)
-    {
+    protected function getUnifiedParameter(
+        ReflectionParameter $rparam,
+        string $class,
+        array $parent
+    ) {
         $name     = $rparam->getName();
         $position = $rparam->getPosition();
 
@@ -356,13 +373,14 @@ class Resolver
     /**
      * Returns the unified setters for a class.
      *
-     * Class-specific setters take precendence over trait-based setters, which
+     * Class-specific setters take precedence over trait-based setters, which
      * take precedence over interface-based setters.
      *
      * @param string $class  The class name to return values for.
      * @param array  $parent The parent unified setters.
      *
      * @return array The unified setters.
+     * @throws NoSuchProperty
      */
     protected function getUnifiedSetters(string $class, array $parent): array
     {
@@ -424,6 +442,30 @@ class Resolver
 
         return $blueprint->replaceParameters(
             array_merge($params, array_values($variadicParams))
+        );
+    }
+
+    /**
+     * @param string   $className
+     * @param Resolver $source
+     * @param Resolver $target
+     */
+    private function processBlueprint(
+        string $className,
+        Resolver $source,
+        Resolver $target
+    ): void {
+        $source->parameters->set(
+            $className,
+            $target->parameters->getWithDefault($className, [])
+        );
+        $source->setters->set(
+            $className,
+            $target->setters->getWithDefault($className, [])
+        );
+        $source->mutations->set(
+            $className,
+            $target->mutations->getWithDefault($className, [])
         );
     }
 }

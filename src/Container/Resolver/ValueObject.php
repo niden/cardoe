@@ -56,7 +56,7 @@ class ValueObject
     /**
      * Get the element from the collection
      *
-     * @param mixed      $element
+     * @param mixed $element
      *
      * @return mixed
      * @throws NoSuchProperty
@@ -65,6 +65,23 @@ class ValueObject
     {
         if (!$this->has($element)) {
             Exception::noSuchProperty($element);
+        }
+
+        return $this->store[$element];
+    }
+
+    /**
+     * Get the element from the collection
+     *
+     * @param mixed      $element
+     * @param mixed|null $defaultValue
+     *
+     * @return mixed|null
+     */
+    public function getWithDefault($element, $defaultValue = null)
+    {
+        if (!$this->has($element)) {
+            return $defaultValue;
         }
 
         return $this->store[$element];
