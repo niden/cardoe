@@ -14,18 +14,23 @@ declare(strict_types=1);
 namespace Phalcon\Test\Fixtures\Container;
 
 /**
- * Class ParentFixtureClass
+ * Class MalleableFixtureClass
  *
  * @property string $name
  */
-class ParentFixtureClass
+class MalleableFixtureClass
 {
     /**
      * @var string
      */
     protected $name;
 
-    public function __construct(string $name = 'seven')
+    public function __construct(string $name)
+    {
+        $this->name = $name;
+    }
+
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -33,10 +38,5 @@ class ParentFixtureClass
     public function getName(): string
     {
         return $this->name;
-    }
-
-    public function mirror(string $mirror): string
-    {
-        return $mirror;
     }
 }

@@ -13,19 +13,22 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
-trait ChildTrait
+/**
+ * Class MalleableFixtureClass
+ *
+ * @property string $name
+ */
+class MeldingFixtureClass
 {
-    use GrandChildTrait;
+    /**
+     * @var string
+     */
+    protected $name;
 
-    protected $child;
-
-    public function getChild()
+    public function __invoke(MalleableFixtureClass $class)
     {
-        return $this->child;
-    }
+        $class->setName('tuvok');
 
-    public function setChild($child)
-    {
-        $this->child = $child;
+        return $class;
     }
 }

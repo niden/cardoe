@@ -13,21 +13,30 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
+use stdClass;
+
 /**
- * Class ParentFixtureClass
+ * Class VariadicFixtureClass
  *
  * @property string $name
+ * @property mixed  $items
  */
-class ParentFixtureClass
+class VariadicFixtureClass
 {
     /**
      * @var string
      */
     protected $name;
 
-    public function __construct(string $name = 'seven')
+    /**
+     * @var stdClass[]
+     */
+    protected $items;
+
+    public function __construct(string $name, stdClass ...$items)
     {
-        $this->name = $name;
+        $this->name  = $name;
+        $this->items = $items;
     }
 
     public function getName(): string
@@ -35,8 +44,8 @@ class ParentFixtureClass
         return $this->name;
     }
 
-    public function mirror(string $mirror): string
+    public function getItems()
     {
-        return $mirror;
+        return $this->items;
     }
 }

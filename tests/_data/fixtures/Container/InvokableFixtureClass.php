@@ -13,19 +13,25 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Container;
 
-trait ChildTrait
+/**
+ * Class MalleableFixtureClass
+ *
+ * @property string $name
+ */
+class InvokableFixtureClass
 {
-    use GrandChildTrait;
+    /**
+     * @var string
+     */
+    protected $name;
 
-    protected $child;
-
-    public function getChild()
+    public function __construct(string $name = 'seven')
     {
-        return $this->child;
+        $this->name = $name;
     }
 
-    public function setChild($child)
+    public function __invoke(string $value)
     {
-        $this->child = $child;
+        return $this->name . $value;
     }
 }

@@ -33,7 +33,7 @@ class ChildFixtureClass extends ParentFixtureClass
     /**
      * ChildFixtureClass constructor.
      *
-     * @param string   $name
+     * @param string     $name
      * @param mixed|null $other
      */
     public function __construct(string $name, $other = null)
