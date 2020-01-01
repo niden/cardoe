@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Injection;
 
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Resolver\Blueprint;
 use Phalcon\Container\Resolver\Resolver;
 use Psr\Container\ContainerInterface;
@@ -65,6 +66,7 @@ class InjectionFactory
      *
      * @return object
      * @throws ReflectionException
+     * @throws NoSuchProperty
      */
     public function newInstance(Blueprint $blueprint): object
     {

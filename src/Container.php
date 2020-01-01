@@ -21,6 +21,7 @@ namespace Phalcon;
 use Closure;
 use Phalcon\Container\Exception;
 use Phalcon\Container\Exception\ContainerLocked;
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Exception\ServiceNotFound;
 use Phalcon\Container\Exception\ServiceNotObject;
 use Phalcon\Container\Injection\Factory;
@@ -81,8 +82,6 @@ class Container implements ContainerInterface
      * properties from outside the object, and cannot set services.)
      *
      * @var bool
-     * @see __get()
-     * @see set()
      */
     protected $locked = false;
 
@@ -395,6 +394,7 @@ class Container implements ContainerInterface
      *                             setter method.
      *
      * @return object
+     * @throws NoSuchProperty
      * @throws ReflectionException
      */
     public function newInstance(

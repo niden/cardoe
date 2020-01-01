@@ -352,6 +352,7 @@ class Resolver
      * @param array  $parent The parent unified params.
      *
      * @return array The unified params.
+     * @throws NoSuchProperty
      * @throws ReflectionException
      */
     protected function getUnifiedParameters(string $class, array $parent): array
