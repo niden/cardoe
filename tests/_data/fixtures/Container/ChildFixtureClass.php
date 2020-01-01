@@ -25,20 +25,21 @@ class ChildFixtureClass extends ParentFixtureClass
      * @var mixed
      */
     protected $other;
+
     /**
-     * @var string
+     * @var mixed
      */
     protected $data;
 
     /**
      * ChildFixtureClass constructor.
      *
-     * @param string     $name
+     * @param string     $store
      * @param mixed|null $other
      */
-    public function __construct(string $name, $other = null)
+    public function __construct(string $store, $other = null)
     {
-        parent::__construct($name);
+        parent::__construct($store);
         $this->other = $other;
     }
 
@@ -51,17 +52,17 @@ class ChildFixtureClass extends ParentFixtureClass
     }
 
     /**
-     * @return string
+     * @return mixed
      */
-    public function getData(): string
+    public function getData()
     {
         return $this->data;
     }
 
     /**
-     * @param string $data
+     * @param mixed $data
      */
-    public function setData(string $data)
+    public function setData($data)
     {
         $this->data = $data;
     }

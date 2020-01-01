@@ -16,23 +16,26 @@ namespace Phalcon\Test\Fixtures\Container;
 /**
  * Class ParentFixtureClass
  *
- * @property string $name
+ * @property mixed $store
  */
 class ParentFixtureClass
 {
     /**
-     * @var string
+     * @var mixed
      */
-    protected $name;
+    protected $store;
 
-    public function __construct(string $name = 'seven')
+    public function __construct($store = 'seven')
     {
-        $this->name = $name;
+        $this->store = $store;
     }
 
-    public function getName(): string
+    /**
+     * @return mixed
+     */
+    public function getStore()
     {
-        return $this->name;
+        return $this->store;
     }
 
     public function mirror(string $mirror): string
