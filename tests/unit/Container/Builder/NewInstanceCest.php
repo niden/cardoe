@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Builder;
 
+use Phalcon\Container\Builder;
+use Phalcon\Container\Resolver\AutoResolver;
+use Phalcon\Container\Resolver\Resolver;
+use Psr\Container\ContainerInterface;
 use UnitTester;
 
 class NewInstanceCest
@@ -24,6 +28,24 @@ class NewInstanceCest
     {
         $I->wantToTest('Container\Builder - newInstance()');
 
-        $I->skipTest('Need implementation');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $I->assertInstanceOf(ContainerInterface::class, $container);
+        $I->assertInstanceOf(Resolver::class, $container->getInjectionFactory()->getResolver());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container\Builder :: newInstance() - autoresolver
+     *
+     * @since  2019-12-30
+     */
+    public function containerBuilderNewInstanceAutoresolver(UnitTester $I)
+    {
+        $I->wantToTest('Container\Builder - newInstance() - autoresolver');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance(true);
+        $I->assertInstanceOf(ContainerInterface::class, $container);
+        $I->assertInstanceOf(AutoResolver::class, $container->getInjectionFactory()->getResolver());
     }
 }
