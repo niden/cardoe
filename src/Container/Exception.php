@@ -34,17 +34,6 @@ use function is_object;
 class Exception extends \Exception implements ContainerExceptionInterface, Throwable
 {
     /**
-     * The container is locked and cannot be modified.
-     *
-     * @return ContainerLocked
-     * @throws ContainerLocked
-     */
-    public static function containerLocked(): ContainerLocked
-    {
-        throw new ContainerLocked("Cannot modify container when locked.");
-    }
-
-    /**
      * A mutation was lazy and returned a value that is not an instanceof
      * MutationInterface.
      *

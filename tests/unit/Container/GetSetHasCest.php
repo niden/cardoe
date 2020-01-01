@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use Phalcon\Container\Exception\ServiceNotFound;
 use UnitTester;
 
 class GetCest
@@ -18,12 +20,21 @@ class GetCest
     /**
      * Unit Tests Phalcon\Container :: get()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerGet(UnitTester $I)
     {
         $I->wantToTest('Container - get()');
 
-        $I->skipTest('Need implementation');
+        $I->expectThrowable(
+            new ServiceNotFound(
+                "Service not defined: 'unknown'"
+            ),
+            function () {
+                $builder   = new Builder();
+                $container = $builder->newInstance();
+                $container->get('unknown');
+            }
+        );
     }
 }

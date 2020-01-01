@@ -59,7 +59,7 @@ class LazyCallable implements LazyInterface
      */
     public function __invoke()
     {
-        if ($this->callableChecked === false) {
+        if (false === $this->callableChecked) {
             // convert Lazy objects in the callable
             if (is_array($this->callable)) {
                 foreach ($this->callable as $key => $val) {
@@ -70,6 +70,7 @@ class LazyCallable implements LazyInterface
             } elseif ($this->callable instanceof LazyInterface) {
                 $this->callable = $this->callable->__invoke();
             }
+
             $this->callableChecked = true;
         }
 

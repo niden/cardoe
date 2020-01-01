@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Container;
 
+use Phalcon\Container;
 use Phalcon\Container\Config\ConfigInterface;
 
 /**

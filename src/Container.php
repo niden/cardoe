@@ -20,6 +20,7 @@ namespace Phalcon;
 
 use Closure;
 use Phalcon\Container\Exception;
+use Phalcon\Container\Exception\ContainerLocked;
 use Phalcon\Container\Exception\ServiceNotFound;
 use Phalcon\Container\Exception\ServiceNotObject;
 use Phalcon\Container\Injection\Factory;
@@ -34,8 +35,10 @@ use Phalcon\Container\Injection\LazyNew;
 use Phalcon\Container\Injection\LazyRequire;
 use Phalcon\Container\Injection\LazyValue;
 use Phalcon\Container\ResolutionHelper;
+use Phalcon\Container\Resolver\AutoResolver;
 use Phalcon\Container\Resolver\Blueprint;
 use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Container\Resolver\ValueObject;
 use Psr\Container\ContainerInterface;
 use ReflectionException;
 
@@ -48,11 +51,6 @@ use ReflectionException;
  * @property bool               $locked
  * @property Resolver           $resolver
  * @property array              $services
- * // * @property array $mutations A reference to the Resolver $mutates.
- * // * @property array $params A reference to the Resolver $params.
- * // * @property array $setters A reference to the Resolver $setters.
- * // * @property array $types A reference to the Resolver $types.
- * // * @property array $values A reference to the Resolver $values.
  */
 class Container implements ContainerInterface
 {
@@ -103,43 +101,23 @@ class Container implements ContainerInterface
     protected $services = [];
 
     /**
-     *
      * Constructor.
      *
-     * @param InjectionFactory   $factory  A factory to create objects
+     * @param InjectionFactory   $factory           A factory to create objects
      *                                              and values for injection.
      *
-     * @param ContainerInterface $delegate An optional container
-     *                                              that will be used to fetch
+     * @param ContainerInterface $delegate          An optional container that will be
+     *                                              used to fetch
      *                                              dependencies (i.e. lazy
      *                                              gets)
-     *
      */
     public function __construct(
         InjectionFactory $factory,
         ContainerInterface $delegate = null
     ) {
         $this->factory  = $factory;
-        $this->resolver          = $this->factory->getResolver();
+        $this->resolver = $this->factory->getResolver();
         $this->delegate = $delegate;
-    }
-
-    /**
-     * Magic get to provide access to the Resolver properties.
-     *
-     * @param string $key The Resolver property to retrieve.
-     *
-     * @return array
-     * @throws Exception\ContainerLocked
-     * @throws Exception\NoSuchProperty
-     */
-    public function &__get($key): array
-    {
-        if ($this->locked) {
-            throw Exception::containerLocked();
-        }
-
-        return $this->resolver->__get($key);
     }
 
     /**
@@ -230,6 +208,7 @@ class Container implements ContainerInterface
     {
         return $this->locked;
     }
+
     /**
      * Returns a lazy object that calls a callable, optionally with arguments.
      *
@@ -352,7 +331,6 @@ class Container implements ContainerInterface
         return $this->factory->newLazyValue($key);
     }
 
-
     /**
      * Locks the Container so that is it read-only.
      *
@@ -361,6 +339,11 @@ class Container implements ContainerInterface
     public function lock(): void
     {
         $this->locked = true;
+    }
+
+    public function mutations(): ValueObject
+    {
+        return $this->resolver->mutations();
     }
 
     /**
@@ -436,6 +419,14 @@ class Container implements ContainerInterface
     }
 
     /**
+     * @return ValueObject
+     */
+    public function parameters(): ValueObject
+    {
+        return $this->resolver->parameters();
+    }
+
+    /**
      * Sets a service definition by name. If you set a service as a Closure,
      * it is automatically treated as a Lazy. (Note that is has to be a
      * Closure, not just any callable, to be treated as a Lazy; this is
@@ -449,12 +440,14 @@ class Container implements ContainerInterface
      * @return $this
      * @throws ServiceNotObject
      *
-     * @throws Exception\ContainerLocked when the Container is locked.
+     * @throws ContainerLocked when the Container is locked.
      */
     public function set(string $service, object $val): Container
     {
         if ($this->locked) {
-            throw Exception::containerLocked();
+            throw new ContainerLocked(
+                "Cannot modify container when locked."
+            );
         }
 
         if (!is_object($val)) {
@@ -474,6 +467,34 @@ class Container implements ContainerInterface
         $this->services[$service] = $val;
 
         return $this;
+    }
+
+    /**
+     * @return ValueObject
+     */
+    public function setters(): ValueObject
+    {
+        return $this->resolver->setters();
+    }
+
+    /**
+     * @return ValueObject|null
+     */
+    public function types(): ?ValueObject
+    {
+        if ($this->resolver instanceof AutoResolver) {
+            return $this->resolver->types();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return ValueObject
+     */
+    public function values(): ValueObject
+    {
+        return $this->resolver->values();
     }
 
     /**

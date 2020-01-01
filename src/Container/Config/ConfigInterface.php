@@ -18,7 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Config;
 
-use Phalcon\Container\Container;
+use Phalcon\Container;
 
 /**
  * An interface for a set of Container configuration instructions.

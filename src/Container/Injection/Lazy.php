@@ -22,7 +22,7 @@ namespace Phalcon\Container\Injection;
  * Returns the value of a callable when invoked (thereby invoking the callable).
  *
  * @property callable $callable
- * @property array    $params
+ * @property array    $parameters
  */
 class Lazy implements LazyInterface
 {
@@ -38,18 +38,18 @@ class Lazy implements LazyInterface
      *
      * @var array
      */
-    protected $params;
+    protected $parameters;
 
     /**
      * Constructor.
      *
      * @param callable $callable The callable to invoke.
-     * @param array    $params   Arguments for the callable.
+     * @param array    $parameters   Arguments for the callable.
      */
-    public function __construct($callable, array $params = [])
+    public function __construct($callable, array $parameters = [])
     {
-        $this->callable = $callable;
-        $this->params   = $params;
+        $this->callable   = $callable;
+        $this->parameters = $parameters;
     }
 
     /**
@@ -61,23 +61,39 @@ class Lazy implements LazyInterface
     {
         // convert Lazy objects in the callable
         if (is_array($this->callable)) {
-            foreach ($this->callable as $key => $val) {
-                if ($val instanceof LazyInterface) {
-                    $this->callable[$key] = $val();
-                }
-            }
+            $this->processArray();
         } elseif ($this->callable instanceof LazyInterface) {
             $this->callable = $this->callable->__invoke();
         }
 
-        // convert Lazy objects in the params
-        foreach ($this->params as $key => $val) {
-            if ($val instanceof LazyInterface) {
-                $this->params[$key] = $val();
-            }
-        }
+        $this->processParameters();
 
         // make the call
-        return call_user_func_array($this->callable, $this->params);
+        return call_user_func_array($this->callable, $this->parameters);
+    }
+
+    /**
+     * Converts Lazy objects in the callable if array
+     */
+    private function processArray(): void
+    {
+        foreach ($this->callable as $key => $val) {
+            if ($val instanceof LazyInterface) {
+                $this->callable[$key] = $val();
+            }
+        }
+    }
+
+    /**
+     * Converts Lazy objects in the parameters
+     */
+    private function processParameters(): void
+    {
+        // convert Lazy objects in the parameters
+        foreach ($this->parameters as $key => $val) {
+            if ($val instanceof LazyInterface) {
+                $this->parameters[$key] = $val();
+            }
+        }
     }
 }

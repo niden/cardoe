@@ -18,12 +18,17 @@ declare(strict_types=1);
 
 namespace Phalcon\Container;
 
+use Phalcon\Container;
+use Phalcon\Container\Config\Collection;
 use Phalcon\Container\Exception\SetterMethodNotFound;
 use Phalcon\Container\Injection\InjectionFactory;
 use Phalcon\Container\Resolver\AutoResolver;
 use Phalcon\Container\Resolver\Reflector;
 use Phalcon\Container\Resolver\Resolver;
 
+/**
+ * Class Builder
+ */
 class Builder
 {
     /**
@@ -80,14 +85,14 @@ class Builder
         array $configClasses = [],
         bool $autoResolve = false
     ): Container {
-        $di = $this->newInstance($autoResolve);
+        $container = $this->newInstance($autoResolve);
         $collection = $this->newConfigCollection($configClasses);
 
-        $collection->define($di);
-        $di->lock();
-        $collection->modify($di);
+        $collection->define($container);
+        $container->lock();
+        $collection->modify($container);
 
-        return $di;
+        return $container;
     }
 
     /**
@@ -97,10 +102,10 @@ class Builder
      * @param array $configClasses A list of ContainerConfig classes to
      * instantiate and invoke for configuring the Container.
      *
-     * @return ConfigCollection
+     * @return Collection
      */
-    protected function newConfigCollection(array $configClasses = []): ConfigCollection
+    protected function newConfigCollection(array $configClasses = []): Collection
     {
-        return new ConfigCollection($configClasses);
+        return new Collection($configClasses);
     }
 }

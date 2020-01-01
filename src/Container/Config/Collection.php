@@ -20,7 +20,7 @@ namespace Phalcon\Container\Config;
 
 use InvalidArgumentException;
 use Phalcon\Container\Config;
-use Phalcon\Container\Container;
+use Phalcon\Container;
 
 /**
  * A collection of Container config instructions
