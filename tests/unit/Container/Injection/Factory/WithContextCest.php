@@ -11,6 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Injection\Factory;
 
+use Phalcon\Container\Injection\Factory;
+use Phalcon\Container\Resolver\Blueprint;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use UnitTester;
 
 class WithContextCest
@@ -24,6 +29,15 @@ class WithContextCest
     {
         $I->wantToTest('Container\Injection\Factory - withContext()');
 
-        $I->skipTest('Need implementation');
+        $factory = new Factory(
+            new Resolver(new Reflector()),
+            new Blueprint(OtherFixtureClass::class)
+        );
+
+        $other = $factory->withContext(new Blueprint(OtherFixtureClass::class));
+
+        $I->assertNotEquals($factory, $other);
+        $I->assertInstanceOf(Factory::class, $factory);
+        $I->assertInstanceOf(Factory::class, $other);
     }
 }

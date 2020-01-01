@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Injection\InjectionFactory;
 
+use Phalcon\Container\Injection\InjectionFactory;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
 use UnitTester;
 
 class GetResolverCest
@@ -24,6 +27,7 @@ class GetResolverCest
     {
         $I->wantToTest('Container\Injection\InjectionFactory - getResolver()');
 
-        $I->skipTest('Need implementation');
+        $factory = new InjectionFactory(new Resolver(new Reflector()));
+        $I->assertInstanceOf(Resolver::class, $factory->getResolver());
     }
 }

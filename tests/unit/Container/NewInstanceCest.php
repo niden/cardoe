@@ -12,12 +12,19 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
+use Phalcon\Container\Exception\MissingParameter;
+use Phalcon\Container\Exception\SetterMethodNotFound;
 use Phalcon\Test\Fixtures\Container\ChildFixtureClass;
+use Phalcon\Test\Fixtures\Container\InterfaceChildFixtureClassClass;
+use Phalcon\Test\Fixtures\Container\InterfaceFixture;
 use Phalcon\Test\Fixtures\Container\InterfaceFixtureClass;
+use Phalcon\Test\Fixtures\Container\InterfaceGrandChildFixtureClass;
+use Phalcon\Test\Fixtures\Container\InterfaceParentFixtureClass;
 use Phalcon\Test\Fixtures\Container\MutationFixtureClass;
 use Phalcon\Test\Fixtures\Container\MutationWithDependencyFixtureClass;
 use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
+use Phalcon\Test\Fixtures\Container\ResolveFixtureClass;
 use Phalcon\Test\Fixtures\Container\VariadicFixtureClass;
 use UnitTester;
 
@@ -122,33 +129,6 @@ class NewInstanceCest
         $I->assertInstanceOf(OtherFixtureClass::class, $actual->getStore());
     }
 
-//    /**
-//     * Unit Tests Phalcon\Container :: newInstance() - setter
-//     *
-//     * @since  2020-01-01
-//     */
-//    public function containerNewInstanceSetter(UnitTester $I)
-//    {
-//        $I->wantToTest('Container - newInstance() - setter');
-//
-//        $builder   = new Builder();
-//        $container = $builder->newInstance();
-//        $container
-//            ->setters()
-//            ->set('setData', 'voyager')
-//        ;
-//        $actual = $container->newInstance(
-//            ChildFixtureClass::class,
-//            [
-//                'store' => 'seven',
-//                'other' => new OtherFixtureClass(),
-//            ]
-//        );
-//        $I->assertEquals('seven', $actual->getStore());
-//        $I->assertEquals('voyager', $actual->getData());
-//        $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
-//    }
-
     /**
      * Unit Tests Phalcon\Container :: newInstance() - mutation
      *
@@ -237,5 +217,239 @@ class NewInstanceCest
 
         $actual = $container->newInstance(InterfaceFixtureClass::class);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual->getShip());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - setter interfaces overrides
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceSetterInterfacesOverrides(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - setter interfaces overrides');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->setters()
+            ->set(
+                InterfaceFixture::class,
+                [
+                    'setShip' => 'voyager',
+                ]
+            )
+            ->set(
+                InterfaceChildFixtureClassClass::class,
+                [
+                    'setShip' => 'enterprise',
+                ]
+            )
+        ;
+        
+        // "inherits" initial value from interface
+        $actual = $container->newInstance(InterfaceFixtureClass::class);
+        $I->assertSame('voyager', $actual->getShip());
+
+        // uses initial value "inherited" from parent
+        $actual = $container->newInstance(InterfaceParentFixtureClass::class);
+        $I->assertSame('voyager', $actual->getShip());
+
+        // overrides the initial "inherited" value
+        $actual = $container->newInstance(InterfaceChildFixtureClassClass::class);
+        $I->assertSame('enterprise', $actual->getShip());
+
+        // uses the "inherited" overridde value
+        $actual = $container->newInstance(InterfaceGrandChildFixtureClass::class);
+        $I->assertSame('enterprise', $actual->getShip());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - setter
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceSetter(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - setter');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->setters()
+            ->set(
+                ChildFixtureClass::class,
+                [
+                    'setData' => 'voyager',
+                ]
+            )
+        ;
+
+        $actual = $container->newInstance(
+            ChildFixtureClass::class,
+            [
+                'store' => 'enterprise',
+                'other' => new OtherFixtureClass(),
+            ]
+        );
+
+        $I->assertEquals('voyager', $actual->getData());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - lazy setter
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceLazySetter(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - lazy setter');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $lazy = $container->lazy(
+            function () {
+                return new OtherFixtureClass();
+            }
+        );
+
+        $container
+            ->setters()
+            ->set(
+                ChildFixtureClass::class,
+                [
+                    'setData' => $lazy,
+                ]
+            )
+        ;
+
+        $actual = $container->newInstance(
+            ChildFixtureClass::class,
+            [
+                'store' => 'enterprise',
+                'other' => new OtherFixtureClass(),
+            ]
+        );
+
+        $I->assertInstanceOf(OtherFixtureClass::class, $actual->getData());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - setter exception
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceSetterException(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - setter exception');
+
+        $I->expectThrowable(
+            new SetterMethodNotFound(
+                'Setter method not found: Phalcon\Test\Fixtures\Container\OtherFixtureClass::setUnknown()'
+            ),
+            function () {
+                $builder   = new Builder();
+                $container = $builder->newInstance();
+
+                $container
+                    ->setters()
+                    ->set(
+                        OtherFixtureClass::class,
+                        [
+                            'setUnknown' => 'unknown',
+                        ]
+                    )
+                ;
+
+                $container->newInstance(OtherFixtureClass::class);
+            }
+        );
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - parameters positional
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceParametersPositional(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - parameters positional');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $other  = $container->newInstance(OtherFixtureClass::class);
+        $actual = $container->newInstance(
+            ChildFixtureClass::class,
+            [
+                'voyager',
+                $other,
+            ]
+        );
+
+        $I->assertInstanceOf(ChildFixtureClass::class, $actual);
+        $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
+        $I->assertEquals('voyager', $actual->getStore());
+
+        // positional overrides names
+        $actual = $container->newInstance(
+            ChildFixtureClass::class,
+            [
+                0       => 'enterprise',
+                'store' => 'voyager',
+                $other,
+            ]
+        );
+
+        $I->assertInstanceOf(ChildFixtureClass::class, $actual);
+        $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
+        $I->assertEquals('enterprise', $actual->getStore());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - parameter exception
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceParameterException(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - parameter exception');
+
+        $I->expectThrowable(
+            new MissingParameter(
+                'Parameter missing: Phalcon\Test\Fixtures\Container\ResolveFixtureClass::$class'
+            ),
+            function () {
+                $builder   = new Builder();
+                $container = $builder->newInstance();
+
+                $container->newInstance(ResolveFixtureClass::class);
+            }
+        );
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - without missing parameter
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceWithoutMissingParameter(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - without missing parameter');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->parameters()
+            ->set(
+                ResolveFixtureClass::class,
+                [
+                    'class' => $container->lazyNew(ParentFixtureClass::class),
+                ]
+            );
+
+        $actual = $container->newInstance(ResolveFixtureClass::class);
+        $I->assertInstanceOf(ResolveFixtureClass::class, $actual);
+        $I->assertInstanceOf(ParentFixtureClass::class, $actual->class);
     }
 }
