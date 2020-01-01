@@ -97,5 +97,4 @@ class AutoResolver extends Resolver
     {
         return $this->types;
     }
-
 }

@@ -63,7 +63,6 @@ class ResolveCest
                 'other' => $blueprint->getOther(),
             ]
         );
-
     }
 
     /**

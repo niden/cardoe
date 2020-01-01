@@ -29,7 +29,7 @@ class Json extends AbstractSerializer
     /**
      * Serializes data
      *
-     * @return string|JsonSerializable
+     * @return string
      */
     public function serialize()
     {

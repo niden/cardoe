@@ -84,4 +84,3 @@ class ResolutionHelper
         return $this->container->newInstance($spec);
     }
 }
-
