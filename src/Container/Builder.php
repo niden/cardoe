@@ -99,13 +99,13 @@ class Builder
      * Creates a new ContainerConfig for a collection of
      * ContainerConfigInterface classes
      *
-     * @param array $configClasses A list of ContainerConfig classes to
-     * instantiate and invoke for configuring the Container.
+     * @param array $classes A list of ContainerConfig classes to instantiate
+     *                       and invoke for configuring the Container.
      *
      * @return Collection
      */
-    protected function newConfigCollection(array $configClasses = []): Collection
+    protected function newConfigCollection(array $classes = []): Collection
     {
-        return new Collection($configClasses);
+        return new Collection($classes);
     }
 }

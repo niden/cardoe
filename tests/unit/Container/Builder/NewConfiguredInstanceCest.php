@@ -11,10 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Builder;
 
+use InvalidArgumentException;
 use Phalcon\Container;
 use Phalcon\Container\Builder;
 use Phalcon\Test\Fixtures\Container\ConfigLibraryFixtureClass;
 use Phalcon\Test\Fixtures\Container\ConfigProjectFixtureClass;
+use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use Psr\Container\ContainerInterface;
 use UnitTester;
 
@@ -58,12 +60,12 @@ class NewConfiguredInstanceCest
         $I->wantToTest('Container\Builder - newConfiguredInstance() - exception');
 
         $I->expectThrowable(
-            new \InvalidArgumentException(
+            new InvalidArgumentException(
                 'Container configs must implement ConfigInterface'
             ),
             function () {
                 $builder = new Builder();
-                $builder->newConfiguredInstance([]);
+                $builder->newConfiguredInstance([ParentFixtureClass::class]);
             }
         );
     }
