@@ -29,6 +29,7 @@ class ParametersFixtureClass
      * @var string|null
      */
     public $empty = 'not null';
+
     /**
      * @var ParentFixtureClass
      */
