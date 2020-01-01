@@ -13,6 +13,10 @@ namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
 use Phalcon\Container\Injection\LazyNew;
+use Phalcon\Container\Resolver\Blueprint;
+use Phalcon\Test\Fixtures\Container\ContextChildClass;
+use Phalcon\Test\Fixtures\Container\ContextGrandChildClass;
+use Phalcon\Test\Fixtures\Container\ContextParentClass;
 use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use Phalcon\Test\Fixtures\Container\VariadicFixtureClass;
 use UnitTester;
@@ -69,5 +73,65 @@ class LazyNewCest
         $instance = $lazy();
         $I->assertEquals($name, $instance->getName());
         $I->assertEquals($items, $instance->getItems());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: lazyNew() - contextual parameters
+     *
+     * @since  2020-01-01
+     */
+    public function containerLazyNewContextualParameters(UnitTester $I)
+    {
+        $I->wantToTest('Container - lazyNew() - contextual parameters');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $container
+            ->parameters()
+            ->set(
+                ContextParentClass::class,
+                [
+                    'store' => $container->lazyNew(ContextChildClass::class)
+                ]
+            )
+            ->set(
+                ContextChildClass::class,
+                [
+                    'store' => $container->lazyNew(ContextGrandChildClass::class)
+                ]
+            )
+            ->set(
+                ContextGrandChildClass::class,
+                [
+                    'store' => 'voyager'
+                ]
+            )
+        ;
+
+        $lazy   = $container->lazyNew(ContextGrandChildClass::class);
+        $actual = $lazy();
+
+        $I->assertEquals('voyager', $actual->store);
+
+        $lazy = $container
+            ->lazyNew(ContextParentClass::class)
+            ->withContext(
+                new Blueprint(
+                    ContextGrandChildClass::class,
+                    [
+                        'store' => 'enterprise'
+                    ]
+                )
+            )
+        ;
+
+        $actual = $lazy();
+        $I->assertEquals('enterprise', $actual->store->store->store);
+
+        $lazy   = $container->lazyNew(ContextGrandChildClass::class);
+        $actual = $lazy();
+
+        $I->assertEquals('voyager', $actual->store);
     }
 }

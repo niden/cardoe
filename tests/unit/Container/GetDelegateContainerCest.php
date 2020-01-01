@@ -11,6 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container;
+use Phalcon\Container\Injection\InjectionFactory;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Test\Fixtures\Container\ContainerFixture;
 use UnitTester;
 
 class GetDelegateContainerCest
@@ -24,6 +29,11 @@ class GetDelegateContainerCest
     {
         $I->wantToTest('Container - getDelegateContainer()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container(
+            new InjectionFactory(new Resolver(new Reflector())),
+            new ContainerFixture([])
+        );
+
+        $I->assertInstanceOf(ContainerFixture::class, $container->getDelegateContainer());
     }
 }

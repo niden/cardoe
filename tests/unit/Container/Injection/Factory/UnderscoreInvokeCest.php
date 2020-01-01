@@ -39,7 +39,7 @@ class UnderscoreInvokeCest
             new Blueprint(
                 ChildFixtureClass::class,
                 [
-                    'name'  => 'tuvok',
+                    'store' => 'tuvok',
                     'other' => $other,
                 ],
                 [
@@ -52,7 +52,7 @@ class UnderscoreInvokeCest
 
         $I->assertInstanceOf(ChildFixtureClass::class, $actual);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
-        $I->assertEquals('tuvok', $actual->getName());
+        $I->assertEquals('tuvok', $actual->getStore());
         $I->assertEquals('neelix', $actual->getData());
     }
 }

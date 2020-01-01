@@ -59,7 +59,7 @@ class ResolveCest
         $I->assertEquals(
             $expected,
             [
-                'name'  => $blueprint->getName(),
+                'name'  => $blueprint->getStore(),
                 'other' => $blueprint->getOther(),
             ]
         );

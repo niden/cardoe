@@ -34,16 +34,16 @@ class LazyValueCest
             ->set(
                 ParentFixtureClass::class,
                 [
-                    'name' => $container->lazyValue('name'),
+                    'store' => $container->lazyValue('store'),
                 ]
             );
         $container
             ->values()
-            ->set('name', 'neelix')
+            ->set('store', 'neelix')
         ;
 
         $actual = $container->newInstance(ParentFixtureClass::class);
-        $I->assertEquals('neelix', $actual->getName());
+        $I->assertEquals('neelix', $actual->getStore());
     }
 
     /**
@@ -62,17 +62,17 @@ class LazyValueCest
             ->set(
                 ParentFixtureClass::class,
                 [
-                    'name' => $container->lazyValue('name'),
+                    'store' => $container->lazyValue('store'),
                 ]
             );
         $container
             ->values()
-            ->set('name', $container->lazyValue('two'))
+            ->set('store', $container->lazyValue('two'))
             ->set('two', 'doctor')
         ;
 
         $actual = $container->newInstance(ParentFixtureClass::class);
-        $I->assertEquals('doctor', $actual->getName());
+        $I->assertEquals('doctor', $actual->getStore());
     }
 
     /**
@@ -85,7 +85,7 @@ class LazyValueCest
         $I->wantToTest('Container - lazyValue() - exception');
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Unknown key (uknown) in container value'
+                'Unknown key (unknown) in container value'
             ),
             function () {
                 $builder   = new Builder();
@@ -95,7 +95,7 @@ class LazyValueCest
                     ->set(
                         ParentFixtureClass::class,
                         [
-                            'name' => $container->lazyValue('uknown'),
+                            'store' => $container->lazyValue('unknown'),
                         ]
                     )
                 ;

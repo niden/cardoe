@@ -11,9 +11,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container;
 use Phalcon\Container\Builder;
+use Phalcon\Container\Injection\InjectionFactory;
 use Phalcon\Container\Injection\LazyGet;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Test\Fixtures\Container\ContainerFixture;
 use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
+use stdClass;
 use UnitTester;
 
 class LazyGetCest
@@ -41,5 +47,37 @@ class LazyGetCest
 
         $actual = $lazy();
         $I->assertInstanceOf(OtherFixtureClass::class, $actual);
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: lazyGet() - delegate
+     *
+     * @since  2020-01-01
+     */
+    public function containerLazyGetDelegate(UnitTester $I)
+    {
+        $I->wantToTest('Container - lazyGet() - delegate');
+
+        $delegate = new ContainerFixture(
+            [
+                "person" => function () {
+                    $obj = new stdClass();
+                    $obj->name = "seven";
+
+                    return $obj;
+                }
+            ]
+        );
+        $container = new Container(
+            new InjectionFactory(new Resolver(new Reflector())),
+            $delegate
+        );
+
+        $lazy = $container->lazyGet('person');
+        $I->assertInstanceOf(LazyGet::class, $lazy);
+
+        $person = $lazy();
+        $I->assertInstanceOf(stdClass::class, $person);
+        $I->assertEquals('seven', $person->name);
     }
 }

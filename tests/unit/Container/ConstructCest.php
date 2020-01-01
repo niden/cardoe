@@ -11,6 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container;
+use Phalcon\Container\Injection\InjectionFactory;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Psr\Container\ContainerInterface;
 use UnitTester;
 
 class ConstructCest
@@ -24,6 +29,11 @@ class ConstructCest
     {
         $I->wantToTest('Container - __construct()');
 
-        $I->skipTest('Need implementation');
+        $container = new Container(
+            new InjectionFactory(new Resolver(new Reflector()))
+        );
+
+        $I->assertInstanceOf(ContainerInterface::class, $container);
+        $I->assertInstanceOf(Container::class, $container);
     }
 }

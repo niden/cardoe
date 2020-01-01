@@ -34,7 +34,7 @@ class NewFactoryCest
         $factory = $container->newFactory(
             ChildFixtureClass::class,
             [
-                'name'  => 'doctor',
+                'store' => 'doctor',
                 'other' => $other,
             ],
             [
@@ -46,7 +46,7 @@ class NewFactoryCest
 
         $I->assertInstanceOf(ChildFixtureClass::class, $actual);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
-        $I->assertEquals('doctor', $actual->getName());
+        $I->assertEquals('doctor', $actual->getStore());
         $I->assertEquals('voyager', $actual->getData());
 
         $second = $factory();

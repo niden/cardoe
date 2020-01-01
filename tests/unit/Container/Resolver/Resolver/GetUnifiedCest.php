@@ -39,7 +39,7 @@ class GetUnifiedCest
         $blueprint = $resolver->getUnified(ParentFixtureClass::class);
         $I->assertEquals(
             [
-                'name' => new DefaultValueParameter('name', 'seven'),
+                'store' => new DefaultValueParameter('store', 'seven'),
             ],
             $blueprint->getParameters()
         );
@@ -58,7 +58,7 @@ class GetUnifiedCest
         $resolver  = new Resolver(new Reflector());
         $blueprint = $resolver->getUnified(ChildFixtureClass::class);
         $expected  = [
-            'name'  => new DefaultValueParameter('name', 'seven'),
+            'store' => new DefaultValueParameter('store', 'seven'),
             'other' => new DefaultValueParameter('other', null),
         ];
         $I->assertEquals($expected, $blueprint->getParameters());
@@ -80,14 +80,14 @@ class GetUnifiedCest
             ->set(
                 ParentFixtureClass::class,
                 [
-                    'name' => 'tuvok',
+                    'store' => 'tuvok',
                 ]
             )
         ;
 
         $blueprint = $resolver->getUnified(ParentFixtureClass::class);
         $expected  = [
-            'name' => 'tuvok',
+            'store' => 'tuvok',
         ];
         $I->assertEquals($expected, $blueprint->getParameters());
     }
@@ -108,14 +108,14 @@ class GetUnifiedCest
             ->set(
                 ParentFixtureClass::class,
                 [
-                    'name' => 'tuvok',
+                    'store' => 'tuvok',
                 ]
             )
         ;
 
         $blueprint = $resolver->getUnified(ChildFixtureClass::class);
         $expected  = [
-            'name'  => 'tuvok',
+            'store' => 'tuvok',
             'other' => new DefaultValueParameter('other', null),
         ];
         $I->assertEquals($expected, $blueprint->getParameters());
