@@ -94,8 +94,9 @@ class Reflector
     {
         if (!isset($this->parameters[$class])) {
             $this->parameters[$class] = [];
-            $constructor          = $this->getClass($class)->getConstructor();
-            if ($constructor) {
+
+            $constructor = $this->getClass($class)->getConstructor();
+            if (null !== $constructor) {
                 $this->parameters[$class] = $constructor->getParameters();
             }
         }

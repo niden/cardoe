@@ -14,6 +14,8 @@ namespace Phalcon\Test\Unit\Container;
 use Phalcon\Container\Builder;
 use Phalcon\Container\Exception\ServiceNotFound;
 use Phalcon\Container\Exception\ServiceNotObject;
+use Phalcon\Test\Fixtures\Container\NullChildConstructClass;
+use Phalcon\Test\Fixtures\Container\NullParentConstructClass;
 use UnitTester;
 
 class GetSetHasCest
@@ -63,5 +65,97 @@ class GetSetHasCest
         // get it again for coverage
         $actual = $container->get('voyager');
         $I->assertEquals($expect, $actual);
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: get() - named parameter null
+     *
+     * @since  2020-01-01
+     */
+    public function containerGetNamedParameterNull(UnitTester $I)
+    {
+        $I->wantToTest('Container - get() - named parameter null');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->parameters()
+            ->set(
+                NullParentConstructClass::class,
+                [
+                    'store' => null,
+                ]
+            )
+        ;
+        $container->set(
+            'parentService',
+            $container->lazyNew(NullParentConstructClass::class)
+        );
+
+        $service = $container->get('parentService');
+        $I->assertInstanceOf(NullParentConstructClass::class, $service);
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: get() - numbered parameter null
+     *
+     * @since  2020-01-01
+     */
+    public function containerGetNumberedParameterNull(UnitTester $I)
+    {
+        $I->wantToTest('Container - get() - numbered parameter null');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->parameters()
+            ->set(
+                NullParentConstructClass::class,
+                [
+                    null,
+                ]
+            )
+        ;
+        $container->set(
+            'parentService',
+            $container->lazyNew(NullParentConstructClass::class)
+        );
+        
+        $service = $container->get('parentService');
+        $I->assertInstanceOf(NullParentConstructClass::class, $service);
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: get() - implicit parent parameter null
+     *
+     * @since  2020-01-01
+     */
+    public function containerGetImplicitParentParameterNull(UnitTester $I)
+    {
+        $I->wantToTest('Container - get() - implicit parent parameter null');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container
+            ->parameters()
+            ->set(
+                NullParentConstructClass::class,
+                [
+                    null,
+                ]
+            )
+        ;
+        $container->set(
+            'parentService',
+            $container->lazyNew(NullParentConstructClass::class)
+        );
+
+        $container->set(
+            'childService',
+            $container->lazyNew(NullChildConstructClass::class)
+        );
+
+        $service = $container->get('childService');
+        $I->assertInstanceOf(NullParentConstructClass::class, $service);
     }
 }

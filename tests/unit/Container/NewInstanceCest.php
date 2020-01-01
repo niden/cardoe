@@ -26,6 +26,8 @@ use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use Phalcon\Test\Fixtures\Container\ResolveFixtureClass;
 use Phalcon\Test\Fixtures\Container\VariadicFixtureClass;
+use Phalcon\Test\Fixtures\Container\WithDefaultParamChildClass;
+use Phalcon\Test\Fixtures\Container\WithDefaultParamParentClass;
 use UnitTester;
 
 class NewInstanceCest
@@ -46,6 +48,27 @@ class NewInstanceCest
         $expected = 'seven';
         $actual   = $instance->getStore();
         $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: newInstance() - defaults for child class
+     *
+     * @since  2020-01-01
+     */
+    public function containerNewInstanceDefaultsForChildClass(UnitTester $I)
+    {
+        $I->wantToTest('Container - newInstance() - defaults for child class');
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $actual = $container->newInstance(WithDefaultParamParentClass::class);
+        $I->assertEquals(1, $actual->first);
+        $I->assertEquals(2, $actual->second);
+
+        $actual = $container->newInstance(WithDefaultParamChildClass::class);
+        $I->assertEquals(1, $actual->first);
+        $I->assertEquals(3, $actual->second);
     }
 
     /**
