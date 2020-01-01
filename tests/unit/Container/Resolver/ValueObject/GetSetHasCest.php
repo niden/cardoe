@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Resolver\ValueObject;
 
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
@@ -37,6 +38,25 @@ class GetSetHasCest
 
         $I->assertEquals('one', $collection->get(0));
         $I->assertEquals('three', $collection->get('two'));
-        $I->assertEquals('default', $collection->get('unknown', 'default'));
+    }
+
+    /**
+     * Unit Tests Phalcon\Container\Resolver\ValueObject :: get() - exception
+     *
+     * @since  2019-12-30
+     */
+    public function containerResolverValueObjectGetException(UnitTester $I)
+    {
+        $I->wantToTest('Container\Resolver\ValueObject - get() - exception');
+
+        $I->expectThrowable(
+            new NoSuchProperty(
+                'Property does not exist: $unknown'
+            ),
+            function () {
+                $collection = new ValueObject();
+                $collection->get('unknown');
+            }
+        );
     }
 }

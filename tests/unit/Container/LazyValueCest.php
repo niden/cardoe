@@ -90,7 +90,6 @@ class LazyValueCest
             function () {
                 $builder   = new Builder();
                 $container = $builder->newInstance();
-
                 $container
                     ->parameters()
                     ->set(

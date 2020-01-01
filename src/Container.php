@@ -341,8 +341,13 @@ class Container implements ContainerInterface
         $this->locked = true;
     }
 
+    /**
+     * @return ValueObject
+     * @throws ContainerLocked
+     */
     public function mutations(): ValueObject
     {
+        $this->checkLocked();
         return $this->resolver->mutations();
     }
 
@@ -420,9 +425,11 @@ class Container implements ContainerInterface
 
     /**
      * @return ValueObject
+     * @throws ContainerLocked
      */
     public function parameters(): ValueObject
     {
+        $this->checkLocked();
         return $this->resolver->parameters();
     }
 
@@ -444,22 +451,7 @@ class Container implements ContainerInterface
      */
     public function set(string $service, object $val): Container
     {
-        if ($this->locked) {
-            throw new ContainerLocked(
-                "Cannot modify container when locked."
-            );
-        }
-
-        if (!is_object($val)) {
-            throw new ServiceNotObject(
-                sprintf(
-                    "Expected service '%s' to be of type 'object', got '%s' instead.",
-                    $service,
-                    gettype($val)
-                )
-            );
-        }
-
+        $this->checkLocked();
         if ($val instanceof Closure) {
             $val = $this->factory->newLazy($val);
         }
@@ -471,18 +463,22 @@ class Container implements ContainerInterface
 
     /**
      * @return ValueObject
+     * @throws ContainerLocked
      */
     public function setters(): ValueObject
     {
+        $this->checkLocked();
         return $this->resolver->setters();
     }
 
     /**
      * @return ValueObject|null
+     * @throws ContainerLocked
      */
     public function types(): ?ValueObject
     {
         if ($this->resolver instanceof AutoResolver) {
+            $this->checkLocked();
             return $this->resolver->types();
         }
 
@@ -491,9 +487,11 @@ class Container implements ContainerInterface
 
     /**
      * @return ValueObject
+     * @throws ContainerLocked
      */
     public function values(): ValueObject
     {
+        $this->checkLocked();
         return $this->resolver->values();
     }
 
@@ -511,12 +509,7 @@ class Container implements ContainerInterface
     {
         // does the definition exist?
         if (!$this->has($service)) {
-            throw new ServiceNotFound(
-                sprintf(
-                    "Service not defined: '%s'",
-                    $service
-                )
-            );
+            Exception::serviceNotFound($service);
         }
 
         // is it defined in this container?
@@ -535,5 +528,15 @@ class Container implements ContainerInterface
 
         // done
         return $instance;
+    }
+
+    /**
+     * @throws ContainerLocked
+     */
+    private function checkLocked(): void
+    {
+        if ($this->locked) {
+            Exception::containerLocked();
+        }
     }
 }

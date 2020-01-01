@@ -51,7 +51,6 @@ class ResolutionHelper
      * @param mixed $spec The object specification.
      *
      * @return array|object
-     * @throws Exception\ServiceNotFound
      * @throws ReflectionException
      */
     public function __invoke($spec)

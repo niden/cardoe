@@ -13,6 +13,7 @@ namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
 use Phalcon\Container\Exception\ServiceNotFound;
+use Phalcon\Container\Exception\ServiceNotObject;
 use UnitTester;
 
 class GetSetHasCest

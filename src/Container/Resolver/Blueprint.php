@@ -91,12 +91,9 @@ final class Blueprint
         $parameters = $this->parameters;
         foreach ($parameters as $index => $parameter) {
             if ($parameter instanceof UnresolvedParameter) {
-                throw new MissingParameter(
-                    sprintf(
-                        "Parameter missing: %s::\$%s",
-                        $this->className,
-                        $parameter->getName()
-                    )
+                Exception::missingParameter(
+                    $this->className,
+                    $parameter->getName()
                 );
             }
 
@@ -106,12 +103,9 @@ final class Blueprint
         $object = $reflectedClass->newInstanceArgs($parameters);
         foreach ($this->setters as $method => $value) {
             if (!method_exists($this->className, $method)) {
-                throw new SetterMethodNotFound(
-                    sprintf(
-                        "Setter method not found: %s::%s()",
-                        $this->className,
-                        $method
-                    )
+                Exception::setterMethodNotFound(
+                    $this->className,
+                    $method
                 );
             }
 
@@ -124,7 +118,7 @@ final class Blueprint
             $mutation = $this->resolveLazy($mutation);
 
             if ($mutation instanceof MutationInterface === false) {
-                throw Exception::mutationDoesNotImplementInterface($mutation);
+                Exception::mutationDoesNotImplementInterface($mutation);
             }
 
             $object = $mutation($object);
@@ -235,7 +229,7 @@ final class Blueprint
      */
     private function mergeParameters(Blueprint $blueprint): array
     {
-        if (!$blueprint->parameters) {
+        if (empty($blueprint->parameters)) {
             // no parameters to merge, micro-optimize the loop
             return $this->parameters;
         }

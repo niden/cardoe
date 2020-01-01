@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Phalcon\Container\Injection;
 
 use InvalidArgumentException;
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Resolver\Resolver;
 
 /**
@@ -56,11 +57,10 @@ class LazyValue implements LazyInterface
     }
 
     /**
-     *
      * Returns the lazy value.
      *
      * @return mixed
-     *
+     * @throws NoSuchProperty
      */
     public function __invoke()
     {

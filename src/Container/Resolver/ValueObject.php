@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Resolver;
 
+use Phalcon\Container\Exception;
+use Phalcon\Container\Exception\NoSuchProperty;
+
 use function array_key_exists;
 
 /**
@@ -54,14 +57,14 @@ class ValueObject
      * Get the element from the collection
      *
      * @param mixed      $element
-     * @param mixed|null $defaultValue
      *
      * @return mixed
+     * @throws NoSuchProperty
      */
-    public function get($element, $defaultValue = null)
+    public function get($element)
     {
         if (!$this->has($element)) {
-            return $defaultValue;
+            Exception::noSuchProperty($element);
         }
 
         return $this->store[$element];
@@ -88,7 +91,7 @@ class ValueObject
     public function merge($element, array $data): array
     {
         $this->store[$element] = array_replace(
-            $this->get($element, []),
+            ($this->store[$element] ?? []),
             $data
         );
 

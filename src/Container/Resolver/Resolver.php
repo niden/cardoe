@@ -18,6 +18,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Resolver;
 
+use Phalcon\Container\Exception;
+use Phalcon\Container\Exception\NoSuchProperty;
 use ReflectionException;
 use ReflectionParameter;
 
@@ -155,6 +157,7 @@ class Resolver
      * @param array     $contextualBlueprints
      *
      * @return object
+     * @throws NoSuchProperty
      * @throws ReflectionException
      */
     public function resolve(Blueprint $blueprint, array $contextualBlueprints = []): object
