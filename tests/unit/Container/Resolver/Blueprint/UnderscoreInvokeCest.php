@@ -105,13 +105,13 @@ class UnderscoreInvokeCest
 
     /**
      * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - mutation
-     * exception
+     * exception string
      *
      * @since  2019-12-30
      */
-    public function containerResolverBlueprintUnderscoreInvokeMutationException(UnitTester $I)
+    public function containerResolverBlueprintUnderscoreInvokeMutationExceptionString(UnitTester $I)
     {
-        $I->wantToTest('Container\Resolver\Blueprint - __invoke() - mutation exception');
+        $I->wantToTest('Container\Resolver\Blueprint - __invoke() - mutation exception string');
 
         $I->expectThrowable(
             new MutationDoesNotImplementInterface(
@@ -120,6 +120,32 @@ class UnderscoreInvokeCest
             function () {
                 $mutations = [
                     'setData' => LazyArray::class,
+                ];
+                $blueprint = new Blueprint('invokeClass', [], [], $mutations);
+                $refection = new ReflectionClass(BlueprintInvoke::class);
+
+                $blueprint($refection);
+            }
+        );
+    }
+
+    /**
+     * Unit Tests Phalcon\Container\Resolver\Blueprint :: __invoke() - mutation
+     * exception object
+     *
+     * @since  2019-12-30
+     */
+    public function containerResolverBlueprintUnderscoreInvokeMutationExceptionObject(UnitTester $I)
+    {
+        $I->wantToTest('Container\Resolver\Blueprint - __invoke() - mutation exception object');
+
+        $I->expectThrowable(
+            new MutationDoesNotImplementInterface(
+                'Mutation does not implement interface: Phalcon\Test\Fixtures\Container\BlueprintInvoke'
+            ),
+            function () {
+                $mutations = [
+                    'setData' => new BlueprintInvoke(),
                 ];
                 $blueprint = new Blueprint('invokeClass', [], [], $mutations);
                 $refection = new ReflectionClass(BlueprintInvoke::class);

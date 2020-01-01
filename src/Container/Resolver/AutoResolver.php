@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Resolver;
 
+use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Injection\LazyNew;
 use ReflectionException;
 use ReflectionParameter;
@@ -59,6 +60,7 @@ class AutoResolver extends Resolver
      *
      * @return LazyNew|mixed|DefaultValueParameter|UnresolvedParameter
      * @throws ReflectionException
+     * @throws NoSuchProperty
      */
     protected function getUnifiedParameter(ReflectionParameter $rparam, string $class, array $parent)
     {

@@ -258,7 +258,6 @@ final class Blueprint
     }
 
     /**
-     *
      * Merges the setters with overrides; also invokes Lazy values.
      *
      * @param Blueprint $blueprint A blueprint containing override setters.

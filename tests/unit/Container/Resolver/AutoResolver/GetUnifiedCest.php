@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Resolver\AutoResolver;
 
+use Phalcon\Container\Resolver\AutoResolver;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\Resolver;
+use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use UnitTester;
 
 class GetUnifiedCest
@@ -24,6 +28,21 @@ class GetUnifiedCest
     {
         $I->wantToTest('Container\Resolver\AutoResolver - getUnified()');
 
-        $I->skipTest('Need implementation');
+        $resolver = new AutoResolver(new Reflector());
+        $resolver
+            ->parameters()
+            ->set(
+                ParentFixtureClass::class,
+                [
+                    'store' => 'tuvok',
+                ]
+            )
+        ;
+
+        $blueprint = $resolver->getUnified(ParentFixtureClass::class);
+        $expected  = [
+            'store' => 'tuvok',
+        ];
+        $I->assertEquals($expected, $blueprint->getParameters());
     }
 }

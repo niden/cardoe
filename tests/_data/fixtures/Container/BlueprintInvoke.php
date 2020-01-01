@@ -24,6 +24,14 @@ class BlueprintInvoke
 
     public function __construct()
     {
+
+    }
+
+    public function __invoke(object $object): object
+    {
+        $object->setData('mutated');
+
+        return $object;
     }
 
     public function setData($data)
