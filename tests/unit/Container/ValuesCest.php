@@ -12,24 +12,27 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
-use Phalcon\Container\Injection\InjectionFactory;
+use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
-class GetInjectionFactoryCest
+class ValuesCest
 {
     /**
-     * Unit Tests Phalcon\Container :: getInjectionFactory()
+     * Unit Tests Phalcon\Container :: values()
      *
      * @since  2020-01-01
      */
-    public function containerGetInjectionFactory(UnitTester $I)
+    public function containerValues(UnitTester $I)
     {
-        $I->wantToTest('Container - getInjectionFactory()');
+        $I->wantToTest('Container - values()');
 
         $builder   = new Builder();
         $container = $builder->newInstance();
-        $factory   = $container->getInjectionFactory();
-
-        $I->assertInstanceOf(InjectionFactory::class, $factory);
+        $container->values()->set('valueOne', 'two');
+        $I->assertInstanceOf(ValueObject::class, $container->values());
+        $I->assertEquals(
+            'two',
+            $container->values()->get('valueOne')
+        );
     }
 }

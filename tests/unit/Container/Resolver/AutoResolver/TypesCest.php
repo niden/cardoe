@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container\Resolver\AutoResolver;
 
+use Phalcon\Container\Resolver\AutoResolver;
+use Phalcon\Container\Resolver\Reflector;
+use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
 class TypesCest
@@ -24,6 +27,10 @@ class TypesCest
     {
         $I->wantToTest('Container\Resolver\AutoResolver - types()');
 
-        $I->skipTest('Need implementation');
+        $resolver = new AutoResolver(new Reflector());
+        $I->assertInstanceOf(ValueObject::class, $resolver->types());
+
+        $resolver->types()->set('typeOne', 'two');
+        $I->assertEquals(1, $resolver->types()->count());
     }
 }

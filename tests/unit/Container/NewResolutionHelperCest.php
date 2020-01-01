@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Codeception\Stub;
+use Phalcon\Container;
+use Phalcon\Container\ResolutionHelper;
 use UnitTester;
 
 class NewResolutionHelperCest
@@ -24,6 +27,9 @@ class NewResolutionHelperCest
     {
         $I->wantToTest('Container - newResolutionHelper()');
 
-        $I->skipTest('Need implementation');
+        $container = Stub::make(Container::class);
+        $helper    = $container->newResolutionHelper();
+
+        $I->assertInstanceOf(ResolutionHelper::class, $helper);
     }
 }

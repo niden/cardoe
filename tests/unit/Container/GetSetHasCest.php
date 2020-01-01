@@ -15,16 +15,16 @@ use Phalcon\Container\Builder;
 use Phalcon\Container\Exception\ServiceNotFound;
 use UnitTester;
 
-class GetCest
+class GetSetHasCest
 {
     /**
-     * Unit Tests Phalcon\Container :: get()
+     * Unit Tests Phalcon\Container :: get() - exception
      *
      * @since  2020-01-01
      */
-    public function containerGet(UnitTester $I)
+    public function containerGetException(UnitTester $I)
     {
-        $I->wantToTest('Container - get()');
+        $I->wantToTest('Container - get() - exception');
 
         $I->expectThrowable(
             new ServiceNotFound(
@@ -36,5 +36,31 @@ class GetCest
                 $container->get('unknown');
             }
         );
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: get()/set()/has()
+     *
+     * @since  2020-01-01
+     */
+    public function containerGetSetHas(UnitTester $I)
+    {
+        $I->wantToTest('Container - get()/set()/has()');
+
+        $expect = (object) [];
+
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container->set('voyager', $expect);
+
+        $I->assertTrue($container->has('voyager'));
+        $I->assertFalse($container->has('borg'));
+
+        $actual = $container->get('voyager');
+        $I->assertEquals($expect, $actual);
+
+        // get it again for coverage
+        $actual = $container->get('voyager');
+        $I->assertEquals($expect, $actual);
     }
 }

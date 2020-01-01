@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use Phalcon\Container\Injection\LazyGet;
+use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use UnitTester;
 
 class LazyGetCest
@@ -18,12 +21,25 @@ class LazyGetCest
     /**
      * Unit Tests Phalcon\Container :: lazyGet()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerLazyGet(UnitTester $I)
     {
         $I->wantToTest('Container - lazyGet()');
 
-        $I->skipTest('Need implementation');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+        $container->set(
+            'other',
+            function () {
+                return new OtherFixtureClass();
+            }
+        );
+
+        $lazy = $container->lazyGet('other');
+        $I->assertInstanceOf(LazyGet::class, $lazy);
+
+        $actual = $lazy();
+        $I->assertInstanceOf(OtherFixtureClass::class, $actual);
     }
 }

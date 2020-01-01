@@ -16,7 +16,8 @@ use UnitTester;
 class NewLazyCallableCest
 {
     /**
-     * Unit Tests Phalcon\Container\Injection\InjectionFactory :: newLazyCallable()
+     * Unit Tests Phalcon\Container\Injection\InjectionFactory ::
+     * newLazyCallable()
      *
      * @since  2019-12-30
      */

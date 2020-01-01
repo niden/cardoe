@@ -16,7 +16,8 @@ use UnitTester;
 class NewLazyIncludeCest
 {
     /**
-     * Unit Tests Phalcon\Container\Injection\InjectionFactory :: newLazyInclude()
+     * Unit Tests Phalcon\Container\Injection\InjectionFactory ::
+     * newLazyInclude()
      *
      * @since  2019-12-30
      */

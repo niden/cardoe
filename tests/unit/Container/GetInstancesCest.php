@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use stdClass;
 use UnitTester;
 
 class GetInstancesCest
@@ -18,12 +20,24 @@ class GetInstancesCest
     /**
      * Unit Tests Phalcon\Container :: getInstances()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerGetInstances(UnitTester $I)
     {
         $I->wantToTest('Container - getInstances()');
 
-        $I->skipTest('Need implementation');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $container->set('one', (object) []);
+        $container->set('two', (object) []);
+        $container->set('three', (object) []);
+
+        $actual = $container->getInstances();
+        $I->assertIsArray($actual);
+        $I->assertEmpty($actual);
+
+        $actual = $container->get('one');
+        $I->assertInstanceOf(stdClass::class, $actual);
     }
 }

@@ -16,7 +16,8 @@ use UnitTester;
 class NewLazyRequireCest
 {
     /**
-     * Unit Tests Phalcon\Container\Injection\InjectionFactory :: newLazyRequire()
+     * Unit Tests Phalcon\Container\Injection\InjectionFactory ::
+     * newLazyRequire()
      *
      * @since  2019-12-30
      */

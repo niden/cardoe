@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use InvalidArgumentException;
+use Phalcon\Container\Builder;
+use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use UnitTester;
 
 class LazyValueCest
@@ -18,12 +21,88 @@ class LazyValueCest
     /**
      * Unit Tests Phalcon\Container :: lazyValue()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerLazyValue(UnitTester $I)
     {
         $I->wantToTest('Container - lazyValue()');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
 
-        $I->skipTest('Need implementation');
+        $container
+            ->parameters()
+            ->set(
+                ParentFixtureClass::class,
+                [
+                    'name' => $container->lazyValue('name'),
+                ]
+            );
+        $container
+            ->values()
+            ->set('name', 'neelix')
+        ;
+
+        $actual = $container->newInstance(ParentFixtureClass::class);
+        $I->assertEquals('neelix', $actual->getName());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: lazyValue() - with lazy
+     *
+     * @since  2020-01-01
+     */
+    public function containerLazyValueWithLazy(UnitTester $I)
+    {
+        $I->wantToTest('Container - lazyValue() - with lazy');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $container
+            ->parameters()
+            ->set(
+                ParentFixtureClass::class,
+                [
+                    'name' => $container->lazyValue('name'),
+                ]
+            );
+        $container
+            ->values()
+            ->set('name', $container->lazyValue('two'))
+            ->set('two', 'doctor')
+        ;
+
+        $actual = $container->newInstance(ParentFixtureClass::class);
+        $I->assertEquals('doctor', $actual->getName());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: lazyValue() - exception
+     *
+     * @since  2020-01-01
+     */
+    public function containerLazyValueException(UnitTester $I)
+    {
+        $I->wantToTest('Container - lazyValue() - exception');
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                'Unknown key (uknown) in container value'
+            ),
+            function () {
+                $builder   = new Builder();
+                $container = $builder->newInstance();
+
+                $container
+                    ->parameters()
+                    ->set(
+                        ParentFixtureClass::class,
+                        [
+                            'name' => $container->lazyValue('uknown'),
+                        ]
+                    )
+                ;
+
+                $container->newInstance(ParentFixtureClass::class);
+            }
+        );
     }
 }

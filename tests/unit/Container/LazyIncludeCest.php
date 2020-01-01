@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use Phalcon\Container\Injection\LazyInterface;
 use UnitTester;
 
 class LazyIncludeCest
@@ -18,12 +20,25 @@ class LazyIncludeCest
     /**
      * Unit Tests Phalcon\Container :: lazyInclude()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerLazyInclude(UnitTester $I)
     {
         $I->wantToTest('Container - lazyInclude()');
 
-        $I->skipTest('Need implementation');
+        $file      = dataDir('fixtures/Container/LazyArray.php');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $lazy = $container->lazyInclude($file);
+        $I->assertInstanceOf(LazyInterface::class, $lazy);
+        $actual = $lazy();
+
+        $I->assertEquals(
+            [
+                'starship' => 'Voyager',
+            ],
+            $actual
+        );
     }
 }

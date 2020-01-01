@@ -12,33 +12,30 @@ declare(strict_types=1);
 namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
-use Phalcon\Container\Injection\LazyInterface;
+use Phalcon\Container\Resolver\ValueObject;
 use UnitTester;
 
-class LazyRequireCest
+class MutationsCest
 {
     /**
-     * Unit Tests Phalcon\Container :: lazyRequire()
+     * Unit Tests Phalcon\Container :: mutations()
      *
      * @since  2020-01-01
      */
-    public function containerLazyRequire(UnitTester $I)
+    public function containerMutations(UnitTester $I)
     {
-        $I->wantToTest('Container - lazyRequire()');
+        $I->wantToTest('Container - mutations()');
 
-        $file      = dataDir('fixtures/Container/LazyArray.php');
         $builder   = new Builder();
         $container = $builder->newInstance();
-
-        $lazy = $container->lazyRequire($file);
-        $I->assertInstanceOf(LazyInterface::class, $lazy);
-        $actual = $lazy();
-
+        $container->mutations()->set('mutationOne', ['one', 'two']);
+        $I->assertInstanceOf(ValueObject::class, $container->mutations());
         $I->assertEquals(
             [
-                'starship' => 'Voyager',
+                'one',
+                'two',
             ],
-            $actual
+            $container->mutations()->get('mutationOne')
         );
     }
 }

@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use Phalcon\Container\Exception\ContainerLocked;
+use stdClass;
 use UnitTester;
 
 class LockCest
@@ -18,12 +21,45 @@ class LockCest
     /**
      * Unit Tests Phalcon\Container :: lock()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerLock(UnitTester $I)
     {
         $I->wantToTest('Container - lock()');
 
-        $I->skipTest('Need implementation');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $I->assertFalse($container->isLocked());
+        $container->lock();
+        $I->assertTrue($container->isLocked());
+    }
+
+    /**
+     * Unit Tests Phalcon\Container :: lock() - exception
+     *
+     * @since  2020-01-01
+     */
+    public function containerLockException(UnitTester $I)
+    {
+        $I->wantToTest('Container - lock() - exception');
+
+        $I->expectThrowable(
+            new ContainerLocked(
+                'Cannot modify container when locked.'
+            ),
+            function () {
+                $builder   = new Builder();
+                $container = $builder->newInstance();
+                $container->lock();
+
+                $container->set(
+                    'name',
+                    function () {
+                        return new stdClass();
+                    }
+                );
+            }
+        );
     }
 }

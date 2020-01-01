@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Phalcon\Container\Builder;
+use Phalcon\Test\Fixtures\Container\ChildFixtureClass;
+use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
 use UnitTester;
 
 class NewFactoryCest
@@ -18,12 +21,35 @@ class NewFactoryCest
     /**
      * Unit Tests Phalcon\Container :: newFactory()
      *
-     * @since  2019-12-30
+     * @since  2020-01-01
      */
     public function containerNewFactory(UnitTester $I)
     {
         $I->wantToTest('Container - newFactory()');
 
-        $I->skipTest('Need implementation');
+        $builder   = new Builder();
+        $container = $builder->newInstance();
+
+        $other = $container->newInstance(OtherFixtureClass::class);
+        $factory = $container->newFactory(
+            ChildFixtureClass::class,
+            [
+                'name'  => 'doctor',
+                'other' => $other,
+            ],
+            [
+                'setData' => 'voyager',
+            ]
+        );
+
+        $actual = $factory();
+
+        $I->assertInstanceOf(ChildFixtureClass::class, $actual);
+        $I->assertInstanceOf(OtherFixtureClass::class, $actual->getOther());
+        $I->assertEquals('doctor', $actual->getName());
+        $I->assertEquals('voyager', $actual->getData());
+
+        $second = $factory();
+        $I->assertNotSame($second, $actual);
     }
 }
