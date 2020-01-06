@@ -59,10 +59,15 @@ class Json extends AbstractFormatter
      */
     public function format(Item $item): string
     {
+        $message = $this->interpolate(
+            $item->getMessage(),
+            $item->getContext()
+        );
+
         return JsonHelper::encode(
             [
                 "type"      => $item->getName(),
-                "message"   => $this->getFormattedMessage($item),
+                "message"   => $message,
                 "timestamp" => $this->getFormattedDate(),
             ]
         );

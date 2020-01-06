@@ -78,7 +78,17 @@ class Line extends AbstractFormatter
      */
     public function format(Item $item): string
     {
-        return $this->getFormattedMessage($item);
+        $context = [
+            'date'    => $this->getFormattedDate(),
+            'type'    => $item->getName(),
+            'message' => $this->interpolate(
+                $item->getMessage(),
+                $item->getContext()
+            ),
+        ];
+        $context = array_merge($item->getContext(), $context);
+
+        return $this->interpolate($this->format, $context);
     }
 
     /**
