@@ -63,25 +63,4 @@ abstract class AbstractFormatter implements FormatterInterface
 
         return $date->format($this->dateFormat);
     }
-
-    /**
-     * @param Item $item
-     *
-     * @return string
-     * @throws Exception
-     */
-    protected function getFormattedMessage(Item $item): string
-    {
-        $context = [
-            'date'    => $this->getFormattedDate(),
-            'type'    => $item->getName(),
-            'message' => $this->interpolate(
-                $item->getMessage(),
-                $item->getContext()
-            ),
-        ];
-        $context = array_merge($item->getContext(), $context);
-
-        return $this->interpolate($this->format, $context);
-    }
 }
