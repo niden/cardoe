@@ -56,7 +56,7 @@ abstract class AbstractHelper
             "id"     => null,
             "name"   => null,
             "value"  => null,
-            "class"  => null
+            "class"  => null,
         ];
 
         $intersect = array_intersect_key($order, $attributes);

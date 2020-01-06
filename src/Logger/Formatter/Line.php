@@ -14,10 +14,6 @@ namespace Phalcon\Logger\Formatter;
 use Exception;
 use Phalcon\Logger\Item;
 
-use function is_array;
-use function str_replace;
-use function strpos;
-
 /**
  * Phalcon\Logger\Formatter\Line
  *

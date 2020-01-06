@@ -21,7 +21,7 @@ class Form extends AbstractHelper
     /**
      * Produce a <form> tag.
      *
-     * @param array  $attributes
+     * @param array $attributes
      *
      * @return string
      * @throws Exception

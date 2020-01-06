@@ -59,6 +59,7 @@ class Escaper
     {
         return $this->doubleEncode;
     }
+
     /**
      * Returns the encoding used
      *
