@@ -51,36 +51,6 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Tests Phalcon\Html\Helper\Anchor :: __construct() - exception
-     *
-     * @throws Exception
-     */
-    public function htmlHelperAnchorConstructException(UnitTester $I)
-    {
-        $I->wantToTest('Html\Helper\Anchor - __construct()');
-        $I->expectThrowable(
-            new Exception(
-                'Value at index: "other" type: "array" cannot be rendered'
-            ),
-            function () {
-                $escaper    = new Escaper();
-                $anchor     = new AnchorRaw($escaper);
-                $attributes = [
-                    'id'    => 'my-id',
-                    'name'  => 'my-name',
-                    'other' => [
-                        'a',
-                        'b',
-                        'c',
-                    ],
-                ];
-
-                $anchor('/myurl', 'click me', $attributes);
-            }
-        );
-    }
-
-    /**
      * @return array
      */
     private function getExamples(): array

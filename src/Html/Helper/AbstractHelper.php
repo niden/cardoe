@@ -16,6 +16,8 @@ use Phalcon\Html\Exception;
 
 /**
  * Class AbstractHelper
+ *
+ * @property Escaper $escaper
  */
 abstract class AbstractHelper
 {
@@ -37,8 +39,8 @@ abstract class AbstractHelper
     /**
      * Keeps all the attributes sorted - same order all the tome
      *
-     * @param array overrides
-     * @param array attributes
+     * @param array $overrides
+     * @param array $attributes
      *
      * @return array
      */
@@ -82,18 +84,6 @@ abstract class AbstractHelper
         $result = "";
         foreach ($attributes as $key => $value) {
             if (is_string($key) && null !== $value) {
-                if (
-                    is_array($value)    ||
-                    is_resource($value) ||
-                    is_object($value)
-                ) {
-                    throw new Exception(
-                        "Value at index: \"" . $key .
-                        "\" type: \"" . gettype($value) .
-                        "\" cannot be rendered"
-                    );
-                }
-
                 $result .= $key . "=\"" . $this->escaper->attributes($value) . "\" ";
             }
         }

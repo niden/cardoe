@@ -51,6 +51,9 @@ class UnderscoreInvokeCest
         $I->assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array
+     */
     private function getExamples(): array
     {
         return [
