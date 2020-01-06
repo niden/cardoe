@@ -15,6 +15,7 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
+use Phalcon\Logger\Item;
 use function is_array;
 
 /**
@@ -29,14 +30,14 @@ abstract class AbstractFormatter implements FormatterInterface
      *
      * @see http://www.php-fig.org/psr/psr-3/ Section 1.2 Message
      *
-     * @param string     $message
-     * @param array|null $context
+     * @param string $message
+     * @param array  $context
      *
      * @return string
      */
-    public function interpolate(string $message, $context = null): string
+    public function interpolate(string $message, $context = []): string
     {
-        if (is_array($context) && count($context) > 0) {
+        if (!empty($context) > 0) {
             $replace = [];
             foreach ($context as $key => $value) {
                 $replace["{" . $key . "}"] = $value;
@@ -63,5 +64,26 @@ abstract class AbstractFormatter implements FormatterInterface
         $date     = new DateTimeImmutable("now", new DateTimeZone($timezone));
 
         return $date->format($this->dateFormat);
+    }
+
+    /**
+     * @param Item $item
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected function getFormattedMessage(Item $item): string
+    {
+        $context = [
+            'date'    => $this->getFormattedDate(),
+            'type'    => $item->getName(),
+            'message' => $this->interpolate(
+                $item->getMessage(),
+                $item->getContext()
+            ),
+        ];
+        $context = array_merge($item->getContext(), $context);
+
+        return $this->interpolate($this->format, $context);
     }
 }
