@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Factory;
+namespace Phalcon\Html;
 
 /**
  * Class Exception
