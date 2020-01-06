@@ -19,7 +19,7 @@ class Ul extends AbstractList
     /**
      * @return string
      */
-    protected function getTag()
+    protected function getTag(): string
     {
         return 'ul';
     }

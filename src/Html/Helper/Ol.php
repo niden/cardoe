@@ -19,7 +19,7 @@ class Ol extends AbstractList
     /**
      * @return string
      */
-    protected function getTag()
+    protected function getTag(): string
     {
         return 'ol';
     }
