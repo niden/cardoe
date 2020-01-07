@@ -15,6 +15,7 @@ use Codeception\Example;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Input\Input;
+use Phalcon\Html\Helper\Input\Textarea;
 use UnitTester;
 
 class UnderscoreInvokeCest
@@ -25,16 +26,15 @@ class UnderscoreInvokeCest
      * @since  2020-01-07
      * @param UnitTester $I
      * @param Example    $example
-     * @throws Exception
+     *
      * @dataProvider getExamples
      */
     public function htmlHelperInputUnderscoreInvoke(UnitTester $I, Example $example)
     {
+        $I->wantToTest('Html\Helper\Input - __invoke() - ' . $example['message']);
         $classes = $this->getClasses();
 
         foreach ($classes as $name => $class) {
-            $I->wantToTest('Html\Helper\Input - __invoke() - ' . $name . ' - ' . $example['message']);
-
             $escaper = new Escaper();
             $helper  = new $class($escaper);
 
@@ -56,7 +56,6 @@ class UnderscoreInvokeCest
      *
      * @since  2020-01-07
      * @param UnitTester $I
-     * @throws Exception
      */
     public function htmlHelperInputUnderscoreInvokeInput(UnitTester $I)
     {
@@ -70,6 +69,35 @@ class UnderscoreInvokeCest
 
         $I->assertEquals(
             '<input type="week" id="x_name" name="x_name" />',
+            (string) $result
+        );
+    }
+
+    /**
+     * Tests Phalcon\Html\Helper\Input :: __invoke() - textarea
+     *
+     * @since  2020-01-07
+     * @param UnitTester $I
+     */
+    public function htmlHelperInputUnderscoreInvokeTextarea(UnitTester $I)
+    {
+        $I->wantToTest('Html\Helper\Input - __invoke() - textarea');
+
+        $escaper = new Escaper();
+        $helper  = new Textarea($escaper);
+
+        $result = $helper(
+            'x_name',
+            'test text area',
+            [
+                'cols' => "10",
+                'rows' => "5",
+            ]
+        );
+
+        $I->assertEquals(
+            '<textarea id="x_name" name="x_name" cols="10" rows="5">' .
+            'test text area</textarea>',
             (string) $result
         );
     }
@@ -132,6 +160,7 @@ class UnderscoreInvokeCest
             'datetime'       => 'Phalcon\\Html\\Helper\\Input\\DateTime',
             'datetime-local' => 'Phalcon\\Html\\Helper\\Input\\DateTimeLocal',
             'email'          => 'Phalcon\\Html\\Helper\\Input\\Email',
+            'file'           => 'Phalcon\\Html\\Helper\\Input\\File',
             'hidden'         => 'Phalcon\\Html\\Helper\\Input\\Hidden',
             'image'          => 'Phalcon\\Html\\Helper\\Input\\Image',
             'month'          => 'Phalcon\\Html\\Helper\\Input\\Month',
@@ -141,6 +170,7 @@ class UnderscoreInvokeCest
             'search'         => 'Phalcon\\Html\\Helper\\Input\\Search',
             'submit'         => 'Phalcon\\Html\\Helper\\Input\\Submit',
             'tel'            => 'Phalcon\\Html\\Helper\\Input\\Tel',
+            'text'           => 'Phalcon\\Html\\Helper\\Input\\Text',
             'time'           => 'Phalcon\\Html\\Helper\\Input\\Time',
             'url'            => 'Phalcon\\Html\\Helper\\Input\\Url',
             'week'           => 'Phalcon\\Html\\Helper\\Input\\Week',

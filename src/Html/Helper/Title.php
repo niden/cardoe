@@ -172,7 +172,6 @@ class Title extends AbstractHelper
 //    public static function checkField(var parameters) -> string
 //    public static function endForm() -> string
 //    public static function fileField(var parameters) -> string
-//    public static function friendlyTitle(
 //    public static function linkTo(parameters, text = null, local = true) -> string
 //    public static function radioField(var parameters) -> string
 //    public static function select(var parameters, data = null) -> string
@@ -180,6 +179,4 @@ class Title extends AbstractHelper
 //    public static function tagHtml( string tagName, var parameters = null,
 //          bool selfClose = false, bool onlyStart = false, bool useEol = false) -> string
 //    public static function tagHtmlClose(string tagName, bool useEol = false) -> string
-//    public static function textArea(var parameters) -> string
-//    public static function textField(var parameters) -> string
 }

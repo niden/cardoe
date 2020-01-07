@@ -242,6 +242,54 @@ class Str
     }
 
     /**
+     * Changes a text to a URL friendly one
+     *
+     * @param string $text
+     * @param string $separator
+     * @param bool   $lowercase
+     * @param null   $replace
+     *
+     * @return string
+     * @throws Exception
+     */
+    public function friendly(
+        string $text,
+        string $separator = "-",
+        bool $lowercase = true,
+        $replace = null
+    ): string {
+
+        if (null !== $replace) {
+            if (!is_array($replace) && !is_string($replace)) {
+                throw new Exception(
+                    "Parameter replace must be an array or a string"
+                );
+            }
+
+            if (is_string($replace)) {
+                $replace = [$replace];
+            }
+
+            $text = str_replace($replace, " ", $text);
+        }
+
+        $friendly = preg_replace(
+            "/[^a-zA-Z0-9\\/_|+ -]/",
+            "",
+            $text
+        );
+
+        if ($lowercase) {
+            $friendly = strtolower($friendly);
+        }
+
+        $friendly = preg_replace("/[\\/_|+ -]+/", $separator, $friendly);
+        $friendly = trim($friendly, $separator);
+
+        return $friendly;
+    }
+
+    /**
      * Makes an underscored or dashed phrase human-readable
      *
      * @param string $text
