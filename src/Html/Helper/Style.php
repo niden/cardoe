@@ -14,7 +14,7 @@ namespace Phalcon\Html\Helper;
 use Phalcon\Html\Exception;
 
 /**
- * Class Styles
+ * Class Style
  */
 class Style extends AbstractSeries
 {
@@ -52,16 +52,16 @@ class Style extends AbstractSeries
     /**
      * Returns the necessary attributes
      *
-     * @param string $attribute
+     * @param string $href
      * @param array  $attributes
      *
      * @return array
      */
-    protected function getAttributes(string $attribute, array $attributes): array
+    protected function getAttributes(string $href, array $attributes): array
     {
         $required = [
             'rel'   => 'stylesheet',
-            'href'  => $attribute,
+            'href'  => $href,
             'type'  => 'text/css',
             'media' => 'screen',
         ];

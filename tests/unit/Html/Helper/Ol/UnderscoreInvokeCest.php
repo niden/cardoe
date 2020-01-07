@@ -18,7 +18,7 @@ use UnitTester;
 class UnderscoreInvokeCest
 {
     /**
-     * Unit Tests Phalcon\Html\Helper\Ol :: __invoke()
+     * Tests Phalcon\Html\Helper\Ol :: __invoke()
      *
      * @since  2020-01-06
      */
@@ -47,7 +47,7 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Unit Tests Phalcon\Html\Helper\Ol :: __invoke() - addRaw
+     * Tests Phalcon\Html\Helper\Ol :: __invoke() - addRaw
      *
      * @since  2020-01-06
      */
@@ -76,7 +76,7 @@ class UnderscoreInvokeCest
     }
 
     /**
-     * Unit Tests Phalcon\Html\Helper\Ol :: __invoke() - indent and delimiter
+     * Tests Phalcon\Html\Helper\Ol :: __invoke() - indent and delimiter
      *
      * @since  2020-01-06
      */

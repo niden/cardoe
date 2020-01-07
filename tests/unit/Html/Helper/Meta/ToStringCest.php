@@ -18,7 +18,7 @@ use UnitTester;
 class ToStringCest
 {
     /**
-     * Unit Tests Phalcon\Html\Helper\Meta :: __toString() - empty
+     * Tests Phalcon\Html\Helper\Meta :: __toString() - empty
      *
      * @since  2020-01-06
      */

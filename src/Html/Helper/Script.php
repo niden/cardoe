@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Html\Helper;
 
 /**
- * Class Scripts
+ * Class Script
  */
 class Script extends Style
 {
@@ -27,15 +27,15 @@ class Script extends Style
     /**
      * Returns the necessary attributes
      *
-     * @param string $attribute
+     * @param string $src
      * @param array  $attributes
      *
      * @return array
      */
-    protected function getAttributes(string $attribute, array $attributes): array
+    protected function getAttributes(string $src, array $attributes): array
     {
         $required = [
-            'src'  => $attribute,
+            'src'  => $src,
             'type' => 'text/javascript',
         ];
 

@@ -9,25 +9,25 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\Html\Helper\Style;
+namespace Phalcon\Test\Unit\Html\Helper\Link;
 
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Helper\Style;
+use Phalcon\Html\Helper\Link;
 use UnitTester;
 
 class ToStringCest
 {
     /**
-     * Tests Phalcon\Html\Helper\Style :: __toString() - empty
+     * Tests Phalcon\Html\Helper\Link :: __toString() - empty
      *
      * @since  2020-01-06
      */
-    public function htmlHelperStyleToStringEmpty(UnitTester $I)
+    public function htmlHelperLinkToStringEmpty(UnitTester $I)
     {
-        $I->wantToTest('Html\Helper\Style - __toString() - empty');
+        $I->wantToTest('Html\Helper\Link - __toString() - empty');
 
         $escaper = new Escaper();
-        $helper  = new Style($escaper);
+        $helper  = new Link($escaper);
 
         $result = $helper();
 

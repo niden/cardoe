@@ -57,18 +57,18 @@ class UnderscoreInvokeCest
     {
         return [
             [
-                '<img src="/my-url"/>',
+                '<img src="/my-url" />',
                 [],
             ],
             [
-                '<img src="/my-url" id="my-id" name="my-name"/>',
+                '<img src="/my-url" id="my-id" name="my-name" />',
                 [
                     'id'   => 'my-id',
                     'name' => 'my-name',
                 ],
             ],
             [
-                '<img src="/my-url" id="my-id" name="my-name" class="my-class"/>',
+                '<img src="/my-url" id="my-id" name="my-name" class="my-class" />',
                 [
                     'src'   => '/other-url',
                     'class' => 'my-class',

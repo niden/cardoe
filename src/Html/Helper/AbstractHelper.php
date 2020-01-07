@@ -37,6 +37,20 @@ abstract class AbstractHelper
     }
 
     /**
+     * Produces a closing tag
+     *
+     * @param string $tag
+     * @param bool   $raw
+     *
+     * @return string
+     */
+    protected function close(string $tag, bool $raw = false): string
+    {
+        $tag = $raw ? $tag : $this->escaper->html($tag);
+
+        return "</" . $tag . ">";
+    }
+    /**
      * Keeps all the attributes sorted - same order all the tome
      *
      * @param array $overrides
@@ -77,7 +91,6 @@ abstract class AbstractHelper
      * @param array $attributes
      *
      * @return string
-     * @throws Exception
      */
     protected function renderAttributes(array $attributes): string
     {
@@ -124,7 +137,7 @@ abstract class AbstractHelper
     ): string {
         $content = $raw ? $text : $this->escaper->html($text);
 
-        return $this->renderElement($tag, $attributes) . $content . "</" . $tag . ">";
+        return $this->renderElement($tag, $attributes) . $content . $this->close($tag, $raw);
     }
 
     /**
@@ -135,7 +148,6 @@ abstract class AbstractHelper
      * @param string $close
      *
      * @return string
-     * @throws Exception
      */
     protected function renderTag(string $tag, array $attributes = [], string $close = ""): string
     {
@@ -144,6 +156,8 @@ abstract class AbstractHelper
             $attrs        = $this->orderAttributes([], $attributes);
             $escapedAttrs = " " . rtrim($this->renderAttributes($attrs));
         }
+
+        $close = empty(trim($close)) ? '' : " " . trim($close);
 
         return "<" . $tag . $escapedAttrs . $close . ">";
     }
@@ -155,7 +169,6 @@ abstract class AbstractHelper
      * @param array  $attributes
      *
      * @return string
-     * @throws Exception
      */
     protected function selfClose(string $tag, array $attributes = []): string
     {
