@@ -50,6 +50,7 @@ abstract class AbstractHelper
 
         return "</" . $tag . ">";
     }
+
     /**
      * Keeps all the attributes sorted - same order all the tome
      *

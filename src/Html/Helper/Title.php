@@ -93,6 +93,10 @@ class Title extends AbstractHelper
         $indent    = $this->indent ? $this->indent : '';
         $delimiter = $this->delimiter ? $this->delimiter : '';
 
+        $this->append  = [];
+        $this->prepend = [];
+        $this->title   = '';
+
         return $indent
             . $this->renderFullElement(
                 'title',
@@ -166,33 +170,16 @@ class Title extends AbstractHelper
     }
 
 //    public static function checkField(var parameters) -> string
-//    public static function colorField(var parameters) -> string
-//    public static function dateField(var parameters) -> string
-//    public static function dateTimeField(var parameters) -> string
-//    public static function dateTimeLocalField(var parameters) -> string
-//    public static function emailField(var parameters) -> string
 //    public static function endForm() -> string
 //    public static function fileField(var parameters) -> string
 //    public static function friendlyTitle(
-//    public static function hiddenField(var parameters) -> string
-//    public static function imageInput(var parameters) -> string
 //    public static function linkTo(parameters, text = null, local = true) -> string
-//    public static function monthField(var parameters) -> string
-//    public static function numericField(var parameters) -> string
-//    public static function passwordField(var parameters) -> string
 //    public static function radioField(var parameters) -> string
-//    public static function rangeField(var parameters) -> string
-//    public static function searchField(var parameters) -> string
 //    public static function select(var parameters, data = null) -> string
 //    public static function selectStatic(parameters, data = null) -> string
-//    public static function submitButton(var parameters) -> string
 //    public static function tagHtml( string tagName, var parameters = null,
 //          bool selfClose = false, bool onlyStart = false, bool useEol = false) -> string
 //    public static function tagHtmlClose(string tagName, bool useEol = false) -> string
-//    public static function telField(var parameters) -> string
 //    public static function textArea(var parameters) -> string
 //    public static function textField(var parameters) -> string
-//    public static function timeField(var parameters) -> string
-//    public static function urlField(var parameters) -> string
-//    public static function weekField(var parameters) -> string
 }
