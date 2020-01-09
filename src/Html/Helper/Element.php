@@ -24,12 +24,17 @@ class Element extends AbstractHelper
      * @param string $tag
      * @param string $text
      * @param array  $attributes
+     * @param bool   $raw
      *
      * @return string
      * @throws Exception
      */
-    public function __invoke(string $tag, string $text, array $attributes = [])
-    {
-        return $this->renderFullElement($tag, $text, $attributes);
+    public function __invoke(
+        string $tag,
+        string $text,
+        array $attributes = [],
+        bool $raw = false
+    ): string {
+        return $this->renderFullElement($tag, $text, $attributes, $raw);
     }
 }

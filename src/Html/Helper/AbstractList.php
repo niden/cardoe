@@ -98,31 +98,15 @@ abstract class AbstractList extends AbstractHelper
      *
      * @param string $text
      * @param array  $attributes
+     * @param bool   $raw
      *
      * @return $this
      * @throws Exception
      */
-    public function add(string $text, array $attributes = [])
+    public function add(string $text, array $attributes = [], bool $raw = false)
     {
         $this->store[] = $this->indent
-            . $this->renderFullElement("li", $text, $attributes);
-
-        return $this;
-    }
-
-    /**
-     * Add a raw element to the list
-     *
-     * @param string $text
-     * @param array  $attributes
-     *
-     * @return $this
-     * @throws Exception
-     */
-    public function addRaw(string $text, array $attributes = [])
-    {
-        $this->store[] = $this->indent
-            . $this->renderFullElement("li", $text, $attributes, true);
+            . $this->renderFullElement("li", $text, $attributes, $raw);
 
         return $this;
     }

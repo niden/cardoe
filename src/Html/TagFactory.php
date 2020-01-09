@@ -75,13 +75,11 @@ class TagFactory extends AbstractFactory
     {
         return [
             "a"                   => "Phalcon\\Html\\Helper\\Anchor",
-            "aRaw"                => "Phalcon\\Html\\Helper\\AnchorRaw",
             "base"                => "Phalcon\\Html\\Helper\\Base",
             "body"                => "Phalcon\\Html\\Helper\\Body",
             "button"              => "Phalcon\\Html\\Helper\\Button",
             "close"               => "Phalcon\\Html\\Helper\\Close",
             "element"             => "Phalcon\\Html\\Helper\\Element",
-            "elementRaw"          => "Phalcon\\Html\\Helper\\ElementRaw",
             "form"                => "Phalcon\\Html\\Helper\\Form",
             "img"                 => "Phalcon\\Html\\Helper\\Img",
             "inputColor"          => "Phalcon\\Html\\Helper\\Input\\Color",

@@ -24,6 +24,7 @@ class Anchor extends AbstractHelper
      * @param string $href
      * @param string $text
      * @param array  $attributes
+     * @param bool   $raw
      *
      * @return string
      * @throws Exception
@@ -31,11 +32,12 @@ class Anchor extends AbstractHelper
     public function __invoke(
         string $href,
         string $text,
-        array $attributes = []
+        array $attributes = [],
+        bool $raw = false
     ): string {
         $overrides = $this->processAttributes($href, $attributes);
 
-        return $this->renderFullElement("a", $text, $overrides);
+        return $this->renderFullElement("a", $text, $overrides, $raw);
     }
 
     /**

@@ -23,12 +23,16 @@ class Button extends AbstractHelper
      *
      * @param string $text
      * @param array  $attributes
+     * @param bool   $raw
      *
      * @return string
      * @throws Exception
      */
-    public function __invoke(string $text, array $attributes = [])
-    {
-        return $this->renderFullElement("button", $text, $attributes);
+    public function __invoke(
+        string $text,
+        array $attributes = [],
+        bool $raw = false
+    ): string {
+        return $this->renderFullElement("button", $text, $attributes, $raw);
     }
 }
