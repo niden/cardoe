@@ -24,14 +24,14 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Form :: __invoke()
      *
-     * @since  2020-01-05
-     *
      * @param UnitTester $I
      * @param Example    $example
      *
      * @throws Exception
      * @throws ExceptionAlias
      * @dataProvider getExamples
+     * @since        2020-01-05
+     *
      */
     public function htmlHelperFormUnderscoreInvoke(UnitTester $I, Example $example)
     {

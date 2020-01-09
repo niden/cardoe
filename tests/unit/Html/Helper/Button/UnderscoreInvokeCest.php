@@ -24,14 +24,14 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Button :: __invoke()
      *
-     * @since  2020-01-05
-     *
      * @param UnitTester $I
      * @param Example    $example
      *
      * @throws Exception
      * @throws ExceptionAlias
      * @dataProvider getExamples
+     * @since        2020-01-05
+     *
      */
     public function htmlHelperButtonUnderscoreInvoke(UnitTester $I, Example $example)
     {
@@ -40,13 +40,13 @@ class UnderscoreInvokeCest
         $helper  = new Button($escaper);
 
         $expected = $example[0];
-        $actual   = $helper($example[1], $example[2]);
+        $actual   = $helper($example[1], $example[2], $example[3]);
         $I->assertEquals($expected, $actual);
 
         $factory  = new TagFactory($escaper);
         $locator  = $factory->newInstance('button');
         $expected = $example[0];
-        $actual   = $locator($example[1], $example[2]);
+        $actual   = $locator($example[1], $example[2], $example[3]);
         $I->assertEquals($expected, $actual);
     }
 
@@ -60,16 +60,19 @@ class UnderscoreInvokeCest
                 '<button>Phalcon Framework</button>',
                 'Phalcon Framework',
                 [],
+                false,
             ],
             [
                 '<button>Jack &amp; Jill</button>',
                 'Jack & Jill',
                 [],
+                false,
             ],
             [
                 '<button>&lt;script&gt;alert(&quot;hello&quot;);&lt;/script&gt;test tag</button>',
                 '<script>alert("hello");</script>test tag',
                 [],
+                false,
             ],
             [
                 '<button id="my-id" name="my-name">test tag</button>',
@@ -78,6 +81,7 @@ class UnderscoreInvokeCest
                     'id'   => 'my-id',
                     'name' => 'my-name',
                 ],
+                false,
             ],
             [
                 '<button id="my-id" name="my-name" class="my-class">test tag</button>',
@@ -87,6 +91,44 @@ class UnderscoreInvokeCest
                     'name'  => 'my-name',
                     'id'    => 'my-id',
                 ],
+                false,
+            ],
+            [
+                '<button>Phalcon Framework</button>',
+                'Phalcon Framework',
+                [],
+                true,
+            ],
+            [
+                '<button>Jack & Jill</button>',
+                'Jack & Jill',
+                [],
+                true,
+            ],
+            [
+                '<button><script>alert("hello");</script>test tag</button>',
+                '<script>alert("hello");</script>test tag',
+                [],
+                true,
+            ],
+            [
+                '<button id="my-id" name="my-name">test tag</button>',
+                'test tag',
+                [
+                    'id'   => 'my-id',
+                    'name' => 'my-name',
+                ],
+                true,
+            ],
+            [
+                '<button id="my-id" name="my-name" class="my-class">test tag</button>',
+                'test tag',
+                [
+                    'class' => 'my-class',
+                    'name'  => 'my-name',
+                    'id'    => 'my-id',
+                ],
+                true,
             ],
         ];
     }

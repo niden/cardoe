@@ -11,8 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Html\Helper\Ul;
 
+use Codeception\Example;
+use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Html\Escaper;
+use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Ul;
+use Phalcon\Html\TagFactory;
 use UnitTester;
 
 class UnderscoreInvokeCest
@@ -21,57 +25,244 @@ class UnderscoreInvokeCest
      * Tests Phalcon\Html\Helper\Ul :: __invoke()
      *
      * @since  2020-01-06
+     * @param UnitTester $I
+     * @param Example    $example
+     *
+     * @throws ExceptionAlias
+     * @throws Exception
+     *
+     * @dataProvider getExamples
      */
-    public function htmlHelperUlUnderscoreInvoke(UnitTester $I)
+    public function htmlHelperUlUnderscoreInvoke(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Html\Helper\Ul - __invoke()');
+        $I->wantToTest('Html\Helper\Ul - __invoke() ' . $example['message']);
 
         $escaper = new Escaper();
         $helper  = new Ul($escaper);
 
-        $result = $helper(null, null, ['id' => 'carsList'])
-            ->add("> Ferrari", ["class" => "active"])
-            ->add("> Ford")
-            ->add("> Dodge")
-            ->add("> Toyota")
-        ;
+        $result = $helper($example['indent'], $example['delimiter'], $example['attributes']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
 
-        $expected = "<ul id=\"carsList\">
-    <li class=\"active\">&gt; Ferrari</li>
-    <li>&gt; Ford</li>
-    <li>&gt; Dodge</li>
-    <li>&gt; Toyota</li>
-</ul>";
+        $expected = $example['result'];
+        $actual   = (string) $result;
+        $I->assertEquals($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('ul');
+
+        $result = $locator($example['indent'], $example['delimiter'], $example['attributes']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
+
         $actual   = (string) $result;
         $I->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests Phalcon\Html\Helper\Ul :: __invoke() - addRaw
-     *
-     * @since  2020-01-06
+     * @return array
      */
-    public function htmlHelperUlUnderscoreInvokeAddRaw(UnitTester $I)
+    private function getExamples(): array
     {
-        $I->wantToTest('Html\Helper\Ul - __invoke() - addRaw');
-
-        $escaper = new Escaper();
-        $helper  = new Ul($escaper);
-
-        $result = $helper(null, null, ['id' => 'carsList'])
-            ->addRaw("> Ferrari", ["class" => "active"])
-            ->addRaw("> Ford")
-            ->addRaw("> Dodge")
-            ->addRaw("> Toyota")
-        ;
-
-        $expected = "<ul id=\"carsList\">
+        return [
+            [
+                'message' => 'base',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">
+    <li class=\"active\">&gt; Ferrari</li>
+    <li>&gt; Ford</li>
+    <li>&gt; Dodge</li>
+    <li>&gt; Toyota</li>
+</ul>"
+            ],
+            [
+                'message' => 'raw',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false,
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">
+    <li class=\"active\">&gt; Ferrari</li>
+    <li>&gt; Ford</li>
+    <li>&gt; Dodge</li>
+    <li>&gt; Toyota</li>
+</ul>"
+            ],
+            [
+                'message' => 'indent and delimiter',
+                'indent'  => '--',
+                'delimiter' => '+',
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false,
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">+--<li class=\"active\">&gt; Ferrari</li>+"
+                    . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ul>"
+            ],
+            [
+                'message' => 'base',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">
     <li class=\"active\">> Ferrari</li>
     <li>> Ford</li>
     <li>> Dodge</li>
     <li>> Toyota</li>
-</ul>";
-        $actual   = (string) $result;
-        $I->assertEquals($expected, $actual);
+</ul>"
+            ],
+            [
+                'message' => 'raw',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">
+    <li class=\"active\">> Ferrari</li>
+    <li>> Ford</li>
+    <li>> Dodge</li>
+    <li>> Toyota</li>
+</ul>"
+            ],
+            [
+                'message' => 'indent and delimiter',
+                'indent'  => '--',
+                'delimiter' => '+',
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ul id=\"carsList\">+--<li class=\"active\">> Ferrari</li>+"
+                    . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ul>"
+            ],
+        ];
     }
 }

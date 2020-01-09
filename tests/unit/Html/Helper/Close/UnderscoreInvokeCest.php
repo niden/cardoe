@@ -11,10 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Html\Helper\Close;
 
-use Codeception\Example;
-use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Factory\Exception;
 use Phalcon\Html\Escaper;
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Close;
 use Phalcon\Html\TagFactory;
 use UnitTester;
@@ -24,9 +22,11 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Close :: __invoke()
      *
+     * @param UnitTester $I
+     *
+     * @throws Exception
      * @since  2020-01-05
      *
-     * @param UnitTester $I
      */
     public function htmlHelperCloseUnderscoreInvoke(UnitTester $I)
     {
@@ -36,6 +36,12 @@ class UnderscoreInvokeCest
 
         $expected = "</image>";
         $actual   = $helper("image");
+        $I->assertEquals($expected, $actual);
+
+        $factory  = new TagFactory($escaper);
+        $locator  = $factory->newInstance('close');
+        $expected = "</image>";
+        $actual   = $locator("image");
         $I->assertEquals($expected, $actual);
     }
 }

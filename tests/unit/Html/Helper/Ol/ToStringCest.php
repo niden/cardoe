@@ -31,7 +31,7 @@ class ToStringCest
 
         $result = $helper(null, null, ['id' => 'carsList']);
 
-        $actual   = (string) $result;
+        $actual = (string) $result;
         $I->assertEmpty($actual);
     }
 }

@@ -11,8 +11,12 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Html\Helper\Ol;
 
+use Codeception\Example;
+use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Html\Escaper;
+use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\Ol;
+use Phalcon\Html\TagFactory;
 use UnitTester;
 
 class UnderscoreInvokeCest
@@ -21,82 +25,244 @@ class UnderscoreInvokeCest
      * Tests Phalcon\Html\Helper\Ol :: __invoke()
      *
      * @since  2020-01-06
+     * @param UnitTester $I
+     * @param Example    $example
+     *
+     * @throws ExceptionAlias
+     * @throws Exception
+     *
+     * @dataProvider getExamples
      */
-    public function htmlHelperOlUnderscoreInvoke(UnitTester $I)
+    public function htmlHelperOlUnderscoreInvoke(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Html\Helper\Ol - __invoke()');
+        $I->wantToTest('Html\Helper\Ol - __invoke() ' . $example['message']);
 
         $escaper = new Escaper();
         $helper  = new Ol($escaper);
 
-        $result = $helper(null, null, ['id' => 'carsList'])
-            ->add("> Ferrari", ["class" => "active"])
-            ->add("> Ford")
-            ->add("> Dodge")
-            ->add("> Toyota")
-        ;
+        $result = $helper($example['indent'], $example['delimiter'], $example['attributes']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
 
-        $expected = "<ol id=\"carsList\">
+        $expected = $example['result'];
+        $actual   = (string) $result;
+        $I->assertEquals($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('ol');
+
+        $result = $locator($example['indent'], $example['delimiter'], $example['attributes']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2]);
+        }
+
+        $actual   = (string) $result;
+        $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @return array
+     */
+    private function getExamples(): array
+    {
+        return [
+            [
+                'message' => 'base',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">
     <li class=\"active\">&gt; Ferrari</li>
     <li>&gt; Ford</li>
     <li>&gt; Dodge</li>
     <li>&gt; Toyota</li>
-</ol>";
-        $actual   = (string) $result;
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Html\Helper\Ol :: __invoke() - addRaw
-     *
-     * @since  2020-01-06
-     */
-    public function htmlHelperOlUnderscoreInvokeAddRaw(UnitTester $I)
-    {
-        $I->wantToTest('Html\Helper\Ol - __invoke() - addRaw');
-
-        $escaper = new Escaper();
-        $helper  = new Ol($escaper);
-
-        $result = $helper(null, null, ['id' => 'carsList'])
-            ->addRaw("> Ferrari", ["class" => "active"])
-            ->addRaw("> Ford")
-            ->addRaw("> Dodge")
-            ->addRaw("> Toyota")
-        ;
-
-        $expected = "<ol id=\"carsList\">
+</ol>"
+            ],
+            [
+                'message' => 'raw',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false,
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">
+    <li class=\"active\">&gt; Ferrari</li>
+    <li>&gt; Ford</li>
+    <li>&gt; Dodge</li>
+    <li>&gt; Toyota</li>
+</ol>"
+            ],
+            [
+                'message' => 'indent and delimiter',
+                'indent'  => '--',
+                'delimiter' => '+',
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        false,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        false,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        false,
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">+--<li class=\"active\">&gt; Ferrari</li>+"
+                    . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ol>"
+            ],
+            [
+                'message' => 'base',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">
     <li class=\"active\">> Ferrari</li>
     <li>> Ford</li>
     <li>> Dodge</li>
     <li>> Toyota</li>
-</ol>";
-        $actual   = (string) $result;
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Html\Helper\Ol :: __invoke() - indent and delimiter
-     *
-     * @since  2020-01-06
-     */
-    public function htmlHelperOlUnderscoreInvokeIndentDelimiter(UnitTester $I)
-    {
-        $I->wantToTest('Html\Helper\Ol - __invoke() - indent and delimiter');
-
-        $escaper = new Escaper();
-        $helper  = new Ol($escaper);
-
-        $result = $helper("--", "+", ['id' => 'carsList'])
-            ->add("> Ferrari", ["class" => "active"])
-            ->add("> Ford")
-        ;
-
-        $expected = "<ol id=\"carsList\">+"
-            . "--<li class=\"active\">&gt; Ferrari</li>+"
-            . "--<li>&gt; Ford</li>+"
-            . "</ol>";
-        $actual   = (string) $result;
-        $I->assertEquals($expected, $actual);
+</ol>"
+            ],
+            [
+                'message' => 'raw',
+                'indent'  => null,
+                'delimiter' => null,
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">
+    <li class=\"active\">> Ferrari</li>
+    <li>> Ford</li>
+    <li>> Dodge</li>
+    <li>> Toyota</li>
+</ol>"
+            ],
+            [
+                'message' => 'indent and delimiter',
+                'indent'  => '--',
+                'delimiter' => '+',
+                'attributes' => ['id' => 'carsList'],
+                'add' => [
+                    [
+                        "> Ferrari",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        [],
+                        true,
+                    ],
+                ],
+                'result' => "<ol id=\"carsList\">+--<li class=\"active\">> Ferrari</li>+"
+                    . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ol>"
+            ],
+        ];
     }
 }

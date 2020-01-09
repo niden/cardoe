@@ -11,8 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Html\Helper\Script;
 
+use Codeception\Example;
+use Phalcon\Factory\Exception;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Helper\Script;
+use Phalcon\Html\TagFactory;
 use UnitTester;
 
 class UnderscoreInvokeCest
@@ -21,43 +24,81 @@ class UnderscoreInvokeCest
      * Tests Phalcon\Html\Helper\Script :: __invoke()
      *
      * @since  2020-01-06
+     * @param UnitTester $I
+     * @param Example    $example
+     *
+     * @throws Exception
+     *
+     * @dataProvider getExamples
      */
-    public function htmlHelperScriptUnderscoreInvoke(UnitTester $I)
+    public function htmlHelperScriptUnderscoreInvoke(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Html\Helper\Script - __invoke()');
+        $I->wantToTest('Html\Helper\Script - __invoke() ' . $example['message']);
 
         $escaper = new Escaper();
         $helper  = new Script($escaper);
 
-        $result = $helper()
-            ->add("/js/custom.js")
-            ->add("/js/print.js", ["ie" => "active"])
-        ;
-        $expected = "    <script type=\"text/javascript\" src=\"/js/custom.js\"></script>" . PHP_EOL
-            . "    <script type=\"text/javascript\" src=\"/js/print.js\" ie=\"active\"></script>" . PHP_EOL;
+        $result = $helper($example['indent'], $example['delimiter']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1]);
+        }
+
+        $expected = $example['result'];
+        $actual   = (string) $result;
+        $I->assertEquals($expected, $actual);
+
+        $factory = new TagFactory($escaper);
+        $locator = $factory->newInstance('script');
+
+        $result = $locator($example['indent'], $example['delimiter']);
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1]);
+        }
+
         $actual   = (string) $result;
         $I->assertEquals($expected, $actual);
     }
 
     /**
-     * Tests Phalcon\Html\Helper\Script :: __invoke() - ident and delimiter
-     *
-     * @since  2020-01-06
+     * @return array
      */
-    public function htmlHelperScriptUnderscoreInvokeIndentDelimiter(UnitTester $I)
+    private function getExamples(): array
     {
-        $I->wantToTest('Html\Helper\Script - __invoke() - indent and delimiter');
-
-        $escaper = new Escaper();
-        $helper  = new Script($escaper);
-
-        $result = $helper("--", "+")
-            ->add("/js/custom.js")
-            ->add("/js/print.js", ["ie" => "active"])
-        ;
-        $expected = "--<script type=\"text/javascript\" src=\"/js/custom.js\"></script>+"
-            . "--<script type=\"text/javascript\" src=\"/js/print.js\" ie=\"active\"></script>+";
-        $actual   = (string) $result;
-        $I->assertEquals($expected, $actual);
+        return [
+            [
+                'message'   => 'base',
+                'indent'    => null,
+                'delimiter' => null,
+                'add'       => [
+                    [
+                        "/js/custom.js",
+                        [],
+                    ],
+                    [
+                        "/js/print.js",
+                        ["ie" => "active"],
+                    ],
+                ],
+                'result'    => "    <script type=\"text/javascript\" src=\"/js/custom.js\"></script>" . PHP_EOL
+                    . "    <script type=\"text/javascript\" src=\"/js/print.js\" ie=\"active\"></script>" . PHP_EOL,
+            ],
+            [
+                'message'   => 'with indent and delimiter',
+                'indent'    => '--',
+                'delimiter' => '+',
+                'add'       => [
+                    [
+                        "/js/custom.js",
+                        [],
+                    ],
+                    [
+                        "/js/print.js",
+                        ["ie" => "active"],
+                    ],
+                ],
+                'result'    => "--<script type=\"text/javascript\" src=\"/js/custom.js\"></script>+"
+                    . "--<script type=\"text/javascript\" src=\"/js/print.js\" ie=\"active\"></script>+",
+            ],
+        ];
     }
 }

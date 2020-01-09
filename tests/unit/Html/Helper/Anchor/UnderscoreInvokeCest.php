@@ -24,14 +24,14 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Anchor :: __invoke()
      *
-     * @since  2020-01-05
-     *
      * @param UnitTester $I
      * @param Example    $example
      *
      * @throws ExceptionAlias
      * @throws Exception
      * @dataProvider getExamples
+     * @since        2020-01-05
+     *
      */
     public function htmlHelperAnchorUnderscoreInvoke(UnitTester $I, Example $example)
     {
@@ -41,13 +41,13 @@ class UnderscoreInvokeCest
         $anchor  = new Anchor($escaper);
 
         $expected = $example[0];
-        $actual   = $anchor('/myurl', 'click<>me', $example[1]);
+        $actual   = $anchor('/myurl', 'click<>me', $example[1], $example[2]);
         $I->assertEquals($expected, $actual);
 
         $factory  = new TagFactory($escaper);
         $locator  = $factory->newInstance('a');
         $expected = $example[0];
-        $actual   = $locator('/myurl', 'click<>me', $example[1]);
+        $actual   = $locator('/myurl', 'click<>me', $example[1], $example[2]);
         $I->assertEquals($expected, $actual);
     }
 
@@ -60,12 +60,14 @@ class UnderscoreInvokeCest
             [
                 '<a href="/myurl">click&lt;&gt;me</a>',
                 [],
+                false,
             ],
             [
                 '<a href="/myurl">click&lt;&gt;me</a>',
                 [
                     'href' => '/somethingelse',
                 ],
+                false,
             ],
             [
                 '<a href="/myurl" id="my-id" name="my-name">click&lt;&gt;me</a>',
@@ -73,6 +75,7 @@ class UnderscoreInvokeCest
                     'id'   => 'my-id',
                     'name' => 'my-name',
                 ],
+                false,
             ],
             [
                 '<a href="/myurl" id="my-id" name="my-name" class="my-class">click&lt;&gt;me</a>',
@@ -81,6 +84,36 @@ class UnderscoreInvokeCest
                     'name'  => 'my-name',
                     'id'    => 'my-id',
                 ],
+                false,
+            ],
+            [
+                '<a href="/myurl">click<>me</a>',
+                [],
+                true,
+            ],
+            [
+                '<a href="/myurl">click<>me</a>',
+                [
+                    'href' => '/somethingelse',
+                ],
+                true,
+            ],
+            [
+                '<a href="/myurl" id="my-id" name="my-name">click<>me</a>',
+                [
+                    'id'   => 'my-id',
+                    'name' => 'my-name',
+                ],
+                true,
+            ],
+            [
+                '<a href="/myurl" id="my-id" name="my-name" class="my-class">click<>me</a>',
+                [
+                    'class' => 'my-class',
+                    'name'  => 'my-name',
+                    'id'    => 'my-id',
+                ],
+                true,
             ],
         ];
     }
