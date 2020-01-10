@@ -244,10 +244,10 @@ class Str
     /**
      * Changes a text to a URL friendly one
      *
-     * @param string $text
-     * @param string $separator
-     * @param bool   $lowercase
-     * @param null   $replace
+     * @param string     $text
+     * @param string     $separator
+     * @param bool       $lowercase
+     * @param mixed|null $replace
      *
      * @return string
      * @throws Exception
