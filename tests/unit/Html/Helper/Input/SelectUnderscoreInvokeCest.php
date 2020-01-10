@@ -409,12 +409,12 @@ class SelectUnderscoreInvokeCest
                 ],
                 'placeholder' => [
                     'Choose & Car...',
-                    null,
+                    "0",
                     [],
                     true,
                 ],
                 'result' => "<select id=\"carsList\">+"
-                    . "--<option>Choose & Car...</option>+"
+                    . "--<option value=\"0\">Choose & Car...</option>+"
                     . "--<option value=\"1\" class=\"active\">> Ferrari</option>+"
                     . "--<option value=\"2\">> Ford</option>+"
                     . "--<option value=\"3\">> Dodge</option>+"
