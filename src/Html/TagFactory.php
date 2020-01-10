@@ -95,6 +95,7 @@ class TagFactory extends AbstractFactory
             "inputNumeric"        => "Phalcon\\Html\\Helper\\Input\\Numeric",
             "inputPassword"       => "Phalcon\\Html\\Helper\\Input\\Password",
             "inputRange"          => "Phalcon\\Html\\Helper\\Input\\Range",
+            "inputSelect"         => "Phalcon\\Html\\Helper\\Input\\Select",
             "inputSearch"         => "Phalcon\\Html\\Helper\\Input\\Search",
             "inputSubmit"         => "Phalcon\\Html\\Helper\\Input\\Submit",
             "inputTel"            => "Phalcon\\Html\\Helper\\Input\\Tel",

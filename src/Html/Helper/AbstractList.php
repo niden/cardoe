@@ -17,6 +17,7 @@ use Phalcon\Html\Exception;
  * Class AbstractList
  *
  * @property array  $attributes
+ * @property string $elementTag
  * @property string $delimiter
  * @property string $indent
  * @property array  $store
@@ -27,6 +28,11 @@ abstract class AbstractList extends AbstractHelper
      * @var array
      */
     protected $attributes = [];
+
+    /**
+     * @var string
+     */
+    protected $elementTag = "li";
 
     /**
      * @var string
@@ -52,7 +58,7 @@ abstract class AbstractList extends AbstractHelper
      */
     public function __invoke(
         string $indent = null,
-        string $delimiter = null, // PHP_EOL,
+        string $delimiter = null,
         array $attributes = []
     ): AbstractList {
         $this->attributes = $attributes;
@@ -91,24 +97,6 @@ abstract class AbstractList extends AbstractHelper
             $this->attributes,
             true
         );
-    }
-
-    /**
-     * Add an element to the list
-     *
-     * @param string $text
-     * @param array  $attributes
-     * @param bool   $raw
-     *
-     * @return $this
-     * @throws Exception
-     */
-    public function add(string $text, array $attributes = [], bool $raw = false)
-    {
-        $this->store[] = $this->indent
-            . $this->renderFullElement("li", $text, $attributes, $raw);
-
-        return $this;
     }
 
     /**

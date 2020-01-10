@@ -14,7 +14,7 @@ namespace Phalcon\Html\Helper;
 /**
  * Class Ul
  */
-class Ul extends AbstractList
+class Ul extends Ol
 {
     /**
      * @return string
