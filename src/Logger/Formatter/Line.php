@@ -11,11 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Formatter;
 
+use Exception;
 use Phalcon\Logger\Item;
-
-use function is_array;
-use function str_replace;
-use function strpos;
 
 /**
  * Phalcon\Logger\Formatter\Line
@@ -48,7 +45,7 @@ class Line extends AbstractFormatter
      * @param string $dateFormat
      */
     public function __construct(
-        string $format = "[%date%][%type%] %message%",
+        string $format = "[{date}][{type}] {message}",
         string $dateFormat = "c"
     ) {
         $this->format     = $format;
@@ -77,39 +74,21 @@ class Line extends AbstractFormatter
      * @param Item $item
      *
      * @return string
+     * @throws Exception
      */
     public function format(Item $item): string
     {
-        $format = $this->format;
-
-        /**
-         * Check if the format has the %date% placeholder
-         */
-        if (false !== strpos($format, "%date%")) {
-            $format = str_replace(
-                "%date%",
-                $this->getFormattedDate(),
-                $format
-            );
-        }
-
-        /**
-         * Check if the format has the %type% placeholder
-         */
-        if (false !== strpos($format, "%type%")) {
-            $format = str_replace("%type%", $item->getName(), $format);
-        }
-
-        $format = str_replace("%message%", $item->getMessage(), $format);
-
-        if (is_array($item->getContext())) {
-            return $this->interpolate(
-                $format,
+        $context = [
+            'date'    => $this->getFormattedDate(),
+            'type'    => $item->getName(),
+            'message' => $this->interpolate(
+                $item->getMessage(),
                 $item->getContext()
-            );
-        }
+            ),
+        ];
+        $context = array_merge($item->getContext(), $context);
 
-        return $format;
+        return $this->interpolate($this->format, $context);
     }
 
     /**

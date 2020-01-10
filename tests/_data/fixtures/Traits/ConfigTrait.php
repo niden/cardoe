@@ -21,7 +21,6 @@ use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Exception;
 use UnitTester;
-
 use function dataDir;
 use function is_array;
 use function sprintf;
@@ -113,12 +112,12 @@ trait ConfigTrait
      *
      * @param string $adapter
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     *
      * @return Config|Ini|Json|Php|Yaml
      * @throws Exception
      * @throws \Phalcon\Factory\Exception
+     * @since  2018-11-13
+     *
+     * @author Phalcon Team <team@phalcon.io>
      */
     private function getConfig(string $adapter = '')
     {

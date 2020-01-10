@@ -930,6 +930,7 @@ trait AcceptanceTesterActions
      * $I->seeCheckboxIsChecked('#signup_form input[type=checkbox]'); // I
      * suppose user agreed to terms, If there is only one checkbox in form.
      * $I->seeCheckboxIsChecked('//form/input[@type=checkbox and
+     *
      * @name=agree]');
      * ?>
      * ```
@@ -955,6 +956,7 @@ trait AcceptanceTesterActions
      * $I->seeCheckboxIsChecked('#signup_form input[type=checkbox]'); // I
      * suppose user agreed to terms, If there is only one checkbox in form.
      * $I->seeCheckboxIsChecked('//form/input[@type=checkbox and
+     *
      * @name=agree]');
      * ?>
      * ```

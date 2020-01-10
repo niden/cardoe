@@ -20,7 +20,7 @@ trait RedisTrait
     public function _before(UnitTester $I)
     {
         $I->checkExtensionIsLoaded('redis');
- 
+
         $this->options = $this->getOptions();
     }
 

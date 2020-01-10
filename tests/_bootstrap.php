@@ -119,4 +119,5 @@ $environment = (!$environment) ? 'local' : 'github';
 Dotenv::createImmutable(
     codecept_root_dir('config/'),
     '.env.' . $environment
-)->load();
+)->load()
+;

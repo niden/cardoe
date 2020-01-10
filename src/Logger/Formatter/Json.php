@@ -11,10 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Formatter;
 
+use Exception;
 use Phalcon\Helper\Json as JsonHelper;
 use Phalcon\Logger\Item;
-
-use function is_array;
 
 /**
  * Phalcon\Logger\Formatter\Json
@@ -56,17 +55,14 @@ class Json extends AbstractFormatter
      * @param Item $item
      *
      * @return string
+     * @throws Exception
      */
     public function format(Item $item): string
     {
-        if (is_array($item->getContext())) {
-            $message = $this->interpolate(
-                $item->getMessage(),
-                $item->getContext()
-            );
-        } else {
-            $message = $item->getMessage();
-        }
+        $message = $this->interpolate(
+            $item->getMessage(),
+            $item->getContext()
+        );
 
         return JsonHelper::encode(
             [

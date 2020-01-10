@@ -54,10 +54,8 @@ class InterpolateCest
         $I->wantToTest('Logger\Formatter\Line - interpolate() - format()');
 
         $formatter = new Line();
-
-        $message = 'The sky is {color}';
-
-        $context = [
+        $message   = 'The sky is {color}';
+        $context   = [
             'color' => 'blue',
         ];
 

@@ -15,8 +15,6 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
-use function is_array;
-
 /**
  * Class AbstractFormatter
  *
@@ -29,14 +27,14 @@ abstract class AbstractFormatter implements FormatterInterface
      *
      * @see http://www.php-fig.org/psr/psr-3/ Section 1.2 Message
      *
-     * @param string     $message
-     * @param array|null $context
+     * @param string $message
+     * @param array  $context
      *
      * @return string
      */
-    public function interpolate(string $message, $context = null): string
+    public function interpolate(string $message, $context = []): string
     {
-        if (is_array($context) && count($context) > 0) {
+        if (!empty($context) > 0) {
             $replace = [];
             foreach ($context as $key => $value) {
                 $replace["{" . $key . "}"] = $value;

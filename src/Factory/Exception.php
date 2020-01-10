@@ -11,9 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Factory;
 
-use Throwable;
-
-class Exception extends \Exception implements Throwable
+/**
+ * Class Exception
+ */
+class Exception extends \Exception
 {
 
 }
