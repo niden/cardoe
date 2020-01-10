@@ -30,13 +30,15 @@ class Style extends AbstractSeries
      */
     public function add(string $href, array $attributes = [])
     {
-        $this->store[] = $this->indent
-            . $this->renderFullElement(
+        $this->store[] = [
+            "renderFullElement",
+            [
                 $this->getTag(),
                 '',
-                $this->getAttributes($href, $attributes)
-            )
-        ;
+                $this->getAttributes($href, $attributes),
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }

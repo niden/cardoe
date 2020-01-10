@@ -92,7 +92,7 @@ class Checkbox extends AbstractInput
         $this->label = [
             "start" => $this->renderTag('label', $attributes),
             "text"  => $text,
-            "end"   => "</label>"
+            "end"   => "</label>",
         ];
 
         return $this;
@@ -103,7 +103,7 @@ class Checkbox extends AbstractInput
      */
     private function processChecked(): void
     {
-        $checked  = $this->attributes["checked"] ?? "";
+        $checked = $this->attributes["checked"] ?? "";
         unset($this->attributes["checked"]);
 
         if (!empty($checked)) {
@@ -121,7 +121,7 @@ class Checkbox extends AbstractInput
      */
     private function processUnchecked(): string
     {
-        $unchecked  = $this->attributes["unchecked"] ?? "";
+        $unchecked = $this->attributes["unchecked"] ?? "";
         unset($this->attributes["unchecked"]);
 
         if (!empty($unchecked)) {

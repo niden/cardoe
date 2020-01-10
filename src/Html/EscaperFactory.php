@@ -9,18 +9,20 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Fixtures\Migrations;
+namespace Phalcon\Html;
 
-use Phalcon\DM\Pdo\Connection;
-
-class Setup
+/**
+ * Class EscaperFactory
+ */
+class EscaperFactory
 {
     /**
-     * @param Connection $connection
+     * Create a new instance of the object
+     *
+     * @return Escaper
      */
-    public function __invoke(Connection $connection)
+    public function newInstance(): Escaper
     {
-
-        (new Invoices())($connection);
+        return new Escaper();
     }
 }

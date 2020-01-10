@@ -11,15 +11,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Html\Helper;
 
-use Phalcon\Html\Exception;
-
 /**
  * Class AbstractSeries
  *
- * @property array  $attributes
- * @property string $delimiter
- * @property string $indent
- * @property array  $store
+ * @property array $attributes
+ * @property array $store
  */
 abstract class AbstractSeries extends AbstractHelper
 {
@@ -27,16 +23,6 @@ abstract class AbstractSeries extends AbstractHelper
      * @var array
      */
     protected $attributes = [];
-
-    /**
-     * @var string
-     */
-    protected $delimiter = PHP_EOL;
-
-    /**
-     * @var string
-     */
-    protected $indent = "    ";
 
     /**
      * @var array
@@ -73,11 +59,10 @@ abstract class AbstractSeries extends AbstractHelper
      */
     public function __toString()
     {
-        if (empty($this->store)) {
-            return "";
-        }
-
-        return implode($this->delimiter, $this->store) . $this->delimiter;
+        return $this->renderArrayElements(
+            $this->store,
+            $this->delimiter
+        );
     }
 
     /**

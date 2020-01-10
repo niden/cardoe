@@ -27,8 +27,8 @@ trait JWTTrait
      */
     public function newToken($signerClass = Hmac::class, int $issDrift = 0): Token
     {
-        $signer  = new $signerClass();
-        $builder = new Builder($signer);
+        $signer     = new $signerClass();
+        $builder    = new Builder($signer);
         $expiry     = strtotime('+1 day');
         $issued     = strtotime('now') + $issDrift;
         $notBefore  = strtotime('-1 day');
@@ -44,6 +44,6 @@ trait JWTTrait
             ->setSubject('Mary had a little lamb')
             ->setPassphrase($passphrase)
             ->getToken()
-        ;
+            ;
     }
 }

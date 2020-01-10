@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Html\Helper;
 
-use Phalcon\Html\Exception;
-
 /**
  * Class Link
  */
@@ -25,7 +23,6 @@ class Link extends AbstractSeries
      * @param string $href
      *
      * @return Link
-     * @throws Exception
      */
     public function add(string $rel, string $href): Link
     {
@@ -34,13 +31,15 @@ class Link extends AbstractSeries
             'href' => $href,
         ];
 
-        $this->store[] = $this->indent
-            . $this->renderTag(
+        $this->store[] = [
+            "renderTag",
+            [
                 $this->getTag(),
                 $attributes,
-                "/"
-            )
-        ;
+                "/",
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }

@@ -24,7 +24,6 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Ul :: __invoke()
      *
-     * @since  2020-01-06
      * @param UnitTester $I
      * @param Example    $example
      *
@@ -32,6 +31,7 @@ class UnderscoreInvokeCest
      * @throws Exception
      *
      * @dataProvider getExamples
+     * @since        2020-01-06
      */
     public function htmlHelperUlUnderscoreInvoke(UnitTester $I, Example $example)
     {
@@ -57,7 +57,7 @@ class UnderscoreInvokeCest
             $result->add($add[0], $add[1], $add[2]);
         }
 
-        $actual   = (string) $result;
+        $actual = (string) $result;
         $I->assertEquals($expected, $actual);
     }
 
@@ -68,11 +68,11 @@ class UnderscoreInvokeCest
     {
         return [
             [
-                'message' => 'base',
-                'indent'  => null,
-                'delimiter' => null,
+                'message'    => 'base',
+                'indent'     => null,
+                'delimiter'  => null,
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -86,27 +86,27 @@ class UnderscoreInvokeCest
                     [
                         "> Dodge",
                         [],
-                        false
+                        false,
                     ],
                     [
                         "> Toyota",
                         [],
-                        false
+                        false,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">
+                'result'     => "<ul id=\"carsList\">
     <li class=\"active\">&gt; Ferrari</li>
     <li>&gt; Ford</li>
     <li>&gt; Dodge</li>
     <li>&gt; Toyota</li>
-</ul>"
+</ul>",
             ],
             [
-                'message' => 'raw',
-                'indent'  => null,
-                'delimiter' => null,
+                'message'    => 'raw',
+                'indent'     => null,
+                'delimiter'  => null,
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -128,19 +128,19 @@ class UnderscoreInvokeCest
                         false,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">
+                'result'     => "<ul id=\"carsList\">
     <li class=\"active\">&gt; Ferrari</li>
     <li>&gt; Ford</li>
     <li>&gt; Dodge</li>
     <li>&gt; Toyota</li>
-</ul>"
+</ul>",
             ],
             [
-                'message' => 'indent and delimiter',
-                'indent'  => '--',
-                'delimiter' => '+',
+                'message'    => 'indent and delimiter',
+                'indent'     => '--',
+                'delimiter'  => '+',
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -162,15 +162,15 @@ class UnderscoreInvokeCest
                         false,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">+--<li class=\"active\">&gt; Ferrari</li>+"
-                    . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ul>"
+                'result'     => "<ul id=\"carsList\">+--<li class=\"active\">&gt; Ferrari</li>+"
+                    . "--<li>&gt; Ford</li>+--<li>&gt; Dodge</li>+--<li>&gt; Toyota</li>+</ul>",
             ],
             [
-                'message' => 'base',
-                'indent'  => null,
-                'delimiter' => null,
+                'message'    => 'base',
+                'indent'     => null,
+                'delimiter'  => null,
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -192,19 +192,19 @@ class UnderscoreInvokeCest
                         true,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">
+                'result'     => "<ul id=\"carsList\">
     <li class=\"active\">> Ferrari</li>
     <li>> Ford</li>
     <li>> Dodge</li>
     <li>> Toyota</li>
-</ul>"
+</ul>",
             ],
             [
-                'message' => 'raw',
-                'indent'  => null,
-                'delimiter' => null,
+                'message'    => 'raw',
+                'indent'     => null,
+                'delimiter'  => null,
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -226,19 +226,19 @@ class UnderscoreInvokeCest
                         true,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">
+                'result'     => "<ul id=\"carsList\">
     <li class=\"active\">> Ferrari</li>
     <li>> Ford</li>
     <li>> Dodge</li>
     <li>> Toyota</li>
-</ul>"
+</ul>",
             ],
             [
-                'message' => 'indent and delimiter',
-                'indent'  => '--',
-                'delimiter' => '+',
+                'message'    => 'indent and delimiter',
+                'indent'     => '--',
+                'delimiter'  => '+',
                 'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'add'        => [
                     [
                         "> Ferrari",
                         ["class" => "active"],
@@ -260,8 +260,8 @@ class UnderscoreInvokeCest
                         true,
                     ],
                 ],
-                'result' => "<ul id=\"carsList\">+--<li class=\"active\">> Ferrari</li>+"
-                    . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ul>"
+                'result'     => "<ul id=\"carsList\">+--<li class=\"active\">> Ferrari</li>+"
+                    . "--<li>> Ford</li>+--<li>> Dodge</li>+--<li>> Toyota</li>+</ul>",
             ],
         ];
     }

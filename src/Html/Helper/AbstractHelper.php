@@ -14,17 +14,40 @@ namespace Phalcon\Html\Helper;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Exception;
 
+use function call_user_func_array;
+use function str_repeat;
+
+use const PHP_EOL;
+
 /**
  * Class AbstractHelper
  *
+ * @property string  $delimiter
  * @property Escaper $escaper
+ * @property string  $indent
+ * @property int     $indentLevel
  */
 abstract class AbstractHelper
 {
     /**
+     * @var string
+     */
+    protected $delimiter = PHP_EOL;
+
+    /**
      * @var Escaper
      */
     protected $escaper;
+
+    /**
+     * @var string
+     */
+    protected $indent = "    ";
+
+    /**
+     * @var int
+     */
+    protected $indentLevel = 1;
 
     /**
      * AbstractHelper constructor.
@@ -49,6 +72,16 @@ abstract class AbstractHelper
         $tag = $raw ? $tag : $this->escaper->html($tag);
 
         return "</" . $tag . ">";
+    }
+
+    /**
+     * Replicates the indent x times as per indentLevel
+     *
+     * @return string
+     */
+    protected function indent(): string
+    {
+        return str_repeat($this->indent, $this->indentLevel);
     }
 
     /**
@@ -84,6 +117,29 @@ abstract class AbstractHelper
         unset($results["escape"]);
 
         return $results;
+    }
+
+    /**
+     * Traverses an array and calls the method defined in the first element
+     * with attributes as the second, returning the resulting string
+     *
+     * @param array  $elements
+     * @param string $delimiter
+     *
+     * @return string
+     */
+    protected function renderArrayElements(
+        array $elements,
+        string $delimiter
+    ): string {
+        $result = "";
+        foreach ($elements as $item) {
+            $result .= $item[2]
+                . call_user_func_array([$this, $item[0]], $item[1])
+                . $delimiter;
+        }
+
+        return $result;
     }
 
     /**

@@ -23,12 +23,13 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Meta :: __invoke()
      *
-     * @since  2020-01-06
      * @param UnitTester $I
      * @param Example    $example
+     *
      * @throws Exception
      *
      * @dataProvider getExamples
+     * @since        2020-01-06
      */
     public function htmlHelperMetaUnderscoreInvoke(UnitTester $I, Example $example)
     {

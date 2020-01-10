@@ -29,5 +29,4 @@ class Input extends AbstractInput
 
         return $this;
     }
-
 }

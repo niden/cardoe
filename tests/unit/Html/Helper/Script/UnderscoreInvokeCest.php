@@ -23,13 +23,13 @@ class UnderscoreInvokeCest
     /**
      * Tests Phalcon\Html\Helper\Script :: __invoke()
      *
-     * @since  2020-01-06
      * @param UnitTester $I
      * @param Example    $example
      *
      * @throws Exception
      *
      * @dataProvider getExamples
+     * @since        2020-01-06
      */
     public function htmlHelperScriptUnderscoreInvoke(UnitTester $I, Example $example)
     {
@@ -55,7 +55,7 @@ class UnderscoreInvokeCest
             $result->add($add[0], $add[1]);
         }
 
-        $actual   = (string) $result;
+        $actual = (string) $result;
         $I->assertEquals($expected, $actual);
     }
 

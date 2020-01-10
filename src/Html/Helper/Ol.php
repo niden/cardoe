@@ -11,8 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Html\Helper;
 
-use Phalcon\Html\Exception;
-
 /**
  * Class Ol
  */
@@ -27,17 +25,19 @@ class Ol extends AbstractList
      * @param bool   $raw
      *
      * @return $this
-     * @throws Exception
      */
     public function add(string $text, array $attributes = [], bool $raw = false)
     {
-        $this->store[] = $this->indent
-            . $this->renderFullElement(
+        $this->store[] = [
+            "renderFullElement",
+            [
                 $this->elementTag,
                 $text,
                 $attributes,
-                $raw
-            );
+                $raw,
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }

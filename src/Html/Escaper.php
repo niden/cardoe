@@ -35,16 +35,33 @@ class Escaper
      */
     protected $flags = ENT_QUOTES;
 
+    /**
+     * Escaper constructor.
+     */
     public function __construct()
     {
         $this->flags = ENT_QUOTES | ENT_SUBSTITUTE;
     }
 
+    /**
+     * Escape HTML attributes
+     *
+     * @param string $input
+     *
+     * @return string
+     */
     public function attributes(string $input): string
     {
         return $input;
     }
 
+    /**
+     * Escape CSS
+     *
+     * @param string $input
+     *
+     * @return string
+     */
     public function css(string $input): string
     {
         return $input;
@@ -71,6 +88,8 @@ class Escaper
     }
 
     /**
+     * Get the htmlspecialchars flags
+     *
      * @return int
      */
     public function getFlags(): int
@@ -79,7 +98,7 @@ class Escaper
     }
 
     /**
-     * Escapes input
+     * Escapes HTML
      *
      * @param mixed $input
      *
@@ -95,6 +114,13 @@ class Escaper
         );
     }
 
+    /**
+     * Escape JS
+     *
+     * @param string $input
+     *
+     * @return string
+     */
     public function js(string $input): string
     {
         return $input;
@@ -138,13 +164,5 @@ class Escaper
     public function url(string $url): string
     {
         return rawurldecode($url);
-    }
-
-    final public function detectEncoding(string $str): ?string
-    {
-    }
-
-    final public function normalizeEncoding(string $str): string
-    {
     }
 }

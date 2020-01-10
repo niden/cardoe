@@ -3,8 +3,8 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and optioncense information, please view the LICENSE.md
- * file that was distributed with this source code.
+ * For the full copyright and optioncense information, please view the
+ * LICENSE.md file that was distributed with this source code.
  */
 
 declare(strict_types=1);
@@ -41,8 +41,13 @@ class SelectUnderscoreInvokeCest
         $helper  = new Select($escaper);
 
         $result = $helper($example['indent'], $example['delimiter'], $example['attributes']);
-        foreach ($example['add'] as $add) {
-            $result->add($add[0], $add[1], $add[2], $add[3]);
+
+        if (!empty($example['selected'])) {
+            $result->selected($example['selected']);
+        }
+
+        if (!empty($example['optgroup'])) {
+            $result->optGroup($example['optgroup'][0], $example['optgroup'][1]);
         }
 
         if (!empty($example['placeholder'])) {
@@ -52,6 +57,14 @@ class SelectUnderscoreInvokeCest
                 $example['placeholder'][2],
                 $example['placeholder'][3]
             );
+        }
+
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2], $add[3]);
+        }
+
+        if (!empty($example['optgroup'])) {
+            $result->optGroup($example['optgroup'][0], $example['optgroup'][1]);
         }
 
         $expected = $example['result'];
@@ -62,8 +75,13 @@ class SelectUnderscoreInvokeCest
         $locator = $factory->newInstance('inputSelect');
 
         $result = $locator($example['indent'], $example['delimiter'], $example['attributes']);
-        foreach ($example['add'] as $add) {
-            $result->add($add[0], $add[1], $add[2], $add[3]);
+
+        if (!empty($example['selected'])) {
+            $result->selected($example['selected']);
+        }
+
+        if (!empty($example['optgroup'])) {
+            $result->optGroup($example['optgroup'][0], $example['optgroup'][1]);
         }
 
         if (!empty($example['placeholder'])) {
@@ -75,7 +93,15 @@ class SelectUnderscoreInvokeCest
             );
         }
 
-        $actual   = (string) $result;
+        foreach ($example['add'] as $add) {
+            $result->add($add[0], $add[1], $add[2], $add[3]);
+        }
+
+        if (!empty($example['optgroup'])) {
+            $result->optGroup($example['optgroup'][0], $example['optgroup'][1]);
+        }
+
+        $actual = (string) $result;
         $I->assertEquals($expected, $actual);
     }
 
@@ -86,11 +112,12 @@ class SelectUnderscoreInvokeCest
     {
         return [
             [
-                'message' => 'base',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'base',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         "1",
@@ -107,29 +134,31 @@ class SelectUnderscoreInvokeCest
                         "> Dodge",
                         "3",
                         [],
-                        false
+                        false,
                     ],
                     [
                         "> Toyota",
                         "4",
                         [],
-                        false
+                        false,
                     ],
                 ],
                 'placeholder' => [],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option value=\"1\" class=\"active\">&gt; Ferrari</option>
     <option value=\"2\">&gt; Ford</option>
     <option value=\"3\">&gt; Dodge</option>
     <option value=\"4\">&gt; Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'raw',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'raw',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         "1",
@@ -156,19 +185,21 @@ class SelectUnderscoreInvokeCest
                     ],
                 ],
                 'placeholder' => [],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option value=\"1\" class=\"active\">> Ferrari</option>
     <option value=\"2\">> Ford</option>
     <option value=\"3\">> Dodge</option>
     <option value=\"4\">> Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'base placeholder',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'base placeholder',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         null,
@@ -185,13 +216,13 @@ class SelectUnderscoreInvokeCest
                         "> Dodge",
                         null,
                         [],
-                        false
+                        false,
                     ],
                     [
                         "> Toyota",
                         null,
                         [],
-                        false
+                        false,
                     ],
                 ],
                 'placeholder' => [
@@ -200,20 +231,22 @@ class SelectUnderscoreInvokeCest
                     [],
                     false,
                 ],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option>Choose &amp; Car...</option>
     <option class=\"active\">&gt; Ferrari</option>
     <option>&gt; Ford</option>
     <option>&gt; Dodge</option>
     <option>&gt; Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'raw placeholder',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'raw placeholder',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         null,
@@ -245,20 +278,22 @@ class SelectUnderscoreInvokeCest
                     [],
                     true,
                 ],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option>Choose & Car...</option>
     <option class=\"active\">> Ferrari</option>
     <option>> Ford</option>
     <option>> Dodge</option>
     <option>> Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'indent and delimiter',
-                'indent'  => '--',
-                'delimiter' => '+',
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'indent and delimiter',
+                'indent'      => '--',
+                'delimiter'   => '+',
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         null,
@@ -290,20 +325,22 @@ class SelectUnderscoreInvokeCest
                     [],
                     false,
                 ],
-                'result' => "<select id=\"carsList\">+"
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">+"
                     . "--<option>Choose &amp; Car...</option>+"
                     . "--<option class=\"active\">&gt; Ferrari</option>+"
                     . "--<option>&gt; Ford</option>+"
                     . "--<option>&gt; Dodge</option>+"
                     . "--<option>&gt; Toyota</option>+"
-                    . "</select>"
+                    . "</select>",
             ],
             [
-                'message' => 'base',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'base',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         null,
@@ -330,19 +367,21 @@ class SelectUnderscoreInvokeCest
                     ],
                 ],
                 'placeholder' => [],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option class=\"active\">> Ferrari</option>
     <option>> Ford</option>
     <option>> Dodge</option>
     <option>> Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'raw',
-                'indent'  => null,
-                'delimiter' => null,
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'raw',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         null,
@@ -369,19 +408,21 @@ class SelectUnderscoreInvokeCest
                     ],
                 ],
                 'placeholder' => [],
-                'result' => "<select id=\"carsList\">
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
     <option class=\"active\">> Ferrari</option>
     <option>> Ford</option>
     <option>> Dodge</option>
     <option>> Toyota</option>
-</select>"
+</select>",
             ],
             [
-                'message' => 'indent and delimiter',
-                'indent'  => '--',
-                'delimiter' => '+',
-                'attributes' => ['id' => 'carsList'],
-                'add' => [
+                'message'     => 'indent and delimiter',
+                'indent'      => '--',
+                'delimiter'   => '+',
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
                     [
                         "> Ferrari",
                         "1",
@@ -413,13 +454,115 @@ class SelectUnderscoreInvokeCest
                     [],
                     true,
                 ],
-                'result' => "<select id=\"carsList\">+"
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">+"
                     . "--<option value=\"0\">Choose & Car...</option>+"
                     . "--<option value=\"1\" class=\"active\">> Ferrari</option>+"
                     . "--<option value=\"2\">> Ford</option>+"
                     . "--<option value=\"3\">> Dodge</option>+"
                     . "--<option value=\"4\">> Toyota</option>+"
-                    . "</select>"
+                    . "</select>",
+            ],
+            [
+                'message'     => 'optgroup',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => null,
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
+                    [
+                        "> Ferrari",
+                        "1",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        "2",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        "3",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        "4",
+                        [],
+                        true,
+                    ],
+                ],
+                'placeholder' => [
+                    'Choose & Car...',
+                    "0",
+                    [],
+                    true,
+                ],
+                'optgroup'    => [
+                    'oneLabel',
+                    [
+                        'class' => 'form-input',
+                    ],
+                ],
+                'result'      => "<select id=\"carsList\">
+    <optgroup class=\"form-input\" label=\"oneLabel\">
+        <option value=\"0\">Choose & Car...</option>
+        <option value=\"1\" class=\"active\">> Ferrari</option>
+        <option value=\"2\">> Ford</option>
+        <option value=\"3\">> Dodge</option>
+        <option value=\"4\">> Toyota</option>
+    </optgroup>
+</select>",
+            ],
+            [
+                'message'     => 'selected',
+                'indent'      => null,
+                'delimiter'   => null,
+                'selected'    => '3',
+                'attributes'  => ['id' => 'carsList'],
+                'add'         => [
+                    [
+                        "> Ferrari",
+                        "1",
+                        ["class" => "active"],
+                        true,
+                    ],
+                    [
+                        "> Ford",
+                        "2",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Dodge",
+                        "3",
+                        [],
+                        true,
+                    ],
+                    [
+                        "> Toyota",
+                        "4",
+                        [],
+                        true,
+                    ],
+                ],
+                'placeholder' => [
+                    'Choose & Car...',
+                    "0",
+                    [],
+                    true,
+                ],
+                'optgroup'    => [],
+                'result'      => "<select id=\"carsList\">
+    <option value=\"0\">Choose & Car...</option>
+    <option value=\"1\" class=\"active\">> Ferrari</option>
+    <option value=\"2\">> Ford</option>
+    <option value=\"3\" selected=\"selected\">> Dodge</option>
+    <option value=\"4\">> Toyota</option>
+</select>",
             ],
         ];
     }

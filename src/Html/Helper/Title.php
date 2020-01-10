@@ -104,8 +104,7 @@ class Title extends AbstractHelper
                 [],
                 true
             )
-            . $delimiter
-        ;
+            . $delimiter;
     }
 
     /**

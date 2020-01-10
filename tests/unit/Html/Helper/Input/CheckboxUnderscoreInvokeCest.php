@@ -105,7 +105,9 @@ class CheckboxUnderscoreInvokeCest
                 'value'      => null,
                 'attributes' => [],
                 'label'      => null,
-                'render'     => '<input type="' . $type . '" id="x_name" name="x_name" />',
+                'render'     => '<input type="'
+                    . $type
+                    . '" id="x_name" name="x_name" />',
             ],
             [
                 'message'    => 'with label',
@@ -113,7 +115,9 @@ class CheckboxUnderscoreInvokeCest
                 'value'      => null,
                 'attributes' => [],
                 'label'      => [],
-                'render'     => '<label for="x_name"><input type="' . $type . '" id="x_name" name="x_name" /></label>',
+                'render'     => '<label for="x_name"><input type="'
+                    . $type
+                    . '" id="x_name" name="x_name" /></label>',
             ],
             [
                 'message'    => 'with label different id',
@@ -123,7 +127,9 @@ class CheckboxUnderscoreInvokeCest
                     'id' => 'x_id',
                 ],
                 'label'      => [],
-                'render'     => '<label for="x_id"><input type="' . $type . '" id="x_id" name="x_name" /></label>',
+                'render'     => '<label for="x_id"><input type="'
+                    . $type
+                    . '" id="x_id" name="x_name" /></label>',
             ],
             [
                 'message'    => 'with label text',
@@ -135,7 +141,9 @@ class CheckboxUnderscoreInvokeCest
                 'label'      => [
                     "text" => "some text",
                 ],
-                'render'     => '<label for="x_id"><input type="' . $type . '" id="x_id" name="x_name" />some text</label>',
+                'render'     => '<label for="x_id"><input type="'
+                    . $type
+                    . '" id="x_id" name="x_name" />some text</label>',
             ],
             [
                 'message'    => 'with unchecked',
@@ -149,7 +157,9 @@ class CheckboxUnderscoreInvokeCest
                     "text" => "some text",
                 ],
                 'render'     => '<hidden name="x_name" value="no">' .
-                    '<label for="x_id"><input type="' . $type . '" id="x_id" name="x_name" />some text</label>',
+                    '<label for="x_id"><input type="'
+                    . $type
+                    . '" id="x_id" name="x_name" />some text</label>',
             ],
             [
                 'message'    => 'with value and checked',
@@ -165,7 +175,9 @@ class CheckboxUnderscoreInvokeCest
                 ],
                 'render'     => '<hidden name="x_name" value="no">' .
                     '<label for="x_id">' .
-                    '<input type="' . $type . '" id="x_id" name="x_name" value="yes" checked="checked" />some text</label>',
+                    '<input type="'
+                    . $type
+                    . '" id="x_id" name="x_name" value="yes" checked="checked" />some text</label>',
             ],
             [
                 'message'    => 'with value and label',
@@ -178,7 +190,9 @@ class CheckboxUnderscoreInvokeCest
                     "text" => "some text",
                 ],
                 'render'     => '<label for="x_id">' .
-                    '<input type="' . $type . '" id="x_id" name="x_name" value="yes" />some text</label>',
+                    '<input type="'
+                    . $type
+                    . '" id="x_id" name="x_name" value="yes" />some text</label>',
             ],
         ];
     }

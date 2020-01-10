@@ -26,20 +26,21 @@ class FriendlyCest
     /**
      * Tests Phalcon\Helper\Str :: friendly()
      *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2020-01-07
-     *
      * @param UnitTester $I
      * @param Example    $example
+     *
      * @throws Exception
      *
      * @dataProvider getExamples
+     * @since        2020-01-07
+     *
+     * @author       Phalcon Team <team@phalcon.io>
      */
     public function helperStrFriendly(UnitTester $I, Example $example)
     {
         $I->wantToTest('Helper\Str - friendly() ' . $example['message']);
 
-        $actual   = Str::friendly(
+        $actual = Str::friendly(
             $example['text'],
             $example['separator'],
             $example['lowercase'],
@@ -52,10 +53,11 @@ class FriendlyCest
     /**
      * Tests Phalcon\Helper\Str :: friendly() - exception
      *
-     * @author Phalcon Team <team@phalcon.io>
+     * @param UnitTester $I
+     *
      * @since  2020-01-07
      *
-     * @param UnitTester $I
+     * @author Phalcon Team <team@phalcon.io>
      */
     public function helperStrFriendlyException(UnitTester $I)
     {

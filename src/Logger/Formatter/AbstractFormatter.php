@@ -14,7 +14,6 @@ namespace Phalcon\Logger\Formatter;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
-use Phalcon\Logger\Item;
 
 /**
  * Class AbstractFormatter

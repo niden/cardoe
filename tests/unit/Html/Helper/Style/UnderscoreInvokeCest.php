@@ -75,7 +75,7 @@ class UnderscoreInvokeCest
                         [],
                     ],
                     [
-                        "print.css", 
+                        "print.css",
                         ["media" => "print"],
                     ],
                 ],
@@ -106,4 +106,3 @@ class UnderscoreInvokeCest
         ];
     }
 }
-

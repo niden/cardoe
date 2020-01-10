@@ -18,8 +18,6 @@ use Phalcon\Html\Exception;
  *
  * @property array  $attributes
  * @property string $elementTag
- * @property string $delimiter
- * @property string $indent
  * @property array  $store
  */
 abstract class AbstractList extends AbstractHelper
@@ -33,16 +31,6 @@ abstract class AbstractList extends AbstractHelper
      * @var string
      */
     protected $elementTag = "li";
-
-    /**
-     * @var string
-     */
-    protected $delimiter = PHP_EOL;
-
-    /**
-     * @var string
-     */
-    protected $indent = "    ";
 
     /**
      * @var array
@@ -87,9 +75,11 @@ abstract class AbstractList extends AbstractHelper
             return "";
         }
 
-        $contents = $this->delimiter
-            . implode($this->delimiter, $this->store)
-            . $this->delimiter;
+        $contents = $this->delimiter .
+            $this->renderArrayElements(
+                $this->store,
+                $this->delimiter
+            );
 
         return $this->renderFullElement(
             $this->getTag(),
@@ -108,4 +98,3 @@ abstract class AbstractList extends AbstractHelper
      */
     abstract protected function getTag();
 }
-

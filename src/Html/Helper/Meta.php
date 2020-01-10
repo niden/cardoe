@@ -24,16 +24,17 @@ class Meta extends AbstractSeries
      * @param array $attributes
      *
      * @return Meta
-     * @throws Exception
      */
     public function add(array $attributes = []): Meta
     {
-        $this->store[] = $this->indent
-            . $this->renderTag(
+        $this->store[] = [
+            "renderTag",
+            [
                 $this->getTag(),
-                $attributes
-            )
-        ;
+                $attributes,
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }

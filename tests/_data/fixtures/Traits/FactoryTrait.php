@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,9 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Traits;
 
-use Phalcon\Config\Adapter\Ini;
 use Phalcon\Config;
-
+use Phalcon\Config\Adapter\Ini;
 use function dataDir;
 use function outputDir;
 

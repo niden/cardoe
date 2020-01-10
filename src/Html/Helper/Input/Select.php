@@ -11,15 +11,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Html\Helper\Input;
 
-use Phalcon\Html\Exception;
 use Phalcon\Html\Helper\AbstractList;
-
-use function array_unshift;
 
 /**
  * Class Select
  *
  * @property string $elementTag
+ * @property bool   $inOptGroup
+ * @property string $selected
  */
 class Select extends AbstractList
 {
@@ -29,6 +28,16 @@ class Select extends AbstractList
     protected $elementTag = "option";
 
     /**
+     * @var bool
+     */
+    protected $inOptGroup = false;
+
+    /**
+     * @var string
+     */
+    protected $selected = "";
+
+    /**
      * Add an element to the list
      *
      * @param string      $text
@@ -36,26 +45,26 @@ class Select extends AbstractList
      * @param array       $attributes
      * @param bool        $raw
      *
-     * @return $this
-     * @throws Exception
+     * @return Select
      */
     public function add(
         string $text,
         string $value = null,
         array $attributes = [],
         bool $raw = false
-    ) {
-        if (null !== $value) {
-            $attributes["value"] = $value;
-        }
+    ): Select {
+        $attributes = $this->processValue($attributes, $value);
 
-        $this->store[] = $this->indent
-            . $this->renderFullElement(
+        $this->store[] = [
+            "renderFullElement",
+            [
                 $this->elementTag,
                 $text,
                 $attributes,
-                $raw
-            );
+                $raw,
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }
@@ -68,36 +77,122 @@ class Select extends AbstractList
      * @param array  $attributes
      * @param bool   $raw
      *
-     * @return $this
-     * @throws Exception
+     * @return Select
      */
     public function addPlaceholder(
         string $text,
         string $value = null,
         array $attributes = [],
         bool $raw = false
-    ) {
+    ): Select {
         if (null !== $value) {
             $attributes["value"] = $value;
         }
 
-        array_unshift(
-            $this->store,
-            $this->indent . $this->renderFullElement(
+        $this->store[] = [
+            "renderFullElement",
+            [
                 $this->elementTag,
                 $text,
                 $attributes,
-                $raw
-            )
-        );
+                $raw,
+            ],
+            $this->indent(),
+        ];
 
         return $this;
     }
+
+    /**
+     * Creates an option group
+     *
+     * @param string $label
+     * @param array  $attributes
+     *
+     * @return Select
+     */
+    public function optGroup(string $label = null, array $attributes = []): Select
+    {
+        if (!$this->inOptGroup) {
+            $this->store[]     = [
+                "optGroupStart",
+                [
+                    $label,
+                    $attributes,
+                ],
+                $this->indent(),
+            ];
+            $this->indentLevel += 1;
+        } else {
+            $this->indentLevel -= 1;
+            $this->store[]     = [
+                "optGroupEnd",
+                [],
+                $this->indent(),
+            ];
+        }
+
+        $this->inOptGroup = !$this->inOptGroup;
+
+        return $this;
+    }
+
+    /**
+     * @param string $selected
+     *
+     * @return Select
+     */
+    public function selected(string $selected): Select
+    {
+        $this->selected = $selected;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
     protected function getTag(): string
     {
         return "select";
+    }
+
+    protected function optGroupEnd(): string
+    {
+        return "</optgroup>";
+    }
+
+    /**
+     * @param string $label
+     * @param array  $attributes
+     *
+     * @return string
+     */
+    protected function optGroupStart(string $label, array $attributes): string
+    {
+        $attributes["label"] = $label;
+
+        return $this->renderTag("optgroup", $attributes);
+    }
+
+    /**
+     * Checks if the value has been passed and if it is the same as the
+     * value stored in the object
+     *
+     * @param array  $attributes
+     * @param string $value
+     *
+     * @return array
+     */
+    private function processValue(array $attributes, string $value = null): array
+    {
+        if (null !== $value) {
+            $attributes["value"] = $value;
+            if (!empty($this->selected) && $value === $this->selected) {
+                $attributes["selected"] = "selected";
+            }
+        }
+
+        return $attributes;
     }
 }
