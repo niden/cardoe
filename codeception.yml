@@ -16,3 +16,6 @@ coverage:
 bootstrap: _bootstrap.php
 settings:
     colors: true
+
+params:
+    - .env
