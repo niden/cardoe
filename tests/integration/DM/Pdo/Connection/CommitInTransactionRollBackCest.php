@@ -14,6 +14,7 @@ namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
 
+use Phalcon\Test\Fixtures\Migrations\Invoices;
 use function date;
 use function str_replace;
 use function uniqid;
@@ -31,6 +32,7 @@ class CommitInTransactionRollBackCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        (new Invoices($connection));
         $connection->beginTransaction();
 
         $I->assertTrue($connection->inTransaction());
@@ -86,6 +88,7 @@ class CommitInTransactionRollBackCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        (new Invoices($connection));
         $connection->beginTransaction();
 
         $I->assertTrue($connection->inTransaction());

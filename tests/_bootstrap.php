@@ -70,6 +70,11 @@ function env(string $key, $default = null)
 /*******************************************************************************
  * Options
  *******************************************************************************/
+/**
+ * Return the Memcached options
+ *
+ * @return array
+ */
 function getOptionsLibmemcached(): array
 {
     return [
@@ -84,6 +89,11 @@ function getOptionsLibmemcached(): array
     ];
 }
 
+/**
+ * Return the Redis options
+ *
+ * @return array
+ */
 function getOptionsRedis(): array
 {
     return [
@@ -107,17 +117,3 @@ foreach ($folders as $folder) {
         mkdir($item, 0777, true);
     }
 }
-
-/**
- * Set up environment variables for the testing suite
- *
- * Differentiate between GitHub actions and nanobox
- */
-$environment = getenv('GITHUB_WORKFLOW');
-$environment = (!$environment) ? 'local' : 'github';
-
-Dotenv::createImmutable(
-    codecept_root_dir('config/'),
-    '.env.' . $environment
-)->load()
-;

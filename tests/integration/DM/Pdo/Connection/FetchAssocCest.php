@@ -13,6 +13,7 @@ namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\Test\Fixtures\Migrations\Invoices;
 
 class FetchAssocCest
 {
@@ -27,14 +28,15 @@ class FetchAssocCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        $invoice = new Invoices($connection);
 
-        $result = $I->getNewInvoice($connection, 1);
+        $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
-        $result = $I->getNewInvoice($connection, 2);
+        $result = $invoice->insert($connection, 2);
         $I->assertEquals(1, $result);
-        $result = $I->getNewInvoice($connection, 3);
+        $result = $invoice->insert($connection, 3);
         $I->assertEquals(1, $result);
-        $result = $I->getNewInvoice($connection, 4);
+        $result = $invoice->insert($connection, 4);
         $I->assertEquals(1, $result);
 
         $all = $connection->fetchAssoc(

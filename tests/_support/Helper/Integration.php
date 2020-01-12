@@ -52,7 +52,7 @@ class Integration extends \Codeception\Module
             $this->getDatabasePassword(),
         );
 
-        (new Setup())($connection);
+        //(new Setup())($connection);
 
         return $connection;
     }
@@ -95,42 +95,5 @@ class Integration extends \Codeception\Module
     public function getDatabaseUsername(): string
     {
         return $this->username;
-    }
-
-    /**
-     * @param Connection  $connection
-     * @param int         $id
-     * @param string|null $title
-     *
-     * @return int
-     */
-    public function getNewInvoice(
-        Connection $connection,
-        int $id,
-        string $title = null
-    ): int {
-        $title = $title ?: uniqid();
-        $now   = date('Y-m-d H:i:s');
-        $total = 100 + $id;
-        $flag  = (int) ($id % 2);
-        $sql   = <<<SQL
-insert into co_invoices (
-    inv_id, 
-    inv_cst_id, 
-    inv_status_flag, 
-    inv_title, 
-    inv_total, 
-    inv_created_at 
-) values (
-    {$id}, 
-    1, 
-    {$flag}, 
-    "{$title}", 
-    {$total}, 
-    "{$now}"
-)
-SQL;
-
-        return $connection->exec($sql);
     }
 }

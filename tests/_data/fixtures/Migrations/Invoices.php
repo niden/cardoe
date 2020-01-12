@@ -14,103 +14,66 @@ declare(strict_types=1);
 namespace Phalcon\Test\Fixtures\Migrations;
 
 use Phalcon\DM\Pdo\Connection;
-use function ucfirst;
+
+use function date;
+use function uniqid;
 
 class Invoices
 {
-    public function __invoke(Connection $connection)
-    {
-        $driver = $connection->getDriverName();
-        $method = "populate" . ucfirst($driver);
-
-        $this->$method($connection);
-    }
-
     /**
-     * Populates Mysql tables
+     * Invoices constructor.
      *
      * @param Connection $connection
      */
-    private function populateMysql(Connection $connection)
+    public function __construct(Connection $connection)
     {
-        $sql = <<<SQL
-drop table if exists co_invoices
-SQL;
-        $connection->exec($sql);
-
-        $sql = <<<SQL
-create table co_invoices
-    (
-    inv_id          int(10) auto_increment  primary key,
-    inv_cst_id      int(10)      null,
-    inv_status_flag tinyint(1)   null,
-    inv_title       varchar(100) null,
-    inv_total       float(10, 2) null,
-    inv_created_at  datetime     null
-)
-SQL;
-        $connection->exec($sql);
-
-        $sql = <<<SQL
-create index co_invoices_inv_created_at_index
-    on co_invoices (inv_created_at);
-SQL;
-        $connection->exec($sql);
-
-        $sql = <<<SQL
-create index co_invoices_inv_cst_id_index
-    on co_invoices (inv_cst_id);
-SQL;
-        $connection->exec($sql);
-
-        $sql = <<<SQL
-create index co_invoices_inv_status_flag_index
-    on co_invoices (inv_status_flag);
-SQL;
-        $connection->exec($sql);
+        $this->truncate($connection);
     }
 
     /**
-     * Populates Mysql tables
+     * @param Connection  $connection
+     * @param int         $id
+     * @param string|null $title
      *
-     * @param Connection $connection
+     * @return int
      */
-    private function populateSqlite(Connection $connection)
-    {
-        $sql = <<<SQL
-drop table if exists co_invoices
-SQL;
-        $connection->exec($sql);
-
-        $sql = <<<SQL
-create table co_invoices
-(
-    inv_id          integer  constraint co_invoices_pk primary key autoincrement,
-    inv_cst_id      integer,
-    inv_status_flag integer,
-    inv_title       text,
-    inv_total       real,
-    inv_created_at  text
+    public function insert(
+        Connection $connection,
+        int $id,
+        string $title = null
+    ): int {
+        $title = $title ?: uniqid();
+        $now   = date('Y-m-d H:i:s');
+        $total = 100 + $id;
+        $flag  = (int) ($id % 2);
+        $sql   = <<<SQL
+insert into co_invoices (
+    inv_id, 
+    inv_cst_id, 
+    inv_status_flag, 
+    inv_title, 
+    inv_total, 
+    inv_created_at 
+) values (
+    {$id}, 
+    1, 
+    {$flag}, 
+    "{$title}", 
+    {$total}, 
+    "{$now}"
 )
 SQL;
-        $connection->exec($sql);
 
-        $sql = <<<SQL
-create index co_invoices_inv_created_at_index
-    on co_invoices (inv_created_at);
-SQL;
-        $connection->exec($sql);
+        return $connection->exec($sql);
+    }
 
-        $sql = <<<SQL
-create index co_invoices_inv_cst_id_index
-    on co_invoices (inv_cst_id);
-SQL;
-        $connection->exec($sql);
+    /**
+     * @param Connection  $connection
+     */
+    public function truncate(Connection $connection): void
+    {
+        $sql   = "truncate table co_invoices";
 
-        $sql = <<<SQL
-create index co_invoices_inv_status_flag_index
-    on co_invoices (inv_status_flag);
-SQL;
         $connection->exec($sql);
     }
 }

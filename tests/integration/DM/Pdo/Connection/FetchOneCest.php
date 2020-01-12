@@ -15,6 +15,7 @@ use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Codeception\Example;
 use IntegrationTester;
+use Phalcon\Test\Fixtures\Migrations\Invoices;
 use stdClass;
 
 class FetchOneCest
@@ -30,8 +31,9 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        $invoice = new Invoices($connection);
 
-        $result = $I->getNewInvoice($connection, 1);
+        $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
 
         $all = $connection->fetchOne(
@@ -62,8 +64,9 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        $invoice = new Invoices($connection);
 
-        $result = $I->getNewInvoice($connection, 1);
+        $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
 
         $all = $connection->fetchOne(
@@ -89,8 +92,9 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
+        $invoice = new Invoices($connection);
 
-        $result = $I->getNewInvoice($connection, 1, 'test-1');
+        $result = $invoice->insert($connection, 1, 'test-1');
         $I->assertEquals(1, $result);
 
         $all = $connection->fetchOne(
@@ -118,8 +122,9 @@ class FetchOneCest
             function () use ($I) {
                 /** @var Connection $connection */
                 $connection = $I->getConnection();
+                $invoice = new Invoices($connection);
 
-                $result = $I->getNewInvoice($connection, 1);
+                $result = $invoice->insert($connection, 1);
                 $I->assertEquals(1, $result);
 
                 $all = $connection->fetchOne(

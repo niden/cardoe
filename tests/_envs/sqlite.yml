@@ -1,1 +1,12 @@
 # `sqlite` environment config goes here
+modules:
+  enabled:
+    - Db:
+        dsn: "sqlite:memory"
+        user: ""
+        password: ""
+        dump: "tests/_data/assets/schemas/sqlite.sql"
+        populate: true
+        cleanup: false
+        reconnect: true
+        waitlock: 10
