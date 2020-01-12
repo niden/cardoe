@@ -14,6 +14,13 @@ use function uniqid;
 // here you can define custom actions
 // all public methods declared in helper class will be available in $I
 
+/**
+ * Class Integration
+ *
+ * @property string $adapter
+ * @property string $password
+ * @property string $username
+ */
 class Integration extends \Codeception\Module
 {
     private $adapter    = 'sqlite';
@@ -73,6 +80,16 @@ class Integration extends \Codeception\Module
                     getenv('TEST_MYSQL_NAME')
                 );
             case 'postgres':
+                $this->password = getenv('TEST_POSTGRES_PASS');
+                $this->username = getenv('TEST_POSTGRES_USER');
+
+                return sprintf(
+                    "pgsql:host=%s;dbname=%s;user=%s;password=%s",
+                    getenv('TEST_POSTGRES_HOST'),
+                    getenv('TEST_POSTGRES_NAME'),
+                    $this->username,
+                    $this->password
+                );
             case 'sqlsrv':
                 return "";
                 break;
