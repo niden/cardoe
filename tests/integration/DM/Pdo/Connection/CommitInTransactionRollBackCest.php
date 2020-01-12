@@ -13,8 +13,8 @@ namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
-
 use Phalcon\Test\Fixtures\Migrations\Invoices;
+
 use function date;
 use function str_replace;
 use function uniqid;
