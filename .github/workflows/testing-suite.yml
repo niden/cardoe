@@ -44,7 +44,7 @@ jobs:
           coverage: xdebug
           pecl: true
 
-      - name: Init Database
+      - name: Init MySql Database
         run: |
           mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `gonano`;'
 
@@ -65,12 +65,8 @@ jobs:
       - name: Validate composer.json and composer.lock
         run: composer validate
 
-      - name: Cache composer dependencies
-        uses: actions/cache@v1
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: ${{ runner.os }}-composer-
+      - name: Setup .env for tests
+        run: cp -v ./config/.env.github ./.env
 
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader

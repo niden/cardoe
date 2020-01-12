@@ -1,3 +1,5 @@
-config/.env
+.env
+memory
+memory_snapshot
 tests/_output/
 vendor/
