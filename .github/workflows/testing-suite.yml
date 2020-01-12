@@ -46,7 +46,7 @@ jobs:
 
       - name: Init MySql Database
         run: |
-          mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `gonano`;'
+          mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `phalcon`;'
 
       - name: Setup PHP, with composer and extensions
         uses: shivammathur/setup-php@v1 #https://github.com/shivammathur/setup-php
