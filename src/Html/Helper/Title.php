@@ -31,16 +31,6 @@ class Title extends AbstractHelper
     protected $append = [];
 
     /**
-     * @var string
-     */
-    protected $delimiter = PHP_EOL;
-
-    /**
-     * @var string
-     */
-    protected $indent = "    ";
-
-    /**
      * @var array
      */
     protected $prepend = [];

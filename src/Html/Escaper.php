@@ -11,6 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Html;
 
+use const ENT_QUOTES;
+use const ENT_SUBSTITUTE;
+
 /**
  * Class Escaper
  *
@@ -31,17 +34,11 @@ class Escaper
     protected $encoding = "utf-8";
 
     /**
+     * ENT_QUOTES | ENT_SUBSTITUTE
+     *
      * @var int
      */
-    protected $flags = ENT_QUOTES;
-
-    /**
-     * Escaper constructor.
-     */
-    public function __construct()
-    {
-        $this->flags = ENT_QUOTES | ENT_SUBSTITUTE;
-    }
+    protected $flags = 11;
 
     /**
      * Escape HTML attributes
