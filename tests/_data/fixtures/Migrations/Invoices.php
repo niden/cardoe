@@ -72,7 +72,7 @@ SQL;
      */
     public function truncate(Connection $connection): void
     {
-        $sql   = "truncate table co_invoices";
+        $sql   = "delete from co_invoices";
 
         $connection->exec($sql);
     }
