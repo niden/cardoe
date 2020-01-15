@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -24,10 +26,10 @@ class GetUserInfoCest
     public function httpMessageUriGetUserInfo(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getUserInfo()');
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
-        $expected = 'cardoe:secret';
+        $expected = 'Phalcon:secret';
         $actual   = $uri->getUserInfo();
         $I->assertEquals($expected, $actual);
     }
@@ -40,10 +42,10 @@ class GetUserInfoCest
     public function httpUriGetUserInfoOnlyUser(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getUserInfo() - only user');
-        $query = 'https://cardoe@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://Phalcon@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
-        $expected = 'cardoe';
+        $expected = 'Phalcon';
         $actual   = $uri->getUserInfo();
         $I->assertEquals($expected, $actual);
     }
@@ -56,7 +58,7 @@ class GetUserInfoCest
     public function httpUriGetUserInfoOnlyPass(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getUserInfo() - only pass');
-        $query = 'https://:secret@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $expected = ':secret';
@@ -72,7 +74,7 @@ class GetUserInfoCest
     public function httpUriGetUserInfoEmpty(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getUserInfo() - empty');
-        $query = 'https://dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $actual = $uri->getUserInfo();

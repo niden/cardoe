@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -27,23 +29,23 @@ class WithHostCest
     {
         $I->wantToTest('Http\Message\Uri - withHost()');
 
-        $query = 'https://cardoe:secret@%s:8080/action?param=value#frag';
+        $query = 'https://Phalcon:secret@%s:8080/action?param=value#frag';
 
         $uri = new Uri(
-            sprintf($query, 'dev.cardoe.ld')
+            sprintf($query, 'dev.phalcon.ld')
         );
 
-        $newInstance = $uri->withHost('prod.cardoe.ld');
+        $newInstance = $uri->withHost('prod.phalcon.ld');
 
         $I->assertNotEquals($uri, $newInstance);
 
         $I->assertEquals(
-            'prod.cardoe.ld',
+            'prod.phalcon.ld',
             $newInstance->getHost()
         );
 
         $I->assertEquals(
-            sprintf($query, 'prod.cardoe.ld'),
+            sprintf($query, 'prod.phalcon.ld'),
             (string) $newInstance
         );
     }
@@ -65,7 +67,7 @@ class WithHostCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withHost($example[2]);

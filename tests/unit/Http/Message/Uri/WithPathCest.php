@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -29,7 +31,7 @@ class WithPathCest
     {
         $I->wantToTest('Http\Message\Uri - withPath() - ' . $example[0]);
 
-        $query = 'https://dev.cardoe.ld%s';
+        $query = 'https://dev.phalcon.ld%s';
 
         $uri = new Uri(
             sprintf($query, '/action')
@@ -69,7 +71,7 @@ class WithPathCest
                 'Path cannot contain a query string or fragment'
             ),
             function () {
-                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath('/login?param=value');
             }
@@ -90,7 +92,7 @@ class WithPathCest
                 'Path cannot contain a query string or fragment'
             ),
             function () {
-                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath('/login#frag');
             }
@@ -113,7 +115,7 @@ class WithPathCest
                 'Method requires a string argument'
             ),
             function () use ($example) {
-                $query    = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath($example[2]);
             }

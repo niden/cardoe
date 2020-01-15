@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -25,10 +27,10 @@ class GetHostCest
     {
         $I->wantToTest('Http\Message\Uri - getHost()');
 
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
-        $expected = 'dev.cardoe.ld';
+        $expected = 'dev.phalcon.ld';
         $actual   = $uri->getHost();
         $I->assertEquals($expected, $actual);
     }

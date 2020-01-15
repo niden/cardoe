@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -51,7 +53,7 @@ class LoadCest
                 'expires=Sun, 08-Nov-2020 00:00:00 UTC; ' .
                 'Max-Age=63071999; ' .
                 'path=/; ' .
-                'domain=.cardoe.ld; ' .
+                'domain=.phalcon.ld; ' .
                 'secure; httponly',
         ];
 
@@ -64,7 +66,7 @@ class LoadCest
             'expires'  => 'Sun, 08-Nov-2020 00:00:00 UTC',
             'Max-Age'  => '63071999',
             'path'     => '/',
-            'domain'   => '.cardoe.ld',
+            'domain'   => '.phalcon.ld',
             'secure'   => '',
             'httponly' => '',
         ];
@@ -82,14 +84,14 @@ class LoadCest
         $I->wantToTest('Http\Message\ServerRequestFactory - load() - header host');
 
         $server = [
-            'HTTP_HOST' => 'dev.cardoe.ld:8080',
+            'HTTP_HOST' => 'dev.phalcon.ld:8080',
         ];
 
         $factory = new ServerRequestFactory();
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals('dev.cardoe.ld', $uri->getHost());
+        $I->assertEquals('dev.phalcon.ld', $uri->getHost());
         $I->assertEquals(8080, $uri->getPort());
         $I->assertEquals('/', $uri->getPath());
         $I->assertEquals('', $uri->getQuery());
@@ -108,8 +110,8 @@ class LoadCest
 
         $server = [
             'HTTP_HOST' => [
-                'dev.cardoe.ld',
-                'test.cardoe.ld',
+                'dev.phalcon.ld',
+                'test.phalcon.ld',
             ],
         ];
 
@@ -117,7 +119,7 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals('dev.cardoe.ld,test.cardoe.ld', $uri->getHost());
+        $I->assertEquals('dev.phalcon.ld,test.phalcon.ld', $uri->getHost());
     }
 
     /**
@@ -173,7 +175,7 @@ class LoadCest
         $I->wantToTest('Http\Message\ServerRequestFactory - load() - server header');
 
         $server = [
-            'HTTP_HOST' => 'test.cardoe.ld',
+            'HTTP_HOST' => 'test.phalcon.ld',
         ];
 
         $factory = new ServerRequestFactoryFixture();
@@ -181,7 +183,7 @@ class LoadCest
         $headers = $request->getHeaders();
 
         $expected = [
-            'host'          => ['test.cardoe.ld'],
+            'host'          => ['test.phalcon.ld'],
             'authorization' => ['Bearer'],
         ];
 
@@ -379,11 +381,11 @@ class LoadCest
         return [
             [
                 'host',
-                'http://dev.cardoe.ld',
+                'http://dev.phalcon.ld',
                 '',
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 null,
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 null,
                 '',
                 '',
@@ -391,11 +393,11 @@ class LoadCest
             ],
             [
                 'host',
-                'http://dev.cardoe.ld',
+                'http://dev.phalcon.ld',
                 '',
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
                 '',
                 '',
@@ -403,11 +405,11 @@ class LoadCest
             ],
             [
                 'host',
-                'http://dev.cardoe.ld/action/reaction',
+                'http://dev.phalcon.ld/action/reaction',
                 '',
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
                 '/action/reaction',
                 '',
@@ -415,11 +417,11 @@ class LoadCest
             ],
             [
                 'host',
-                'http://dev.cardoe.ld/action/reaction?one=two',
+                'http://dev.phalcon.ld/action/reaction?one=two',
                 'one=two',
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
                 '/action/reaction',
                 'one=two',
@@ -427,11 +429,11 @@ class LoadCest
             ],
             [
                 'host',
-                'http://dev.cardoe.ld/action/reaction?one=two#fragment',
+                'http://dev.phalcon.ld/action/reaction?one=two#fragment',
                 'one=two',
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
-                'dev.cardoe.ld',
+                'dev.phalcon.ld',
                 8080,
                 '/action/reaction',
                 'one=two',

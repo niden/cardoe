@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -25,8 +27,8 @@ class DecodeUrlCest
     {
         $I->wantToTest('Helper\Base64 - decodeUrl()');
 
-        $source   = 'aHR0cHM6Ly9jYXJkb2UubGQ_b25lPXR3byZkYXRhPWpzb24rdmRp';
-        $expected = 'https://cardoe.ld?one=two&data=json+vdi';
+        $source   = 'aHR0cHM6Ly9waGFsY29uLmxkP29uZT10d28mZGF0YT1qc29uK3ZkaQ';
+        $expected = 'https://phalcon.ld?one=two&data=json+vdi';
         $actual   = Base64::decodeUrl($source);
         $I->assertEquals($expected, $actual);
     }

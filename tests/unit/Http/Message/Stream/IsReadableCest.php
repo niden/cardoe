@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -44,11 +46,11 @@ class IsReadableCest
     /**
      * Tests Phalcon\Http\Message\Stream :: isReadable() - with "x"
      *
-     * @dataProvider getExamplesX
+     * @dataProvider getExamplesWrite
      *
      * @since        2019-02-10
      */
-    public function httpMessageStreamIsReadableWithX(UnitTester $I, Example $example)
+    public function httpMessageStreamIsReadableWrite(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Stream - isReadable() with "x" - ' . $example[0]);
 
@@ -63,7 +65,7 @@ class IsReadableCest
         );
     }
 
-    private function getExamplesX(): array
+    private function getExamplesWrite(): array
     {
         return [
             ['w', false],

@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -49,26 +51,26 @@ class GetAuthorityCest
 
             [
                 'default',
-                'https://dev.cardoe.ld',
-                'dev.cardoe.ld',
+                'https://dev.phalcon.ld',
+                'dev.phalcon.ld',
             ],
 
             [
                 'with user info',
-                'https://cardoe:secret@dev.cardoe.ld',
-                'cardoe:secret@dev.cardoe.ld',
+                'https://Phalcon:secret@dev.phalcon.ld',
+                'Phalcon:secret@dev.phalcon.ld',
             ],
 
             [
                 'with port',
-                'https://dev.cardoe.ld:8080',
-                'dev.cardoe.ld:8080',
+                'https://dev.phalcon.ld:8080',
+                'dev.phalcon.ld:8080',
             ],
 
             [
                 'full',
-                'https://cardoe:secret@dev.cardoe.ld:8080',
-                'cardoe:secret@dev.cardoe.ld:8080',
+                'https://Phalcon:secret@dev.phalcon.ld:8080',
+                'Phalcon:secret@dev.phalcon.ld:8080',
             ],
         ];
     }

@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -24,7 +26,7 @@ class GetPortCest
     public function httpMessageUriGetPort(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getPort()');
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $expected = 8080;
@@ -40,7 +42,7 @@ class GetPortCest
     public function httpUriGetPortEmpty(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getPort() - empty');
-        $query = 'https://cardoe:secret@dev.cardoe.ld/action?param=value';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld/action?param=value';
         $uri   = new Uri($query);
 
         $actual = $uri->getPort();

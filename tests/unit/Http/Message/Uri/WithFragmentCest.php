@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -27,7 +29,7 @@ class WithFragmentCest
     {
         $I->wantToTest('Http\Message\Uri - withFragment()');
 
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#%s';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#%s';
 
         $uri = new Uri(
             sprintf($query, 'frag')
@@ -77,7 +79,7 @@ class WithFragmentCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withFragment($example[2]);

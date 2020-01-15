@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -29,7 +31,7 @@ class WithQueryCest
     {
         $I->wantToTest('Http\Message\Uri - withQuery()');
 
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?%s#frag';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?%s#frag';
         $uri   = new Uri(sprintf($query, 'param=value'));
 
         $newInstance = $uri->withQuery($example[1]);
@@ -64,7 +66,7 @@ class WithQueryCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withQuery($example[2]);
@@ -87,7 +89,7 @@ class WithQueryCest
             ),
             function () {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withQuery('/login#frag');

@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -27,7 +29,7 @@ class WithSchemeCest
     {
         $I->wantToTest('Http\Message\Uri - withScheme()');
 
-        $query = '%s://cardoe:secret@dev.cardoe.ld:8000/action?param=value#frag';
+        $query = '%s://Phalcon:secret@dev.phalcon.ld:8000/action?param=value#frag';
 
         $uri = new Uri(
             sprintf($query, 'https')
@@ -63,7 +65,7 @@ class WithSchemeCest
             ),
             function () {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withScheme('ftp');
@@ -88,7 +90,7 @@ class WithSchemeCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag'
+                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withScheme($example[2]);

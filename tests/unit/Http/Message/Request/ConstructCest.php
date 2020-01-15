@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -108,17 +110,17 @@ class ConstructCest
 
         $request = new Request(
             'GET',
-            'https://dev.cardoe.ld:8080/action',
+            'https://dev.phalcon.ld:8080/action',
             'php://memory',
             [
-                'Host'          => ['test.cardoe.ld'],
+                'Host'          => ['test.phalcon.ld'],
                 'Accept'        => ['text/html'],
                 'Cache-Control' => ['max-age=0'],
             ]
         );
 
         $expected = [
-            'Host'          => ['dev.cardoe.ld:8080'],
+            'Host'          => ['dev.phalcon.ld:8080'],
             'Accept'        => ['text/html'],
             'Cache-Control' => ['max-age=0'],
         ];

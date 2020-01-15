@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -28,7 +30,7 @@ class GetClientMediaTypeCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'cardoe.txt',
+            'Phalcon.txt',
             'some-media-type'
         );
 

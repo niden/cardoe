@@ -76,7 +76,9 @@ class NewInstanceCest
         );
     }
 
-
+    /**
+     * @return array
+     */
     private function getExamples(): array
     {
         return [

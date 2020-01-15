@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -24,7 +26,7 @@ class ToStringCest
     public function httpMessageUriToString(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - __toString()');
-        $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $I->assertEquals($query, (string) $uri);
@@ -38,10 +40,10 @@ class ToStringCest
     public function httpUriToStringPathNoLeadSlash(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - __toString() - path no lead slash');
-        $uri = new Uri('https://dev.cardoe.ld');
+        $uri = new Uri('https://dev.phalcon.ld');
 
         $newInstance = $uri->withPath('action/reaction');
-        $expected    = 'https://dev.cardoe.ld/action/reaction';
+        $expected    = 'https://dev.phalcon.ld/action/reaction';
         $actual      = $newInstance->__toString();
         $I->assertEquals($expected, $actual);
     }
@@ -54,10 +56,10 @@ class ToStringCest
     public function httpUriToStringPathManySlashes(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - __toString() - path many slashes');
-        $uri = new Uri('https://dev.cardoe.ld');
+        $uri = new Uri('https://dev.phalcon.ld');
 
         $newInstance = $uri->withPath('///action/reaction');
-        $expected    = 'https://dev.cardoe.ld/action/reaction';
+        $expected    = 'https://dev.phalcon.ld/action/reaction';
         $actual      = $newInstance->__toString();
         $I->assertEquals($expected, $actual);
     }

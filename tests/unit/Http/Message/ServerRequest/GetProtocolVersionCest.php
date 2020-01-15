@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,7 +21,7 @@ class GetProtocolVersionCest
 //    /**
 //     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion()
 //     *
-//     * @author Phalcon Team <team@cardoephp.com>
+//     * @author Phalcon Team <team@Phalconphp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
@@ -62,7 +64,7 @@ class GetProtocolVersionCest
 //     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion() -
 //     * exception
 //     *
-//     * @author Phalcon Team <team@cardoephp.com>
+//     * @author Phalcon Team <team@Phalconphp.com>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)

@@ -41,15 +41,15 @@ class GetKeysCest
             getOptionsLibmemcached()
         );
 
-        $memcachedServerVersions   = $adapter->getAdapter()->getVersion();
-        $memcachedExtensionVersion = phpversion('memcached');
+        $versions         = $adapter->getAdapter()->getVersion();
+        $extensionVersion = phpversion('memcached');
 
-        foreach ($memcachedServerVersions as $server => $memcachedServerVersion) {
+        foreach ($versions as $server => $version) {
             // https://www.php.net/manual/en/memcached.getallkeys.php#123793
             // https://bugs.launchpad.net/libmemcached/+bug/1534062
             if (
-                version_compare($memcachedServerVersion, '1.4.23', '>=') &&
-                version_compare($memcachedExtensionVersion, '3.0.1', '<')
+                version_compare($version, '1.4.23', '>=') &&
+                version_compare($extensionVersion, '3.0.1', '<')
             ) {
                 $I->skipTest(
                     'getAllKeys() does not work in certain Memcached versions'
@@ -57,7 +57,7 @@ class GetKeysCest
             }
 
             // https://github.com/php-memcached-dev/php-memcached/issues/367
-            if (version_compare($memcachedServerVersion, '1.5.0', '>=')) {
+            if (version_compare($version, '1.5.0', '>=')) {
                 $I->skipTest(
                     'getAllKeys() does not work in certain Memcached versions'
                 );

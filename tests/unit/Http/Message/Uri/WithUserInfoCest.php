@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -29,7 +31,7 @@ class WithUserInfoCest
     {
         $I->wantToTest('Http\Message\Uri - withUserInfo()');
 
-        $query = 'https://%s@dev.cardoe.ld:8080/action?param=value#frag';
+        $query = 'https://%s@dev.phalcon.ld:8080/action?param=value#frag';
 
         $uri = new Uri(
             sprintf($query, 'zephir:module')
@@ -66,7 +68,7 @@ class WithUserInfoCest
                 'Method requires a string argument'
             ),
             function () use ($example) {
-                $query = 'https://cardoe:secret@dev.cardoe.ld:8080/action?param=value#frag';
+                $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri   = new Uri($query);
 
                 $instance = $uri->withUserInfo($example[2]);
@@ -77,11 +79,11 @@ class WithUserInfoCest
     private function getExamples(): array
     {
         return [
-            ['valid', 'cardoe', 'secret', 'cardoe:secret'],
-            ['user only', 'cardoe', '', 'cardoe'],
-            ['email', 'cardoe@secret', 'secret@cardoe', 'cardoe%40secret:secret%40cardoe'],
-            ['email', 'cardoe:secret', 'secret:cardoe', 'cardoe%3Asecret:secret%3Acardoe'],
-            ['percent', 'cardoe%secret', 'secret%cardoe', 'cardoe%25secret:secret%25cardoe'],
+            ['valid', 'Phalcon', 'secret', 'Phalcon:secret'],
+            ['user only', 'Phalcon', '', 'Phalcon'],
+            ['email', 'Phalcon@secret', 'secret@Phalcon', 'Phalcon%40secret:secret%40Phalcon'],
+            ['email', 'Phalcon:secret', 'secret:Phalcon', 'Phalcon%3Asecret:secret%3APhalcon'],
+            ['percent', 'Phalcon%secret', 'secret%Phalcon', 'Phalcon%25secret:secret%25Phalcon'],
         ];
     }
 

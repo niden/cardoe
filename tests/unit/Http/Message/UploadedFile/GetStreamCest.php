@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -36,7 +38,7 @@ class GetStreamCest
             $stream,
             0,
             UPLOAD_ERR_OK,
-            'cardoe.txt'
+            'Phalcon.txt'
         );
 
         $expected = $stream;
@@ -56,7 +58,7 @@ class GetStreamCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'cardoe.txt'
+            'Phalcon.txt'
         );
 
         $actual = $file->getStream();
@@ -82,7 +84,7 @@ class GetStreamCest
                     $stream,
                     0,
                     UPLOAD_ERR_CANT_WRITE,
-                    'cardoe.txt'
+                    'Phalcon.txt'
                 );
 
                 $actual = $file->getStream();
