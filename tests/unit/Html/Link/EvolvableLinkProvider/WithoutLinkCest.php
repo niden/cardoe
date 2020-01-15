@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -22,14 +24,14 @@ class WithoutLinkCest
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: withoutLink()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkProviderWithoutLink(UnitTester $I)
+    public function linkEvolvableLinkProviderWithoutLink(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLinkProvider - withoutLink()');
+        $I->wantToTest('Html\Link\EvolvableLinkProvider - withoutLink()');
 
-        $link1    = new Link('canonical', 'https://dev.cardoe.ld');
-        $link2    = new Link('cite-as', 'https://test.cardoe.ld');
+        $link1    = new Link('canonical', 'https://dev.phalcon.ld');
+        $link2    = new Link('cite-as', 'https://test.phalcon.ld');
         $instance = new EvolvableLinkProvider(
             [
                 $link1,

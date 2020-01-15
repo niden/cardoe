@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class GetHrefCest
     /**
      * Tests Phalcon\Html\Link\Link :: getHref()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkLinkGetHref(UnitTester $I)
+    public function linkLinkGetHref(UnitTester $I)
     {
-        $I->wantToTest('Link\Link - getHref()');
+        $I->wantToTest('Html\Link\Link - getHref()');
 
-        $href = 'https://dev.cardoe.ld';
+        $href = 'https://dev.phalcon.ld';
         $link = new Link('payment', $href);
 
         $I->assertEquals($href, $link->getHref());

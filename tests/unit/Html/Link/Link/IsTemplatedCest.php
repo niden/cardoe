@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class IsTemplatedCest
     /**
      * Tests Phalcon\Html\Link\Link :: isTemplated()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkLinkIsTemplated(UnitTester $I)
+    public function linkLinkIsTemplated(UnitTester $I)
     {
-        $I->wantToTest('Link\Link - isTemplated()');
+        $I->wantToTest('Html\Link\Link - isTemplated()');
 
-        $href = 'https://dev.cardoe.ld';
+        $href = 'https://dev.phalcon.ld';
         $link = new Link('payment', $href);
 
         $I->assertFalse($link->isTemplated());

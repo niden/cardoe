@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -20,11 +22,11 @@ class ConstructCest
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: __construct()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkConstruct(UnitTester $I)
+    public function linkEvolvableLinkConstruct(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLinkProvider - __construct()');
+        $I->wantToTest('Html\Link\EvolvableLinkProvider - __construct()');
 
         $link = new EvolvableLinkProvider();
 

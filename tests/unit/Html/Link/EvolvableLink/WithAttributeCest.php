@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class WithAttributeCest
     /**
      * Tests Phalcon\Html\Link\Link :: withAttribute()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkWithAttribute(UnitTester $I)
+    public function linkEvolvableLinkWithAttribute(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLink - withAttribute()');
+        $I->wantToTest('Html\Link\EvolvableLink - withAttribute()');
 
-        $href       = 'https://dev.cardoe.ld';
+        $href       = 'https://dev.phalcon.ld';
         $attributes = ['one' => true];
 
         $link = new EvolvableLink('payment', $href, $attributes);

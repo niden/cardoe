@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,18 +21,18 @@ class WithHrefCest
     /**
      * Tests Phalcon\Html\Link\Link :: withHref()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkWithHref(UnitTester $I)
+    public function linkEvolvableLinkWithHref(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLink - withHref()');
+        $I->wantToTest('Html\Link\EvolvableLink - withHref()');
 
-        $href = 'https://dev.cardoe.ld';
+        $href = 'https://dev.phalcon.ld';
         $link = new EvolvableLink('payment', $href);
 
         $I->assertEquals($href, $link->getHref());
 
-        $href        = 'https://test.cardoe.ld';
+        $href        = 'https://test.phalcon.ld';
         $newInstance = $link->withHref($href);
 
         $I->assertNotSame($link, $newInstance);

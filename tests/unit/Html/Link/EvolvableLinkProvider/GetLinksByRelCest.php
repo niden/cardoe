@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -20,15 +22,15 @@ class GetLinksByRelCest
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: getLinksByRel()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkProviderGetLinksByRel(UnitTester $I)
+    public function linkEvolvableLinkProviderGetLinksByRel(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLinkProvider - getLinksByRel()');
+        $I->wantToTest('Html\Link\EvolvableLinkProvider - getLinksByRel()');
 
         $links = [
-            new Link('canonical', 'https://dev.cardoe.ld'),
-            new Link('cite-as', 'https://test.cardoe.ld'),
+            new Link('canonical', 'https://dev.phalcon.ld'),
+            new Link('cite-as', 'https://test.phalcon.ld'),
         ];
         $link  = new EvolvableLinkProvider($links);
 

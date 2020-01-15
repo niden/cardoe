@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -22,18 +24,18 @@ class WithLinkCest
     /**
      * Tests Phalcon\Html\Link\EvolvableLinkProvider :: withLink()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkProviderWithLink(UnitTester $I)
+    public function linkEvolvableLinkProviderWithLink(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLinkProvider - withLink()');
+        $I->wantToTest('Html\Link\EvolvableLinkProvider - withLink()');
 
         $links    = [
-            new Link('canonical', 'https://dev.cardoe.ld'),
+            new Link('canonical', 'https://dev.phalcon.ld'),
         ];
         $instance = new EvolvableLinkProvider($links);
 
-        $link        = new Link('cite-as', 'https://test.cardoe.ld');
+        $link        = new Link('cite-as', 'https://test.phalcon.ld');
         $newInstance = $instance->withLink($link);
 
         $I->assertNotSame($instance, $newInstance);

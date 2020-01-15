@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class GetRelsCest
     /**
      * Tests Phalcon\Html\Link\Link :: getRels()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkLinkGetRels(UnitTester $I)
+    public function linkLinkGetRels(UnitTester $I)
     {
-        $I->wantToTest('Link\Link - getRels()');
+        $I->wantToTest('Html\Link\Link - getRels()');
 
-        $href = 'https://dev.cardoe.ld';
+        $href = 'https://dev.phalcon.ld';
         $link = new Link('payment', $href);
 
         $expected = ['payment'];

@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class GetAttributesCest
     /**
      * Tests Phalcon\Html\Link\Link :: getAttributes()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkLinkGetAttributes(UnitTester $I)
+    public function linkLinkGetAttributes(UnitTester $I)
     {
-        $I->wantToTest('Link\Link - getAttributes()');
+        $I->wantToTest('Html\Link\Link - getAttributes()');
 
-        $href       = 'https://dev.cardoe.ld';
+        $href       = 'https://dev.phalcon.ld';
         $attributes = [
             'one'   => true,
             'two'   => 123,

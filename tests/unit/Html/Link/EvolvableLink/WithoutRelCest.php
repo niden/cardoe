@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
@@ -19,13 +21,13 @@ class WithoutRelCest
     /**
      * Tests Phalcon\Html\Link\Link :: withoutRel()
      *
-     * @since  2019-06-15
+     * @since  2019-11-02
      */
-    public function htmlLinkEvolvableLinkWithoutRel(UnitTester $I)
+    public function linkEvolvableLinkWithoutRel(UnitTester $I)
     {
-        $I->wantToTest('Link\EvolvableLink - withoutRel()');
+        $I->wantToTest('Html\Link\EvolvableLink - withoutRel()');
 
-        $href = 'https://dev.cardoe.ld';
+        $href = 'https://dev.phalcon.ld';
         $link = new EvolvableLink('payment', $href);
 
         $I->assertEquals(['payment'], $link->getRels());
