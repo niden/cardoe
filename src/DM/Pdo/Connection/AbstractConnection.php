@@ -437,6 +437,19 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
+     * Return an array of available PDO drivers
+     *
+     * @return array PDO::getAvailableDrivers returns an array of PDO driver
+     *               names.If no drivers are available, it returns an empty array.
+     *
+     * @see https://php.net/manual/en/pdo.getavailabledrivers.php
+     */
+    public static function getAvailableDrivers(): array
+    {
+        return PDO::getAvailableDrivers();
+    }
+
+    /**
      * Return the driver name
      *
      * @return string
@@ -729,19 +742,6 @@ abstract class AbstractConnection implements ConnectionInterface
         $this->connect();
 
         return $this->pdo->setAttribute($attribute, $value);
-    }
-
-    /**
-     * Return an array of available PDO drivers
-     *
-     * @return array PDO::getAvailableDrivers returns an array of PDO driver
-     *               names.If no drivers are available, it returns an empty array.
-     *
-     * @see https://php.net/manual/en/pdo.getavailabledrivers.php
-     */
-    public static function getAvailableDrivers(): array
-    {
-        return PDO::getAvailableDrivers();
     }
 
     /**
