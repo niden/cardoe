@@ -3,7 +3,9 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * For the full copyright and license information, please view the LICENSE.md
+ * (c) Phalcon Team <team@phalcon.io>
+ *
+ * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by AtlasPHP
@@ -15,6 +17,8 @@
 declare(strict_types=1);
 
 namespace Phalcon\DM\Pdo;
+
+use Phalcon\DM\Pdo\Connection\ConnectionInterface;
 
 /**
  * Locates PDO connections for default, read, and write databases.
