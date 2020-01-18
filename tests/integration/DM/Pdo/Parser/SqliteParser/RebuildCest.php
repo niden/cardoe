@@ -25,7 +25,8 @@ class RebuildCest
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\SqliteParser :: rebuild() - backticks
+     * Integration Tests Phalcon\DM\Pdo\Parser\SqliteParser :: rebuild() -
+     * backticks
      *
      * @since  2019-12-25
      */

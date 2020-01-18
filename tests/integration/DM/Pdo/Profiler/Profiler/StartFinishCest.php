@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
-use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 
 use function sleep;
 use function strpos;

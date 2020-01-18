@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
+use IntegrationTester;
 use Phalcon\DM\Pdo\Profiler\MemoryLogger;
 use Phalcon\DM\Pdo\Profiler\Profiler;
-use IntegrationTester;
 
 class GetLoggerCest
 {
@@ -27,7 +27,7 @@ class GetLoggerCest
         $I->wantToTest('DM\Pdo\Profiler\Profiler - getLogger()');
 
         $profile = new Profiler();
-        $logger = $profile->getLogger();
+        $logger  = $profile->getLogger();
 
         $I->assertInstanceOf(MemoryLogger::class, $logger);
 

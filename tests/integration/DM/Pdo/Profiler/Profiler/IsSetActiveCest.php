@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
-use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 
 class IsSetActiveCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: isActive()/setActive()
+     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler ::
+     * isActive()/setActive()
      *
      * @since  2019-12-11
      */

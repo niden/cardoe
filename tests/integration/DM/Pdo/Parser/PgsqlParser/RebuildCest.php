@@ -25,7 +25,8 @@ class RebuildCest
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\PgsqlParser :: rebuild() - backticks
+     * Integration Tests Phalcon\DM\Pdo\Parser\PgsqlParser :: rebuild() -
+     * backticks
      *
      * @since  2019-12-25
      */
@@ -72,14 +73,14 @@ SQL;
                 $sql,
                 ['id' => ['one', 'two']],
                 $sql,
-                []
+                [],
             ],
             [
                 "c style string constants",
                 "select E'C-style escaping \' :id \''",
                 ['a000' => ['one', 'two']],
                 "select E'C-style escaping \' :id \''",
-                []
+                [],
             ],
             [
                 "c style string constants multiline",
@@ -88,63 +89,63 @@ SQL;
                 ['id' => ['one', 'two']],
                 "select E'Multiline'
        'C-style escaping \' :id \' :id'",
-                []
+                [],
             ],
             [
                 "double dollar quoted",
                 'select $$:id$$',
                 ['id' => ['one', 'two']],
                 'select $$:id$$',
-                []
+                [],
             ],
             [
                 "single dollar quote two parameters",
                 'select $tag$ :foo $tag$',
                 ['id' => ['one', 'two']],
                 'select $tag$ :foo $tag$',
-                []
+                [],
             ],
             [
                 "single dollar nested",
                 'select $outer$ nested strings $inner$:foo$inner$ $outer$',
                 ['id' => ['one', 'two']],
                 'select $outer$ nested strings $inner$:foo$inner$ $outer$',
-                []
+                [],
             ],
             [
                 "single dollar utf8",
                 'select $€$hello$€$',
                 ['hello' => ['one', 'two']],
                 'select $€$hello$€$',
-                []
+                [],
             ],
             [
                 "single dollar utf8 unaligned pairs",
                 'select $€$hello$€',
                 ['hello' => ['one', 'two']],
                 'select $€$hello$€',
-                []
+                [],
             ],
             [
                 "type casting",
                 "SELECT 'hello'::TEXT",
                 ['TEXT' => ['one', 'two']],
                 "SELECT 'hello'::TEXT",
-                []
+                [],
             ],
             [
                 "array accessor",
                 $sql2,
                 ['2' => ['one', 'two']],
                 $sql2,
-                []
+                [],
             ],
             [
                 "invalid placeholder name",
                 "SELECT 'hello':]",
                 [']' => ['one', 'two']],
                 "SELECT 'hello':]",
-                []
+                [],
             ],
         ];
     }

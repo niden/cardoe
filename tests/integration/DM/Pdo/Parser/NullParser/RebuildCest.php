@@ -13,12 +13,12 @@ namespace Phalcon\Test\Integration\DM\Pdo\Parser\NullParser;
 
 use IntegrationTester;
 use Phalcon\DM\Pdo\Parser\NullParser;
-use Phalcon\Test\Fixtures\Traits\DMPdoParserTrait;
 
 class RebuildCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\NullParser :: rebuild() - backticks
+     * Integration Tests Phalcon\DM\Pdo\Parser\NullParser :: rebuild() -
+     * backticks
      *
      * @since  2019-12-25
      */

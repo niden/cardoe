@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
-use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 
 class GetSetLogFormatCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: getLogFormat()/setLogFormat()
+     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler ::
+     * getLogFormat()/setLogFormat()
      *
      * @since  2019-12-11
      */

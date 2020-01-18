@@ -11,14 +11,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\Profiler;
 
-use Phalcon\DM\Pdo\Profiler\Profiler;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\Profiler;
 use Psr\Log\LogLevel;
 
 class GetSetLogLevelCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: getLogLevel()/setLogLevel()
+     * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler ::
+     * getLogLevel()/setLogLevel()
      *
      * @since  2019-12-11
      */

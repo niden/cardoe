@@ -26,7 +26,8 @@ class RebuildCest
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() - backticks
+     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() -
+     * backticks
      *
      * @since  2019-12-25
      */
@@ -50,7 +51,8 @@ class RebuildCest
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() - exception missing named parameter
+     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() -
+     * exception missing named parameter
      *
      * @since  2019-12-25
      */
@@ -66,13 +68,14 @@ class RebuildCest
                 $sql        = 'select :one :two :three';
                 $parameters = ['one' => 1, 'two' => 2, 'four' => 4];
 
-                [$statement, $values] = $this->rebuild($sql, $parameters);
+                $this->rebuild($sql, $parameters);
             }
         );
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() - exception missing numeric parameter
+     * Integration Tests Phalcon\DM\Pdo\Parser\MysqlParser :: rebuild() -
+     * exception missing numeric parameter
      *
      * @since  2019-12-25
      */
@@ -82,7 +85,7 @@ class RebuildCest
 
         $I->expectThrowable(
             new MissingParameter(
-                "Parameter 3 is missing from the bound values"
+                "Parameter '3' is missing from the bound values"
             ),
             function () {
                 $sql        = 'select ? ? ?';

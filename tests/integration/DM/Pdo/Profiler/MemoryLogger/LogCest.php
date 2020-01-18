@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\MemoryLogger;
 
-use Phalcon\DM\Pdo\Profiler\MemoryLogger;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\MemoryLogger;
 use Psr\Log\LogLevel;
 
 class LogCest
@@ -26,7 +26,7 @@ class LogCest
     {
         $I->wantToTest('DM\Pdo\Profiler\MemoryLogger - log()');
 
-        $logger  = new MemoryLogger();
+        $logger = new MemoryLogger();
 
         $message = "{method} ({duration} seconds): {statement} {backtrace}";
         $context = [

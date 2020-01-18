@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Profiler\MemoryLogger;
 
-use Phalcon\DM\Pdo\Profiler\MemoryLogger;
 use Codeception\Example;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Profiler\MemoryLogger;
 
 class LevelsCest
 {
@@ -21,13 +21,13 @@ class LevelsCest
      * Integration Tests Phalcon\DM\Pdo\Profiler\MemoryLogger ::
      *
      * @dataProvider getExamples
-     * @since  2019-12-11
+     * @since        2019-12-11
      */
     public function dMPdoProfilerMemoryLoggerLevels(IntegrationTester $I, Example $example)
     {
         $I->wantToTest('DM\Pdo\Profiler\MemoryLogger - ' . $example[0]);
 
-        $logger  = new MemoryLogger();
+        $logger = new MemoryLogger();
 
         $logger->{$example[0]}($example[0] . ' message');
         $expected = [$example[0] . ' message'];
