@@ -18,6 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Pdo;
 
+use Phalcon\DM\Pdo\Connection\ConnectionInterface;
+use Phalcon\DM\Pdo\Exception\ConnectionNotFound;
+
 use function array_rand;
 use function call_user_func;
 
@@ -54,11 +57,9 @@ class ConnectionLocator implements ConnectionLocatorInterface
     /**
      * Constructor.
      *
-     * @param callable $master A callable to create a default connection.
-     * @param array    $read   An array of callables to create read
-     *                         connections.
-     * @param array    $write  An array of callables to create write
-     *                         connections.
+     * @param callable|null $master
+     * @param array         $read
+     * @param array         $write
      */
     public function __construct(
         callable $master = null,
@@ -95,14 +96,14 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * random connection; if no read connections are present, returns the
      * default connection.
      *
-     * @param string $name The read connection name to return.
+     * @param string $name
      *
      * @return ConnectionInterface
-     * @throws Exception\ConnectionNotFound
+     * @throws ConnectionNotFound
      */
-    public function getRead($name = ''): ConnectionInterface
+    public function getRead($name = ""): ConnectionInterface
     {
-        return $this->getConnection('read', $name);
+        return $this->getConnection("read", $name);
     }
 
     /**
@@ -110,20 +111,20 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * random connection; if no write connections are present, returns the
      * default connection.
      *
-     * @param string $name The write connection name to return.
+     * @param string $name
      *
      * @return ConnectionInterface
-     * @throws Exception\ConnectionNotFound
+     * @throws ConnectionNotFound
      */
-    public function getWrite($name = ''): ConnectionInterface
+    public function getWrite($name = ""): ConnectionInterface
     {
-        return $this->getConnection('write', $name);
+        return $this->getConnection("write", $name);
     }
 
     /**
      * Sets the default connection factory.
      *
-     * @param callable $callable The factory for the connection.
+     * @param callable|null $callable
      *
      * @return ConnectionLocatorInterface
      */
@@ -137,31 +138,32 @@ class ConnectionLocator implements ConnectionLocatorInterface
     /**
      * Sets a read connection factory by name.
      *
-     * @param string   $name     The name of the connection.
-     * @param callable $callable The factory for the connection.
+     * @param string   $name
+     * @param callable $callable
      *
      * @return ConnectionLocatorInterface
-     *
      */
-    public function setRead($name, callable $callable): ConnectionLocatorInterface
-    {
+    public function setRead(
+        string $name,
+        callable $callable
+    ): ConnectionLocatorInterface {
         $this->read[$name] = $callable;
 
         return $this;
     }
 
     /**
-     *
      * Sets a write connection factory by name.
      *
-     * @param string   $name     The name of the connection.
-     * @param callable $callable The factory for the connection.
+     * @param string   $name
+     * @param callable $callable
      *
      * @return ConnectionLocatorInterface
-     *
      */
-    public function setWrite($name, callable $callable): ConnectionLocatorInterface
-    {
+    public function setWrite(
+        string $name,
+        callable $callable
+    ): ConnectionLocatorInterface {
         $this->write[$name] = $callable;
 
         return $this;
@@ -170,15 +172,17 @@ class ConnectionLocator implements ConnectionLocatorInterface
     /**
      * Returns a connection by name.
      *
-     * @param string $type The connection type ('read' or 'write').
-     * @param string $name The name of the connection.
+     * @param string $type
+     * @param string $name
      *
      * @return ConnectionInterface
      * @throws Exception\ConnectionNotFound
      *
      */
-    protected function getConnection(string $type, string $name): ConnectionInterface
-    {
+    protected function getConnection(
+        string $type,
+        string $name
+    ): ConnectionInterface {
         if (empty($this->{$type})) {
             return $this->getMaster();
         }
@@ -188,7 +192,9 @@ class ConnectionLocator implements ConnectionLocatorInterface
         }
 
         if (!isset($this->{$type}[$name])) {
-            throw new Exception\ConnectionNotFound("{$type}:{$name}");
+            throw new ConnectionNotFound(
+                "Connection not found: " . $type . ":" . $name
+            );
         }
 
         if (!$this->{$type}[$name] instanceof Connection) {

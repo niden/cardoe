@@ -27,8 +27,8 @@ class NullParser implements ParserInterface
     /**
      * Leaves the query and parameters alone.
      *
-     * @param string $statement The query statement string.
-     * @param array  $values    Bind these values into the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      */

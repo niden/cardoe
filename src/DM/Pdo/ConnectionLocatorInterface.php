@@ -37,27 +37,27 @@ interface ConnectionLocatorInterface
      * random connection; if no read connections are present, returns the
      * default connection.
      *
-     * @param string $name The read connection name to return.
+     * @param string $name
      *
      * @return ConnectionInterface
      */
-    public function getRead(string $name = ''): ConnectionInterface;
+    public function getRead(string $name = ""): ConnectionInterface;
 
     /**
      * Returns a write connection by name; if no name is given, picks a
      * random connection; if no write connections are present, returns the
      * default connection.
      *
-     * @param string $name The write connection name to return.
+     * @param string $name
      *
      * @return ConnectionInterface
      */
-    public function getWrite(string $name = ''): ConnectionInterface;
+    public function getWrite(string $name = ""): ConnectionInterface;
 
     /**
      * Sets the default connection registry entry.
      *
-     * @param callable $callable The registry entry.
+     * @param callable $callable
      *
      * @return ConnectionLocatorInterface
      */
@@ -66,8 +66,8 @@ interface ConnectionLocatorInterface
     /**
      * Sets a read connection registry entry by name.
      *
-     * @param string   $name     The name of the registry entry.
-     * @param callable $callable The registry entry.
+     * @param string   $name
+     * @param callable $callable
      *
      * @return ConnectionLocatorInterface
      */
@@ -76,8 +76,8 @@ interface ConnectionLocatorInterface
     /**
      * Sets a write connection registry entry by name.
      *
-     * @param string   $name     The name of the registry entry.
-     * @param callable $callable The registry entry.
+     * @param string   $name
+     * @param callable $callable
      *
      * @return ConnectionLocatorInterface
      */

@@ -64,7 +64,7 @@ class Profiler implements ProfilerInterface
     /**
      * Constructor.
      *
-     * @param LoggerInterface $logger Record profiles through this interface.
+     * @param LoggerInterface $logger
      */
     public function __construct(LoggerInterface $logger = null)
     {
@@ -78,8 +78,8 @@ class Profiler implements ProfilerInterface
     /**
      * Finishes and logs a profile entry.
      *
-     * @param string $statement The statement being profiled, if any.
-     * @param array  $values    The values bound to the statement, if any.
+     * @param string $statement
+     * @param array  $values
      */
     public function finish(string $statement = null, array $values = []): void
     {
@@ -170,7 +170,7 @@ class Profiler implements ProfilerInterface
     /**
      * Level at which to log profile messages.
      *
-     * @param string $logLevel A PSR LogLevel constant.
+     * @param string $logLevel
      *
      * @return ProfilerInterface
      */
@@ -184,7 +184,7 @@ class Profiler implements ProfilerInterface
     /**
      * Starts a profile entry.
      *
-     * @param string $method The method starting the profile entry.
+     * @param string $method
      */
     public function start(string $method): void
     {

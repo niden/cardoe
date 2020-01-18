@@ -45,9 +45,9 @@ class MemoryLogger extends AbstractLogger
     /**
      * Logs a message.
      *
-     * @param mixed  $level   The log level (ignored).
-     * @param string $message The log message.
-     * @param array  $context Data to interpolate into the message.
+     * @param mixed  $level
+     * @param string $message
+     * @param array  $context
      */
     public function log($level, $message, array $context = [])
     {

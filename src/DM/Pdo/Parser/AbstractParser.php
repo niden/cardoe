@@ -39,7 +39,7 @@ abstract class AbstractParser implements ParserInterface
      * @var array
      */
     protected $count = [
-        '__' => null,
+        "__" => null,
     ];
 
     /**
@@ -55,7 +55,7 @@ abstract class AbstractParser implements ParserInterface
     /**
      * @var string
      */
-    protected $skip = '/^(\'|\"|\:[^a-zA-Z_])/um';
+    protected $skip = "/^(\'|\"|\:[^a-zA-Z_])/um";
 
     /**
      * @var array
@@ -75,12 +75,10 @@ abstract class AbstractParser implements ParserInterface
     /**
      * Rebuilds a statement with placeholders and bound values.
      *
-     * @param string $statement The statement to rebuild.
-     * @param array  $values    The values to bind and/or replace into a
-     *                          statement.
+     * @param string $statement
+     * @param array  $values
      *
-     * @return array An array where element 0 is the rebuilt statement and
-     * element 1 is the rebuilt array of values.
+     * @return array
      * @throws MissingParameter
      */
     public function rebuild(string $statement, array $values = []): array
@@ -100,9 +98,9 @@ abstract class AbstractParser implements ParserInterface
      *
      * Given a statement, rebuilds it with array values embedded.
      *
-     * @param string $statement The SQL statement.
+     * @param string $statement
      *
-     * @return string The rebuilt statement.
+     * @return string
      * @throws MissingParameter
      */
     protected function rebuildStatement(string $statement): string
@@ -115,14 +113,14 @@ abstract class AbstractParser implements ParserInterface
     /**
      * Given an array of statement parts, rebuilds each part.
      *
-     * @param array $parts The statement parts.
+     * @param array $parts
      *
-     * @return string The rebuilt statement.
+     * @return string
      * @throws MissingParameter
      */
     protected function rebuildParts(array $parts): string
     {
-        $statement = '';
+        $statement = "";
         foreach ($parts as $part) {
             $statement .= $this->rebuildPart($part);
         }
@@ -152,49 +150,49 @@ abstract class AbstractParser implements ParserInterface
             PREG_SPLIT_DELIM_CAPTURE
         );
 
-        // check subparts to expand placeholders for bound arrays
+        // check sub-parts to expand placeholders for bound arrays
         return $this->prepareValuePlaceholders($subs);
     }
 
     /**
      * Prepares the sub-parts of a query with placeholders.
      *
-     * @param array $subs The query subparts.
+     * @param array $parts
      *
-     * @return string The prepared subparts.
+     * @return string
      * @throws MissingParameter
      */
-    protected function prepareValuePlaceholders(array $subs): string
+    protected function prepareValuePlaceholders(array $parts): string
     {
-        $str = '';
-        foreach ($subs as $i => $sub) {
-            $char = substr($sub, 0, 1);
-            if ($char == '?') {
-                $str .= $this->prepareNumberedPlaceholder($sub);
-            } elseif ($char == ':') {
-                $str .= $this->prepareNamedPlaceholder($sub);
+        $result = '';
+        foreach ($parts as $key => $value) {
+            $character = substr($value, 0, 1);
+            if ($character == '?') {
+                $result .= $this->prepareNumberedPlaceholder($value);
+            } elseif ($character == ':') {
+                $result .= $this->prepareNamedPlaceholder($value);
             } else {
-                $str .= $sub;
+                $result .= $value;
             }
         }
 
-        return $str;
+        return $result;
     }
 
     /**
-     * Bind or quote a numbered placeholder in a query subpart.
+     * Bind or quote a numbered placeholder in a query sub-part.
      *
-     * @param string $sub The query subpart.
+     * @param string $part
      *
-     * @return string The prepared query subpart.
+     * @return string
      * @throws MissingParameter
      */
-    protected function prepareNumberedPlaceholder($sub): string
+    protected function prepareNumberedPlaceholder($part): string
     {
         $this->num++;
         if (array_key_exists($this->num, $this->values) === false) {
             throw new MissingParameter(
-                "Parameter {$this->num} is missing from the bound values"
+                "Parameter '" . $this->num . "' is missing from the bound values",
             );
         }
 
@@ -204,99 +202,106 @@ abstract class AbstractParser implements ParserInterface
             $values[] = null;
         }
         foreach ($values as $value) {
-            $count                    = ++$this->count['__'];
-            $name                     = "__{$count}";
-            $expanded[]               = ":{$name}";
+            $count                    = ++$this->count["__"];
+            $name                     = "__" . $count;
+            $expanded[]               = ":" . $name;
             $this->finalValues[$name] = $value;
         }
 
-        return implode(', ', $expanded);
+        return implode(", ", $expanded);
     }
 
     /**
-     * Bind or quote a named placeholder in a query subpart.
+     * Bind or quote a named placeholder in a query sub-part.
      *
-     * @param string $sub The query subpart.
+     * @param string $part
      *
-     * @return string The prepared query subpart.
+     * @return string
      * @throws MissingParameter
      */
-    protected function prepareNamedPlaceholder($sub): string
+    protected function prepareNamedPlaceholder($part): string
     {
-        $orig = substr($sub, 1);
-        if (array_key_exists($orig, $this->values) === false) {
-            throw new MissingParameter("Parameter '{$orig}' is missing from the bound values");
+        $original = substr($part, 1);
+        if (array_key_exists($original, $this->values) === false) {
+            throw new MissingParameter(
+                "Parameter '" . $original . "' is missing from the bound values",
+            );
         }
 
-        $name = $this->getPlaceholderName($orig);
+        $name = $this->getPlaceholderName($original);
 
         // is the corresponding data element an array?
-        $bind_array = is_array($this->values[$orig]);
-        if ($bind_array) {
+        $bind = is_array($this->values[$original]);
+        if ($bind) {
             // expand to multiple placeholders
-            return $this->expandNamedPlaceholder($name, $this->values[$orig]);
+            return $this->expandNamedPlaceholder(
+                $name,
+                $this->values[$original]
+            );
         }
 
         // not an array, retain the placeholder for later
-        $this->finalValues[$name] = $this->values[$orig];
+        $this->finalValues[$name] = $this->values[$original];
 
-        return ":$name";
+        return ":" . $name;
     }
 
     /**
      * Given an original placeholder name, return a replacement name.
      *
-     * @param string $orig The original placeholder name.
+     * @param string $placeholder
      *
      * @return string
      */
-    protected function getPlaceholderName(string $orig): string
+    protected function getPlaceholderName(string $placeholder): string
     {
-        if (!isset($this->count[$orig])) {
-            $this->count[$orig] = 0;
-            return $orig;
+        if (!isset($this->count[$placeholder])) {
+            $this->count[$placeholder] = 0;
+            return $placeholder;
         }
 
-        $count = ++$this->count[$orig];
+        $count = ++$this->count[$placeholder];
 
-        return "{$orig}__{$count}";
+        return $placeholder . "__" . $count;
     }
 
     /**
      * Given a named placeholder for an array, expand it for the array values,
      * and bind those values to the expanded names.
      *
-     * @param string $prefix The named placeholder.
-     * @param array  $values The array values to be bound.
+     * @param string $prefix
+     * @param array  $values
      *
      * @return string
      */
-    protected function expandNamedPlaceholder(string $prefix, array $values): string
-    {
-        $i        = 0;
+    protected function expandNamedPlaceholder(
+        string $prefix,
+        array $values
+    ): string {
+        $counter  = 0;
         $expanded = [];
         foreach ($values as $value) {
-            $name                     = "{$prefix}_{$i}";
-            $expanded[]               = ":{$name}";
+            $name                     = $prefix . "_" . $counter;
+            $expanded[]               = ":" . $name;
             $this->finalValues[$name] = $value;
-            $i++;
+            $counter++;
         }
 
-        return implode(', ', $expanded);
+        return implode(", ", $expanded);
     }
 
     /**
      * Given a query string, split it into parts.
      *
-     * @param string $statement The query string.
+     * @param string $statement
      *
      * @return array
      */
     protected function getParts(string $statement): array
     {
-        $split = implode('|', $this->split);
+        $split = implode("|", $this->split);
         return preg_split(
-            "/($split)/um",
+            "/(" . $split . ")/um",
             $statement,
             -1,
             PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY

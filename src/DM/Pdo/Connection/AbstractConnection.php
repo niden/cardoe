@@ -37,10 +37,7 @@ use function is_array;
  * @property ParserInterface   $parser
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
- * @property string            $quoteNameEscapeFind
- * @property string            $quoteNamePrefix
- * @property string            $quoteNameEscapeRepl
- * @property string            $quoteNameSuffix
+ * @property array             $quote
  */
 abstract class AbstractConnection implements ConnectionInterface
 {
@@ -60,35 +57,19 @@ abstract class AbstractConnection implements ConnectionInterface
     protected $profiler;
 
     /**
-     * @var string
+     * @var array
      */
-    protected $quoteNameEscapeFind = '"';
-
-    /**
-     * @var string
-     */
-    protected $quoteNamePrefix = '"';
-
-    /**
-     * @var string
-     */
-    protected $quoteNameEscapeRepl = '""';
-
-    /**
-     * @var string
-     */
-    protected $quoteNameSuffix = '"';
+    protected $quote = [];
 
     /**
      * Proxies to PDO methods created for specific drivers; in particular,
      * `sqlite` and `pgsql`.
      *
-     * @param string $name      The PDO method to call; e.g.
-     *                          `sqliteCreateFunction` or `pgsqlGetPid`.
-     * @param array  $arguments Arguments to pass to the called method.
+     * @param string $name
+     * @param array  $arguments
      *
      * @return mixed
-     * @throws BadMethodCallException when the method does not exist.
+     * @throws BadMethodCallException
      */
     public function __call($name, array $arguments)
     {
@@ -104,11 +85,10 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Begins a transaction and turns off autocommit mode.
+     * Begins a transaction. If the profiler is enabled, the operation will
+     * be recorded.
      *
-     * @return bool True on success, false on failure.
-     *
-     * @see http://php.net/manual/en/pdo.begintransaction.php
+     * @return bool
      */
     public function beginTransaction(): bool
     {
@@ -121,11 +101,10 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Commits the existing transaction and restores autocommit mode.
+     * Commits the existing transaction. If the profiler is enabled, the
+     * operation will be recorded.
      *
-     * @return bool True on success, false on failure.
-     *
-     * @see http://php.net/manual/en/pdo.commit.php
+     * @return bool
      */
     public function commit(): bool
     {
@@ -172,13 +151,12 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Executes an SQL statement and returns the number of affected rows.
+     * Executes an SQL statement and returns the number of affected rows. If
+     * the profiler is enabled, the operation will be recorded.
      *
-     * @param string $statement The SQL statement to prepare and execute.
+     * @param string $statement
      *
-     * @return int The number of affected rows.
-     *
-     * @see http://php.net/manual/en/pdo.exec.php
+     * @return int
      */
     public function exec(string $statement): int
     {
@@ -193,8 +171,8 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Performs a statement and returns the number of affected rows.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return int
      * @throws CannotBindValue
@@ -207,11 +185,11 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Fetches a sequential array of rows from the database; the rows
-     * are returned as associative arrays.
+     * Fetches a sequential array of rows from the database; the rows are
+     * returned as associative arrays.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      * @throws CannotBindValue
@@ -227,15 +205,16 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Fetches an associative array of rows from the database; the rows
-     * are returned as associative arrays, and the array of rows is keyed
-     * on the first column of each row.
+     * Fetches an associative array of rows from the database; the rows are
+     * returned as associative arrays, and the array of rows is keyed on the
+     * first column of each row.
      *
-     * N.b.: If multiple rows have the same first column value, the last
-     * row with that value will override earlier rows.
+     * If multiple rows have the same first column value, the last row with
+     * that value will overwrite earlier rows. This method is more resource
+     * intensive and should be avoided if possible.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      * @throws CannotBindValue
@@ -254,8 +233,8 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Fetches the first column of rows as a sequential array.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      * @throws CannotBindValue
@@ -272,13 +251,12 @@ abstract class AbstractConnection implements ConnectionInterface
 
     /**
      * Fetches multiple from the database as an associative array. The first
-     * column will be the index key.
+     * column will be the index key. The default flags are
+     * PDO::FETCH_ASSOC | PDO::FETCH_GROUP
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
-     * @param int    $style     a fetch style defaults to PDO::FETCH_COLUMN for
-     *                          single values, use PDO::FETCH_NAMED when
-     *                          fetching a multiple columns
+     * @param string $statement
+     * @param array  $values
+     * @param int    $flags
      *
      * @return array
      * @throws CannotBindValue
@@ -286,11 +264,11 @@ abstract class AbstractConnection implements ConnectionInterface
     public function fetchGroup(
         string $statement,
         array $values = [],
-        int $style = PDO::FETCH_ASSOC
+        int $flags = PDO::FETCH_ASSOC
     ): array {
         return $this->fetchData(
             "fetchAll",
-            [PDO::FETCH_GROUP | $style],
+            [PDO::FETCH_GROUP | $flags],
             $statement,
             $values
         );
@@ -300,17 +278,15 @@ abstract class AbstractConnection implements ConnectionInterface
      * Fetches one row from the database as an object where the column values
      * are mapped to object properties.
      *
-     * Warning: PDO "injects property-values BEFORE invoking the constructor -
-     * in other words, if your class initializes property-values to defaults
-     * in the constructor, you will be overwriting the values injected by
-     * fetchObject() !"
+     * Since PDO injects property values before invoking the constructor, any
+     * initializations for defaults that you potentially have in your object's
+     * constructor, will override the values that have been injected by
+     * `fetchObject`. The default object returned is `\stdClass`
      *
-     * <http://www.php.net/manual/en/pdostatement.fetchobject.php#111744>
-     *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
-     * @param string $class     The name of the class to create.
-     * @param array  $args      Arguments to pass to the object constructor.
+     * @param string $statement
+     * @param array  $values
+     * @param string $class
+     * @param array  $arguments
      *
      * @return object
      * @throws CannotBindValue
@@ -319,29 +295,27 @@ abstract class AbstractConnection implements ConnectionInterface
         string $statement,
         array $values = [],
         string $class = 'stdClass',
-        array $args = []
+        array $arguments = []
     ): object {
         $sth = $this->perform($statement, $values);
 
-        return $sth->fetchObject($class, $args);
+        return $sth->fetchObject($class, $arguments);
     }
 
     /**
-     * Fetches a sequential array of rows from the database; the rows
-     * are returned as objects where the column values are mapped to
-     * object properties.
+     * Fetches a sequential array of rows from the database; the rows are
+     * returned as objects where the column values are mapped to object
+     * properties.
      *
-     * Warning: PDO "injects property-values BEFORE invoking the constructor -
-     * in other words, if your class initializes property-values to defaults
-     * in the constructor, you will be overwriting the values injected by
-     * fetchObject() !"
+     * Since PDO injects property values before invoking the constructor, any
+     * initializations for defaults that you potentially have in your object's
+     * constructor, will override the values that have been injected by
+     * `fetchObject`. The default object returned is `\stdClass`
      *
-     * <http://www.php.net/manual/en/pdostatement.fetchobject.php#111744>
-     *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
-     * @param string $class     The name of the class to create from each row.
-     * @param array  $args      Arguments to pass to each object constructor.
+     * @param string $statement
+     * @param array  $values
+     * @param string $class
+     * @param array  $arguments
      *
      * @return array
      * @throws CannotBindValue
@@ -350,18 +324,18 @@ abstract class AbstractConnection implements ConnectionInterface
         string $statement,
         array $values = [],
         string $class = 'stdClass',
-        array $args = []
+        array $arguments = []
     ): array {
         $sth = $this->perform($statement, $values);
 
-        return $sth->fetchAll(PDO::FETCH_CLASS, $class, $args);
+        return $sth->fetchAll(PDO::FETCH_CLASS, $class, $arguments);
     }
 
     /**
      * Fetches one row from the database as an associative array.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      * @throws CannotBindValue
@@ -377,11 +351,11 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Fetches an associative array of rows as key-value pairs (first
-     * column is the key, second column is the value).
+     * Fetches an associative array of rows as key-value pairs (first column is
+     * the key, second column is the value).
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return array
      * @throws CannotBindValue
@@ -399,8 +373,8 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Fetches the very first value (i.e., first column of the first row).
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param array  $values    Values to bind to the query.
+     * @param string $statement
+     * @param array  $values
      *
      * @return mixed
      * @throws CannotBindValue
@@ -439,12 +413,9 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Return an array of available PDO drivers
+     * Return an array of available PDO drivers (empty array if none available)
      *
-     * @return array PDO::getAvailableDrivers returns an array of PDO driver
-     *               names.If no drivers are available, it returns an empty array.
-     *
-     * @see https://php.net/manual/en/pdo.getavailabledrivers.php
+     * @return array
      */
     public static function getAvailableDrivers(): array
     {
@@ -484,11 +455,48 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Is a transaction currently active?
+     * Gets the quote parameters based on the driver
+     *
+     * @param string $driver
+     *
+     * @return array
+     */
+    public function getQuoteNames(string $driver): array
+    {
+        switch ($driver) {
+            case 'mysql':
+                return [
+                    "prefix"  => '`',
+                    "suffix"  => '`',
+                    "find"    => '`',
+                    "replace" => '``',
+                ];
+                break;
+
+            case 'sqlsrv':
+                return [
+                    "prefix"  => '[',
+                    "suffix"  => ']',
+                    "find"    => ']',
+                    "replace" => '][',
+                ];
+
+            default:
+                return [
+                    "prefix"  => '"',
+                    "suffix"  => '"',
+                    "find"    => '"',
+                    "replace" => '""',
+                ];
+        }
+    }
+
+    /**
+     * Is a transaction currently active? If the profiler is enabled, the
+     * operation will be recorded. If the profiler is enabled, the operation
+     * will be recorded.
      *
      * @return bool
-     *
-     * @see http://php.net/manual/en/pdo.intransaction.php
      */
     public function inTransaction(): bool
     {
@@ -510,15 +518,12 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Returns the last inserted autoincrement sequence value.
+     * Returns the last inserted autoincrement sequence value. If the profiler
+     * is enabled, the operation will be recorded.
      *
-     * @param string $name The name of the sequence to check; typically needed
-     *                     only for PostgreSQL, where it takes the form of
-     *                     `<table>_<column>_seq`.
+     * @param string $name
      *
      * @return string
-     *
-     * @see http://php.net/manual/en/pdo.lastinsertid.php
      */
     public function lastInsertId(string $name = null): string
     {
@@ -534,15 +539,14 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Performs a query with bound values and returns the resulting
      * PDOStatement; array values will be passed through `quote()` and their
-     * respective placeholders will be replaced in the query string.
+     * respective placeholders will be replaced in the query string. If the
+     * profiler is enabled, the operation will be recorded.
      *
-     * @param string $statement The SQL statement to perform.
-     * @param array  $values    Values to bind to the query
+     * @param string $statement
+     * @param array  $values
      *
      * @return PDOStatement
      * @throws CannotBindValue
-     *
-     * @see quote()
      */
     public function perform(string $statement, array $values = []): PDOStatement
     {
@@ -559,13 +563,10 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Prepares an SQL statement for execution.
      *
-     * @param string $statement The SQL statement to prepare for execution.
-     * @param array  $options   Set these attributes on the returned
-     *                          PDOStatement.
+     * @param string $statement
+     * @param array  $options
      *
      * @return PDOStatement|false
-     *
-     * @see http://php.net/manual/en/pdo.prepare.php
      */
     public function prepare($statement, array $options = [])
     {
@@ -575,27 +576,22 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Prepares an SQL statement with bound values.
+     * Prepares an SQL statement with bound values. The method only binds values
+     * that have associated placeholders in the statement. It also binds
+     * sequential (question-mark) placeholders. If a placeholder is an array, it
+     * is converted to a comma separated string to be used with a `IN`
+     * condition.
      *
-     * This method only binds values that have placeholders in the
-     * statement, thereby avoiding errors from PDO regarding too many bound
-     * values. It also binds all sequential (question-mark) placeholders.
-     *
-     * If a placeholder value is an array, the array is converted to a string
-     * of comma-separated quoted values; e.g., for an `IN (...)` condition.
-     * The quoted string is replaced directly into the statement instead of
-     * using `PDOStatement::bindValue()` proper.
-     *
-     * @param string $statement The SQL statement to prepare for execution.
-     * @param array  $values    The values to bind to the statement, if any.
+     * @param string $statement
+     * @param array  $values
      *
      * @return PDOStatement|false
      * @throws CannotBindValue
-     *
-     * @see http://php.net/manual/en/pdo.prepare.php
      */
-    public function prepareWithValues(string $statement, array $values = []): PDOStatement
-    {
+    public function prepareWithValues(
+        string $statement,
+        array $values = []
+    ): PDOStatement {
         // if there are no values to bind ...
         if (empty($values)) {
             // ... use the normal preparation
@@ -621,10 +617,11 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Queries the database and returns a PDOStatement.
+     * Queries the database and returns a PDOStatement. If the profiler is
+     * enabled, the operation will be recorded.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param mixed  ...$fetch  Optional fetch-related parameters.
+     * @param string $statement
+     * @param mixed  ...$fetch
      *
      * @return PDOStatement|false
      *
@@ -642,17 +639,14 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Quotes a value for use in an SQL statement.
+     * Quotes a value for use in an SQL statement. This differs from
+     * `PDO::quote()` in that it will convert an array into a string of
+     * comma-separated quoted values. The default type is `PDO::PARAM_STR`
      *
-     * This differs from `PDO::quote()` in that it will convert an array into
-     * a string of comma-separated quoted values.
-     *
-     * @param mixed $value The value to quote.
-     * @param int   $type  A data type hint for the database driver.
+     * @param mixed $value
+     * @param int   $type
      *
      * @return string The quoted value.
-     *
-     * @see http://php.net/manual/en/pdo.quote.php
      */
     public function quote($value, int $type = PDO::PARAM_STR): string
     {
@@ -674,9 +668,9 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Quotes a multi-part (dotted) identifier name.
      *
-     * @param string $name The multi-part identifier name.
+     * @param string $name
      *
-     * @return string The multi-part identifier name, quoted.
+     * @return string
      */
     public function quoteName(string $name): string
     {
@@ -694,31 +688,30 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Quotes a single identifier name.
+     * Quotes a single identifier name based on the driver
      *
-     * @param string $name The identifier name.
+     * @param string $name
      *
-     * @return string The quoted identifier name.
+     * @return string
      */
     public function quoteSingleName(string $name): string
     {
         $name = str_replace(
-            $this->quoteNameEscapeFind,
-            $this->quoteNameEscapeRepl,
+            $this->quote["find"],
+            $this->quote["replace"],
             $name
         );
 
-        return $this->quoteNamePrefix
+        return $this->quote["prefix"]
             . $name
-            . $this->quoteNameSuffix;
+            . $this->quote["suffix"];
     }
 
     /**
-     * Rolls back the current transaction, and restores autocommit mode.
+     * Rolls back the current transaction, and restores autocommit mode. If the
+     * profiler is enabled, the operation will be recorded.
      *
-     * @return bool True on success, false on failure.
-     *
-     * @see http://php.net/manual/en/pdo.rollback.php
+     * @return bool
      */
     public function rollBack(): bool
     {
@@ -749,7 +742,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Sets the Parser instance.
      *
-     * @param ParserInterface $parser The Parser instance.
+     * @param ParserInterface $parser
      */
     public function setParser(ParserInterface $parser)
     {
@@ -759,7 +752,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Sets the Profiler instance.
      *
-     * @param ProfilerInterface $profiler The Profiler instance.
+     * @param ProfilerInterface $profiler
      */
     public function setProfiler(ProfilerInterface $profiler)
     {
@@ -769,39 +762,41 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Bind a value using the proper PDO::PARAM_* type.
      *
-     * @param PDOStatement $sth The statement to bind to.
-     * @param mixed        $key The placeholder key.
-     * @param mixed        $val The value to bind to the statement.
+     * @param PDOStatement $statement
+     * @param mixed        $key
+     * @param mixed        $value
      *
      * @return bool
-     * @throws CannotBindValue when the value to be bound is not
-     * bindable (e.g., array, object, or resource).
+     * @throws CannotBindValue
      */
-    protected function bindValue(PDOStatement $sth, $key, $val): bool
+    protected function bindValue(PDOStatement $statement, $key, $value): bool
     {
-        if (is_int($val)) {
-            return $sth->bindValue($key, $val, PDO::PARAM_INT);
+        if (is_int($value)) {
+            return $statement->bindValue($key, $value, PDO::PARAM_INT);
         }
 
-        if (is_bool($val)) {
-            return $sth->bindValue($key, $val, PDO::PARAM_BOOL);
+        if (is_bool($value)) {
+            return $statement->bindValue($key, $value, PDO::PARAM_BOOL);
         }
 
-        if (is_null($val)) {
-            return $sth->bindValue($key, $val, PDO::PARAM_NULL);
+        if (is_null($value)) {
+            return $statement->bindValue($key, $value, PDO::PARAM_NULL);
         }
 
-        if (!is_scalar($val)) {
-            $type = gettype($val);
+        if (!is_scalar($value)) {
+            $type = gettype($value);
             throw new CannotBindValue(
-                "Cannot bind value of type '{$type}' to placeholder '{$key}'"
+                "Cannot bind value of type '" . $type .
+                "' to placeholder '" . $key . "'"
             );
         }
 
-        return $sth->bindValue($key, $val);
+        return $statement->bindValue($key, $value);
     }
 
     /**
+     * Helper method to get data from PDO based on the method passed
+     *
      * @param string $method
      * @param array  $arguments
      * @param string $statement
@@ -833,7 +828,7 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Returns a new Parser instance.
      *
-     * @param string $driver Return a parser for this driver.
+     * @param string $driver
      *
      * @return ParserInterface
      */
@@ -845,36 +840,5 @@ abstract class AbstractConnection implements ConnectionInterface
         }
 
         return new $class();
-    }
-
-    /**
-     * Sets quoting properties based on the PDO driver.
-     *
-     * @param string $driver The PDO driver name.
-     */
-    protected function setQuoteName(string $driver)
-    {
-        switch ($driver) {
-            case 'mysql':
-                $this->quoteNamePrefix     = '`';
-                $this->quoteNameSuffix     = '`';
-                $this->quoteNameEscapeFind = '`';
-                $this->quoteNameEscapeRepl = '``';
-                break;
-
-            case 'sqlsrv':
-                $this->quoteNamePrefix     = '[';
-                $this->quoteNameSuffix     = ']';
-                $this->quoteNameEscapeFind = ']';
-                $this->quoteNameEscapeRepl = '][';
-                break;
-
-            default:
-                $this->quoteNamePrefix     = '"';
-                $this->quoteNameSuffix     = '"';
-                $this->quoteNameEscapeFind = '"';
-                $this->quoteNameEscapeRepl = '""';
-                break;
-        }
     }
 }

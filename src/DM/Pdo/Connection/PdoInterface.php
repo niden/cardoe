@@ -20,6 +20,7 @@ namespace Phalcon\DM\Pdo\Connection;
 
 use PDO;
 use PDOStatement;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
 
 /**
  * An interface to the native PDO object.
@@ -27,20 +28,18 @@ use PDOStatement;
 interface PdoInterface
 {
     /**
-     * Begins a transaction and turns off autocommit mode.
+     * Begins a transaction. If the profiler is enabled, the operation will
+     * be recorded.
      *
-     * @return bool True on success, false on failure.
-     *
-     * @see http://php.net/manual/en/pdo.begintransaction.php
+     * @return bool
      */
     public function beginTransaction(): bool;
 
     /**
-     * Commits the existing transaction and restores autocommit mode.
+     * Commits the existing transaction. If the profiler is enabled, the
+     * operation will be recorded.
      *
-     * @return bool True on success, false on failure.
-     *
-     * @see http://php.net/manual/en/pdo.commit.php
+     * @return bool
      */
     public function commit(): bool;
 
@@ -59,13 +58,12 @@ interface PdoInterface
     public function errorInfo(): array;
 
     /**
-     * Executes an SQL statement and returns the number of affected rows.
+     * Executes an SQL statement and returns the number of affected rows. If
+     * the profiler is enabled, the operation will be recorded.
      *
-     * @param string $statement The SQL statement to prepare and execute.
+     * @param string $statement
      *
-     * @return int The number of affected rows.
-     *
-     * @see http://php.net/manual/en/pdo.exec.php
+     * @return int
      */
     public function exec(string $statement): int;
 
@@ -76,86 +74,108 @@ interface PdoInterface
      *
      * @return mixed
      */
-    public function getAttribute(string $attribute);
+    public function getAttribute($attribute);
 
     /**
-     * Return an array of available PDO drivers
+     * Return an array of available PDO drivers (empty array if none available)
      *
-     * @return array PDO::getAvailableDrivers returns an array of PDO driver
-     *               names.If no drivers are available, it returns an empty array.
-     *
-     * @see https://php.net/manual/en/pdo.getavailabledrivers.php
+     * @return array
      */
     public static function getAvailableDrivers(): array;
 
     /**
-     * Is a transaction currently active?
+     * Is a transaction currently active? If the profiler is enabled, the
+     * operation will be recorded. If the profiler is enabled, the operation
+     * will be recorded.
      *
      * @return bool
-     *
-     * @see http://php.net/manual/en/pdo.intransaction.php
      */
     public function inTransaction(): bool;
 
     /**
-     * Returns the last inserted autoincrement sequence value.
+     * Returns the last inserted autoincrement sequence value. If the profiler
+     * is enabled, the operation will be recorded.
      *
-     * @param string $name The name of the sequence to check; typically needed
-     *                     only for PostgreSQL, where it takes the form of
-     *                     `<table>_<column>_seq`.
+     * @param string $name
      *
      * @return string
-     *
-     * @see http://php.net/manual/en/pdo.lastinsertid.php
      */
     public function lastInsertId(string $name = null): string;
 
     /**
      * Prepares an SQL statement for execution.
      *
-     * @param string $statement The SQL statement to prepare for execution.
-     * @param array  $options   Set these attributes on the returned
-     *                          PDOStatement.
+     * @param string $statement
+     * @param array  $options
      *
      * @return PDOStatement|false
-     *
-     * @see http://php.net/manual/en/pdo.prepare.php
      */
-    public function prepare(string $statement, array $options = []);
+    public function prepare($statement, array $options = []);
 
     /**
-     * Queries the database and returns a PDOStatement.
+     * Prepares an SQL statement with bound values. The method only binds values
+     * that have associated placeholders in the statement. It also binds
+     * sequential (question-mark) placeholders. If a placeholder is an array, it
+     * is converted to a comma separated string to be used with a `IN`
+     * condition.
      *
-     * @param string $statement The SQL statement to prepare and execute.
-     * @param mixed  ...$fetch  Optional fetch-related parameters.
+     * @param string $statement
+     * @param array  $values
      *
      * @return PDOStatement|false
+     * @throws CannotBindValue
+     */
+    public function prepareWithValues(
+        string $statement,
+        array $values = []
+    ): PDOStatement;
+
+    /**
+     * Queries the database and returns a PDOStatement. If the profiler is
+     * enabled, the operation will be recorded.
      *
-     * @see http://php.net/manual/en/pdo.query.php
+     * @param string $statement
+     * @param mixed  ...$fetch
+     *
+     * @return PDOStatement|false
      */
     public function query(string $statement, ...$fetch);
 
     /**
-     * Quotes a value for use in an SQL statement.
+     * Quotes a value for use in an SQL statement. This differs from
+     * `PDO::quote()` in that it will convert an array into a string of
+     * comma-separated quoted values. The default type is `PDO::PARAM_STR`
      *
-     * This differs from `PDO::quote()` in that it will convert an array into
-     * a string of comma-separated quoted values.
-     *
-     * @param mixed $value The value to quote.
-     * @param int   $type  A data type hint for the database driver.
+     * @param mixed $value
+     * @param int   $type
      *
      * @return string The quoted value.
-     *
-     * @see http://php.net/manual/en/pdo.quote.php
      */
     public function quote($value, int $type = PDO::PARAM_STR): string;
 
     /**
-     * Rolls back the current transaction, and restores autocommit mode.
+     * Quotes a multi-part (dotted) identifier name.
      *
-     * @return bool True on success, false on failure.
+     * @param string $name
      *
-     * @see http://php.net/manual/en/pdo.rollback.php
+     * @return string
+     */
+    public function quoteName(string $name): string;
+
+    /**
+     * Quotes a single identifier name.
+     *
+     * @param string $name
+     *
+     * @return string
+     */
+    public function quoteSingleName(string $name): string;
+
+    /**
+     * Rolls back the current transaction, and restores autocommit mode. If the
+     * profiler is enabled, the operation will be recorded.
+     *
+     * @return bool
      */
     public function rollBack(): bool;
 

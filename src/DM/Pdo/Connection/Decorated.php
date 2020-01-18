@@ -35,9 +35,8 @@ class Decorated extends AbstractConnection
      * This overrides the parent so that it can take an existing PDO instance
      * and decorate it with the extended methods.
      *
-     * @param PDO $pdo An existing PDO instance to decorate.
-     *
-     * @param ProfilerInterface $profiler Tracks and logs query profiles.
+     * @param PDO                    $pdo
+     * @param ProfilerInterface|null $profiler
      *
      */
     public function __construct(PDO $pdo, ProfilerInterface $profiler = null)
@@ -51,7 +50,7 @@ class Decorated extends AbstractConnection
 
         $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
         $this->setParser($this->newParser($driver));
-        $this->setQuoteName($driver);
+        $this->quote = $this->getQuoteNames($driver);
     }
 
     /**

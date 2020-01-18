@@ -28,8 +28,8 @@ interface ProfilerInterface
     /**
      * Finishes and logs a profile entry.
      *
-     * @param string $statement The statement being profiled, if any.
-     * @param array  $values    The values bound to the statement, if any.
+     * @param string $statement
+     * @param array  $values
      */
     public function finish(string $statement = null, array $values = []): void;
 
@@ -82,7 +82,7 @@ interface ProfilerInterface
     /**
      * Level at which to log profile messages.
      *
-     * @param string $logLevel A PSR LogLevel constant.
+     * @param string $logLevel
      *
      * @return ProfilerInterface
      *
@@ -92,7 +92,7 @@ interface ProfilerInterface
     /**
      * Starts a profile entry.
      *
-     * @param string $method The method starting the profile entry.
+     * @param string $method
      */
     public function start(string $method): void;
 }

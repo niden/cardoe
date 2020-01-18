@@ -32,10 +32,6 @@ use PDO;
  * @property ParserInterface   $parser
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
- * @property string            $quoteNameEscapeFind
- * @property string            $quoteNamePrefix
- * @property string            $quoteNameEscapeRepl
- * @property string            $quoteNameSuffix
  */
 class Connection extends AbstractConnection
 {
@@ -50,17 +46,12 @@ class Connection extends AbstractConnection
      * This overrides the parent so that it can take connection attributes as a
      * constructor parameter, and set them after connection.
      *
-     * @param string            $dsn      The data source name for the
-     *                                    connection.
-     * @param string            $username The username for the connection.
-     * @param string            $password The password for the connection.
-     * @param array             $options  Driver-specific options for the
-     *                                    connection.
-     * @param array             $queries  Queries to execute after the
-     *                                    connection.
-     * @param ProfilerInterface $profiler Tracks and logs query profiles.
-     *
-     * @see http://php.net/manual/en/pdo.construct.php
+     * @param string            $dsn
+     * @param string            $username
+     * @param string            $password
+     * @param array             $options
+     * @param array             $queries
+     * @param ProfilerInterface $profiler
      */
     public function __construct(
         string $dsn,
@@ -96,7 +87,7 @@ class Connection extends AbstractConnection
         $this->setParser($parser);
 
         // set quotes for identifier names
-        $this->setQuoteName($parts[0]);
+        $this->quote = $this->getQuoteNames($parts[0]);
     }
 
     /**
