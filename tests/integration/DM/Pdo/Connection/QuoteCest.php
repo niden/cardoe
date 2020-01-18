@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
 
 use function ucfirst;
 
@@ -59,7 +59,7 @@ class QuoteCest
             [
                 'float',
                 123.456,
-                "'123.456'"
+                "'123.456'",
             ],
             [
                 'array',
@@ -75,7 +75,7 @@ class QuoteCest
             [
                 'null',
                 null,
-                "''"
+                "''",
             ],
         ];
     }
@@ -99,7 +99,7 @@ class QuoteCest
             [
                 'float',
                 123.456,
-                "'123.456'"
+                "'123.456'",
             ],
             [
                 'array',
@@ -113,7 +113,7 @@ class QuoteCest
             [
                 'null',
                 null,
-                "''"
+                "''",
             ],
         ];
     }

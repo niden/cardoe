@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection\Decorated;
 
-use Phalcon\DM\Pdo\Connection\Decorated;
-use Phalcon\DM\Pdo\Exception\CannotDisconnect;
 use IntegrationTester;
 use PDO;
+use Phalcon\DM\Pdo\Connection\Decorated;
+use Phalcon\DM\Pdo\Exception\CannotDisconnect;
 
 class DisconnectCest
 {

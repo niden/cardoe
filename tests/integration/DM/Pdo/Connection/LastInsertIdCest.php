@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
 
 use function date;
 use function str_replace;
@@ -47,7 +47,7 @@ class LastInsertIdCest
                 2,
                 uniqid(),
                 102,
-                date('Y-m-d H:i:s')
+                date('Y-m-d H:i:s'),
             ],
             $template
         );

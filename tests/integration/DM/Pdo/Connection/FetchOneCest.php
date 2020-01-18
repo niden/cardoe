@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
-use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Codeception\Example;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
 use stdClass;
 
@@ -31,7 +31,7 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
@@ -64,7 +64,7 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
@@ -84,7 +84,7 @@ class FetchOneCest
      * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - bind types
      *
      * @dataProvider getBindTypes
-     * @since  2019-11-16
+     * @since        2019-11-16
      */
     public function dMPdoConnectionFetchOneBindTypes(IntegrationTester $I, Example $example)
     {
@@ -92,7 +92,7 @@ class FetchOneCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1, 'test-1');
         $I->assertEquals(1, $result);
@@ -122,7 +122,7 @@ class FetchOneCest
             function () use ($I) {
                 /** @var Connection $connection */
                 $connection = $I->getConnection();
-                $invoice = new Invoices($connection);
+                $invoice    = new Invoices($connection);
 
                 $result = $invoice->insert($connection, 1);
                 $I->assertEquals(1, $result);

@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,10 +11,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
+use IntegrationTester;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
 use Phalcon\Test\Fixtures\Resultset;
-use IntegrationTester;
 use stdClass;
 
 class FetchObjectCest
@@ -30,7 +30,7 @@ class FetchObjectCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
@@ -58,7 +58,7 @@ class FetchObjectCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);
@@ -70,7 +70,7 @@ class FetchObjectCest
             ],
             Resultset::class,
             [
-                'vader'
+                'vader',
             ]
         );
 

@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
 use PDO;
+use Phalcon\DM\Pdo\Connection;
 
 class DebugInfoCest
 {
@@ -38,7 +38,7 @@ class DebugInfoCest
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                 ],
                 [],
-            ]
+            ],
         ];
         $I->assertEquals($expected, $connection->__debugInfo());
     }

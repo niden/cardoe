@@ -11,13 +11,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
 
 class ConnectDisconnectIsConnectedCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Connection :: connect()/disconnect()/isConnected()
+     * Integration Tests Phalcon\DM\Pdo\Connection ::
+     * connect()/disconnect()/isConnected()
      *
      * @since  2019-12-11
      */

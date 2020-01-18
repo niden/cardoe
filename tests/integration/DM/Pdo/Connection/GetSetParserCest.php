@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
+use IntegrationTester;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Parser\SqliteParser;
-use IntegrationTester;
 
 class GetSetParserCest
 {
@@ -42,7 +42,8 @@ class GetSetParserCest
     }
 
     /**
-     * Integration Tests Phalcon\DM\Pdo\Connection :: getParser()/setParser() default
+     * Integration Tests Phalcon\DM\Pdo\Connection :: getParser()/setParser()
+     * default
      *
      * @since  2019-12-11
      */

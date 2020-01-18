@@ -11,9 +11,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
 use PDO;
+use Phalcon\DM\Pdo\Connection;
 
 class GetAvailableDriversCest
 {

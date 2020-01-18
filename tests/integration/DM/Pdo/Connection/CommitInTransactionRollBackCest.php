@@ -1,7 +1,7 @@
 <?php
 
 /**
-* This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon Framework.
  *
  * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
 
 use function date;
@@ -52,7 +52,7 @@ class CommitInTransactionRollBackCest
                 2,
                 uniqid(),
                 102,
-                date('Y-m-d H:i:s')
+                date('Y-m-d H:i:s'),
             ],
             $template
         );
@@ -108,7 +108,7 @@ class CommitInTransactionRollBackCest
                 2,
                 uniqid(),
                 102,
-                date('Y-m-d H:i:s')
+                date('Y-m-d H:i:s'),
             ],
             $template
         );

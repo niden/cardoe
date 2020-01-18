@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
-use Phalcon\DM\Pdo\Connection;
 use IntegrationTester;
+use Phalcon\DM\Pdo\Connection;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
 
 class FetchPairsCest
@@ -28,7 +28,7 @@ class FetchPairsCest
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
-        $invoice = new Invoices($connection);
+        $invoice    = new Invoices($connection);
 
         $result = $invoice->insert($connection, 1);
         $I->assertEquals(1, $result);

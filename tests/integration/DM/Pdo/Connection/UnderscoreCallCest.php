@@ -12,9 +12,9 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use BadMethodCallException;
+use IntegrationTester;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\Test\Fixtures\DM\Pdo\ConnectionFixture;
-use IntegrationTester;
 
 class UnderscoreCallCest
 {
