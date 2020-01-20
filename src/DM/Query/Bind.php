@@ -135,6 +135,8 @@ class Bind
     }
 
     /**
+     * Processes an array - if passed as an `inline` parameter
+     *
      * @param array $array
      * @param int   $type
      *

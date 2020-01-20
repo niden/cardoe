@@ -28,7 +28,7 @@ class GetAdapterCest
         /** @var Connection $connection */
         $connection = $I->getConnection();
 
-        $I->assertTrue($connection->isConnected());
+        $I->assertFalse($connection->isConnected());
 
         $connection->connect();
 
