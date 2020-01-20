@@ -35,7 +35,6 @@ use function strtoupper;
 use function substr;
 use function trim;
 
-use function var_dump;
 use const PHP_EOL;
 
 /**
