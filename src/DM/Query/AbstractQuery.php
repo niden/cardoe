@@ -11,24 +11,36 @@
  * Implementation of this file has been influenced by AtlasPHP
  *
  * @link    https://github.com/atlasphp/Atlas.Query
- * @license https://github.com/atlasphp/Atlas.Query/blob/1.x/LICENSE.md
+ * @license https://github.com/atlasphp/Atlas.Qyert/blob/1.x/LICENSE.md
  */
 
 declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
-use PDOStatement;
+use PDO;
 use Phalcon\DM\Pdo\Connection;
-use Phalcon\DM\Pdo\Exception\CannotBindValue;
-use Phalcon\DM\Query\Clause\Component\Flags;
+
+use function array_keys;
+use function get_class_methods;
+use function implode;
+use function is_array;
+use function is_bool;
+use function is_int;
+use function is_null;
+use function ltrim;
+use function substr;
+use function ucfirst;
+use function var_dump;
+
+use const PHP_EOL;
 
 /**
  * Class AbstractQuery
  *
  * @property Bind       $bind
  * @property Connection $connection
- * @property Flags      $flags
+ * @property array      $store
  */
 abstract class AbstractQuery
 {
@@ -43,9 +55,9 @@ abstract class AbstractQuery
     protected $connection;
 
     /**
-     * @var Flags
+     * @var array
      */
-    protected $flags;
+    protected $store = [];
 
     /**
      * AbstractQuery constructor.
@@ -55,25 +67,16 @@ abstract class AbstractQuery
      */
     public function __construct(Connection $connection, Bind $bind)
     {
-        $this->connection = $connection;
         $this->bind       = $bind;
+        $this->connection = $connection;
+        $this->store["UNION"] = [];
 
         $this->reset();
     }
 
     /**
-     * @return PDOStatement
-     * @throws CannotBindValue
-     */
-    public function perform(): PDOStatement
-    {
-        return $this->connection->perform(
-            $this->getStatement(),
-            $this->getBindValues()
-        );
-    }
-
-    /**
+     * Binds a value inline
+     *
      * @param mixed $value
      * @param int   $type
      *
@@ -85,32 +88,41 @@ abstract class AbstractQuery
     }
 
     /**
+     * Binds a value - auto-detects the type if necessary
+     *
      * @param string $key
      * @param mixed  $value
      * @param int    $type
      *
-     * @return $this
+     * @return AbstractQuery
      */
-    public function bindValue(string $key, $value, int $type = -1): AbstractQuery
-    {
-        $this->bind->value($key, $value, $type);
+    public function bindValue(
+        string $key,
+        $value,
+        int $type = -1
+    ): AbstractQuery {
+        $this->bind->setValue($key, $value, $type);
 
         return $this;
     }
 
     /**
+     * Binds an array of values
+     *
      * @param array $values
      *
      * @return AbstractQuery
      */
     public function bindValues(array $values): AbstractQuery
     {
-        $this->bind->values($values);
+        $this->bind->setValues($values);
 
         return $this;
     }
 
     /**
+     * Returns all the bound values
+     *
      * @return array
      */
     public function getBindValues(): array
@@ -118,49 +130,86 @@ abstract class AbstractQuery
         return $this->bind->toArray();
     }
 
-    /**
-     * @param string $flag
-     * @param bool   $enable
-     *
-     * @return AbstractQuery
-     */
-    public function setFlag(string $flag, bool $enable = true): AbstractQuery
-    {
-        $this->flags->set($flag, $enable);
+    abstract public function getStatement(): string;
 
-        return $this;
+    public function perform()
+    {
+        return $this->connection->perform(
+            $this->getStatement(),
+            $this->getBindValues()
+        );
     }
 
     /**
-     * @return $this
+     * Sets a flag for the query such as "DISTINCT"
+     *
+     * @param string $flag
+     * @param bool   $enable
+     */
+    public function setFlag(string $flag, bool $enable = true): void
+    {
+        if ($enable) {
+            $this->store["FLAGS"][$flag] = true;
+        } else {
+            unset($this->store["FLAGS"][$flag]);
+        }
+    }
+
+    public function quoteIdentifier(string $name): string
+    {
+        return $this->connection->quoteName($name);
+    }
+
+    /**
+     * Resets the internal array
      */
     public function reset()
     {
+        $this->store["COLUMNS"] = [];
+        $this->store["FLAGS"]   = [];
+        $this->store["FROM"]    = [];
+        $this->store["GROUP"]   = [];
+        $this->store["HAVING"]  = [];
+        $this->store["LIMIT"]   = 0;
+        $this->store["ORDER"]   = [];
+        $this->store["OFFSET"]  = 0;
+        $this->store["WHERE"]   = [];
+
         foreach (get_class_methods($this) as $method) {
             if (substr($method, 0, 5) == 'reset' && $method != 'reset') {
                 $this->$method();
             }
         }
-        return $this;
     }
 
     /**
-     * @return $this
-     */
-    public function resetFlags(): AbstractQuery
-    {
-        $this->flags = new Flags();
-
-        return $this;
-    }
-
-    public function quoteIdentifier(string $name): string
-    {
-        return $this->quoter->quoteIdentifier($name);
-    }
-
-    /**
+     * Builds the flags statement(s)
+     *
      * @return string
      */
-    abstract public function getStatement(): string;
+    protected function buildFlags()
+    {
+        if (empty($this->store["FLAGS"])) {
+            return "";
+        }
+
+        return " " . implode(" ", array_keys($this->store["FLAGS"]));
+    }
+
+    /**
+     * Indents a collection
+     *
+     * @param array  $collection
+     * @param string $glue
+     *
+     * @return string
+     */
+    protected function indent(array $collection, string $glue = ""): string
+    {
+        if (empty($collection)) {
+            return "";
+        }
+
+        return " " . implode($glue . " ", $collection);
+    }
 }
