@@ -18,11 +18,11 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Pdo\Connection;
 
+use PDO;
+use PDOStatement;
 use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Phalcon\DM\Pdo\Parser\ParserInterface;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
-use PDO;
-use PDOStatement;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`

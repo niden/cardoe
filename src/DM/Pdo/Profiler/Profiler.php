@@ -23,8 +23,6 @@ use Phalcon\Helper\Json;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-use function json_encode;
-
 /**
  * Sends query profiles to a logger.
  *

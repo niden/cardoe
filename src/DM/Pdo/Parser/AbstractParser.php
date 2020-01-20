@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Phalcon\DM\Pdo\Parser;
 
 use Phalcon\DM\Pdo\Exception\MissingParameter;
+
 use function is_array;
 
 /**

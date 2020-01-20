@@ -19,16 +19,14 @@ declare(strict_types=1);
 namespace Phalcon\DM\Pdo\Connection;
 
 use BadMethodCallException;
-use Phalcon\DM\Pdo\Exception\CannotBindValue;
-use Phalcon\DM\Pdo\Parser\ParserInterface;
-use Phalcon\DM\Pdo\Parser\SqliteParser;
-use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
 use PDOStatement;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
+use Phalcon\DM\Pdo\Parser\ParserInterface;
+use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 use function call_user_func_array;
 use function is_array;
-use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -433,7 +431,7 @@ abstract class AbstractConnection implements ConnectionInterface
 
         return $this->pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
     }
-    
+
     /**
      * Returns the Parser instance.
      *
@@ -697,7 +695,7 @@ abstract class AbstractConnection implements ConnectionInterface
     public function quoteSingleName(string $name): string
     {
         $quote = $this->getQuoteNames();
-        $name = str_replace(
+        $name  = str_replace(
             $quote["find"],
             $quote["replace"],
             $name

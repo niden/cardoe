@@ -31,6 +31,7 @@ class ConstructCest
 
         $I->assertInstanceOf(Connection::class, $connection);
     }
+    
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: __construct() - exception
      *

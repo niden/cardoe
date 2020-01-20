@@ -18,10 +18,10 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Pdo\Connection;
 
+use PDO;
 use Phalcon\DM\Pdo\Exception\CannotDisconnect;
 use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
-use PDO;
 
 /**
  * Decorates an existing PDO instance with the extended methods.
