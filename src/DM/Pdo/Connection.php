@@ -18,11 +18,13 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Pdo;
 
+use InvalidArgumentException;
 use Phalcon\DM\Pdo\Connection\AbstractConnection;
 use Phalcon\DM\Pdo\Parser\ParserInterface;
 use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
+use function explode;
 use function var_dump;
 
 /**
@@ -62,12 +64,26 @@ class Connection extends AbstractConnection
         array $queries = [],
         ProfilerInterface $profiler = null
     ) {
+        $parts     = explode(':', $dsn);
+        $available = [
+            "mysql"  => true,
+            "pgsql"  => true,
+            "sqlite" => true,
+            "mssql"  => true,
+        ];
+        if (!isset($available[$parts[0]])) {
+            throw new InvalidArgumentException(
+                "Driver not supported [" . $parts[0] . "]"
+            );
+        }
+
+
         // if no error mode is specified, use exceptions
         if (!isset($options[PDO::ATTR_ERRMODE])) {
             $options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
         }
 
-        // retain the arguments for later
+        // Arguments store
         $this->args = [
             $dsn,
             $username,
@@ -76,18 +92,17 @@ class Connection extends AbstractConnection
             $queries,
         ];
 
-        // retain a profiler, instantiating a default one if needed
+        // Create a new profiler if none has been passed
         if ($profiler === null) {
             $profiler = new Profiler();
         }
         $this->setProfiler($profiler);
 
-        // retain a query parser
-        $parts  = explode(':', $dsn);
+        // Set the new Query parser
         $parser = $this->newParser($parts[0]);
         $this->setParser($parser);
 
-        // set quotes for identifier names
+        // Quotes
         $this->quote = $this->getQuoteNames($parts[0]);
     }
 

@@ -72,7 +72,8 @@ abstract class AbstractConnection implements ConnectionInterface
 
         if (!method_exists($this->pdo, $name)) {
             $class   = get_class($this);
-            $message = "Class '{$class}' does not have a method '{$name}'";
+            $message = "Class '" . $class
+                . "' does not have a method '" . $name . "'";
             throw new BadMethodCallException($message);
         }
 
@@ -456,11 +457,14 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Gets the quote parameters based on the driver
      *
+     * @param string $driver
+     *
      * @return array
      */
-    public function getQuoteNames(): array
+    public function getQuoteNames($driver = ""): array
     {
-        switch ($this->getDriverName()) {
+        $driver = "" === $driver ? $this->getDriverName() : $driver;
+        switch ($driver) {
             case 'mysql':
                 return [
                     "prefix"  => '`',
@@ -832,9 +836,6 @@ abstract class AbstractConnection implements ConnectionInterface
     protected function newParser(string $driver): ParserInterface
     {
         $class = sprintf("Phalcon\DM\Pdo\Parser\%sParser", ucfirst($driver));
-        if (!class_exists($class)) {
-            $class = SqliteParser::class;
-        }
 
         return new $class();
     }

@@ -11,6 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
+use Codeception\Stub;
 use IntegrationTester;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Parser\SqliteParser;
@@ -39,25 +40,5 @@ class GetSetParserCest
         $connection->setParser($parser);
 
         $I->assertSame($parser, $connection->getParser());
-    }
-
-    /**
-     * Integration Tests Phalcon\DM\Pdo\Connection :: getParser()/setParser()
-     * default
-     *
-     * @since  2019-12-11
-     */
-    public function dMPdoConnectionGetSetParserDefault(IntegrationTester $I)
-    {
-        $I->wantToTest('DM\Pdo\Connection - getParser()/setParser() - default');
-
-        $connection = new Connection(
-            'random:some data'
-        );
-
-        $I->assertInstanceOf(
-            SqliteParser::class,
-            $connection->getParser()
-        );
     }
 }

@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use IntegrationTester;
+use InvalidArgumentException;
 use Phalcon\DM\Pdo\Connection;
 
 class ConstructCest
@@ -29,5 +30,23 @@ class ConstructCest
         $connection = $I->getConnection();
 
         $I->assertInstanceOf(Connection::class, $connection);
+    }
+    /**
+     * Integration Tests Phalcon\DM\Pdo\Connection :: __construct() - exception
+     *
+     * @since  2020-01-20
+     */
+    public function dMPdoConnectionConstructException(IntegrationTester $I)
+    {
+        $I->wantToTest('DM\Pdo\Connection - __construct() - exception');
+
+        $I->expectThrowable(
+            new InvalidArgumentException(
+                "Driver not supported [random]"
+            ),
+            function () {
+                (new Connection('random:some data'));
+            }
+        );
     }
 }

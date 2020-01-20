@@ -29,7 +29,7 @@ class ErrorInfoCest
         $connection = $I->getConnection();
 
         $actual = $connection->errorInfo();
-        $expect = ['00000', null, null];
+        $expect = ['', null, null];
 
         $I->assertEquals($expect, $actual);
     }
