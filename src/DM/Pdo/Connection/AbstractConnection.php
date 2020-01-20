@@ -28,6 +28,7 @@ use PDOStatement;
 
 use function call_user_func_array;
 use function is_array;
+use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -37,7 +38,6 @@ use function is_array;
  * @property ParserInterface   $parser
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
- * @property array             $quote
  */
 abstract class AbstractConnection implements ConnectionInterface
 {
@@ -55,11 +55,6 @@ abstract class AbstractConnection implements ConnectionInterface
      * @var ProfilerInterface
      */
     protected $profiler;
-
-    /**
-     * @var array
-     */
-    protected $quote = [];
 
     /**
      * Proxies to PDO methods created for specific drivers; in particular,
@@ -231,19 +226,23 @@ abstract class AbstractConnection implements ConnectionInterface
     }
 
     /**
-     * Fetches the first column of rows as a sequential array.
+     * Fetches a column of rows as a sequential array (default first one).
      *
      * @param string $statement
      * @param array  $values
+     * @param int    $column
      *
      * @return array
      * @throws CannotBindValue
      */
-    public function fetchCol(string $statement, array $values = []): array
-    {
+    public function fetchColumn(
+        string $statement,
+        array $values = [],
+        int $column = 0
+    ): array {
         return $this->fetchData(
             "fetchAll",
-            [PDO::FETCH_COLUMN, 0],
+            [PDO::FETCH_COLUMN, $column],
             $statement,
             $values
         );
@@ -457,13 +456,11 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * Gets the quote parameters based on the driver
      *
-     * @param string $driver
-     *
      * @return array
      */
-    public function getQuoteNames(string $driver): array
+    public function getQuoteNames(): array
     {
-        switch ($driver) {
+        switch ($this->getDriverName()) {
             case 'mysql':
                 return [
                     "prefix"  => '`',
@@ -471,7 +468,6 @@ abstract class AbstractConnection implements ConnectionInterface
                     "find"    => '`',
                     "replace" => '``',
                 ];
-                break;
 
             case 'sqlsrv':
                 return [
@@ -605,15 +601,15 @@ abstract class AbstractConnection implements ConnectionInterface
         [$statement, $values] = $parser->rebuild($statement, $values);
 
         // prepare the statement
-        $sth = $this->pdo->prepare($statement);
+        $statement = $this->pdo->prepare($statement);
 
         // for the placeholders we found, bind the corresponding data values
-        foreach ($values as $key => $val) {
-            $this->bindValue($sth, $key, $val);
+        foreach ($values as $key => $value) {
+            $this->bindValue($statement, $key, $value);
         }
 
         // done
-        return $sth;
+        return $statement;
     }
 
     /**
@@ -696,15 +692,16 @@ abstract class AbstractConnection implements ConnectionInterface
      */
     public function quoteSingleName(string $name): string
     {
+        $quote = $this->getQuoteNames();
         $name = str_replace(
-            $this->quote["find"],
-            $this->quote["replace"],
+            $quote["find"],
+            $quote["replace"],
             $name
         );
 
-        return $this->quote["prefix"]
+        return $quote["prefix"]
             . $name
-            . $this->quote["suffix"];
+            . $quote["suffix"];
     }
 
     /**

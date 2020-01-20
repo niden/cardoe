@@ -29,7 +29,7 @@ class ConnectDisconnectIsConnectedCest
         /** @var Connection $connection */
         $connection = $I->getConnection();
 
-        $I->assertFalse($connection->isConnected());
+        $I->assertTrue($connection->isConnected());
         $connection->connect();
         $I->assertTrue($connection->isConnected());
         $connection->disconnect();

@@ -29,6 +29,6 @@ class ErrorCodeCest
         $connection = $I->getConnection();
 
         $actual = $connection->errorCode();
-        $I->assertEquals('', $actual);
+        $I->assertEquals('00000', $actual);
     }
 }

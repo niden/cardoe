@@ -15,16 +15,16 @@ use IntegrationTester;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
 
-class FetchColCest
+class FetchColumnCest
 {
     /**
-     * Integration Tests Phalcon\DM\Pdo\Connection :: fetchCol()
+     * Integration Tests Phalcon\DM\Pdo\Connection :: fetchColumn()
      *
      * @since  2019-12-11
      */
     public function dMPdoConnectionFetchCol(IntegrationTester $I)
     {
-        $I->wantToTest('DM\Pdo\Connection - fetchCol()');
+        $I->wantToTest('DM\Pdo\Connection - fetchColumn()');
 
         /** @var Connection $connection */
         $connection = $I->getConnection();
@@ -37,7 +37,7 @@ class FetchColCest
         $result = $invoice->insert($connection, 3);
         $I->assertEquals(1, $result);
 
-        $all = $connection->fetchCol(
+        $all = $connection->fetchColumn(
             'select * from co_invoices'
         );
 
@@ -45,5 +45,16 @@ class FetchColCest
         $I->assertEquals(1, $all[0]);
         $I->assertEquals(2, $all[1]);
         $I->assertEquals(3, $all[2]);
+
+        $all = $connection->fetchColumn(
+            'select * from co_invoices',
+            [],
+            4
+        );
+
+        $I->assertIsArray($all);
+        $I->assertEquals("101.00", $all[0]);
+        $I->assertEquals("102.00", $all[1]);
+        $I->assertEquals("103.00", $all[2]);
     }
 }

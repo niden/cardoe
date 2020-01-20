@@ -23,6 +23,7 @@ use Phalcon\DM\Pdo\Parser\ParserInterface;
 use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 use PDO;
+use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`

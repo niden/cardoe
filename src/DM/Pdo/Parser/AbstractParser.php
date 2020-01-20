@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Phalcon\DM\Pdo\Parser;
 
 use Phalcon\DM\Pdo\Exception\MissingParameter;
+use function is_array;
 
 /**
  * Parsing/rebuilding functionality for all drivers.
@@ -142,13 +143,15 @@ abstract class AbstractParser implements ParserInterface
             return $part;
         }
 
-        // split into subparts by ":name" and "?"
+        // split into sub-parts by ":name" and "?"
         $subs = preg_split(
             "/(?<!:)(:[a-zA-Z_][a-zA-Z0-9_]*)|(\?)/um",
             $part,
             -1,
             PREG_SPLIT_DELIM_CAPTURE
         );
+
+        $subs = is_array($subs) ? $subs : [];
 
         // check sub-parts to expand placeholders for bound arrays
         return $this->prepareValuePlaceholders($subs);
@@ -299,12 +302,14 @@ abstract class AbstractParser implements ParserInterface
      */
     protected function getParts(string $statement): array
     {
-        $split = implode("|", $this->split);
-        return preg_split(
+        $split  = implode("|", $this->split);
+        $result = preg_split(
             "/(" . $split . ")/um",
             $statement,
             -1,
             PREG_SPLIT_DELIM_CAPTURE | PREG_SPLIT_NO_EMPTY
         );
+
+        return (is_array($result)) ? $result : [];
     }
 }

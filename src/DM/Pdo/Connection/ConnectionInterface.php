@@ -87,15 +87,16 @@ interface ConnectionInterface extends PdoInterface
     public function fetchAssoc(string $statement, array $values = []): array;
 
     /**
-     * Fetches the first column of rows as a sequential array.
+     * Fetches a column of rows as a sequential array (default first one).
      *
      * @param string $statement
      * @param array  $values
+     * @param int    $column
      *
      * @return array
      * @throws CannotBindValue
      */
-    public function fetchCol(string $statement, array $values = []): array;
+    public function fetchColumn(string $statement, array $values = [], int $column = 0): array;
 
     /**
      * Fetches multiple from the database as an associative array. The first
