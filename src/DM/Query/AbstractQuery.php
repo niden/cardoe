@@ -18,7 +18,9 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
+use PDOStatement;
 use Phalcon\DM\Pdo\Connection;
+use Phalcon\DM\Pdo\Exception\CannotBindValue;
 
 use function array_keys;
 use function implode;
@@ -118,8 +120,19 @@ abstract class AbstractQuery
         return $this->bind->toArray();
     }
 
+    /**
+     * Return the generated statement
+     *
+     * @return string
+     */
     abstract public function getStatement(): string;
 
+    /**
+     * Performs a statement in the connection
+     *
+     * @return PDOStatement
+     * @throws CannotBindValue
+     */
     public function perform()
     {
         return $this->connection->perform(
