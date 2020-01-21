@@ -12,6 +12,8 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\DM\Pdo\ConnectionLocator;
 
 use IntegrationTester;
+use Phalcon\DM\Pdo\ConnectionLocator;
+use Phalcon\DM\Pdo\ConnectionLocatorInterface;
 
 class ConstructCest
 {
@@ -24,6 +26,13 @@ class ConstructCest
     {
         $I->wantToTest('DM\Pdo\ConnectionLocator - __construct()');
 
-        $I->skipTest('Need implementation');
+        $connection1 = $I->getConnection();
+        $locator     = new ConnectionLocator(
+            function () use ($connection1) {
+                return $connection1;
+            }
+        );
+        $I->assertInstanceOf(ConnectionLocatorInterface::class, $locator);
+        $I->assertInstanceOf(ConnectionLocator::class, $locator);
     }
 }

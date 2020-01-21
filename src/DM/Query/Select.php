@@ -535,18 +535,6 @@ class Select extends AbstractQuery
         return $this;
     }
 
-//    public function __clone()
-//    {
-//        $vars = get_object_vars($this);
-//        unset($vars['bind']);
-//        foreach ($vars as $name => $prop) {
-//            if (is_object($prop)) {
-//                $this->$name = clone $prop;
-//            }
-//        }
-//    }
-//
-
     /**
      * Statement builder
      *
@@ -566,7 +554,8 @@ class Select extends AbstractQuery
             . $this->buildCondition("HAVING")
             . $this->buildBy("ORDER")
             . $this->buildLimit()
-            . ($this->forUpdate ? " FOR UPDATE" : "");
+            . ($this->forUpdate ? " FOR UPDATE" : "")
+        ;
 
         if ("" !== $this->as) {
             $stm = "(" . $stm . ") AS " . $this->as;
@@ -698,9 +687,8 @@ class Select extends AbstractQuery
         $limit = "";
         if ("sqlsrv" === $this->connection->getDriverName()) {
             if ($this->store["LIMIT"] > 0 && $this->store["OFFSET"] > 0) {
-                $limit = PHP_EOL
-                    . "OFFSET " . $this->store["OFFSET"] . " ROWS "
-                    . "FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
+                $limit = " OFFSET " . $this->store["OFFSET"] . " ROWS"
+                    . " FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
             }
         } else {
             if (0 !== $this->store["LIMIT"]) {

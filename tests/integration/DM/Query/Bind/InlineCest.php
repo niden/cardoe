@@ -37,7 +37,7 @@ class InlineCest
         $bind->inline("one");
 
         $expected = [
-            "__1__" => ["one", 2]
+            "__1__" => ["one", 2],
         ];
         $actual   = $bind->toArray();
         $I->assertEquals($expected, $actual);

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\DM\Query\Select;
 
 use IntegrationTester;
+use Phalcon\DM\Query\QueryFactory;
 
 class QuoteIdentifierCest
 {
@@ -26,6 +27,14 @@ class QuoteIdentifierCest
     {
         $I->wantToTest('DM\Query\Select - quoteIdentifier()');
 
-        $I->skipTest('Need implementation');
+        $connection = $I->getConnection();
+        $factory    = new QueryFactory();
+        $select     = $factory->newSelect($connection);
+
+        $quotes   = $connection->getQuoteNames();
+        $source   = 'some field';
+        $expected = $quotes['prefix'] . $source . $quotes['suffix'];
+        $actual   = $select->quoteIdentifier($source);
+        $I->assertEquals($expected, $actual);
     }
 }
