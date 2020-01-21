@@ -35,8 +35,6 @@ use function strtoupper;
 use function substr;
 use function trim;
 
-use const PHP_EOL;
-
 /**
  * Class Select
  *
@@ -54,7 +52,7 @@ use const PHP_EOL;
  * @method array  fetchPairs()
  * @method mixed  fetchValue()
  */
-class Select extends AbstractQuery
+class Select extends AbstractConditions
 {
     public const JOIN_INNER   = "INNER";
     public const JOIN_LEFT    = "LEFT";
@@ -132,22 +130,6 @@ class Select extends AbstractQuery
     }
 
     /**
-     * Sets a `AND` for a `WHERE` condition
-     *
-     * @param string     $condition
-     * @param mixed|null $value
-     * @param int        $type
-     *
-     * @return Select
-     */
-    public function andWhere(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->where($condition, $value, $type);
-
-        return $this;
-    }
-
-    /**
      * The `AS` statement for the query - useful in sub-queries
      *
      * @param string $as
@@ -204,30 +186,14 @@ class Select extends AbstractQuery
     }
 
     /**
-     * Concatenates to the most recent `WHERE` clause
-     *
-     * @param string     $condition
-     * @param mixed|null $value
-     * @param int        $type
-     *
-     * @return Select
-     */
-    public function catWhere(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->catCondition("WHERE", $condition, $value, $type);
-
-        return $this;
-    }
-
-    /**
      * The columns to select from. If a key is set in an array element, the
      * key will be used as the alias
      *
      * @param string ...$column
      *
-     * @return $this
+     * @return Select
      */
-    public function columns()
+    public function columns(): Select
     {
         $this->store['COLUMNS'] = array_merge(
             $this->store["COLUMNS"],
@@ -250,6 +216,20 @@ class Select extends AbstractQuery
     }
 
     /**
+     * Adds table(s) in the query
+     *
+     * @param string $table
+     *
+     * @return Select
+     */
+    public function from(string $table): Select
+    {
+        $this->store["FROM"][] = [$table];
+
+        return $this;
+    }
+
+    /**
      * Enable the `FOR UPDATE` for the query
      *
      * @param bool $enable
@@ -259,20 +239,6 @@ class Select extends AbstractQuery
     public function forUpdate(bool $enable = true): Select
     {
         $this->forUpdate = $enable;
-
-        return $this;
-    }
-
-    /**
-     * Adds table(s) in the query
-     *
-     * @param array|string $table
-     *
-     * @return Select
-     */
-    public function from(string $table): Select
-    {
-        $this->store["FROM"][] = [$table];
 
         return $this;
     }
@@ -373,48 +339,6 @@ class Select extends AbstractQuery
     }
 
     /**
-     * Sets the `LIMIT` clause
-     *
-     * @param int $limit
-     *
-     * @return $this
-     */
-    public function limit(int $limit): Select
-    {
-        $this->store["LIMIT"] = $limit;
-
-        return $this;
-    }
-
-    /**
-     * Sets the `OFFSET` clause
-     *
-     * @param int $offset
-     *
-     * @return $this
-     */
-    public function offset(int $offset): Select
-    {
-        $this->store["OFFSET"] = $offset;
-
-        return $this;
-    }
-
-    /**
-     * Sets the `ORDER BY`
-     *
-     * @param array|string $orderBy
-     *
-     * @return Select
-     */
-    public function orderBy($orderBy): Select
-    {
-        $this->processValue("ORDER", $orderBy);
-
-        return $this;
-    }
-
-    /**
      * Sets a `OR` for a `HAVING` condition
      *
      * @param string     $condition
@@ -426,22 +350,6 @@ class Select extends AbstractQuery
     public function orHaving(string $condition, $value = null, int $type = -1): Select
     {
         $this->appendCondition("HAVING", "OR ", $condition, $value, $type);
-
-        return $this;
-    }
-
-    /**
-     * Sets a `OR` for a `WHERE` condition
-     *
-     * @param string     $condition
-     * @param mixed|null $value
-     * @param int        $type
-     *
-     * @return Select
-     */
-    public function orWhere(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->appendCondition("WHERE", "OR ", $condition, $value, $type);
 
         return $this;
     }
@@ -502,40 +410,6 @@ class Select extends AbstractQuery
     }
 
     /**
-     * Sets a `WHERE` condition
-     *
-     * @param string     $condition
-     * @param mixed|null $value
-     * @param int        $type
-     *
-     * @return Select
-     */
-    public function where(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->appendCondition("WHERE", "AND ", $condition, $value, $type);
-
-        return $this;
-    }
-
-
-    public function whereEquals(array $columnsValues)
-    {
-        foreach ($columnsValues as $key => $val) {
-            if (is_numeric($key)) {
-                $this->where($val);
-            } elseif ($val === null) {
-                $this->where($key . " IS NULL");
-            } elseif (is_array($val)) {
-                $this->where($key . " IN ", $val);
-            } else {
-                $this->where($key . " = ", $val);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * Statement builder
      *
      * @param string $suffix
@@ -565,50 +439,6 @@ class Select extends AbstractQuery
     }
 
     /**
-     * Appends a conditional
-     *
-     * @param string     $store
-     * @param string     $andor
-     * @param string     $condition
-     * @param mixed|null $value
-     * @param int        $type
-     */
-    protected function appendCondition(
-        string $store,
-        string $andor,
-        string $condition,
-        $value = null,
-        $type = -1
-    ): void {
-        if (!empty($value)) {
-            $condition .= $this->bindInline($value, $type);
-        }
-
-        if (empty($this->store[$store])) {
-            $andor = "";
-        }
-
-        $this->store[$store][] = $andor . $condition;
-    }
-
-    /**
-     * Builds a `BY` list
-     *
-     * @param string $type
-     *
-     * @return string
-     */
-    private function buildBy(string $type): string
-    {
-        if (empty($this->store[$type])) {
-            return "";
-        }
-
-        return " " . $type . " BY"
-            . $this->indent($this->store[$type], ",");
-    }
-
-    /**
      * Builds the columns list
      *
      * @return string
@@ -622,23 +452,6 @@ class Select extends AbstractQuery
         }
 
         return $this->indent($columns, ",");
-    }
-
-    /**
-     * Builds the conditional string
-     *
-     * @param string $type
-     *
-     * @return string
-     */
-    private function buildCondition(string $type): string
-    {
-        if (empty($this->store[$type])) {
-            return "";
-        }
-
-        return " " . $type
-            . $this->indent($this->store[$type]);
     }
 
     /**
@@ -658,100 +471,5 @@ class Select extends AbstractQuery
         }
 
         return " FROM" . $this->indent($from, ",");
-    }
-
-    /**
-     * Builds the early `LIMIT` clause - MS SQLServer
-     *
-     * @return string
-     */
-    private function buildLimitEarly(): string
-    {
-        $limit = "";
-        if ("sqlsrv" === $this->connection->getDriverName()) {
-            if ($this->store["LIMIT"] > 0 && 0 === $this->store["OFFSET"]) {
-                $limit = " TOP " . $this->store["LIMIT"];
-            }
-        }
-
-        return $limit;
-    }
-
-    /**
-     * Builds the `LIMIT` clause
-     *
-     * @return string
-     */
-    private function buildLimit(): string
-    {
-        $limit = "";
-        if ("sqlsrv" === $this->connection->getDriverName()) {
-            if ($this->store["LIMIT"] > 0 && $this->store["OFFSET"] > 0) {
-                $limit = " OFFSET " . $this->store["OFFSET"] . " ROWS"
-                    . " FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
-            }
-        } else {
-            if (0 !== $this->store["LIMIT"]) {
-                $limit .= "LIMIT " . $this->store["LIMIT"];
-            }
-
-            if (0 !== $this->store["OFFSET"]) {
-                $limit .= " OFFSET " . $this->store["OFFSET"];
-            }
-
-            if ("" !== $limit) {
-                $limit = " " . ltrim($limit);
-            }
-        }
-
-        return $limit;
-    }
-
-    /**
-     * Concatenates a conditional
-     *
-     * @param string $store
-     * @param string $condition
-     * @param mixed  $value
-     * @param int    $type
-     */
-    protected function catCondition(
-        string $store,
-        string $condition,
-        $value = null,
-        int $type = -1
-    ): void {
-        if (!empty($value)) {
-            $condition .= $this->bindInline($value, $type);
-        }
-
-        if (empty($this->store[$store])) {
-            $this->store[$store][] = "";
-        }
-
-        end($this->store[$store]);
-        $key = key($this->store[$store]);
-
-        $this->store[$store][$key] .= $condition;
-    }
-
-    /**
-     * Processes a value (array or string) and merges it with the store
-     *
-     * @param string       $store
-     * @param array|string $data
-     */
-    private function processValue(string $store, $data): void
-    {
-        if (is_string($data)) {
-            $data = [$data];
-        }
-
-        if (is_array($data)) {
-            $this->store[$store] = array_merge(
-                $this->store[$store],
-                $data
-            );
-        }
     }
 }

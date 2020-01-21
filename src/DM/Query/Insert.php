@@ -12,30 +12,67 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
-class Insert extends Query
+use function array_values;
+
+/**
+ * Class Insert
+ */
+class Insert extends AbstractQuery
 {
-    use Clause\ModifyColumns;
-    use Clause\Returning;
-
-    protected $table = '';
-
-    public function into(string $table)
+    /**
+     * Adds table(s) in the query
+     *
+     * @param string $table
+     *
+     * @return Insert
+     */
+    public function from(string $table): Insert
     {
-        $this->table = $table;
+        $this->store["FROM"] = $table;
+
         return $this;
     }
 
-    public function getStatement(): string
-    {
-        return 'INSERT'
-            . $this->flags->build()
-            . " INTO {$this->table} "
-            . $this->columns->build()
-            . $this->returning->build();
-    }
-
+    /**
+     * Returns the id of the last inserted record
+     *
+     * @param string|null $name
+     *
+     * @return string
+     */
     public function getLastInsertId(string $name = null)
     {
         return $this->connection->lastInsertId($name);
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatement(): string
+    {
+        return "INSERT"
+            . $this->buildFlags()
+            . " INTO " . $this->store["FROM"]
+            . $this->buildColumns()
+            . $this->buildReturning()
+        ;
+    }
+
+    /**
+     * Builds the column list
+     *
+     * @return string
+     */
+    private function buildColumns(): string
+    {
+        $columns = [];
+        foreach ($this->store["COLUMNS"] as $column => $value) {
+            $columns[] = $this->quoteIdentifier($column);
+        }
+        return "("
+            . $this->indent($columns, ",")
+            . ") VALUES ("
+            . $this->indent(array_values($this->store["COLUMNS"]), ",")
+            . ")";
     }
 }

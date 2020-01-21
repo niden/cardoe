@@ -18,22 +18,12 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
-use PDO;
 use Phalcon\DM\Pdo\Connection;
 
 use function array_keys;
 use function get_class_methods;
 use function implode;
-use function is_array;
-use function is_bool;
-use function is_int;
-use function is_null;
-use function ltrim;
 use function substr;
-use function ucfirst;
-use function var_dump;
-
-use const PHP_EOL;
 
 /**
  * Class AbstractQuery
@@ -67,8 +57,8 @@ abstract class AbstractQuery
      */
     public function __construct(Connection $connection, Bind $bind)
     {
-        $this->bind       = $bind;
-        $this->connection = $connection;
+        $this->bind           = $bind;
+        $this->connection     = $connection;
         $this->store["UNION"] = [];
 
         $this->reset();
@@ -174,12 +164,6 @@ abstract class AbstractQuery
         $this->store["ORDER"]   = [];
         $this->store["OFFSET"]  = 0;
         $this->store["WHERE"]   = [];
-
-        foreach (get_class_methods($this) as $method) {
-            if (substr($method, 0, 5) == 'reset' && $method != 'reset') {
-                $this->$method();
-            }
-        }
     }
 
     /**
@@ -194,6 +178,16 @@ abstract class AbstractQuery
         }
 
         return " " . implode(" ", array_keys($this->store["FLAGS"]));
+    }
+
+    /**
+     * Builds the `RETURNING` clause
+     *
+     * @return string
+     */
+    protected function buildReturning(): string
+    {
+        return " RETURNING " . $this->indent($this->store["RETURNING"]);
     }
 
     /**
