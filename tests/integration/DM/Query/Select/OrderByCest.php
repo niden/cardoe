@@ -43,9 +43,8 @@ class OrderByCest
 
 
         $expected = "SELECT * FROM co_invoices "
-            . "ORDER BY inv_cst_id, UPPER(inv_title)"
-        ;
-        $actual = $select->getStatement();
+            . "ORDER BY inv_cst_id, UPPER(inv_title)";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

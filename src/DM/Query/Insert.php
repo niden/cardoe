@@ -54,8 +54,7 @@ class Insert extends AbstractQuery
             . $this->buildFlags()
             . " INTO " . $this->store["FROM"]
             . $this->buildColumns()
-            . $this->buildReturning()
-        ;
+            . $this->buildReturning();
     }
 
     /**

@@ -37,11 +37,11 @@ class WhereCest
         ;
 
         $expected = "SELECT * FROM co_invoices WHERE inv_id > :__1__";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [
-            '__1__' => [1, 1]
+            '__1__' => [1, 1],
         ];
         $actual   = $select->getBindValues();
         $I->assertEquals($expected, $actual);
@@ -73,7 +73,7 @@ class WhereCest
             . "WHERE inv_id > 1 AND inv_total > :total "
             . "AND inv_cst_id IN (:__1__, :__2__, :__3__) "
             . "AND inv_status_flag = :__4__";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [
@@ -110,7 +110,7 @@ class WhereCest
         $expected = "SELECT * FROM co_invoices "
             . "WHERE inv_total > :__1__ "
             . "OR inv_status_flag = :status";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [

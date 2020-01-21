@@ -73,8 +73,7 @@ class Delete extends AbstractConditions
             . $this->buildFlags()
             . " FROM " . $this->store["FROM"]
             . $this->buildCondition("WHERE")
-            . $this->buildReturning()
-        ;
+            . $this->buildReturning();
     }
 
     /**

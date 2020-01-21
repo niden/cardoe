@@ -38,9 +38,8 @@ class JoinCest
         ;
 
         $expected = "SELECT * FROM co_invoices "
-            . "LEFT JOIN co_customers ON inv_cst_id = cst_id"
-        ;
-        $actual = $select->getStatement();
+            . "LEFT JOIN co_customers ON inv_cst_id = cst_id";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -63,13 +62,12 @@ class JoinCest
         ;
 
         $expected = "SELECT * FROM co_invoices "
-            . "RIGHT JOIN co_customers ON inv_cst_id = cst_id"
-        ;
-        $actual = $select->getStatement();
+            . "RIGHT JOIN co_customers ON inv_cst_id = cst_id";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
-     /**
+    /**
      * Integration Tests Phalcon\DM\Query\Select :: join() - inner
      *
      * @since  2020-01-20
@@ -89,9 +87,8 @@ class JoinCest
 
 
         $expected = "SELECT * FROM co_invoices "
-            . "INNER JOIN co_customers ON inv_cst_id = cst_id"
-        ;
-        $actual = $select->getStatement();
+            . "INNER JOIN co_customers ON inv_cst_id = cst_id";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -114,9 +111,8 @@ class JoinCest
         ;
 
         $expected = "SELECT * FROM co_invoices "
-            . "NATURAL JOIN co_customers ON inv_cst_id = cst_id"
-        ;
-        $actual = $select->getStatement();
+            . "NATURAL JOIN co_customers ON inv_cst_id = cst_id";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -146,16 +142,15 @@ class JoinCest
 
         $expected = "SELECT * FROM co_invoices "
             . "LEFT JOIN co_customers ON inv_cst_id = cst_id "
-            . "AND cst_status_flag = :__1__ AND cst_name LIKE :__2__"
-        ;
-        $actual = $select->getStatement();
+            . "AND cst_status_flag = :__1__ AND cst_name LIKE :__2__";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [
             '__1__' => [1, PDO::PARAM_INT],
             '__2__' => ['%john%', PDO::PARAM_STR],
         ];
-        $actual = $select->getBindValues();
+        $actual   = $select->getBindValues();
         $I->assertEquals($expected, $actual);
     }
 }

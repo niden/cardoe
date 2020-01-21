@@ -38,7 +38,7 @@ class WhereEqualsCest
                     'inv_id'     => [1, 2, 3],
                     'inv_cst_id' => null,
                     'inv_title'  => 'ACME',
-                    'inv_created_at = NOW()'
+                    'inv_created_at = NOW()',
                 ]
             )
         ;
@@ -49,7 +49,7 @@ class WhereEqualsCest
             . "AND inv_cst_id IS NULL "
             . "AND inv_title = :__4__ "
             . "AND inv_created_at = NOW()";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

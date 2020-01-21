@@ -41,7 +41,7 @@ class ColumnsCest
 
         $expected = "SELECT inv_id, inv_cst_id, COUNT(inv_total) "
             . "FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

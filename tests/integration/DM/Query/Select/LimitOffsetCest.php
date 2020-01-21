@@ -37,13 +37,13 @@ class LimitOffsetCest
         ;
 
         $expected = "SELECT * FROM co_invoices LIMIT 10";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $select->offset(50);
 
         $expected = "SELECT * FROM co_invoices LIMIT 10 OFFSET 50";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

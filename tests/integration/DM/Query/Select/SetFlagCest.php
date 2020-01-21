@@ -37,7 +37,7 @@ class SetFlagCest
         ;
 
         $expected = "SELECT LOW_PRIORITY * FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

@@ -37,7 +37,7 @@ class FromCest
         ;
 
         $expected = "SELECT * FROM co_invoices, co_customers";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -56,7 +56,7 @@ class FromCest
 
 
         $expected = "SELECT *";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

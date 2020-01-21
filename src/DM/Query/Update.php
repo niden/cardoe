@@ -16,7 +16,6 @@ use Phalcon\DM\Pdo\Connection;
 
 use function array_merge;
 use function func_get_args;
-use const PHP_EOL;
 
 class Update extends AbstractConditions
 {
@@ -103,8 +102,7 @@ class Update extends AbstractConditions
             . " " . $this->store["FROM"]
             . $this->buildColumns()
             . $this->buildCondition("WHERE")
-            . $this->buildReturning()
-        ;
+            . $this->buildReturning();
     }
 
     /**

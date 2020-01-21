@@ -37,7 +37,7 @@ class ForUpdateCest
         ;
 
         $expected = "SELECT * FROM co_invoices FOR UPDATE";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -61,7 +61,7 @@ class ForUpdateCest
         ;
 
         $expected = "SELECT * FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

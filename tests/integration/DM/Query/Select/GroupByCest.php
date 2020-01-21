@@ -39,9 +39,8 @@ class GroupByCest
 
 
         $expected = "SELECT * FROM co_invoices "
-            . "GROUP BY inv_cst_id, inv_status_flag"
-        ;
-        $actual = $select->getStatement();
+            . "GROUP BY inv_cst_id, inv_status_flag";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

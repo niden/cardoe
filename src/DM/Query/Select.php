@@ -26,9 +26,6 @@ use function array_shift;
 use function call_user_func_array;
 use function end;
 use function func_get_args;
-use function is_array;
-use function is_numeric;
-use function is_string;
 use function key;
 use function ltrim;
 use function strtoupper;
@@ -46,8 +43,10 @@ use function trim;
  * @method array  fetchAssoc()
  * @method array  fetchColumn(int $column = 0)
  * @method array  fetchGroup(int $flags = PDO::FETCH_ASSOC)
- * @method object fetchObject(string $class = 'stdClass', array $arguments = [])
- * @method array  fetchObjects(string $class = 'stdClass', array $arguments = [])
+ * @method object fetchObject(string $class = 'stdClass', array $arguments =
+ *         [])
+ * @method array  fetchObjects(string $class = 'stdClass', array $arguments =
+ *         [])
  * @method array  fetchOne()
  * @method array  fetchPairs()
  * @method mixed  fetchValue()
@@ -428,8 +427,7 @@ class Select extends AbstractConditions
             . $this->buildCondition("HAVING")
             . $this->buildBy("ORDER")
             . $this->buildLimit()
-            . ($this->forUpdate ? " FOR UPDATE" : "")
-        ;
+            . ($this->forUpdate ? " FOR UPDATE" : "");
 
         if ("" !== $this->as) {
             $stm = "(" . $stm . ") AS " . $this->as;

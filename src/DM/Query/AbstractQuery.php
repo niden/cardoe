@@ -21,9 +21,7 @@ namespace Phalcon\DM\Query;
 use Phalcon\DM\Pdo\Connection;
 
 use function array_keys;
-use function get_class_methods;
 use function implode;
-use function substr;
 
 /**
  * Class AbstractQuery

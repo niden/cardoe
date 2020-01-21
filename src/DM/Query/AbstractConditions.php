@@ -18,24 +18,13 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
-use Phalcon\DM\Pdo\Connection;
-
-use function array_keys;
 use function array_merge;
-use function array_shift;
-use function call_user_func_array;
 use function end;
-use function func_get_args;
-use function get_class_methods;
-use function implode;
 use function is_array;
 use function is_numeric;
 use function is_string;
 use function key;
 use function ltrim;
-use function strtoupper;
-use function substr;
-use function trim;
 
 /**
  * Class AbstractConditions

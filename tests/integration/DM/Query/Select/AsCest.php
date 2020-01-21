@@ -37,7 +37,7 @@ class AsCest
         ;
 
         $expected = "(SELECT * FROM co_invoices) AS inv";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

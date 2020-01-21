@@ -45,7 +45,7 @@ class UnionCest
         $expected = "SELECT * FROM co_invoices WHERE inv_id = 1 UNION "
             . "SELECT * FROM co_invoices WHERE inv_id = 2 UNION "
             . "SELECT * FROM co_invoices WHERE inv_id = 3";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

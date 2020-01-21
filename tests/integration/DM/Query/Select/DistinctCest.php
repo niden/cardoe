@@ -38,7 +38,7 @@ class DistinctCest
         ;
 
         $expected = "SELECT DISTINCT inv_id, inc_cst_id FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -63,7 +63,7 @@ class DistinctCest
         ;
 
         $expected = "SELECT DISTINCT inv_id, inc_cst_id FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 
@@ -88,7 +88,7 @@ class DistinctCest
         ;
 
         $expected = "SELECT inv_id, inc_cst_id FROM co_invoices";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }
 }

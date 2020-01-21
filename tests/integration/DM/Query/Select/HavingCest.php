@@ -40,11 +40,11 @@ class HavingCest
 
 
         $expected = "SELECT * FROM co_invoices HAVING inv_total = :total";
-        $actual = $select->getStatement();
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [
-            'total' => [100, PDO::PARAM_INT]
+            'total' => [100, PDO::PARAM_INT],
         ];
         $actual   = $select->getBindValues();
         $I->assertEquals($expected, $actual);
@@ -76,13 +76,12 @@ class HavingCest
         $expected = "SELECT * FROM co_invoices "
             . "HAVING inv_total = :total AND "
             . "inv_cst_id = 1 OR "
-            . "(inv_status_flag = 0 OR inv_status_flag = 1)"
-        ;
-        $actual = $select->getStatement();
+            . "(inv_status_flag = 0 OR inv_status_flag = 1)";
+        $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
 
         $expected = [
-            'total' => [100, PDO::PARAM_INT]
+            'total' => [100, PDO::PARAM_INT],
         ];
         $actual   = $select->getBindValues();
         $I->assertEquals($expected, $actual);
