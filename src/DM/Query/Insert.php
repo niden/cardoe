@@ -26,7 +26,7 @@ class Insert extends AbstractQuery
      *
      * @return Insert
      */
-    public function from(string $table): Insert
+    public function into(string $table): Insert
     {
         $this->store["FROM"] = $table;
 
