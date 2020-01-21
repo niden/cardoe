@@ -25,6 +25,7 @@ use function is_numeric;
 use function is_string;
 use function key;
 use function ltrim;
+use function ucfirst;
 
 /**
  * Class AbstractConditions
@@ -244,24 +245,48 @@ abstract class AbstractConditions extends AbstractQuery
      */
     protected function buildLimit(): string
     {
+        $suffix = $this->connection->getDriverName();
+        $suffix = "sqlsrv" === $suffix ? $suffix : "common";
+        $method = "buildLimit" . ucfirst($suffix);
+
+        return $this->$method();
+    }
+
+    /**
+     * Builds the `LIMIT` clause for all drivers
+     *
+     * @return string
+     */
+
+    protected function buildLimitCommon(): string
+    {
         $limit = "";
-        if ("sqlsrv" === $this->connection->getDriverName()) {
-            if ($this->store["LIMIT"] > 0 && $this->store["OFFSET"] > 0) {
-                $limit = " OFFSET " . $this->store["OFFSET"] . " ROWS"
-                    . " FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
-            }
-        } else {
-            if (0 !== $this->store["LIMIT"]) {
-                $limit .= "LIMIT " . $this->store["LIMIT"];
-            }
+        if (0 !== $this->store["LIMIT"]) {
+            $limit .= "LIMIT " . $this->store["LIMIT"];
+        }
 
-            if (0 !== $this->store["OFFSET"]) {
-                $limit .= " OFFSET " . $this->store["OFFSET"];
-            }
+        if (0 !== $this->store["OFFSET"]) {
+            $limit .= " OFFSET " . $this->store["OFFSET"];
+        }
 
-            if ("" !== $limit) {
-                $limit = " " . ltrim($limit);
-            }
+        if ("" !== $limit) {
+            $limit = " " . ltrim($limit);
+        }
+
+        return $limit;
+    }
+
+    /**
+     * Builds the `LIMIT` clause for MSSQLServer
+     *
+     * @return string
+     */
+    protected function buildLimitSqlsrv(): string
+    {
+        $limit = "";
+        if ($this->store["LIMIT"] > 0 && $this->store["OFFSET"] > 0) {
+            $limit = " OFFSET " . $this->store["OFFSET"] . " ROWS"
+                . " FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
         }
 
         return $limit;
