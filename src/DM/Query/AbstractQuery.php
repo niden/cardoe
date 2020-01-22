@@ -21,6 +21,7 @@ namespace Phalcon\DM\Query;
 use PDOStatement;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Exception\CannotBindValue;
+
 use function array_keys;
 use function implode;
 

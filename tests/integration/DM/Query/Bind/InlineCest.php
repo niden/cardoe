@@ -73,7 +73,7 @@ class InlineCest
         $actual   = $bind->toArray();
         $I->assertEquals($expected, $actual);
 
-        $expected = 'SELECT * FROM co_customers WHERE inv_cst_id = :__1__';
+        $expected = '(SELECT * FROM co_customers WHERE inv_cst_id = :__1__)';
         $actual   = $bind->inline($select);
         $I->assertEquals($expected, $actual);
     }

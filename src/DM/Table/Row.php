@@ -28,12 +28,12 @@ abstract class Row implements IteratorAggregate, JsonSerializable
     public const UPDATED  = 'UPDATED';
     public const DELETED  = 'DELETED';
 
-    private   $action      = self::INSERT;
-    private   $delete      = false;
-    private   $init        = [];
-    private   $status      = '';
-    private   $validAction = ['', self::INSERT, self::UPDATE, self::DELETE];
-    private   $validStatus = ['', self::SELECTED, self::INSERTED, self::UPDATED, self::DELETED];
+    private $action      = self::INSERT;
+    private $delete      = false;
+    private $init        = [];
+    private $status      = '';
+    private $validAction = ['', self::INSERT, self::UPDATE, self::DELETE];
+    private $validStatus = ['', self::SELECTED, self::INSERTED, self::UPDATED, self::DELETED];
     protected $cols        = [];
 
     final public function __construct(array $cols = [])

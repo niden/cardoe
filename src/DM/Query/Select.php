@@ -20,6 +20,7 @@ namespace Phalcon\DM\Query;
 
 use BadMethodCallException;
 use PDO;
+
 use function array_merge;
 use function array_shift;
 use function call_user_func_array;
