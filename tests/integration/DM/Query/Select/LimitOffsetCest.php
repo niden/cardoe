@@ -57,15 +57,15 @@ class LimitOffsetCest
     {
         $I->wantToTest('DM\Query\Select - limit()/offset() - MSSQL');
 
-        $connection = $I->getConnection();
+        $connection     = $I->getConnection();
         $mockConnection = Stub::make(
             $connection,
             [
-                'getDriverName' => 'sqlsrv'
+                'getDriverName' => 'sqlsrv',
             ]
         );
-        $factory    = new QueryFactory();
-        $select     = $factory->newSelect($mockConnection);
+        $factory        = new QueryFactory();
+        $select         = $factory->newSelect($mockConnection);
 
         $select
             ->from('co_invoices')

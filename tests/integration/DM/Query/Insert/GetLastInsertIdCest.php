@@ -37,8 +37,8 @@ class GetLastInsertIdCest
                 'lastInsertId' => "12345",
             ]
         );
-        $factory    = new QueryFactory();
-        $insert     = $factory->newInsert($mockConnection);
+        $factory        = new QueryFactory();
+        $insert         = $factory->newInsert($mockConnection);
 
         $name = uniqid('inv-');
         $insert

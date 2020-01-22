@@ -16,6 +16,7 @@ namespace Phalcon\Test\Integration\DM\Query\Update;
 use IntegrationTester;
 use PDO;
 use Phalcon\DM\Query\QueryFactory;
+
 use function sprintf;
 
 class GetStatementCest

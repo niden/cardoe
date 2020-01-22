@@ -12,9 +12,9 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Orm\Transaction;
 
+use Exception;
 use Phalcon\DM\Mapper\Mapper;
 use Phalcon\DM\Mapper\Record;
-use Exception;
 
 /**
  * Auto-begins, and then commits or rolls back, each write operation.
