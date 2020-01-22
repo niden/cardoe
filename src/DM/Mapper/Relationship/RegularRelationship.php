@@ -177,10 +177,10 @@ abstract class RegularRelationship extends Relationship
         $foreignRow = $foreignRecord->getRow();
         foreach ($this->on as $nativeCol => $foreignCol) {
             if (
-                !$this->valuesMatch(
-                    $nativeRow->$nativeCol,
-                    $foreignRow->$foreignCol
-                )
+            !$this->valuesMatch(
+                $nativeRow->$nativeCol,
+                $foreignRow->$foreignCol
+            )
             ) {
                 return false;
             }

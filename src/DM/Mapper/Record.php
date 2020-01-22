@@ -12,8 +12,8 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Mapper;
 
-use Phalcon\DM\Table\Row;
 use JsonSerializable;
+use Phalcon\DM\Table\Row;
 use SplObjectStorage;
 
 abstract class Record implements JsonSerializable

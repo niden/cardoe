@@ -20,7 +20,6 @@ namespace Phalcon\DM\Pdo;
 
 use Phalcon\DM\Pdo\Connection\ConnectionInterface;
 use Phalcon\DM\Pdo\Exception\ConnectionNotFound;
-
 use function array_rand;
 use function call_user_func;
 

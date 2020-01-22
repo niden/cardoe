@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Phalcon\DM\Query;
 
 use Phalcon\DM\Pdo\Connection;
-
 use function array_merge;
 use function array_values;
 use function func_get_args;
@@ -47,7 +46,7 @@ class Insert extends AbstractQuery
      */
     public function column(string $column)
     {
-        $arguments = func_get_args();
+        $arguments                       = func_get_args();
         $this->store["COLUMNS"][$column] = ":" . $column;
 
         if (isset($arguments[1]) && !empty($arguments[1])) {
@@ -61,6 +60,7 @@ class Insert extends AbstractQuery
 
     /**
      * Mass sets columns and values for the `UPDATE`
+     *
      * @param array $columns
      *
      * @return $this
@@ -145,6 +145,7 @@ class Insert extends AbstractQuery
 
     /**
      * Sets a column = value condition
+     *
      * @param string     $column
      * @param mixed|null $value
      *

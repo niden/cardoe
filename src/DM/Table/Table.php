@@ -12,22 +12,22 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Table;
 
+use PDOStatement;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\ConnectionLocator;
 use Phalcon\DM\Query\Delete;
 use Phalcon\DM\Query\Insert;
 use Phalcon\DM\Query\QueryFactory;
 use Phalcon\DM\Query\Update;
-use PDOStatement;
 
 abstract class Table
 {
-    public const NAME = '';
-    public const COLUMNS = [];
-    public const COLUMN_NAMES = [];
-    public const COLUMN_DEFAULTS = [];
-    public const PRIMARY_KEY = [];
-    public const AUTOINC_COLUMN = null;
+    public const NAME             = '';
+    public const COLUMNS          = [];
+    public const COLUMN_NAMES     = [];
+    public const COLUMN_DEFAULTS  = [];
+    public const PRIMARY_KEY      = [];
+    public const AUTOINC_COLUMN   = null;
     public const AUTOINC_SEQUENCE = null;
 
     protected $queryFactory;

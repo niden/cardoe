@@ -13,7 +13,6 @@ declare(strict_types=1);
 namespace Phalcon\DM\Query;
 
 use Phalcon\DM\Pdo\Connection;
-
 use function array_merge;
 use function func_get_args;
 

@@ -12,11 +12,11 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Table;
 
+use PDOStatement;
 use Phalcon\DM\Query\Delete;
 use Phalcon\DM\Query\Insert;
 use Phalcon\DM\Query\Select;
 use Phalcon\DM\Query\Update;
-use PDOStatement;
 
 abstract class TableEvents
 {
