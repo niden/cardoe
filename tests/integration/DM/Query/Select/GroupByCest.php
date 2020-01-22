@@ -37,7 +37,6 @@ class GroupByCest
             ->groupBy('inv_status_flag')
         ;
 
-
         $expected = "SELECT * FROM co_invoices "
             . "GROUP BY inv_cst_id, inv_status_flag";
         $actual   = $select->getStatement();

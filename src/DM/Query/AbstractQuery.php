@@ -198,7 +198,11 @@ abstract class AbstractQuery
      */
     protected function buildReturning(): string
     {
-        return " RETURNING " . $this->indent($this->store["RETURNING"]);
+        if (empty($this->store["RETURNING"])) {
+            return "";
+        }
+
+        return " RETURNING" . $this->indent($this->store["RETURNING"], ",");
     }
 
     /**

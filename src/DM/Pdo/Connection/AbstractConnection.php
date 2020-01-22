@@ -600,6 +600,10 @@ abstract class AbstractConnection implements ConnectionInterface
 
         // rebuild the statement and values
         $parser = clone $this->parser;
+        /**
+         * $values has the value in the first element and the type
+         * in the second
+         */
         [$statement, $values] = $parser->rebuild($statement, $values);
 
         // prepare the statement

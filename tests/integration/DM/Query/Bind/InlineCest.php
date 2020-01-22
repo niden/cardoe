@@ -16,6 +16,7 @@ namespace Phalcon\Test\Integration\DM\Query\Bind;
 use IntegrationTester;
 use PDO;
 use Phalcon\DM\Query\Bind;
+use Phalcon\DM\Query\QueryFactory;
 
 class InlineCest
 {
@@ -28,7 +29,15 @@ class InlineCest
     {
         $I->wantToTest('DM\Query\Bind - inline()');
 
-        $bind = new Bind();
+        $connection = $I->getConnection();
+        $bind       = new Bind();
+        $factory    = new QueryFactory();
+        $select     = $factory->newSelect($connection);
+
+        $select
+            ->from('co_customers')
+            ->where('inv_cst_id = ', 1)
+        ;
 
         $expected = [];
         $actual   = $bind->toArray();
@@ -62,6 +71,10 @@ class InlineCest
             "__6__" => [9, 1],
         ];
         $actual   = $bind->toArray();
+        $I->assertEquals($expected, $actual);
+
+        $expected = 'SELECT * FROM co_customers WHERE inv_cst_id = :__1__';
+        $actual   = $bind->inline($select);
         $I->assertEquals($expected, $actual);
     }
 }

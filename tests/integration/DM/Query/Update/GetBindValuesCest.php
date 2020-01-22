@@ -11,21 +11,67 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\DM\Query\Update;
+namespace Phalcon\Test\Integration\DM\Query\Update;
 
-use UnitTester;
+use IntegrationTester;
+use PDO;
+use Phalcon\DM\Query\QueryFactory;
 
 class GetBindValuesCest
 {
     /**
-     * Unit Tests Phalcon\DM\Query\Update :: getBindValues()
+     * Integration Tests Phalcon\DM\Query\Update :: getBindValues()
      *
      * @since  2020-01-20
      */
-    public function dMQueryUpdateGetBindValues(UnitTester $I)
+    public function dMQueryUpdateGetBindValues(IntegrationTester $I)
     {
         $I->wantToTest('DM\Query\Update - getBindValues()');
 
-        $I->skipTest('Need implementation');
+        $connection = $I->getConnection();
+        $factory    = new QueryFactory();
+        $update     = $factory->newUpdate($connection);
+
+        $expected = [];
+        $actual   = $update->getBindValues();
+        $I->assertEquals($expected, $actual);
+
+        $update
+            ->bindValues(
+                [
+                    'one'   => 100,
+                    'two'   => null,
+                    'three' => true,
+                    'four'  => [1, 2, 3],
+                ]
+            )
+        ;
+
+        $expected = [
+            'one'   => [100, PDO::PARAM_INT],
+            'two'   => [null, PDO::PARAM_NULL],
+            'three' => [true, PDO::PARAM_BOOL],
+            'four'  => [[1, 2, 3], PDO::PARAM_STR],
+        ];
+        $actual   = $update->getBindValues();
+        $I->assertEquals($expected, $actual);
+
+        $update
+            ->bindValues(
+                [
+                    'five'  => 'active',
+                ]
+            )
+        ;
+
+        $expected = [
+            'one'   => [100, PDO::PARAM_INT],
+            'two'   => [null, PDO::PARAM_NULL],
+            'three' => [true, PDO::PARAM_BOOL],
+            'four'  => [[1, 2, 3], PDO::PARAM_STR],
+            'five'  => ['active', PDO::PARAM_STR],
+        ];
+        $actual   = $update->getBindValues();
+        $I->assertEquals($expected, $actual);
     }
 }

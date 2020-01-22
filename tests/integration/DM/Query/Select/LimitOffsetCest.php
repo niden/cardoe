@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\DM\Query\Select;
 
+use Codeception\Stub;
 use IntegrationTester;
 use Phalcon\DM\Query\QueryFactory;
 
@@ -43,6 +44,42 @@ class LimitOffsetCest
         $select->offset(50);
 
         $expected = "SELECT * FROM co_invoices LIMIT 10 OFFSET 50";
+        $actual   = $select->getStatement();
+        $I->assertEquals($expected, $actual);
+    }
+
+    /**
+     * Integration Tests Phalcon\DM\Query\Select :: limit()/offset() - MSSSQL
+     *
+     * @since  2020-01-20
+     */
+    public function dMQuerySelectLimitOffsetMssql(IntegrationTester $I)
+    {
+        $I->wantToTest('DM\Query\Select - limit()/offset() - MSSQL');
+
+        $connection = $I->getConnection();
+        $mockConnection = Stub::make(
+            $connection,
+            [
+                'getDriverName' => 'sqlsrv'
+            ]
+        );
+        $factory    = new QueryFactory();
+        $select     = $factory->newSelect($mockConnection);
+
+        $select
+            ->from('co_invoices')
+            ->limit(10)
+        ;
+
+        $expected = "SELECT TOP 10 * FROM co_invoices";
+        $actual   = $select->getStatement();
+        $I->assertEquals($expected, $actual);
+
+        $select->offset(50);
+
+        $expected = "SELECT * FROM co_invoices "
+            . "OFFSET 50 ROWS FETCH NEXT 10 ROWS ONLY";
         $actual   = $select->getStatement();
         $I->assertEquals($expected, $actual);
     }

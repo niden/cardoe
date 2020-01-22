@@ -16,11 +16,15 @@ use Phalcon\DM\Pdo\Connection;
 
 use function array_merge;
 use function func_get_args;
+use function var_dump;
 
+/**
+ * Class Update
+ */
 class Update extends AbstractConditions
 {
     /**
-     * Delete constructor.
+     * Update constructor.
      *
      * @param Connection $connection
      * @param Bind       $bind
@@ -34,20 +38,41 @@ class Update extends AbstractConditions
     }
 
     /**
-     * The columns to select from. If a key is set in an array element, the
-     * key will be used as the alias
+     * Sets a column for the `UPDATE` query
      *
-     * @param string ...$column
+     * @param string $column
      *
-     * @return Update
+     * @return $this
      */
-    public function columns(): Update
+    public function column(string $column)
     {
-        $this->store['COLUMNS'] = array_merge(
-            $this->store["COLUMNS"],
-            func_get_args()
-        );
+        $arguments = func_get_args();
+        $this->store["COLUMNS"][$column] = ":" . $column;
 
+        if (isset($arguments[1]) && !empty($arguments[1])) {
+            $value = $arguments[1];
+            $type  = $arguments[2] ?? -1;
+            $this->bind->setValue($column, $value, $type);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Mass sets columns and values for the `UPDATE`
+     * @param array $columns
+     *
+     * @return $this
+     */
+    public function columns(array $columns)
+    {
+        foreach ($columns as $column => $value) {
+            if (is_int($column)) {
+                $this->column($value);
+            } else {
+                $this->column($column, $value);
+            }
+        }
         return $this;
     }
 
@@ -63,6 +88,19 @@ class Update extends AbstractConditions
         $this->store["FROM"] = $table;
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatement(): string
+    {
+        return "UPDATE"
+            . $this->buildFlags()
+            . " " . $this->store["FROM"]
+            . $this->buildColumns()
+            . $this->buildCondition("WHERE")
+            . $this->buildReturning();
     }
 
     /**
@@ -93,19 +131,6 @@ class Update extends AbstractConditions
     }
 
     /**
-     * @return string
-     */
-    public function getStatement(): string
-    {
-        return "UPDATE"
-            . $this->buildFlags()
-            . " " . $this->store["FROM"]
-            . $this->buildColumns()
-            . $this->buildCondition("WHERE")
-            . $this->buildReturning();
-    }
-
-    /**
      * Resets the internal store
      */
     public function reset()
@@ -114,6 +139,25 @@ class Update extends AbstractConditions
 
         $this->store["FROM"]      = "";
         $this->store["RETURNING"] = [];
+    }
+
+    /**
+     * Sets a column = value condition
+     * @param string     $column
+     * @param mixed|null $value
+     *
+     * @return Update
+     */
+    public function set(string $column, $value = null): Update
+    {
+        if (null === $value) {
+            $value = "NULL";
+        }
+
+        $this->store["COLUMNS"][$column] = $value;
+        $this->bind->remove($column);
+
+        return $this;
     }
 
     /**

@@ -11,21 +11,32 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\DM\Query\Update;
+namespace Phalcon\Test\Integration\DM\Query\Update;
 
-use UnitTester;
+use IntegrationTester;
+use Phalcon\DM\Query\QueryFactory;
 
 class HasColumnsCest
 {
     /**
-     * Unit Tests Phalcon\DM\Query\Update :: hasColumns()
+     * Integration Tests Phalcon\DM\Query\Update :: hasColumns()
      *
      * @since  2020-01-20
      */
-    public function dMQueryUpdateHasColumns(UnitTester $I)
+    public function dMQueryUpdateHasColumns(IntegrationTester $I)
     {
         $I->wantToTest('DM\Query\Update - hasColumns()');
 
-        $I->skipTest('Need implementation');
+        $connection = $I->getConnection();
+        $factory    = new QueryFactory();
+        $update     = $factory->newUpdate($connection);
+
+        $actual = $update->hasColumns();
+        $I->assertFalse($actual);
+
+        $update->columns(['inv_id', 'inv_total']);
+
+        $actual = $update->hasColumns();
+        $I->assertTrue($actual);
     }
 }
