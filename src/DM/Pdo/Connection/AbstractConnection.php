@@ -27,6 +27,7 @@ use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 use function call_user_func_array;
 use function is_array;
+use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -600,11 +601,21 @@ abstract class AbstractConnection implements ConnectionInterface
 
         // rebuild the statement and values
         $parser = clone $this->parser;
+
         /**
-         * $values has the value in the first element and the type
+         * $values can be an array with value in the first element and the type
          * in the second
          */
-        [$statement, $values] = $parser->rebuild($statement, $values);
+        $valueNames = [];
+        foreach ($values as $key => $value) {
+            if (is_array($value)) {
+                $valueNames[$key] = $value[0];
+            } else {
+                $valueNames[$key] = $value;
+            }
+        }
+
+        [$statement, $values] = $parser->rebuild($statement, $valueNames);
 
         // prepare the statement
         $statement = $this->pdo->prepare($statement);
