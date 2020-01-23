@@ -99,6 +99,21 @@ class Integration extends \Codeception\Module
     }
 
     /**
+     * @param string $driver
+     *
+     * @return string
+     */
+    public function getDatabaseNow(string $driver): string
+    {
+        switch ($driver) {
+            case "sqlite":
+                return date('Y-m-d H:i:s');
+            default:
+                return "NOW()";
+        }
+    }
+
+    /**
      * @return string
      */
     public function getDatabasePassword(): string
