@@ -2,7 +2,8 @@ filter:
   paths:
     - 'src/*'
 tools:
-  external_code_coverage: true
+  external_code_coverage:
+    runs: 3
   php_code_coverage: true
   php_code_sniffer:
     config:
