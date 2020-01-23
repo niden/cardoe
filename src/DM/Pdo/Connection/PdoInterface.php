@@ -139,7 +139,7 @@ interface PdoInterface
      *
      * @return PDOStatement|false
      */
-    public function query(string $statement, ...$fetch);
+    public function query(string $statement);
 
     /**
      * Quotes a value for use in an SQL statement. This differs from

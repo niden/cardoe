@@ -26,6 +26,7 @@ use Phalcon\DM\Pdo\Parser\ParserInterface;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 use function call_user_func_array;
+use function func_get_args;
 use function is_array;
 use function var_dump;
 
@@ -637,15 +638,19 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param mixed  ...$fetch
      *
      * @return PDOStatement|false
-     *
-     * @see http://php.net/manual/en/pdo.query.php
      */
-    public function query(string $statement, ...$fetch)
+    public function query(string $statement)
     {
         $this->connect();
 
         $this->profiler->start(__FUNCTION__);
-        $sth = $this->pdo->query($statement, ...$fetch);
+        $sth = call_user_func_array(
+            [
+                $this->pdo,
+                "query"
+            ],
+            func_get_args()
+        );
         $this->profiler->finish($sth->queryString);
 
         return $sth;
