@@ -87,7 +87,10 @@ class GetLastInsertIdCest
                     'inv_total'       => 100.00,
                 ]
             )
-            ->set('inv_created_at', 'NOW()')
+            ->set(
+                'inv_created_at',
+                $I->getDatabaseNow($connection->getDriverName())
+            )
         ;
 
         $insert->perform();

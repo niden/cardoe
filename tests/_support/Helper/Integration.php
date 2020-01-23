@@ -107,7 +107,7 @@ class Integration extends \Codeception\Module
     {
         switch ($driver) {
             case "sqlite":
-                return date('Y-m-d H:i:s');
+                return date("'Y-m-d H:i:s'");
             default:
                 return "NOW()";
         }
