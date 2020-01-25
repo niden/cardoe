@@ -18,6 +18,7 @@ declare(strict_types=1);
 
 namespace Phalcon\DM\Query;
 
+use PDO;
 use PDOStatement;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Exception\CannotBindValue;
@@ -156,9 +157,17 @@ abstract class AbstractQuery
         }
     }
 
-    public function quoteIdentifier(string $name): string
+    /**
+     * Quotes the identifier
+     *
+     * @param string $name
+     * @param int    $type
+     *
+     * @return string
+     */
+    public function quoteIdentifier(string $name, int $type = PDO::PARAM_STR): string
     {
-        return $this->connection->quoteName($name);
+        return $this->connection->quote($name, $type);
     }
 
     /**

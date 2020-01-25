@@ -59,8 +59,6 @@ class Integration extends \Codeception\Module
             $this->getDatabasePassword(),
         );
 
-        //(new Setup())($connection);
-
         return $connection;
     }
 
