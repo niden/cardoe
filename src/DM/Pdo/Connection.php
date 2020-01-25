@@ -25,12 +25,13 @@ use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 use function explode;
+use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
  * methods
  *
- * @property array             $args
+ * @property array             $arguments
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
  */
@@ -39,7 +40,7 @@ class Connection extends AbstractConnection
     /**
      * @var array
      */
-    protected $args = [];
+    protected $arguments = [];
 
     /**
      * Constructor.
@@ -82,7 +83,7 @@ class Connection extends AbstractConnection
         }
 
         // Arguments store
-        $this->args = [
+        $this->arguments = [
             $dsn,
             $username,
             $password,
@@ -108,12 +109,12 @@ class Connection extends AbstractConnection
     public function __debugInfo()
     {
         return [
-            'args' => [
-                $this->args[0],
+            'arguments' => [
+                $this->arguments[0],
                 '****',
                 '****',
-                $this->args[3],
-                $this->args[4],
+                $this->arguments[3],
+                $this->arguments[4],
             ],
         ];
     }
@@ -126,11 +127,10 @@ class Connection extends AbstractConnection
         if (!$this->pdo) {
             // connect
             $this->profiler->start(__FUNCTION__);
-            [$dsn, $username, $password, $options, $queries] = $this->args;
+            [$dsn, $username, $password, $options, $queries] = $this->arguments;
             $this->pdo = new PDO($dsn, $username, $password, $options);
             $this->profiler->finish();
 
-            // connection-time queries
             foreach ($queries as $query) {
                 $this->exec($query);
             }

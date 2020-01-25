@@ -33,7 +33,6 @@ use function is_array;
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
  * methods
  *
- * @property array             $args
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
  */
