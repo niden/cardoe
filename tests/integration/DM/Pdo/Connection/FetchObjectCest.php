@@ -22,7 +22,7 @@ class FetchObjectCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchObject()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchObject(IntegrationTester $I)
     {

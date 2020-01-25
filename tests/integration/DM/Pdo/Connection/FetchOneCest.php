@@ -13,6 +13,7 @@ namespace Phalcon\Test\Integration\DM\Pdo\Connection;
 
 use Codeception\Example;
 use IntegrationTester;
+use PDO;
 use Phalcon\DM\Pdo\Connection;
 use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
@@ -23,7 +24,7 @@ class FetchOneCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchOne()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchOne(IntegrationTester $I)
     {
@@ -107,37 +108,6 @@ class FetchOneCest
     }
 
     /**
-     * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - bind types exception
-     *
-     * @since  2019-11-16
-     */
-    public function dMPdoConnectionFetchOneBindTypesException(IntegrationTester $I)
-    {
-        $I->wantToTest('DM\Pdo\Connection - fetchOne() - bind types - exception');
-
-        $I->expectThrowable(
-            new CannotBindValue(
-                "Cannot bind value of type 'object' to placeholder 'id'"
-            ),
-            function () use ($I) {
-                /** @var Connection $connection */
-                $connection = $I->getConnection();
-                $invoice    = new Invoices($connection);
-
-                $result = $invoice->insert($connection, 1);
-                $I->assertEquals(1, $result);
-
-                $all = $connection->fetchOne(
-                    'select * from co_invoices WHERE inv_id = :id',
-                    [
-                        'id' => new stdClass(),
-                    ]
-                );
-            }
-        );
-    }
-
-    /**
      * @return array
      */
     private function getBindTypes(): array
@@ -156,7 +126,16 @@ class FetchOneCest
             [
                 'named boolean',
                 'inv_status_flag = :status',
-                ['status' => true],
+                [
+                    'status' => true,
+                ],
+            ],
+            [
+                'named boolean with type',
+                'inv_status_flag = :status',
+                [
+                    'status' => [true, PDO::PARAM_BOOL],
+                ],
             ],
             [
                 'named null',
@@ -164,6 +143,14 @@ class FetchOneCest
                 [
                     'id'     => 1,
                     'status' => null,
+                ],
+            ],
+            [
+                'named null with type',
+                'inv_id = :id AND inv_status_flag IS NOT :status',
+                [
+                    'id'     => [1, PDO::PARAM_INT],
+                    'status' => [null, PDO::PARAM_NULL],
                 ],
             ],
             [

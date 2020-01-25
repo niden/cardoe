@@ -20,7 +20,7 @@ class FetchAllCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchAll()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchAll(IntegrationTester $I)
     {

@@ -20,7 +20,7 @@ class GetLoggerCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: getLogger()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerProfilerGetLogger(IntegrationTester $I)
     {

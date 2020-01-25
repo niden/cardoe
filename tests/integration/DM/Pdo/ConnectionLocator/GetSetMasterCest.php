@@ -22,7 +22,7 @@ class GetSetMasterCest
      * Integration Tests Phalcon\DM\Pdo\ConnectionLocator ::
      * getMaster()/setMaster()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionLocatorGetSetMaster(IntegrationTester $I)
     {

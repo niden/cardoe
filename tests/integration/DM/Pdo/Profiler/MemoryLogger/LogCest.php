@@ -20,7 +20,7 @@ class LogCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Profiler\MemoryLogger :: log()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerMemoryLoggerLog(IntegrationTester $I)
     {

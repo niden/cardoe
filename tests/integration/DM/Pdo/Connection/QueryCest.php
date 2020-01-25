@@ -20,7 +20,7 @@ class QueryCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: query()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionQuery(IntegrationTester $I)
     {

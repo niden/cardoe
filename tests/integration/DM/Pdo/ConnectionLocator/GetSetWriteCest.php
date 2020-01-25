@@ -24,7 +24,7 @@ class GetSetWriteCest
      * Integration Tests Phalcon\DM\Pdo\ConnectionLocator ::
      * getWrite()/setWrite()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionLocatorGetSetWrite(IntegrationTester $I)
     {
@@ -58,7 +58,7 @@ class GetSetWriteCest
     /**
      * Integration Tests Phalcon\DM\Pdo\ConnectionLocator :: getWrite() - random
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionLocatorGetWriteRandom(IntegrationTester $I)
     {
@@ -94,7 +94,7 @@ class GetSetWriteCest
     /**
      * Integration Tests Phalcon\DM\Pdo\ConnectionLocator :: getWrite() - empty
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionLocatorGetWriteEmpty(IntegrationTester $I)
     {
@@ -115,7 +115,7 @@ class GetSetWriteCest
      * Integration Tests Phalcon\DM\Pdo\ConnectionLocator :: getWrite() -
      * exception
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionLocatorGetWriteException(IntegrationTester $I)
     {

@@ -19,7 +19,7 @@ class ConstructCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: __construct()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerProfilerConstruct(IntegrationTester $I)
     {

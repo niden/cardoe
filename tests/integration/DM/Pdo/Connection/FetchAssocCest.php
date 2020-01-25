@@ -20,7 +20,7 @@ class FetchAssocCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchAssoc()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchAssoc(IntegrationTester $I)
     {

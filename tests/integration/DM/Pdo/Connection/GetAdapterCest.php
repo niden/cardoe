@@ -19,7 +19,7 @@ class GetAdapterCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: getAdapter()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionGetAdapter(IntegrationTester $I)
     {

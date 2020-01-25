@@ -20,7 +20,7 @@ class FetchAffectedCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchAffected()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchAffected(IntegrationTester $I)
     {

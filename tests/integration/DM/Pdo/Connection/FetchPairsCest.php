@@ -20,7 +20,7 @@ class FetchPairsCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchPairs()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchPairs(IntegrationTester $I)
     {

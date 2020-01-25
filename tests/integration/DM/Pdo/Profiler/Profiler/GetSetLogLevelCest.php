@@ -21,7 +21,7 @@ class GetSetLogLevelCest
      * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler ::
      * getLogLevel()/setLogLevel()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerProfilerGetSetLogLevel(IntegrationTester $I)
     {

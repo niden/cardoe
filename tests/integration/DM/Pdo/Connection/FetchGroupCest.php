@@ -20,7 +20,7 @@ class FetchGroupCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: fetchGroup()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchGroup(IntegrationTester $I)
     {

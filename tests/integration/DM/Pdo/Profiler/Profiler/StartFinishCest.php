@@ -22,7 +22,7 @@ class StartFinishCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler :: start()/finish()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerProfilerStartFinish(IntegrationTester $I)
     {

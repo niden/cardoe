@@ -20,7 +20,7 @@ class IsSetActiveCest
      * Integration Tests Phalcon\DM\Pdo\Profiler\Profiler ::
      * isActive()/setActive()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoProfilerProfilerIsSetActive(IntegrationTester $I)
     {

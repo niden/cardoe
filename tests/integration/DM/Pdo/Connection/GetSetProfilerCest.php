@@ -20,7 +20,7 @@ class GetSetProfilerCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: getProfiler()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionGetProfiler(IntegrationTester $I)
     {

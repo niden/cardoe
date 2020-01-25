@@ -20,7 +20,7 @@ class ConnectDisconnectIsConnectedCest
      * Integration Tests Phalcon\DM\Pdo\Connection ::
      * connect()/disconnect()/isConnected()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionConnectDisconnectIsConnected(IntegrationTester $I)
     {
@@ -39,7 +39,7 @@ class ConnectDisconnectIsConnectedCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: connect() - queries
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionConnectQueries(IntegrationTester $I)
     {

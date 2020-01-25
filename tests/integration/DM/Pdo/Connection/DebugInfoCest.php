@@ -20,7 +20,7 @@ class DebugInfoCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection :: __debugInfo()
      *
-     * @since  2019-12-11
+     * @since  2020-01-25
      */
     public function dMPdoConnectionDebugInfo(IntegrationTester $I)
     {
