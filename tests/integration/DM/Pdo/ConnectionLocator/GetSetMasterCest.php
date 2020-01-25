@@ -30,20 +30,12 @@ class GetSetMasterCest
 
         $connection1 = $I->getConnection();
         $connection2 = $I->getConnection();
-        $locator     = new ConnectionLocator(
-            function () use ($connection1) {
-                return $connection1;
-            }
-        );
+        $locator     = new ConnectionLocator($connection1);
 
         $actual = $locator->getMaster();
         $I->assertEquals(spl_object_hash($connection1), spl_object_hash($actual));
 
-        $locator->setMaster(
-            function () use ($connection2) {
-                return $connection2;
-            }
-        );
+        $locator->setMaster($connection2);
         $actual = $locator->getMaster();
         $I->assertEquals(spl_object_hash($connection2), spl_object_hash($actual));
     }

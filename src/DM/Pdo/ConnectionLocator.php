@@ -27,16 +27,17 @@ use function call_user_func;
 /**
  * Manages Connection instances for default, read, and write connections.
  *
- * @property callable $master
- * @property array    $read
- * @property array    $write
+ * @property ConnectionInterface $master
+ * @property array               $read
+ * @property array               $write
+ * @property array               $instances
  */
 class ConnectionLocator implements ConnectionLocatorInterface
 {
     /**
      * A default Connection connection factory/instance.
      *
-     * @var callable
+     * @var ConnectionInterface
      */
     protected $master;
 
@@ -55,25 +56,32 @@ class ConnectionLocator implements ConnectionLocatorInterface
     protected $write = [];
 
     /**
+     * A collection of resolved instances
+     *
+     * @var array
+     */
+    private $instances = [];
+
+    /**
      * Constructor.
      *
-     * @param callable|null $master
-     * @param array         $read
-     * @param array         $write
+     * @param ConnectionInterface $master
+     * @param array               $read
+     * @param array               $write
      */
     public function __construct(
-        callable $master = null,
+        ConnectionInterface $master,
         array $read = [],
         array $write = []
     ) {
-        if ($master) {
-            $this->setMaster($master);
+        $this->setMaster($master);
+        
+        foreach ($read as $name => $callableObject) {
+            $this->setRead($name, $callableObject);
         }
-        foreach ($read as $name => $callable) {
-            $this->setRead($name, $callable);
-        }
-        foreach ($write as $name => $callable) {
-            $this->setWrite($name, $callable);
+
+        foreach ($write as $name => $callableObject) {
+            $this->setWrite($name, $callableObject);
         }
     }
 
@@ -84,10 +92,6 @@ class ConnectionLocator implements ConnectionLocatorInterface
      */
     public function getMaster(): ConnectionInterface
     {
-        if (!$this->master instanceof Connection) {
-            $this->master = call_user_func($this->master);
-        }
-
         return $this->master;
     }
 
@@ -101,7 +105,7 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * @return ConnectionInterface
      * @throws ConnectionNotFound
      */
-    public function getRead($name = ""): ConnectionInterface
+    public function getRead(string $name = ""): ConnectionInterface
     {
         return $this->getConnection("read", $name);
     }
@@ -116,7 +120,7 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * @return ConnectionInterface
      * @throws ConnectionNotFound
      */
-    public function getWrite($name = ""): ConnectionInterface
+    public function getWrite(string $name = ""): ConnectionInterface
     {
         return $this->getConnection("write", $name);
     }
@@ -124,13 +128,13 @@ class ConnectionLocator implements ConnectionLocatorInterface
     /**
      * Sets the default connection factory.
      *
-     * @param callable|null $callable
+     * @param ConnectionInterface $callableObject
      *
      * @return ConnectionLocatorInterface
      */
-    public function setMaster(callable $callable): ConnectionLocatorInterface
+    public function setMaster(ConnectionInterface $callableObject): ConnectionLocatorInterface
     {
-        $this->master = $callable;
+        $this->master = $callableObject;
 
         return $this;
     }
@@ -139,15 +143,15 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * Sets a read connection factory by name.
      *
      * @param string   $name
-     * @param callable $callable
+     * @param callable $callableObject
      *
      * @return ConnectionLocatorInterface
      */
     public function setRead(
         string $name,
-        callable $callable
+        callable $callableObject
     ): ConnectionLocatorInterface {
-        $this->read[$name] = $callable;
+        $this->read[$name] = $callableObject;
 
         return $this;
     }
@@ -156,15 +160,15 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * Sets a write connection factory by name.
      *
      * @param string   $name
-     * @param callable $callable
+     * @param callable $callableObject
      *
      * @return ConnectionLocatorInterface
      */
     public function setWrite(
         string $name,
-        callable $callable
+        callable $callableObject
     ): ConnectionLocatorInterface {
-        $this->write[$name] = $callable;
+        $this->write[$name] = $callableObject;
 
         return $this;
     }
@@ -176,31 +180,51 @@ class ConnectionLocator implements ConnectionLocatorInterface
      * @param string $name
      *
      * @return ConnectionInterface
-     * @throws Exception\ConnectionNotFound
-     *
+     * @throws ConnectionNotFound
      */
     protected function getConnection(
         string $type,
-        string $name
+        string $name = ""
     ): ConnectionInterface {
-        if (empty($this->{$type})) {
+        $collection = $this->{$type};
+        $requested  = $name;
+        $instances  = $this->instances;
+
+        /**
+         * No collection returns the master
+         */
+        if (empty($collection)) {
             return $this->getMaster();
         }
 
-        if ($name === '') {
-            $name = array_rand($this->{$type});
+        /**
+         * If the requested name is empty, get a random connection
+         */
+        if ("" === $requested) {
+            $requested = array_rand($collection);
         }
 
-        if (!isset($this->{$type}[$name])) {
+        /**
+         * If the connection name does not exist, send an exception back
+         */
+        if (!isset($collection[$requested])) {
             throw new ConnectionNotFound(
-                "Connection not found: " . $type . ":" . $name
+                "Connection not found: " . $type . ":" . $requested
             );
         }
 
-        if (!$this->{$type}[$name] instanceof Connection) {
-            $this->{$type}[$name] = call_user_func($this->{$type}[$name]);
+        /**
+         * Check if the connection has been resolved already, if yes return
+         * it, otherwise resolve it. The keys in the `resolved` array are
+         * formatted as "type-name"
+         */
+        $instanceName = $type . "-" . $name;
+
+        if (!isset($instances[$instanceName])) {
+            $instances[$instanceName] = call_user_func($collection[$requested]);
+            $this->instances          = $instances;
         }
 
-        return $this->{$type}[$name];
+        return $instances[$instanceName];
     }
 }

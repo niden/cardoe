@@ -33,9 +33,7 @@ class GetSetReadCest
         $read1   = $I->getConnection();
         $read2   = $I->getConnection();
         $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            },
+            $master,
             [
                 "read1" => function () use ($read1) {
                     return $read1;
@@ -66,9 +64,7 @@ class GetSetReadCest
         $read1   = $I->getConnection();
         $read2   = $I->getConnection();
         $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            },
+            $master,
             [
                 "read1" => function () use ($read1) {
                     return $read1;
@@ -98,11 +94,7 @@ class GetSetReadCest
         $I->wantToTest('DM\Pdo\ConnectionLocator - getRead() - empty');
 
         $master  = $I->getConnection();
-        $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            }
-        );
+        $locator = new ConnectionLocator($master);
 
         $actual = $locator->getRead("read1");
         $I->assertEquals(spl_object_hash($master), spl_object_hash($actual));
@@ -126,9 +118,7 @@ class GetSetReadCest
                 $master  = $I->getConnection();
                 $read1   = $I->getConnection();
                 $locator = new ConnectionLocator(
-                    function () use ($master) {
-                        return $master;
-                    },
+                    $master,
                     [
                         "read1" => function () use ($read1) {
                             return $read1;

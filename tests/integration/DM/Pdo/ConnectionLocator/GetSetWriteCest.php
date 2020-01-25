@@ -34,9 +34,7 @@ class GetSetWriteCest
         $write1  = $I->getConnection();
         $write2  = $I->getConnection();
         $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            },
+            $master,
             [],
             [
                 "write1" => function () use ($write1) {
@@ -68,9 +66,7 @@ class GetSetWriteCest
         $write1  = $I->getConnection();
         $write2  = $I->getConnection();
         $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            },
+            $master,
             [],
             [
                 "write1" => function () use ($write1) {
@@ -101,11 +97,7 @@ class GetSetWriteCest
         $I->wantToTest('DM\Pdo\ConnectionLocator - getWrite() - empty');
 
         $master  = $I->getConnection();
-        $locator = new ConnectionLocator(
-            function () use ($master) {
-                return $master;
-            }
-        );
+        $locator = new ConnectionLocator($master);
 
         $actual = $locator->getWrite("write1");
         $I->assertEquals(spl_object_hash($master), spl_object_hash($actual));
@@ -129,9 +121,7 @@ class GetSetWriteCest
                 $master  = $I->getConnection();
                 $write1  = $I->getConnection();
                 $locator = new ConnectionLocator(
-                    function () use ($master) {
-                        return $master;
-                    },
+                    $master,
                     [],
                     [
                         "write1" => function () use ($write1) {
