@@ -30,7 +30,7 @@ class DebugInfoCest
         $connection = $I->getConnection();
 
         $expected = [
-            'args' => [
+            'arguments' => [
                 $I->getDatabaseDsn(),
                 '****',
                 '****',

@@ -57,10 +57,12 @@ class ConnectDisconnectIsConnectedCest
                 ]
             );
 
+            $I->assertFalse($connection->isConnected());
             $result = $connection->fetchOne(
                 'show variables like "character_set_client"'
             );
 
+            $I->assertTrue($connection->isConnected());
             $expeced = [
                 'Variable_name' => 'character_set_client',
                 'Value'         => 'big5',
