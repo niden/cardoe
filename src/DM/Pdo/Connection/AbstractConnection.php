@@ -28,6 +28,7 @@ use function array_merge;
 use function call_user_func_array;
 use function func_get_args;
 use function is_array;
+use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`
@@ -614,7 +615,7 @@ abstract class AbstractConnection implements ConnectionInterface
 
         // quote array values, not keys, then combine with commas
         foreach ($value as $key => $element) {
-            $element     = (string) $value;
+            $element     = (string) $element;
             $value[$key] = $quotes["prefix"] . $element . $quotes["suffix"];
         }
 

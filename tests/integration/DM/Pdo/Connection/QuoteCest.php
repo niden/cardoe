@@ -33,5 +33,13 @@ class QuoteCest
         $expected = $quotes["prefix"] . $source . $quotes["suffix"];
         $actual   = $connection->quote($source);
         $I->assertEquals($expected, $actual);
+
+        $source   = ['test', 1, true, null];
+        $expected = $quotes["prefix"] . 'test' . $quotes["suffix"] . ', '
+                  . $quotes["prefix"] . '1' . $quotes["suffix"] . ', '
+                  . $quotes["prefix"] . '1' . $quotes["suffix"] . ', '
+                  . $quotes["prefix"] . '' . $quotes["suffix"];
+        $actual   = $connection->quote($source);
+        $I->assertEquals($expected, $actual);
     }
 }
