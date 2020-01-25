@@ -25,7 +25,6 @@ use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
 use function explode;
-use function var_dump;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`

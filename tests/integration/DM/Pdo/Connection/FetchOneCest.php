@@ -15,9 +15,7 @@ use Codeception\Example;
 use IntegrationTester;
 use PDO;
 use Phalcon\DM\Pdo\Connection;
-use Phalcon\DM\Pdo\Exception\CannotBindValue;
 use Phalcon\Test\Fixtures\Migrations\Invoices;
-use stdClass;
 
 class FetchOneCest
 {

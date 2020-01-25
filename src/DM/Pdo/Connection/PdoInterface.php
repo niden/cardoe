@@ -20,7 +20,6 @@ namespace Phalcon\DM\Pdo\Connection;
 
 use PDO;
 use PDOStatement;
-use Phalcon\DM\Pdo\Exception\CannotBindValue;
 
 /**
  * An interface to the native PDO object.

@@ -582,7 +582,7 @@ abstract class AbstractConnection implements ConnectionInterface
         $sth = call_user_func_array(
             [
                 $this->pdo,
-                "query"
+                "query",
             ],
             func_get_args()
         );
@@ -687,7 +687,7 @@ abstract class AbstractConnection implements ConnectionInterface
         call_user_func_array(
             [
                 $statement,
-                "bindValue"
+                "bindValue",
             ],
             $parameters
         );
