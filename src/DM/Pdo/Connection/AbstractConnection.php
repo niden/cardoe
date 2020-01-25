@@ -605,14 +605,17 @@ abstract class AbstractConnection implements ConnectionInterface
     {
         $this->connect();
 
-        // non-array quoting
+        $quotes = $this->getQuoteNames();
         if (!is_array($value)) {
-            return $this->pdo->quote((string) $value, $type);
+            $value = (string) $value;
+
+            return $quotes["prefix"] . $value . $quotes["suffix"];
         }
 
         // quote array values, not keys, then combine with commas
         foreach ($value as $key => $element) {
-            $value[$key] = $this->pdo->quote((string) $element, $type);
+            $element     = (string) $value;
+            $value[$key] = $quotes["prefix"] . $element . $quotes["suffix"];
         }
 
         return implode(', ', $value);
@@ -702,7 +705,6 @@ abstract class AbstractConnection implements ConnectionInterface
      * @param array  $values
      *
      * @return array
-     * @throws CannotBindValue
      */
     protected function fetchData(
         string $method,
