@@ -55,7 +55,7 @@ class FetchOneCest
     /**
      * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - no result
      *
-     * @since  2019-11-16
+     * @since  2020-01-25
      */
     public function dMPdoConnectionFetchOneNoResult(IntegrationTester $I)
     {
@@ -83,7 +83,7 @@ class FetchOneCest
      * Tests Phalcon\DM\Pdo\Connection :: fetchOne() - bind types
      *
      * @dataProvider getBindTypes
-     * @since        2019-11-16
+     * @since        2020-01-25
      */
     public function dMPdoConnectionFetchOneBindTypes(IntegrationTester $I, Example $example)
     {

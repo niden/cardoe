@@ -21,7 +21,7 @@ class DisconnectCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection\Decorated :: disconnect()
      *
-     * @since  2019-12-12
+     * @since  2020-01-25
      */
     public function dMPdoConnectionDecoratedDisconnect(IntegrationTester $I)
     {

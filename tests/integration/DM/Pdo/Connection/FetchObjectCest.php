@@ -50,7 +50,7 @@ class FetchObjectCest
     /**
      * Tests Phalcon\DM\Pdo\Connection :: fetchObject() - ctor
      *
-     * @since  2019-11-16
+     * @since  2020-01-25
      */
     public function connectionFetchObjectCtor(IntegrationTester $I)
     {

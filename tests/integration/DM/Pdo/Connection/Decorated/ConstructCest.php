@@ -21,7 +21,7 @@ class ConstructCest
     /**
      * Integration Tests Phalcon\DM\Pdo\Connection\Decorated :: __construct()
      *
-     * @since  2019-12-12
+     * @since  2020-01-25
      */
     public function dMPdoConnectionDecoratedConstruct(IntegrationTester $I)
     {
