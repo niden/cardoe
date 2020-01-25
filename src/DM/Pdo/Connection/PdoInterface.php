@@ -74,7 +74,7 @@ interface PdoInterface
      *
      * @return mixed
      */
-    public function getAttribute($attribute);
+    public function getAttribute(int $attribute);
 
     /**
      * Return an array of available PDO drivers (empty array if none available)
@@ -110,25 +110,7 @@ interface PdoInterface
      *
      * @return PDOStatement|false
      */
-    public function prepare($statement, array $options = []);
-
-    /**
-     * Prepares an SQL statement with bound values. The method only binds values
-     * that have associated placeholders in the statement. It also binds
-     * sequential (question-mark) placeholders. If a placeholder is an array, it
-     * is converted to a comma separated string to be used with a `IN`
-     * condition.
-     *
-     * @param string $statement
-     * @param array  $values
-     *
-     * @return PDOStatement|false
-     * @throws CannotBindValue
-     */
-    public function prepareWithValues(
-        string $statement,
-        array $values = []
-    ): PDOStatement;
+    public function prepare(string $statement, array $options = []);
 
     /**
      * Queries the database and returns a PDOStatement. If the profiler is
@@ -152,24 +134,6 @@ interface PdoInterface
      * @return string The quoted value.
      */
     public function quote($value, int $type = PDO::PARAM_STR): string;
-
-    /**
-     * Quotes a multi-part (dotted) identifier name.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function quoteName(string $name): string;
-
-    /**
-     * Quotes a single identifier name.
-     *
-     * @param string $name
-     *
-     * @return string
-     */
-    public function quoteSingleName(string $name): string;
 
     /**
      * Rolls back the current transaction, and restores autocommit mode. If the

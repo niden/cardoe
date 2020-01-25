@@ -21,7 +21,6 @@ namespace Phalcon\DM\Pdo;
 use InvalidArgumentException;
 use PDO;
 use Phalcon\DM\Pdo\Connection\AbstractConnection;
-use Phalcon\DM\Pdo\Parser\ParserInterface;
 use Phalcon\DM\Pdo\Profiler\Profiler;
 use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
 
@@ -32,7 +31,6 @@ use function explode;
  * methods
  *
  * @property array             $args
- * @property ParserInterface   $parser
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
  */
@@ -97,10 +95,6 @@ class Connection extends AbstractConnection
             $profiler = new Profiler();
         }
         $this->setProfiler($profiler);
-
-        // Set the new Query parser
-        $parser = $this->newParser($parts[0]);
-        $this->setParser($parser);
 
         // Quotes
         $this->quote = $this->getQuoteNames($parts[0]);

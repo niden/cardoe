@@ -29,7 +29,6 @@ use Phalcon\DM\Pdo\Profiler\ProfilerInterface;
  * methods
  *
  * @property array             $args
- * @property ParserInterface   $parser
  * @property PDO               $pdo
  * @property ProfilerInterface $profiler
  * @property array             $quote
@@ -207,13 +206,6 @@ interface ConnectionInterface extends PdoInterface
     public function getAdapter(): PDO;
 
     /**
-     * Returns the Parser instance.
-     *
-     * @return ParserInterface
-     */
-    public function getParser(): ParserInterface;
-
-    /**
      * Returns the Profiler instance.
      *
      * @return ProfilerInterface
@@ -240,13 +232,6 @@ interface ConnectionInterface extends PdoInterface
      * @throws CannotBindValue
      */
     public function perform(string $statement, array $values = []): PDOStatement;
-
-    /**
-     * Sets the Parser instance.
-     *
-     * @param ParserInterface $parser The Parser instance.
-     */
-    public function setParser(ParserInterface $parser);
 
     /**
      * Sets the Profiler instance.

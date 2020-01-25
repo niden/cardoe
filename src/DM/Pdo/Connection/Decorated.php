@@ -48,8 +48,7 @@ class Decorated extends AbstractConnection
         }
         $this->setProfiler($profiler);
 
-        $driver = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
-        $this->setParser($this->newParser($driver));
+        $driver      = $pdo->getAttribute(PDO::ATTR_DRIVER_NAME);
         $this->quote = $this->getQuoteNames($driver);
     }
 
