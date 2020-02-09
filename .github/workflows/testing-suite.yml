@@ -71,27 +71,39 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
 
+      - name: Generate schemas
+        run: |
+          php tests/_ci/generage-db-schemas.php
+          vendor/bin/codecept build
+
       - name: Run Unit Tests
         run: |
-          vendor/bin/codecept build
           vendor/bin/codecept run unit --coverage --coverage-xml
 
       - name: Upload Unit Coverage to Scrutinizer
         run: |
           php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
-      - name: Run Integration Tests - MySQL
+      - name: Run Integration Tests
         run: |
-          vendor/bin/codecept run integration --env mysql --coverage --coverage-xml
+          vendor/bin/codecept run integration --coverage --coverage-xml
 
-      - name: Upload Integration MySQL Coverage to Scrutinizer
+      - name: Upload Integration Coverage to Scrutinizer
         run: |
           php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
-      - name: Run Integration Tests - Sqlite
+      - name: Run Database Tests - MySQL
         run: |
-          vendor/bin/codecept run integration --env sqlite --coverage --coverage-xml
+          vendor/bin/codecept run database --env mysql --coverage --coverage-xml
 
-      - name: Upload Integration Sqlite Coverage to Scrutinizer
+      - name: Upload Database MySQL Coverage to Scrutinizer
+        run: |
+          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+
+      - name: Run Database Tests - Sqlite
+        run: |
+          vendor/bin/codecept run database --env sqlite --coverage --coverage-xml
+
+      - name: Upload Database Sqlite Coverage to Scrutinizer
         run: |
           php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml

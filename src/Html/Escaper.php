@@ -11,9 +11,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Html;
 
-use const ENT_QUOTES;
-use const ENT_SUBSTITUTE;
-
 /**
  * Class Escaper
  *

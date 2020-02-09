@@ -10,4 +10,5 @@
     <file>src</file>
     <file>tests/unit</file>
     <file>tests/integration</file>
+    <file>tests/database</file>
 </ruleset>

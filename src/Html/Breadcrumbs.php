@@ -186,11 +186,11 @@ class Breadcrumbs
         return str_replace(
             [
                 "{label}",
-                "{link}"
+                "{link}",
             ],
             [
                 $label,
-                $url
+                $url,
             ],
             $this->template
         );
