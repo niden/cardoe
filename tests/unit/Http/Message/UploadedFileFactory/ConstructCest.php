@@ -22,6 +22,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\ServerUploadedFileFactory :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-08
      */
     public function httpUploadedFileFactoryConstruct(UnitTester $I)

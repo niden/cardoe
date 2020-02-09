@@ -21,6 +21,7 @@ class HasHeaderCest
     /**
      * Tests Phalcon\Http\Message\Response :: hasHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseHasHeader(UnitTester $I)
@@ -48,6 +49,7 @@ class HasHeaderCest
     /**
      * Tests Phalcon\Http\Message\Response :: hasHeader() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseHasHeaderEmpty(UnitTester $I)

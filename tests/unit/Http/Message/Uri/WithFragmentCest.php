@@ -23,13 +23,14 @@ class WithFragmentCest
     /**
      * Tests Phalcon\Http\Message\Uri :: withFragment()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriWithFragment(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - withFragment()');
 
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#%s';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#%s';
 
         $uri = new Uri(
             sprintf($query, 'frag')
@@ -67,6 +68,7 @@ class WithFragmentCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-07
      */
     public function httpUriWithFragmentException(UnitTester $I, Example $example)
@@ -79,13 +81,14 @@ class WithFragmentCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
+                    'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withFragment($example[2]);
             }
         );
     }
+
 
     private function getExamples(): array
     {

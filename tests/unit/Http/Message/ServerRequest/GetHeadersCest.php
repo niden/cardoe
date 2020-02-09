@@ -22,6 +22,7 @@ class GetHeadersCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getHeaders()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetHeaders(UnitTester $I)
@@ -44,6 +45,7 @@ class GetHeadersCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getHeaders() - collection
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetHeadersCollection(UnitTester $I)
@@ -67,6 +69,7 @@ class GetHeadersCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getHeaders() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetHeadersEmpty(UnitTester $I)

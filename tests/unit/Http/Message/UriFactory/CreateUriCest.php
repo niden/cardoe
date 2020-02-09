@@ -22,6 +22,7 @@ class CreateUriCest
     /**
      * Tests Phalcon\Http\Message\UriFactory :: createUri()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriFactoryCreateUri(UnitTester $I)

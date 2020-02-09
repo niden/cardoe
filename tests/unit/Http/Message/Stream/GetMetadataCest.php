@@ -18,19 +18,18 @@ use Phalcon\Http\Message\Stream;
 use Phalcon\Test\Fixtures\Http\Message\StreamFixture;
 use UnitTester;
 
-use function dataDir;
-
 class GetMetadataCest
 {
     /**
      * Tests Phalcon\Http\Message\Stream :: getMetadata()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamGetMetadata(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - getMetadata()');
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 
@@ -55,12 +54,13 @@ class GetMetadataCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageStreamGetMetadataByKey(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Stream - getMetadata() - by key - ' . $example[0]);
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
 
@@ -71,6 +71,7 @@ class GetMetadataCest
     /**
      * Tests Phalcon\Http\Message\Stream :: getMetadata() - invalid handle
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageStreamGetMetadataInvalidHandle(UnitTester $I)
@@ -94,7 +95,7 @@ class GetMetadataCest
             ['mode', 'rb',],
             ['unread_bytes', 0,],
             ['seekable', true,],
-            ['uri', dataDir('assets/stream/bill-of-rights.txt'),],
+            ['uri', dataDir('assets/stream/mit.txt'),],
             ['unknown', [],],
         ];
     }

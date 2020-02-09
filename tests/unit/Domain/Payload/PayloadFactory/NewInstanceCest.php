@@ -20,14 +20,14 @@ use UnitTester;
 class NewInstanceCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\PayloadFactory :: newInstance()
+     * Unit Tests Phalcon\Domain\PayloadFactory :: newInstance()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
     public function httpPayloadPayloadFactoryNewInstance(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload\PayloadFactory - newInstance()');
+        $I->wantToTest('Domain\PayloadFactory - newInstance()');
 
         $factory = new PayloadFactory();
         $payload = $factory->newInstance();

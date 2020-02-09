@@ -16,7 +16,6 @@ namespace Phalcon\Test\Unit\Autoload\Loader;
 use Phalcon\Autoload\Loader;
 use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
-
 use function array_pop;
 use function spl_autoload_functions;
 

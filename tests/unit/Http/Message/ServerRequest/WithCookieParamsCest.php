@@ -21,6 +21,7 @@ class WithCookieParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withCookieParams()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestWithCookieParams(UnitTester $I)

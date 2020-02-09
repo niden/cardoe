@@ -22,12 +22,13 @@ class RewindCest
     /**
      * Tests Phalcon\Http\Message\Stream :: rewind()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamRewind(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - rewind()');
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName);
 
         $stream->seek(10);
@@ -44,6 +45,7 @@ class RewindCest
     /**
      * Tests Phalcon\Http\Message\Stream :: rewind() - detached
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamRewindDetached(UnitTester $I)
@@ -54,7 +56,7 @@ class RewindCest
                 'A valid resource is required.'
             ),
             function () {
-                $fileName = dataDir('assets/stream/bill-of-rights.txt');
+                $fileName = dataDir('assets/stream/mit.txt');
                 $stream   = new Stream($fileName, 'rb');
                 $stream->detach();
 

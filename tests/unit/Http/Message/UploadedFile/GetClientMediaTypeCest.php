@@ -21,6 +21,7 @@ class GetClientMediaTypeCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getClientMediaType()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetClientMediaType(UnitTester $I)
@@ -30,7 +31,7 @@ class GetClientMediaTypeCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'Phalcon.txt',
+            'phalcon.txt',
             'some-media-type'
         );
 

@@ -29,13 +29,13 @@ class IncludesCest
         $I->wantToTest('Helper\Str - includes()');
 
         $source = 'Mary had a little lamb';
-        $actual = Str::includes($source, 'lamb');
+        $actual = Str::includes('lamb', $source);
         $I->assertTrue($actual);
 
-        $actual = Str::includes($source, 'unknown');
+        $actual = Str::includes('unknown', $source);
         $I->assertFalse($actual);
 
-        $actual = Str::includes($source, 'Mary');
+        $actual = Str::includes('Mary', $source);
         $I->assertTrue($actual);
     }
 }

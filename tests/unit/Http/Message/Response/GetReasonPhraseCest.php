@@ -21,6 +21,7 @@ class GetReasonPhraseCest
     /**
      * Tests Phalcon\Http\Message\Response :: getReasonPhrase()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetReasonPhrase(UnitTester $I)
@@ -38,6 +39,7 @@ class GetReasonPhraseCest
     /**
      * Tests Phalcon\Http\Message\Response :: getReasonPhrase() - other port
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetReasonPhraseOtherPort(UnitTester $I)

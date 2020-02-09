@@ -21,6 +21,7 @@ class GetRequestTargetCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getRequestTarget()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetRequestTarget(UnitTester $I)

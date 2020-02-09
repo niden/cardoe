@@ -21,6 +21,7 @@ class WithParsedBodyCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withParsedBody()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithParsedBody(UnitTester $I)

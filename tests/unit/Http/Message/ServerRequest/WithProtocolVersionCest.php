@@ -21,6 +21,7 @@ class WithProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withProtocolVersion()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithProtocolVersion(UnitTester $I)

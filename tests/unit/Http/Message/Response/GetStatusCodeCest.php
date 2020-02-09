@@ -22,6 +22,7 @@ class GetStatusCodeCest
     /**
      * Tests Phalcon\Http\Message\Response :: getStatusCode()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetStatusCode(UnitTester $I)
@@ -39,6 +40,7 @@ class GetStatusCodeCest
     /**
      * Tests Phalcon\Http\Message\Response :: getStatusCode() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetStatusCodeException(UnitTester $I)
@@ -50,7 +52,7 @@ class GetStatusCodeCest
                 "Invalid status code '847', (allowed values 100-599)"
             ),
             function () {
-                (new Response('php://memory', 847));
+                $response = new Response('php://memory', 847);
             }
         );
     }

@@ -22,6 +22,7 @@ class GetMethodCest
     /**
      * Tests Phalcon\Http\Message\Request :: getMethod()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetMethod(UnitTester $I)
@@ -39,6 +40,7 @@ class GetMethodCest
     /**
      * Tests Phalcon\Http\Message\Request :: getMethod() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetMethodEmpty(UnitTester $I)
@@ -56,6 +58,7 @@ class GetMethodCest
     /**
      * Tests Phalcon\Http\Message\Request :: getMethod() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetMethodWxception(UnitTester $I)

@@ -22,6 +22,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\Uri :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriConstruct(UnitTester $I)

@@ -22,13 +22,14 @@ class CreateStreamFromFileCest
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: createStreamFromFile()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamFactoryCreateStreamFromFile(UnitTester $I)
     {
         $I->wantToTest('Http\Message\StreamFactory - createStreamFromFile()');
 
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $expected = file_get_contents($fileName);
         $factory  = new StreamFactory();
         $stream   = $factory->createStreamFromFile($fileName);

@@ -21,6 +21,7 @@ class IsSeekableCest
     /**
      * Tests Phalcon\Http\Message\Stream\Memory :: isSeekable()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-19
      */
     public function httpMessageStreamMemoryIsSeekable(UnitTester $I)

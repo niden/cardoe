@@ -1,0 +1,7 @@
+actor: DatabaseTester
+modules:
+  enabled:
+    - Asserts
+    - Filesystem
+    - Helper\Database
+    - Helper\Unit

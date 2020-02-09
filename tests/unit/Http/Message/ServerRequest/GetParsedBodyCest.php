@@ -21,6 +21,7 @@ class GetParsedBodyCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getParsedBody()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-05
      */
     public function httpMessageServerRequestGetParsedBody(UnitTester $I)
@@ -46,6 +47,7 @@ class GetParsedBodyCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getParsedBody() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-05
      */
     public function httpMessageServerRequestGetParsedBodyEmpty(UnitTester $I)

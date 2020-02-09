@@ -21,6 +21,7 @@ class GetSizeCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getSize()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetSize(UnitTester $I)

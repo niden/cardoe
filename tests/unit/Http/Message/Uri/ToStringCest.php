@@ -21,12 +21,13 @@ class ToStringCest
     /**
      * Tests Phalcon\Http\Message\Uri :: __toString()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriToString(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - __toString()');
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $I->assertEquals($query, (string) $uri);
@@ -35,6 +36,7 @@ class ToStringCest
     /**
      * Tests Phalcon\Http\Message\Uri :: __toString() - path no lead slash
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriToStringPathNoLeadSlash(UnitTester $I)
@@ -51,7 +53,8 @@ class ToStringCest
     /**
      * Tests Phalcon\Http\Message\Uri :: __toString() - path many slashes
      *
-     * @since  2019-02-07
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2019-06-01
      */
     public function httpUriToStringPathManySlashes(UnitTester $I)
     {

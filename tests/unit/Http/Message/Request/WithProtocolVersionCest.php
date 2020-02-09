@@ -22,6 +22,7 @@ class WithProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\Request :: withProtocolVersion()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithProtocolVersion(UnitTester $I)
@@ -46,9 +47,10 @@ class WithProtocolVersionCest
     }
 
     /**
-     * Tests Phalcon\Http\Message\Request :: withProtocolVersion() - unsupported
-     * protocol
+     * Tests Phalcon\Http\Message\Request :: withProtocolVersion() -
+     * unsupported protocol
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithProtocolVersionEmpty(UnitTester $I)
@@ -71,6 +73,7 @@ class WithProtocolVersionCest
      * Tests Phalcon\Http\Message\Request :: withProtocolVersion() - empty
      * protocol
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithProtocolVersionUnsupported(UnitTester $I)

@@ -20,6 +20,7 @@ class ToStringCest
     /**
      * Unit Tests Phalcon\Http\Message\Stream\Input :: __toString()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
     public function httpMessageStreamInputToString(UnitTester $I)

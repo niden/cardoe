@@ -17,20 +17,19 @@ use Phalcon\Http\Message\Request;
 use Phalcon\Http\Message\Stream;
 use UnitTester;
 
-use function dataDir;
-
 class GetBodyCest
 {
     /**
      * Tests Phalcon\Http\Message\Request :: getBody()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetBody(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Request - getBody()');
 
-        $fileName = dataDir('/assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('/assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 
@@ -46,6 +45,7 @@ class GetBodyCest
     /**
      * Tests Phalcon\Http\Message\Request :: getBody() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetBodyEmpty(UnitTester $I)

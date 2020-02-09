@@ -20,7 +20,7 @@ use UnitTester;
 class GetSetExceptionCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload ::
+     * Unit Tests Phalcon\Domain\Payload ::
      * getException()/setException()
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -28,7 +28,7 @@ class GetSetExceptionCest
      */
     public function httpPayloadPayloadGetSetException(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload\Payload - getException()/setException()');
+        $I->wantToTest('Domain\Payload - getException()/setException()');
 
         $payload   = new Payload();
         $exception = new RuntimeException('Runtime error');

@@ -2,15 +2,13 @@
 modules:
   enabled:
     - Db:
-        dsn: "mysql:host=%TEST_MYSQL_HOST%"
-        user: "%TEST_MYSQL_USER%"
-        password: "%TEST_MYSQL_PASS%"
-        dump: "tests/_data/assets/schemas/mysql.sql"
+        dsn: 'mysql:host=%DATA_MYSQL_HOST%;dbname=%DATA_MYSQL_NAME%;port=%DATA_MYSQL_PORT%'
+        user: '%DATA_MYSQL_USER%'
+        password: '%DATA_MYSQL_PASS%'
+        dump: 'tests/_data/assets/schemas/mysql.sql'
         populate: true
         cleanup: false
         reconnect: true
         waitlock: 10
         initial_queries:
-          - "CREATE DATABASE IF NOT EXISTS %TEST_MYSQL_NAME%"
-          - "USE %TEST_MYSQL_NAME%;"
           - "SET NAMES utf8;"

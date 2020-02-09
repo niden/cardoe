@@ -22,12 +22,13 @@ class GetUriCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getUri()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetUri(UnitTester $I)
     {
         $I->wantToTest('Http\Message\ServerRequest - getUri()');
-        $query   = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query   = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri     = new Uri($query);
         $request = new ServerRequest('GET', $uri);
 

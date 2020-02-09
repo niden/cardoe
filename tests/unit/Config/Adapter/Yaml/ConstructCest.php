@@ -58,13 +58,13 @@ class ConstructCest
                     return hash('sha256', $value);
                 },
                 '!approot' => function ($value) {
-                    return APP_PATH . $value;
+                    return PATH_DATA . $value;
                 },
             ]
         );
 
         $I->assertEquals(
-            APP_PATH . '/app/controllers/',
+            PATH_DATA . '/app/controllers/',
             $config->application->controllersDir
         );
 

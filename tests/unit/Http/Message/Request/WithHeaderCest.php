@@ -23,6 +23,7 @@ class WithHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithHeader(UnitTester $I)
@@ -44,7 +45,6 @@ class WithHeaderCest
 
         $I->assertNotEquals($request, $newInstance);
 
-
         $expected = [
             'Accept' => ['text/html'],
         ];
@@ -53,7 +53,6 @@ class WithHeaderCest
             $expected,
             $request->getHeaders()
         );
-
 
         $expected = [
             'Accept'        => ['text/html'],
@@ -69,6 +68,7 @@ class WithHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withHeader() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithHeaderException(UnitTester $I)
@@ -97,6 +97,7 @@ class WithHeaderCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageRequestWithHeaderExceptionValue(UnitTester $I, Example $example)
@@ -120,9 +121,7 @@ class WithHeaderCest
         );
     }
 
-    /**
-     * @return array
-     */
+
     private function getExamples(): array
     {
         return [

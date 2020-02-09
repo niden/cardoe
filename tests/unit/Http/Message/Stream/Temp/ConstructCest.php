@@ -22,6 +22,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\Stream\Temp :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-19
      */
     public function httpMessageStreamTempConstruct(UnitTester $I)

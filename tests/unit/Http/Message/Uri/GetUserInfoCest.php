@@ -21,15 +21,16 @@ class GetUserInfoCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getUserInfo()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriGetUserInfo(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getUserInfo()');
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
-        $expected = 'Phalcon:secret';
+        $expected = 'phalcon:secret';
         $actual   = $uri->getUserInfo();
         $I->assertEquals($expected, $actual);
     }
@@ -37,15 +38,16 @@ class GetUserInfoCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getUserInfo() - only user
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetUserInfoOnlyUser(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getUserInfo() - only user');
-        $query = 'https://Phalcon@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
-        $expected = 'Phalcon';
+        $expected = 'phalcon';
         $actual   = $uri->getUserInfo();
         $I->assertEquals($expected, $actual);
     }
@@ -53,6 +55,7 @@ class GetUserInfoCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getUserInfo() - only pass
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetUserInfoOnlyPass(UnitTester $I)
@@ -69,6 +72,7 @@ class GetUserInfoCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getUserInfo() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetUserInfoEmpty(UnitTester $I)

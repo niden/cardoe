@@ -21,13 +21,14 @@ class GetHostCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getHost()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriGetHost(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getHost()');
 
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $expected = 'dev.phalcon.ld';
@@ -38,6 +39,7 @@ class GetHostCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getHost() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetHostEmpty(UnitTester $I)

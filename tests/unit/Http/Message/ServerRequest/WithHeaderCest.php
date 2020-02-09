@@ -21,6 +21,7 @@ class WithHeaderCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithHeader(UnitTester $I)

@@ -21,6 +21,7 @@ class GetHeaderLineCest
     /**
      * Tests Phalcon\Http\Message\Response :: getHeaderLine()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetHeaderLine(UnitTester $I)
@@ -28,7 +29,7 @@ class GetHeaderLineCest
         $I->wantToTest('Http\Message\Response - getHeaderLine()');
 
         $data = [
-            'Accept' => [
+            'accept' => [
                 'text/html',
                 'text/json',
             ],
@@ -52,6 +53,7 @@ class GetHeaderLineCest
     /**
      * Tests Phalcon\Http\Message\Response :: getHeaderLine() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetHeaderLineEmpty(UnitTester $I)

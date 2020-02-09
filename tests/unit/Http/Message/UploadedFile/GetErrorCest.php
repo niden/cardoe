@@ -21,6 +21,7 @@ class GetErrorCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getError()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetError(UnitTester $I)

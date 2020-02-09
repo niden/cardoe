@@ -19,14 +19,14 @@ use UnitTester;
 class GetSetMessagesCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getMessages()/setMessages()
+     * Unit Tests Phalcon\Domain\Payload :: getMessages()/setMessages()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
     public function httpPayloadPayloadGetSetMessages(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload\Payload - getMessages()/setMessages()');
+        $I->wantToTest('Domain\Payload - getMessages()/setMessages()');
 
         $payload = new Payload();
         $payload->setMessages('messages');

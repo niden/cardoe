@@ -19,14 +19,14 @@ use UnitTester;
 class GetSetOutputCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getOutput()/setOutput()
+     * Unit Tests Phalcon\Domain\Payload :: getOutput()/setOutput()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
     public function httpPayloadPayloadGetSetOutput(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload\Payload - getOutput()/setOutput()');
+        $I->wantToTest('Domain\Payload - getOutput()/setOutput()');
 
         $payload = new Payload();
         $payload->setOutput('output');

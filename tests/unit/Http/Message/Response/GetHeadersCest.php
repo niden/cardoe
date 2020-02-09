@@ -21,6 +21,7 @@ class GetHeadersCest
     /**
      * Tests Phalcon\Http\Message\Response :: getHeaders()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetHeaders(UnitTester $I)
@@ -48,6 +49,7 @@ class GetHeadersCest
     /**
      * Tests Phalcon\Http\Message\Response :: getHeaders() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseGetHeadersEmpty(UnitTester $I)

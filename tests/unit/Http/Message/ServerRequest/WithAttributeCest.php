@@ -21,6 +21,7 @@ class WithAttributeCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withAttribute()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithAttribute(UnitTester $I)

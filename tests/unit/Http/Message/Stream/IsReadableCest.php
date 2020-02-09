@@ -17,7 +17,6 @@ use Codeception\Example;
 use Phalcon\Http\Message\Stream;
 use UnitTester;
 
-use function dataDir;
 use function logsDir;
 
 class IsReadableCest
@@ -27,13 +26,14 @@ class IsReadableCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageStreamIsReadable(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Stream - isReadable() - ' . $example[0]);
 
-        $fileName = dataDir('assets/stream/bill-of-rights-empty.txt');
+        $fileName = dataDir('assets/stream/mit-empty.txt');
 
         $stream = new Stream($fileName, $example[0]);
 
@@ -46,11 +46,12 @@ class IsReadableCest
     /**
      * Tests Phalcon\Http\Message\Stream :: isReadable() - with "x"
      *
-     * @dataProvider getExamplesWrite
+     * @dataProvider getExamplesX
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
-    public function httpMessageStreamIsReadableWrite(UnitTester $I, Example $example)
+    public function httpMessageStreamIsReadableWithX(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Stream - isReadable() with "x" - ' . $example[0]);
 
@@ -65,7 +66,7 @@ class IsReadableCest
         );
     }
 
-    private function getExamplesWrite(): array
+    private function getExamplesX(): array
     {
         return [
             ['w', false],

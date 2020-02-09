@@ -25,6 +25,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\Stream :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-08
      */
     public function httpMessageStreamConstruct(UnitTester $I)
@@ -44,6 +45,7 @@ class ConstructCest
      *
      * @dataProvider getExceptionExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-08
      */
     public function httpMessageStreamConstructException(UnitTester $I, Example $example)
@@ -63,12 +65,30 @@ class ConstructCest
     private function getExceptionExamples(): array
     {
         return [
-            ['array', ['array']],
-            ['boolean', true],
-            ['float', 123.45],
-            ['integer', 123],
-            ['null', null],
-            ['object', new stdClass()],
+            [
+                'array',
+                ['array'],
+            ],
+            [
+                'boolean',
+                true,
+            ],
+            [
+                'float',
+                123.45,
+            ],
+            [
+                'integer',
+                123,
+            ],
+            [
+                'null',
+                null,
+            ],
+            [
+                'object',
+                new stdClass(),
+            ],
         ];
     }
 }

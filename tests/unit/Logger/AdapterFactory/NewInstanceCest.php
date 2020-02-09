@@ -17,7 +17,6 @@ use Phalcon\Factory\Exception;
 use Phalcon\Logger\Adapter\AdapterInterface;
 use Phalcon\Logger\AdapterFactory;
 use UnitTester;
-
 use function outputDir;
 
 class NewInstanceCest

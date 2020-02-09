@@ -21,6 +21,7 @@ class GetHeaderLineCest
     /**
      * Tests Phalcon\Http\Message\Request :: getHeaderLine()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetHeaderLine(UnitTester $I)
@@ -57,6 +58,7 @@ class GetHeaderLineCest
     /**
      * Tests Phalcon\Http\Message\Request :: getHeaderLine() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestGetHeaderLineEmpty(UnitTester $I)

@@ -24,6 +24,7 @@ class GetAuthorityCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-09
      */
     public function httpMessageUriGetAuthority(UnitTester $I, Example $example)
@@ -39,6 +40,7 @@ class GetAuthorityCest
             $uri->getAuthority()
         );
     }
+
 
     private function getExamples(): array
     {
@@ -57,8 +59,8 @@ class GetAuthorityCest
 
             [
                 'with user info',
-                'https://Phalcon:secret@dev.phalcon.ld',
-                'Phalcon:secret@dev.phalcon.ld',
+                'https://phalcon:secret@dev.phalcon.ld',
+                'phalcon:secret@dev.phalcon.ld',
             ],
 
             [
@@ -69,8 +71,8 @@ class GetAuthorityCest
 
             [
                 'full',
-                'https://Phalcon:secret@dev.phalcon.ld:8080',
-                'Phalcon:secret@dev.phalcon.ld:8080',
+                'https://phalcon:secret@dev.phalcon.ld:8080',
+                'phalcon:secret@dev.phalcon.ld:8080',
             ],
         ];
     }

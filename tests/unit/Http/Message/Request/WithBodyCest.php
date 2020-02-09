@@ -22,13 +22,14 @@ class WithBodyCest
     /**
      * Tests Phalcon\Http\Message\Request :: withBody()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithBody(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Request - withBody()');
 
-        $fileName = dataDir('/assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('/assets/stream/mit.txt');
 
         $stream = new Stream($fileName, 'rb');
 

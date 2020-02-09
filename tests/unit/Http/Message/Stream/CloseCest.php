@@ -21,13 +21,14 @@ class CloseCest
     /**
      * Tests Phalcon\Http\Message\Stream :: close()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamClose(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - close()');
 
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
 
         $handle = fopen($fileName, 'rb');
 
@@ -44,13 +45,14 @@ class CloseCest
     /**
      * Tests Phalcon\Http\Message\Stream :: close() - detach
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamCloseDetach(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - close()');
 
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
 
         $handle = fopen($fileName, 'rb');
 

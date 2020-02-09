@@ -11,7 +11,7 @@
 
 declare(strict_types=1);
 
-namespace Phalcon\Test\Unit\Domain\Payload\Payload;
+namespace Phalcon\Test\Unit\Domain\Payload;
 
 use Phalcon\Domain\Payload;
 use UnitTester;
@@ -19,14 +19,14 @@ use UnitTester;
 class GetSetExtrasCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getExtras()/setExtras()
+     * Unit Tests Phalcon\Domain\Payload :: getExtras()/setExtras()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24
      */
     public function httpPayloadPayloadGetSetExtras(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload\Payload - getExtras()/setExtras()');
+        $I->wantToTest('Domain\Payload - getExtras()/setExtras()');
 
         $payload = new Payload();
         $payload->setExtras('extras');

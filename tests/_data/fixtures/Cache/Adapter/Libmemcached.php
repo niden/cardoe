@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -9,11 +11,10 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Phalcon\Test\Fixtures\Cache\Adapter;
 
 use Phalcon\Cache\Adapter\Libmemcached as CacheLibmemcached;
+use Phalcon\Storage\Exception;
 
 /**
  * Phalcon\Test\Fixtures\Cache\Adapter
@@ -30,8 +31,8 @@ class Libmemcached extends CacheLibmemcached
     /**
      * @param \DateInterval|int|null $ttl
      *
-     * @return DateIntervalint|null
-     * @throws \Exception
+     * @return int
+     * @throws Exception
      */
     public function getTtl($ttl = null): int
     {

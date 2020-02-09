@@ -17,7 +17,6 @@ use Codeception\Example;
 use Phalcon\Http\Message\Stream;
 use UnitTester;
 
-use function dataDir;
 use function logsDir;
 
 class IsSeekableCest
@@ -27,13 +26,14 @@ class IsSeekableCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageStreamIsSeekable(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Stream - isSeekable() - ' . $example[0]);
 
-        $fileName = dataDir('assets/stream/bill-of-rights-empty.txt');
+        $fileName = dataDir('assets/stream/mit-empty.txt');
 
         $stream = new Stream($fileName, $example[0]);
 
@@ -48,6 +48,7 @@ class IsSeekableCest
      *
      * @dataProvider getExamplesX
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-10
      */
     public function httpMessageStreamIsSeekableWithX(UnitTester $I, Example $example)

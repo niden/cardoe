@@ -21,12 +21,13 @@ class EofCest
     /**
      * Tests Phalcon\Http\Message\Stream :: eof()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamEof(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - eof()');
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $handle   = fopen($fileName, 'rb');
         $stream   = new Stream($handle);
         while (true !== feof($handle)) {
@@ -40,12 +41,13 @@ class EofCest
     /**
      * Tests Phalcon\Http\Message\Stream :: eof() - detached stream
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamEofDetached(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - eof() - detached stream');
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->detach();
 
@@ -56,12 +58,13 @@ class EofCest
     /**
      * Tests Phalcon\Http\Message\Stream :: eof() - not at eof
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamEofNotAtEof(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Stream - eof() - not at eof');
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $stream   = new Stream($fileName, 'rb');
         $stream->seek(10);
 

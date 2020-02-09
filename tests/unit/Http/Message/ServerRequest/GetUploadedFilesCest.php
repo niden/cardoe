@@ -23,6 +23,7 @@ class GetUploadedFilesCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getUploadedFiles()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestGetUploadedFiles(UnitTester $I)
@@ -51,6 +52,7 @@ class GetUploadedFilesCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getUploadedFiles() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestGetUploadedFilesEmpty(UnitTester $I)
@@ -66,6 +68,7 @@ class GetUploadedFilesCest
      * Tests Phalcon\Http\Message\ServerRequest :: getUploadedFiles() -
      * exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestGetUploadedFilesException(UnitTester $I)

@@ -22,6 +22,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-08
      */
     public function httpStreamFactoryConstruct(UnitTester $I)

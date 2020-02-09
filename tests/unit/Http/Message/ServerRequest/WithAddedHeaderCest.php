@@ -21,6 +21,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withAddedHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithAddedHeader(UnitTester $I)
@@ -51,6 +52,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withAddedHeader() - merge
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithAddedHeaderMerge(UnitTester $I)

@@ -22,6 +22,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withAddedHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithAddedHeader(UnitTester $I)
@@ -66,6 +67,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withAddedHeader() - string value
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithAddedHeaderStringValue(UnitTester $I)
@@ -99,6 +101,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withAddedHeader() - empty value
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithAddedHeaderEmptyValue(UnitTester $I)
@@ -124,6 +127,7 @@ class WithAddedHeaderCest
     /**
      * Tests Phalcon\Http\Message\Request :: withAddedHeader() - merge
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithAddedHeaderMerge(UnitTester $I)
