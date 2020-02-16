@@ -16,14 +16,7 @@ namespace Phalcon\Collection;
 use Phalcon\Collection;
 
 /**
- * Phalcon\Collection
- *
- * Phalcon\Collection is a supercharged object oriented array. It implements
- * ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
- *
- * It can be used in any part of the application that needs collection of data
- * Such implementations are for instance accessing globals `$_GET`, `$_POST`
- * etc.
+ * Phalcon\Collection\ReadOnly is a read only Collection object
  */
 class ReadOnly extends Collection
 {
@@ -31,13 +24,12 @@ class ReadOnly extends Collection
      * Delete the element from the collection
      *
      * @param string $element
-     * @param bool   $insensitive
      *
      * @throws Exception
      */
-    public function remove(string $element, bool $insensitive = true): void
+    public function remove(string $element): void
     {
-        throw new Exception('The object is read only');
+        throw new Exception("The object is read only");
     }
 
     /**
@@ -50,6 +42,6 @@ class ReadOnly extends Collection
      */
     public function set(string $element, $value): void
     {
-        throw new Exception('The object is read only');
+        throw new Exception("The object is read only");
     }
 }
