@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Storage\SerializerFactory;
 use Psr\SimpleCache\CacheInterface;
+use UnitTester;
 
 class ConstructCest
 {
@@ -27,7 +27,7 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheConstruct(IntegrationTester $I)
+    public function cacheCacheConstruct(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - __construct()');
 

@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Serializer\Igbinary;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Serializer\Igbinary;
 use stdClass;
+use UnitTester;
 
 use function igbinary_serialize;
 
@@ -30,7 +30,7 @@ class UnserializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
-    public function storageSerializerIgbinaryUnserialize(IntegrationTester $I, Example $example)
+    public function storageSerializerIgbinaryUnserialize(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Serializer\Igbinary - unserialize() - ' . $example[0]);
         $serializer = new Igbinary();
@@ -48,7 +48,7 @@ class UnserializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-11-21
      */
-    public function storageSerializerIgbinaryUnserializeError(IntegrationTester $I)
+    public function storageSerializerIgbinaryUnserializeError(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Igbinary - unserialize() - error');
         $serializer = new Igbinary();

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class ClearCest
 {
@@ -25,7 +25,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryClear(IntegrationTester $I)
+    public function storageAdapterMemoryClear(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - clear()');
 
@@ -58,7 +58,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryClearTwice(IntegrationTester $I)
+    public function storageAdapterMemoryClearTwice(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - clear() - twice');
 

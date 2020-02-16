@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Libmemcached;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Libmemcached;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
+use UnitTester;
 
 use function getOptionsLibmemcached;
 
@@ -30,7 +30,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterLibmemcachedDelete(IntegrationTester $I)
+    public function storageAdapterLibmemcachedDelete(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Libmemcached - delete()');
 
@@ -59,7 +59,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterLibmemcachedDeleteTwice(IntegrationTester $I)
+    public function storageAdapterLibmemcachedDeleteTwice(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Libmemcached - delete() - twice');
 
@@ -88,7 +88,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterLibmemcachedDeleteUnknown(IntegrationTester $I)
+    public function storageAdapterLibmemcachedDeleteUnknown(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Libmemcached - delete() - unknown');
 

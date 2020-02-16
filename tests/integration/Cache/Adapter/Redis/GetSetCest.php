@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Cache\Adapter\Redis;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use stdClass;
+use UnitTester;
 
 use function array_merge;
 use function getOptionsRedis;
@@ -39,7 +39,7 @@ class GetSetCest
      *
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterRedisGetSet(IntegrationTester $I, Example $example)
+    public function cacheAdapterRedisGetSet(UnitTester $I, Example $example)
     {
         $I->wantToTest('Cache\Adapter\Redis - get()/set() - ' . $example[0]);
 
@@ -64,7 +64,7 @@ class GetSetCest
      *
      * @since  2019-03-31
      */
-    public function cacheAdapterRedisGetSetPersistent(IntegrationTester $I)
+    public function cacheAdapterRedisGetSetPersistent(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - get()/set() - persistent');
 
@@ -99,7 +99,7 @@ class GetSetCest
      * @since  2019-03-31
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterRedisGetSetWrongIndex(IntegrationTester $I)
+    public function cacheAdapterRedisGetSetWrongIndex(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - get()/set() - wrong index');
         $I->expectThrowable(
@@ -128,7 +128,7 @@ class GetSetCest
      * @since  2019-03-31
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterRedisGetSetFailedAuth(IntegrationTester $I)
+    public function cacheAdapterRedisGetSetFailedAuth(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - get()/set() - failed auth');
         $I->expectThrowable(
@@ -159,7 +159,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterRedisGetSetCustomSerializer(IntegrationTester $I)
+    public function cacheAdapterRedisGetSetCustomSerializer(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - get()/set() - custom serializer');
 

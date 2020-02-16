@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Redis;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
+use UnitTester;
 
 use function getOptionsRedis;
 
@@ -33,7 +33,7 @@ class DecrementCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterRedisDecrement(IntegrationTester $I)
+    public function storageAdapterRedisDecrement(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - decrement()');
 

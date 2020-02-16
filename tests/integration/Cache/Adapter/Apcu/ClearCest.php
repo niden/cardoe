@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Apcu;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\ApcuTrait;
+use UnitTester;
 
 class ClearCest
 {
@@ -28,7 +28,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterApcuClear(IntegrationTester $I)
+    public function cacheAdapterApcuClear(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Apcu - clear()');
 
@@ -71,7 +71,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterApcuClearTwice(IntegrationTester $I)
+    public function cacheAdapterApcuClearTwice(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Apcu - clear() - twice');
 

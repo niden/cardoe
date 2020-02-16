@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Cache\Adapter\Libmemcached;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
 use stdClass;
+use UnitTester;
 
 use function getOptionsLibmemcached;
 
@@ -37,7 +37,7 @@ class GetSetCest
      *
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterLibmemcachedGetSet(IntegrationTester $I, Example $example)
+    public function cacheAdapterLibmemcachedGetSet(UnitTester $I, Example $example)
     {
         $I->wantToTest('Cache\Adapter\Libmemcached - get()/set() - ' . $example[0]);
 
@@ -65,7 +65,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterLibmemcachedGetSetCustomSerializer(IntegrationTester $I)
+    public function cacheAdapterLibmemcachedGetSetCustomSerializer(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Libmemcached - get()/set() - custom serializer');
 

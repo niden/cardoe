@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class GetKeysCest
 {
@@ -25,7 +25,7 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
-    public function storageAdapterMemoryGetKeys(IntegrationTester $I)
+    public function storageAdapterMemoryGetKeys(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - getKeys()');
 

@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function file_put_contents;
 use function outputDir;
@@ -32,7 +32,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterStreamSet(IntegrationTester $I)
+    public function cacheAdapterStreamSet(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - set()');
 
@@ -60,7 +60,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterStreamGet(IntegrationTester $I)
+    public function cacheAdapterStreamGet(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - get()');
 
@@ -88,7 +88,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterStreamGetErrors(IntegrationTester $I)
+    public function cacheAdapterStreamGetErrors(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - get() - errors');
 

@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\AdapterFactory;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Factory\Exception;
 use Phalcon\Storage\Adapter\Apcu;
 use Phalcon\Storage\Adapter\Libmemcached;
@@ -23,6 +22,7 @@ use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\AdapterFactory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function getOptionsLibmemcached;
 use function getOptionsRedis;
@@ -40,7 +40,7 @@ class NewInstanceCest
      *
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterFactoryNewInstance(IntegrationTester $I, Example $example)
+    public function storageAdapterFactoryNewInstance(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\AdapterFactory - newInstance() - ' . $example[0]);
 
@@ -61,7 +61,7 @@ class NewInstanceCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageSerializerFactoryNewInstanceException(IntegrationTester $I)
+    public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {
         $I->wantToTest('Storage\SerializerFactory - newInstance() - exception');
 

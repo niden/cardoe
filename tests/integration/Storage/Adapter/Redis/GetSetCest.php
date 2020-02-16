@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Adapter\Redis;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
 use stdClass;
+use UnitTester;
 
 use function array_merge;
 use function getOptionsRedis;
@@ -39,7 +39,7 @@ class GetSetCest
      *
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterRedisGetSet(IntegrationTester $I, Example $example)
+    public function storageAdapterRedisGetSet(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Adapter\Redis - get()/set() - ' . $example[0]);
 
@@ -72,7 +72,7 @@ class GetSetCest
      *
      * @since  2019-03-31
      */
-    public function storageAdapterRedisGetSetPersistent(IntegrationTester $I)
+    public function storageAdapterRedisGetSetPersistent(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - get()/set() - persistent');
 
@@ -108,7 +108,7 @@ class GetSetCest
      * @since  2019-03-31
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterRedisGetSetWrongIndex(IntegrationTester $I)
+    public function storageAdapterRedisGetSetWrongIndex(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - get()/set() - wrong index');
 
@@ -138,7 +138,7 @@ class GetSetCest
      * @since  2019-03-31
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterRedisGetSetFailedAuth(IntegrationTester $I)
+    public function storageAdapterRedisGetSetFailedAuth(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - get()/set() - failed auth');
 
@@ -170,7 +170,7 @@ class GetSetCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageAdapterRedisGetSetCustomSerializer(IntegrationTester $I)
+    public function storageAdapterRedisGetSetCustomSerializer(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - get()/set() - custom serializer');
 

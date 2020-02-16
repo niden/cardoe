@@ -14,8 +14,8 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Serializer\None;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Serializer\None;
+use UnitTester;
 
 class SerializeCest
 {
@@ -27,7 +27,7 @@ class SerializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
-    public function storageSerializerNoneSerialize(IntegrationTester $I, Example $example)
+    public function storageSerializerNoneSerialize(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Serializer\None - serialize()');
         $serializer = new None($example[1]);

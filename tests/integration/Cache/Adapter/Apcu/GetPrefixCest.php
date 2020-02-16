@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Apcu;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\ApcuTrait;
+use UnitTester;
 
 class GetPrefixCest
 {
@@ -28,7 +28,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterApcuGetSetPrefix(IntegrationTester $I)
+    public function cacheAdapterApcuGetSetPrefix(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Apcu - getPrefix()');
 
@@ -53,7 +53,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterApcuGetSetPrefixDefault(IntegrationTester $I)
+    public function cacheAdapterApcuGetSetPrefixDefault(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Apcu - getPrefix() - default');
 

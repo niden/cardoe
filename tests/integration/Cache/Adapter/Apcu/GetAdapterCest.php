@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Apcu;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\ApcuTrait;
+use UnitTester;
 
 class GetAdapterCest
 {
@@ -28,7 +28,7 @@ class GetAdapterCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-14
      */
-    public function cacheAdapterApcuGetAdapter(IntegrationTester $I)
+    public function cacheAdapterApcuGetAdapter(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Apcu - getAdapter()');
 

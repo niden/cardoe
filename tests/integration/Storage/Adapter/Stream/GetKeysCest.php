@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 use function sort;
@@ -29,7 +29,7 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function storageAdapterStreamGetKeys(IntegrationTester $I)
+    public function storageAdapterStreamGetKeys(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - getKeys()');
 
@@ -86,7 +86,7 @@ class GetKeysCest
      * @author       ekmst <https://github.com/ekmst>
      * @since        2019-06-26
      */
-    public function storageAdapterStreamGetKeysIssue14190(IntegrationTester $I)
+    public function storageAdapterStreamGetKeysIssue14190(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - getKeys() - issue 14190');
 
@@ -130,7 +130,7 @@ class GetKeysCest
      * @author       ekmst <https://github.com/ekmst>
      * @since        2020-01-17
      */
-    public function storageAdapterStreamGetKeysPrefix(IntegrationTester $I)
+    public function storageAdapterStreamGetKeysPrefix(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - getKeys() - prefix');
 

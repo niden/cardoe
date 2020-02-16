@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class DeleteCest
 {
@@ -25,7 +25,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryDelete(IntegrationTester $I)
+    public function storageAdapterMemoryDelete(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - delete()');
 
@@ -50,7 +50,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryDeleteTwice(IntegrationTester $I)
+    public function storageAdapterMemoryDeleteTwice(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - delete() - twice');
 
@@ -75,7 +75,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryDeleteUnknown(IntegrationTester $I)
+    public function storageAdapterMemoryDeleteUnknown(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - delete() - unknown');
 

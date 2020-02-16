@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function uniqid;
 
@@ -29,7 +29,7 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheGetMultiple(IntegrationTester $I)
+    public function cacheCacheGetMultiple(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - getMultiple()');
 
@@ -76,7 +76,7 @@ class GetMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheGetMultipleException(IntegrationTester $I)
+    public function cacheCacheGetMultipleException(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - getMultiple() - exception');
 

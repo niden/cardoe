@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function uniqid;
 
@@ -29,7 +29,7 @@ class GetSetCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheSetGet(IntegrationTester $I)
+    public function cacheCacheSetGet(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - get()');
 
@@ -85,7 +85,7 @@ class GetSetCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheGetSetException(IntegrationTester $I)
+    public function cacheCacheGetSetException(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - get() - exception');
 

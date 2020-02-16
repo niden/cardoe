@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class GetPrefixCest
 {
@@ -25,7 +25,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterMemoryGetSetPrefix(IntegrationTester $I)
+    public function cacheAdapterMemoryGetSetPrefix(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Memory - getPrefix()');
 
@@ -50,7 +50,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterMemoryGetSetPrefixDefault(IntegrationTester $I)
+    public function cacheAdapterMemoryGetSetPrefixDefault(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Memory - getPrefix() - default');
 

@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Serializer\Base64;
 
-use IntegrationTester;
 use Phalcon\Storage\Serializer\Base64;
+use UnitTester;
 
 class GetDataCest
 {
@@ -24,7 +24,7 @@ class GetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-30
      */
-    public function storageSerializerBase64GetData(IntegrationTester $I)
+    public function storageSerializerBase64GetData(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Base64 - getData()');
 

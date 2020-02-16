@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Libmemcached;
 
-use IntegrationTester;
 use Memcached;
 use Phalcon\Storage\Adapter\Libmemcached;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
+use UnitTester;
 
 use function getOptionsLibmemcached;
 
@@ -31,7 +31,7 @@ class GetAdapterCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-14
      */
-    public function storageAdapterLibmemcachedGetAdapter(IntegrationTester $I)
+    public function storageAdapterLibmemcachedGetAdapter(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Libmemcached - getAdapter()');
 

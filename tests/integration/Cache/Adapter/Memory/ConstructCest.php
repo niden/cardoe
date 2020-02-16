@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class ConstructCest
 {
@@ -26,7 +26,7 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-09
      */
-    public function cacheAdapterMemoryConstruct(IntegrationTester $I)
+    public function cacheAdapterMemoryConstruct(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Memory - __construct()');
 

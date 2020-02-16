@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 use function uniqid;
@@ -28,7 +28,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterStreamClear(IntegrationTester $I)
+    public function storageAdapterStreamClear(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - clear()');
 
@@ -73,7 +73,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterStreamClearTwice(IntegrationTester $I)
+    public function storageAdapterStreamClearTwice(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - clear() - twice');
 

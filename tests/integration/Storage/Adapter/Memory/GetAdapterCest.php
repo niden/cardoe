@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class GetAdapterCest
 {
@@ -25,7 +25,7 @@ class GetAdapterCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-14
      */
-    public function storageAdapterMemoryGetAdapter(IntegrationTester $I)
+    public function storageAdapterMemoryGetAdapter(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - getAdapter()');
 

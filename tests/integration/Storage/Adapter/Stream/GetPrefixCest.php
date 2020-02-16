@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 
@@ -27,7 +27,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function storageAdapterStreamGetSetPrefix(IntegrationTester $I)
+    public function storageAdapterStreamGetSetPrefix(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - getPrefix()');
 
@@ -53,7 +53,7 @@ class GetPrefixCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function storageAdapterStreamGetSetPrefixDefault(IntegrationTester $I)
+    public function storageAdapterStreamGetSetPrefixDefault(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - getPrefix() - default');
 

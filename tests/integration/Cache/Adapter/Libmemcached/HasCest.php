@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Libmemcached;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Libmemcached;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\LibmemcachedTrait;
+use UnitTester;
 
 use function getOptionsLibmemcached;
 
@@ -30,7 +30,7 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterLibmemcachedGetSetHas(IntegrationTester $I)
+    public function cacheAdapterLibmemcachedGetSetHas(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Libmemcached - has()');
 

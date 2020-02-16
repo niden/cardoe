@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Redis;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Redis;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
+use UnitTester;
 
 use function getOptionsRedis;
 
@@ -30,7 +30,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterRedisClear(IntegrationTester $I)
+    public function cacheAdapterRedisClear(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - clear()');
 
@@ -63,7 +63,7 @@ class ClearCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function cacheAdapterRedisClearTwice(IntegrationTester $I)
+    public function cacheAdapterRedisClearTwice(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Redis - clear() - twice');
 

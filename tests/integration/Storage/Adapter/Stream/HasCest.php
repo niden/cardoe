@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 use function uniqid;
@@ -28,7 +28,7 @@ class HasCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function storageAdapterStreamHas(IntegrationTester $I)
+    public function storageAdapterStreamHas(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Stream - has()');
 

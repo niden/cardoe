@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 use function sort;
@@ -28,7 +28,7 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function cacheAdapterStreamGetKeys(IntegrationTester $I)
+    public function cacheAdapterStreamGetKeys(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - getKeys()');
 

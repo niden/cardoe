@@ -14,9 +14,9 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Serializer\Msgpack;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Serializer\Msgpack;
 use stdClass;
+use UnitTester;
 
 class UnserializeCest
 {
@@ -28,7 +28,7 @@ class UnserializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
-    public function storageSerializerMsgpackUnserialize(IntegrationTester $I, Example $example)
+    public function storageSerializerMsgpackUnserialize(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Serializer\Msgpack - unserialize() - ' . $example[0]);
         $serializer = new Msgpack();
@@ -46,7 +46,7 @@ class UnserializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-09-28
      */
-    public function storageSerializerMsgpackUnserializeError(IntegrationTester $I)
+    public function storageSerializerMsgpackUnserializeError(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Msgpack - unserialize() - error');
         $serializer = new Msgpack();

@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class IncrementCest
 {
@@ -25,7 +25,7 @@ class IncrementCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-31
      */
-    public function storageAdapterMemoryIncrement(IntegrationTester $I)
+    public function storageAdapterMemoryIncrement(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Memory - increment()');
 

@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Cache;
 
-use IntegrationTester;
 use Phalcon\Cache;
 use Phalcon\Cache\AdapterFactory;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function uniqid;
 
@@ -29,7 +29,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheDelete(IntegrationTester $I)
+    public function cacheCacheDelete(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - delete()');
 
@@ -75,7 +75,7 @@ class DeleteCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-01
      */
-    public function cacheCacheDeleteException(IntegrationTester $I)
+    public function cacheCacheDeleteException(UnitTester $I)
     {
         $I->wantToTest('Cache\Cache - delete() - exception');
 

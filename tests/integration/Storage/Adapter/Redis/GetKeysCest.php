@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Adapter\Redis;
 
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Redis;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\RedisTrait;
+use UnitTester;
 
 use function getOptionsRedis;
 
@@ -30,7 +30,7 @@ class GetKeysCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-13
      */
-    public function storageAdapterRedisGetKeys(IntegrationTester $I)
+    public function storageAdapterRedisGetKeys(UnitTester $I)
     {
         $I->wantToTest('Storage\Adapter\Redis - getKeys()');
 

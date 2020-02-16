@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 
@@ -29,7 +29,7 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function cacheAdapterStreamConstruct(IntegrationTester $I)
+    public function cacheAdapterStreamConstruct(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - __construct()');
         $serializer = new SerializerFactory();
@@ -48,7 +48,7 @@ class ConstructCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-04-24
      */
-    public function cacheAdapterStreamConstructException(IntegrationTester $I)
+    public function cacheAdapterStreamConstructException(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - __construct() - exception');
 

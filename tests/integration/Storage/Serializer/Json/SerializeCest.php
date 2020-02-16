@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Serializer\Json;
 
 use Codeception\Example;
-use IntegrationTester;
 use InvalidArgumentException;
 use Phalcon\Collection;
 use Phalcon\Storage\Serializer\Json;
+use UnitTester;
 
 use function json_encode;
 
@@ -31,7 +31,7 @@ class SerializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
-    public function storageSerializerJsonSerialize(IntegrationTester $I, Example $example)
+    public function storageSerializerJsonSerialize(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Serializer\Json - serialize() - ' . $example[0]);
         $serializer = new Json($example[1]);
@@ -47,7 +47,7 @@ class SerializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-11-11
      */
-    public function storageSerializerJsonSerializeObject(IntegrationTester $I)
+    public function storageSerializerJsonSerializeObject(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Json - serialize() - object');
 
@@ -76,7 +76,7 @@ class SerializeCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-30
      */
-    public function storageSerializerJsonSerializeError(IntegrationTester $I)
+    public function storageSerializerJsonSerializeError(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Json - serialize() - error');
 

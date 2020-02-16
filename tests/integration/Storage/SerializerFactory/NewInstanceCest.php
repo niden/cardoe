@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\SerializerFactory;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Factory\Exception;
 use Phalcon\Storage\Serializer\Base64;
 use Phalcon\Storage\Serializer\Igbinary;
@@ -23,6 +22,7 @@ use Phalcon\Storage\Serializer\Msgpack;
 use Phalcon\Storage\Serializer\None;
 use Phalcon\Storage\Serializer\Php;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 class NewInstanceCest
 {
@@ -36,7 +36,7 @@ class NewInstanceCest
      *
      * @author       Phalcon Team <team@phalcon.io>
      */
-    public function storageSerializerFactoryNewInstance(IntegrationTester $I, Example $example)
+    public function storageSerializerFactoryNewInstance(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\SerializerFactory - newInstance() - ' . $example[0]);
 
@@ -57,7 +57,7 @@ class NewInstanceCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function storageSerializerFactoryNewInstanceException(IntegrationTester $I)
+    public function storageSerializerFactoryNewInstanceException(UnitTester $I)
     {
         $I->wantToTest('Storage\SerializerFactory - newInstance() - exception');
 

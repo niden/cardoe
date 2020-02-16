@@ -14,11 +14,11 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Adapter\Apcu;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Apcu;
 use Phalcon\Storage\SerializerFactory;
 use Phalcon\Test\Fixtures\Traits\ApcuTrait;
 use stdClass;
+use UnitTester;
 
 class GetSetCest
 {
@@ -32,7 +32,7 @@ class GetSetCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-31
      */
-    public function storageAdapterApcuGetSet(IntegrationTester $I, Example $example)
+    public function storageAdapterApcuGetSet(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Adapter\Apcu - get()/set() - ' . $example[0]);
 

@@ -14,10 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Test\Integration\Storage\Adapter\Memory;
 
 use Codeception\Example;
-use IntegrationTester;
 use Phalcon\Storage\Adapter\Memory;
 use Phalcon\Storage\SerializerFactory;
 use stdClass;
+use UnitTester;
 
 class GetSetCest
 {
@@ -29,7 +29,7 @@ class GetSetCest
      * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-03-31
      */
-    public function storageAdapterMemoryGetSet(IntegrationTester $I, Example $example)
+    public function storageAdapterMemoryGetSet(UnitTester $I, Example $example)
     {
         $I->wantToTest('Storage\Adapter\Memory - get()/set() - ' . $example[0]);
 

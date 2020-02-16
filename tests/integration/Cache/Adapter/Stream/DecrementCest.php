@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Cache\Adapter\Stream;
 
-use IntegrationTester;
 use Phalcon\Cache\Adapter\Stream;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+use UnitTester;
 
 use function outputDir;
 
@@ -30,7 +30,7 @@ class DecrementCest
      *
      * @author Phalcon Team <team@phalcon.io>
      */
-    public function cacheAdapterStreamDecrement(IntegrationTester $I)
+    public function cacheAdapterStreamDecrement(UnitTester $I)
     {
         $I->wantToTest('Cache\Adapter\Stream - decrement()');
         $serializer = new SerializerFactory();

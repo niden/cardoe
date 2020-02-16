@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Integration\Storage\Serializer\Msgpack;
 
-use IntegrationTester;
 use Phalcon\Storage\Serializer\Msgpack;
+use UnitTester;
 
 class SetDataCest
 {
@@ -24,7 +24,7 @@ class SetDataCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-30
      */
-    public function storageSerializerMsgpackSetData(IntegrationTester $I)
+    public function storageSerializerMsgpackSetData(UnitTester $I)
     {
         $I->wantToTest('Storage\Serializer\Msgpack - setData()');
         $data       = ['Phalcon Framework'];
