@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon.
  *
- * (c) Phalcon Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.com>
  *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Helper;
 
 /**
- * Phalcon\Helper\Number
+ * Phalcon\Helper\number
  *
  * This class offers numeric functions for the framework
  */
@@ -22,7 +22,8 @@ class Number
 {
     /**
      * Helper method to get an array element or a default
-     *
+     */
+    /**
      * @param int $value
      * @param int $from
      * @param int $to

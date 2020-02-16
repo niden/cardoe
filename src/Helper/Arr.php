@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon.
  *
- * (c) Phalcon Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.com>
  *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -14,28 +14,32 @@ declare(strict_types=1);
 namespace Phalcon\Helper;
 
 use function array_chunk;
+use function array_diff_key;
 use function array_filter;
+use function array_flip;
+use function array_intersect_key;
+use function array_key_exists;
+use function array_key_first;
+use function array_key_last;
 use function array_keys;
 use function array_merge;
 use function array_slice;
 use function array_unique;
 use function array_values;
 use function call_user_func;
-use function count;
 use function end;
 use function function_exists;
 use function is_array;
 use function is_callable;
+use function is_int;
 use function is_object;
 use function is_string;
-use function key;
 use function krsort;
 use function ksort;
 use function reset;
+use function settype;
 
 /**
- * Phalcon\Helper\Arr
- *
  * This class offers quick array functions throughout the framework
  */
 class Arr
@@ -49,8 +53,10 @@ class Arr
      *
      * @return array
      */
-    final public static function blackList(array $collection, array $blackList): array
-    {
+    final public static function blackList(
+        array $collection,
+        array $blackList
+    ): array {
         $blackList = array_filter(
             $blackList,
             function ($element) {
@@ -89,8 +95,10 @@ class Arr
      *
      * @return array
      */
-    final public static function filter(array $collection, $method = null): array
-    {
+    final public static function filter(
+        array $collection,
+        $method = null
+    ): array {
         if (null === $method || !is_callable($method)) {
             return $collection;
         }
@@ -118,8 +126,8 @@ class Arr
      * Returns the key of the first element of the collection. If a callable
      * is passed, the element returned is the first that validates true
      *
-     * @param array         $collection
-     * @param callable|null $method
+     * @param array    $collection
+     * @param callable $method
      *
      * @return mixed
      */
@@ -127,9 +135,7 @@ class Arr
     {
         $filtered = self::filter($collection, $method);
 
-        reset($filtered);
-
-        return key($filtered);
+        return array_key_first($filtered);
     }
 
     /**
@@ -141,17 +147,26 @@ class Arr
      *
      * @return array
      */
-    final public static function flatten(array $collection, bool $deep = false): array
-    {
+    final public static function flatten(
+        array $collection,
+        bool $deep = false
+    ): array {
         $data = [];
+
         foreach ($collection as $item) {
             if (!is_array($item)) {
                 $data[] = $item;
             } else {
                 if ($deep) {
-                    $data = array_merge($data, self::flatten($item, true));
+                    $data = array_merge(
+                        $data,
+                        self::flatten($item, true)
+                    );
                 } else {
-                    $data = array_merge($data, array_values($item));
+                    $data = array_merge(
+                        $data,
+                        array_values($item)
+                    );
                 }
             }
         }
@@ -164,7 +179,7 @@ class Arr
      *
      * @param array       $collection
      * @param mixed       $index
-     * @param mixed|null  $defaultValue
+     * @param null        $defaultValue
      * @param string|null $cast
      *
      * @return mixed|null
@@ -269,9 +284,7 @@ class Arr
     {
         $filtered = self::filter($collection, $method);
 
-        end($filtered);
-
-        return key($filtered);
+        return array_key_last($filtered);
     }
 
     /**
@@ -316,8 +329,10 @@ class Arr
      *
      * @return array
      */
-    final public static function pluck(array $collection, string $element): array
-    {
+    final public static function pluck(
+        array $collection,
+        string $element
+    ): array {
         $filtered = [];
         foreach ($collection as $item) {
             if (is_object($item) && isset($item->{$element})) {
@@ -361,8 +376,10 @@ class Arr
      *
      * @return array
      */
-    final public static function sliceLeft(array $collection, int $elements = 1): array
-    {
+    final public static function sliceLeft(
+        array $collection,
+        int $elements = 1
+    ): array {
         return array_slice($collection, 0, $elements);
     }
 
@@ -374,8 +391,10 @@ class Arr
      *
      * @return array
      */
-    final public static function sliceRight(array $collection, int $elements = 1): array
-    {
+    final public static function sliceRight(
+        array $collection,
+        int $elements = 1
+    ): array {
         return array_slice($collection, $elements);
     }
 
@@ -397,6 +416,10 @@ class Arr
 
     /**
      * Returns the passed array as an object
+     *
+     * @param array $collection
+     *
+     * @return object
      */
     final public static function toObject(array $collection)
     {

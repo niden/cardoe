@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon.
  *
- * (c) Phalcon Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.com>
  *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -14,12 +14,10 @@ declare(strict_types=1);
 namespace Phalcon\Helper;
 
 use InvalidArgumentException;
-
 use function json_decode;
 use function json_encode;
 use function json_last_error;
 use function json_last_error_msg;
-
 use const JSON_ERROR_NONE;
 
 /**
@@ -50,7 +48,7 @@ class Json
      *
      * @return mixed
      *
-     * @throws InvalidArgumentException if the JSON cannot be decoded.
+     * @throws \InvalidArgumentException if the JSON cannot be decoded.
      * @link http://www.php.net/manual/en/function.json-decode.php
      */
     final public static function decode(
@@ -86,13 +84,13 @@ class Json
      * // {"one":"two","0":"three"}
      * ```
      *
-     * @param mixed $data    JSON data to parse
-     * @param int   $options Bitmask of JSON decode options.
-     * @param int   $depth   Recursion depth.
+     * @param mixed  $data        JSON data to parse
+     * @param int    $options     Bitmask of JSON decode options.
+     * @param int    $depth       Recursion depth.
      *
-     * @return string
+     * @return mixed
      *
-     * @throws InvalidArgumentException if the JSON cannot be encoded.
+     * @throws \InvalidArgumentException if the JSON cannot be encoded.
      * @link http://www.php.net/manual/en/function.json-encode.php
      */
     final public static function encode(
