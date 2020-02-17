@@ -19,6 +19,7 @@ declare(strict_types=1);
 namespace Phalcon\DataMapper\Query;
 
 use BadMethodCallException;
+use PDO;
 use Phalcon\Helper\Arr;
 
 use function array_merge;
