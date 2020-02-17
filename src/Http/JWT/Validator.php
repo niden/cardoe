@@ -18,6 +18,8 @@ use Phalcon\Http\JWT\Signer\SignerInterface;
 use Phalcon\Http\JWT\Token\Enum;
 use Phalcon\Http\JWT\Token\Token;
 
+use function in_array;
+
 /**
  * Class Validator
  *

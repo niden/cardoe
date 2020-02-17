@@ -30,7 +30,7 @@ class Msgpack extends AbstractSerializer
      *
      * @return string|null
      */
-    public function serialize(): ?string
+    public function serialize()
     {
         if (true !== $this->isSerializable($this->data)) {
             return $this->data;

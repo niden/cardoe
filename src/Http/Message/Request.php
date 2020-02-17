@@ -15,11 +15,9 @@
 
 declare(strict_types=1);
 
-
 namespace Phalcon\Http\Message;
 
 use Phalcon\Http\Message\Stream\Input;
-use Phalcon\Http\Message\AbstractRequest;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -38,18 +36,18 @@ final class Request extends AbstractRequest implements RequestInterface
      * @param array                           $headers
      */
     public function __construct(
-        string method = "GET",
-        var uri = null,
-        var body = "php://memory",
-        var headers = []
+        string $method = "GET",
+        $uri = null,
+        $body = "php://memory",
+        $headers = []
     ) {
-        if unlikely "php://input" === body {
-            let body = new Input();
+        if ("php://input" === $body) {
+            $body = new Input();
         }
 
-        let this->uri     = this->processUri(uri),
-            this->headers = this->processHeaders(headers),
-            this->method  = this->processMethod(method),
-            this->body    = this->processBody(body, "w+b");
+        $this->uri     = $this->processUri($uri);
+        $this->headers = $this->processHeaders($headers);
+        $this->method  = $this->processMethod($method);
+        $this->body    = $this->processBody($body, "w+b");
     }
 }

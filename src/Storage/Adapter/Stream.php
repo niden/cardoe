@@ -13,8 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
 use FilesystemIterator;
 use Iterator;
+use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Storage\Exception;
@@ -22,11 +24,29 @@ use Phalcon\Storage\SerializerFactory;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
+use function file_exists;
+use function file_get_contents;
+use function file_put_contents;
+use function is_array;
+use function is_dir;
+use function mkdir;
+use function restore_error_handler;
+use function serialize;
+use function set_error_handler;
+use function str_replace;
+use function strrchr;
+use function time;
+use function unlink;
+use function unserialize;
+
+use const E_NOTICE;
+
 /**
  * Stream adapter
  *
  * @property string $storageDir
  * @property array  $options
+ * @property bool   $warning
  */
 class Stream extends AbstractAdapter
 {
@@ -44,20 +64,14 @@ class Stream extends AbstractAdapter
      * Stream constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'storageDir' => '',
-     *                                   'defaultSerializer' => 'Php',
-     *                                   'lifetime' => 3600,
-     *                                   'serializer' => null,
-     *                                   'prefix' => ''
-     *                                   ]
+     * @param array             $options
      *
      * @throws Exception
+     * @throws ExceptionAlias
      */
-    public function __construct(
-        SerializerFactory $factory,
-        array $options = []
-    ) {
+    public function __construct(SerializerFactory $factory, array $options = [])
+    {
+        /** @var string $storageDir */
         $storageDir = Arr::get($options, "storageDir", "");
         if (empty($storageDir)) {
             throw new Exception(
@@ -106,12 +120,11 @@ class Stream extends AbstractAdapter
      */
     public function decrement(string $key, int $value = 1)
     {
-        $data = $this->get($key);
-
-        if (false === $data) {
+        if (!$this->has($key)) {
             return false;
         }
 
+        $data = $this->get($key);
         $data = (int) $data - $value;
 
         return $this->set($key, $data);
@@ -141,15 +154,26 @@ class Stream extends AbstractAdapter
      * @param string $key
      * @param null   $defaultValue
      *
-     * @return mixed|null
+     * @return mixed
      */
     public function get(string $key, $defaultValue = null)
     {
-        if (!$this->has($key)) {
-            return false;
+        $filepath = $this->getFilepath($key);
+
+        if (!file_exists($filepath)) {
+            return $defaultValue;
         }
 
-        $payload = $this->getPayload($this->getFilepath($key));
+        $payload = $this->getPayload($filepath);
+
+        if (empty($payload)) {
+            return $defaultValue;
+        }
+
+        if ($this->isExpired($payload)) {
+            return $defaultValue;
+        }
+
         $content = Arr::get($payload, "content", null);
 
         return $this->getUnserializedData($content, $defaultValue);
@@ -158,7 +182,7 @@ class Stream extends AbstractAdapter
     /**
      * Always returns null
      *
-     * @return mixed|null
+     * @return null
      */
     public function getAdapter()
     {
@@ -167,21 +191,24 @@ class Stream extends AbstractAdapter
 
     /**
      * Stores data in the adapter
+     *
+     * @param string $prefix
+     *
+     * @return array
      */
     public function getKeys(string $prefix = ""): array
     {
         $files     = [];
         $directory = $this->getDir();
+        $iterator  = $this->getIterator($directory);
 
-        if (!file_exists($directory)) {
-            return [];
-        }
-
-        $iterator = $this->getIterator($directory);
-
+        /** @var FilesystemIterator $file */
         foreach ($iterator as $file) {
-            if ($file->isFile()) {
-                $files[] = $this->prefix . $file->getFilename();
+            if ($file->isFile() && false !== $file->getPathname()) {
+                $key     = str_replace($directory, "", $file->getPathName());
+                $key     = strrchr($key, "/");
+                $key     = $this->prefix . str_replace("/", "", $key);
+                $files[] = $key;
             }
         }
 
@@ -223,12 +250,11 @@ class Stream extends AbstractAdapter
      */
     public function increment(string $key, int $value = 1)
     {
-        $data = $this->get($key);
-
-        if (false === $data) {
+        if (!$this->has($key)) {
             return false;
         }
 
+        $data = $this->get($key);
         $data = (int) $data + $value;
 
         return $this->set($key, $data);
@@ -258,7 +284,7 @@ class Stream extends AbstractAdapter
             mkdir($directory, 0777, true);
         }
 
-        return false !== file_put_contents($directory . $key, $payload, LOCK_EX);
+        return false !== file_put_contents($directory . $key, $payload);
     }
 
     /**
@@ -280,17 +306,22 @@ class Stream extends AbstractAdapter
 
     /**
      * Returns the full path to the file
+     *
+     * @param string $key
+     *
+     * @return string
      */
     private function getFilepath(string $key): string
     {
-        $count = 1;
-
-        return $this->getDir($key) .
-            str_replace($this->prefix, "", $key, $count);
+        return $this->getDir($key) . str_replace($this->prefix, "", $key);
     }
 
     /**
      * Returns an iterator for the directory contents
+     *
+     * @param string $dir
+     *
+     * @return Iterator
      */
     private function getIterator(string $dir): Iterator
     {
@@ -313,15 +344,8 @@ class Stream extends AbstractAdapter
      */
     private function getPayload(string $filepath): array
     {
-        $payload = false;
         $warning = false;
-        $pointer = fopen($filepath, 'r');
-
-        if (flock($pointer, LOCK_SH)) {
-            $payload = file_get_contents($filepath);
-        }
-
-        fclose($pointer);
+        $payload = file_get_contents($filepath);
 
         if (false === $payload) {
             return [];

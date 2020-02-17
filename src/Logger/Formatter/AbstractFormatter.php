@@ -17,6 +17,8 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
+use function date_default_timezone_get;
+
 /**
  * Class AbstractFormatter
  *

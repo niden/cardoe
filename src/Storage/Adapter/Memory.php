@@ -13,7 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
 use Phalcon\Collection;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 
 /**
@@ -38,16 +41,13 @@ class Memory extends AbstractAdapter
      * Memory constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'defaultSerializer' => 'Php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param array             $options
+     *
+     * @throws Exception
+     * @throws ExceptionAlias
      */
-    public function __construct(
-        SerializerFactory $factory,
-        array $options = []
-    ) {
+    public function __construct(SerializerFactory $factory, array $options = [])
+    {
         /**
          * Lets set some defaults and options here
          */
@@ -95,7 +95,7 @@ class Memory extends AbstractAdapter
     }
 
     /**
-     * Reads data from the adapter
+     * Deletes data from the adapter
      *
      * @param string $key
      *
@@ -193,16 +193,16 @@ class Memory extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
+     * @throws \Exception
      */
     public function set(string $key, $value, $ttl = null): bool
     {
         $content     = $this->getSerializedData($value);
-        $lifetime    = $this->getTtl($ttl);
         $prefixedKey = $this->getPrefixedKey($key);
 
         $this->data->set($prefixedKey, $content);

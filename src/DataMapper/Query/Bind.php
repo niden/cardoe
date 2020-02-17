@@ -20,6 +20,9 @@ namespace Phalcon\DataMapper\Query;
 
 use PDO;
 
+use function is_bool;
+use function is_int;
+
 /**
  * Class Bind
  *
@@ -54,8 +57,10 @@ class Bind
             return $this->inlineArray($value, $type);
         }
 
-        $this->inlineCount++;
+        $this->inlineCount = $this->inlineCount + 1;
+
         $key = "__" . $this->inlineCount . "__";
+
         $this->setValue($key, $value, $type);
 
         return ":" . $key;
@@ -66,9 +71,13 @@ class Bind
      *
      * @param string $key
      */
-    public function remove(string $key)
+    public function remove(string $key): void
     {
-        unset($this->store[$key]);
+        $store = $this->store;
+
+        unset($store[$key]);
+
+        $this->store = $store;
     }
 
     /**
@@ -80,11 +89,12 @@ class Bind
      */
     public function setValue(string $key, $value, int $type = -1): void
     {
-        if ($type === -1) {
-            $type = $this->getType($value);
+        $localType = $type;
+        if ($localType === -1) {
+            $localType = $this->getType($value);
         }
 
-        $this->store[$key] = [$value, $type];
+        $this->store[$key] = [$value, $localType];
     }
 
     /**
@@ -117,9 +127,9 @@ class Bind
      *
      * @return int
      */
-    protected function getType($value)
+    protected function getType($value): int
     {
-        if (is_null($value)) {
+        if (null === $value) {
             return PDO::PARAM_NULL;
         }
 
@@ -137,19 +147,22 @@ class Bind
     /**
      * Processes an array - if passed as an `inline` parameter
      *
-     * @param array $array
+     * @param array $data
      * @param int   $type
      *
      * @return string
      */
-    protected function inlineArray(array $array, int $type): string
+    protected function inlineArray(array $data, int $type): string
     {
         $keys = [];
-        foreach ($array as $value) {
-            $this->inlineCount++;
+        foreach ($data as $value) {
+            $this->inlineCount = $this->inlineCount + 1;
+
             $key = "__" . $this->inlineCount . "__";
+
             $this->setValue($key, $value, $type);
-            $keys[] = ":{$key}";
+
+            $keys[] = ":" . $key;
         }
 
         return "(" . implode(", ", $keys) . ")";

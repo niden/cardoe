@@ -18,6 +18,9 @@ use Phalcon\Helper\Arr;
 use Phalcon\Helper\Base64;
 use Phalcon\Helper\Json;
 
+use function explode;
+use function is_array;
+
 /**
  * Class Parser
  */

@@ -15,8 +15,6 @@
 
 declare(strict_types=1);
 
-
-
 namespace Phalcon\Http\Message;
 
 use Phalcon\Collection;
@@ -27,15 +25,25 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
+use function is_array;
+use function is_object;
+
 /**
  * PSR-7 ServerRequest
+ *
+ * @property Collection $attributes;
+ * @property array      $cookieParams
+ * @property mixed      $parsedBody
+ * @property array      $queryParams
+ * @property array      $serverParams
+ * @property array      $uploadedFiles
  */
 final class ServerRequest extends AbstractRequest implements ServerRequestInterface
 {
     /**
      * @var Collection
      */
-    private attributes;
+    protected $attributes;
 
     /**
      * Retrieve cookies.
@@ -47,7 +55,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @var array
      */
-    private cookieParams = [] { get };
+    protected $cookieParams = [];
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -63,7 +71,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @var mixed
      */
-    private parsedBody { get };
+    protected $parsedBody;
 
     /**
      * Retrieve query string arguments.
@@ -77,7 +85,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @var array
      */
-    private queryParams = [] { get };
+    protected $queryParams = [];
 
     /**
      * Retrieve server parameters.
@@ -88,7 +96,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @var array
      */
-    private serverParams = [] { get };
+    protected $serverParams = [];
 
     /**
      * Retrieve normalized file upload data.
@@ -101,7 +109,7 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @var array
      */
-    private uploadedFiles = [] { get };
+    protected $uploadedFiles = [];
 
     /**
      * ServerRequest constructor.
@@ -118,34 +126,34 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @param string                   $protocol
      */
     public function __construct(
-        string method = "GET",
-        var uri = null,
-        array serverParams = [],
-        var body = "php://input",
-        var headers = [],
-        array cookies = [],
-        array queryParams = [],
-        array uploadFiles = [],
-        var parsedBody = null,
-        string protocol = "1.1"
+        string $method = "GET",
+        $uri = null,
+        array $serverParams = [],
+        $body = "php://input",
+        $headers = [],
+        array $cookies = [],
+        array $queryParams = [],
+        array $uploadFiles = [],
+        $parsedBody = null,
+        string $protocol = "1.1"
     ) {
-        if unlikely "php://input" === body {
-            let body = new Input();
+        if ("php://input" === $body) {
+            $body = new Input();
         }
 
-        this->checkUploadedFiles(uploadFiles);
+        $this->checkUploadedFiles($uploadFiles);
 
-        let this->protocolVersion = this->processProtocol(protocol),
-            this->method          = this->processMethod(method),
-            this->headers         = this->processHeaders(headers),
-            this->uri             = this->processUri(uri),
-            this->body            = this->processBody(body, "w+b"),
-            this->uploadedFiles   = uploadFiles,
-            this->parsedBody      = parsedBody,
-            this->serverParams    = serverParams,
-            this->cookieParams    = cookies,
-            this->queryParams     = queryParams,
-            this->attributes      = new Collection();
+        $this->protocolVersion = $this->processProtocol($protocol);
+        $this->method          = $this->processMethod($method);
+        $this->headers         = $this->processHeaders($headers);
+        $this->uri             = $this->processUri($uri);
+        $this->body            = $this->processBody($body, "w+b");
+        $this->uploadedFiles   = $uploadFiles;
+        $this->parsedBody      = $parsedBody;
+        $this->serverParams    = $serverParams;
+        $this->cookieParams    = $cookies;
+        $this->queryParams     = $queryParams;
+        $this->attributes      = new Collection();
     }
 
     /**
@@ -163,9 +171,9 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return mixed
      */
-    public function getAttribute(var name, var defaultValue = null): var
+    public function getAttribute($name, $defaultValue = null)
     {
-        return this->attributes->get(name, defaultValue);
+        return $this->attributes->get($name, $defaultValue);
     }
 
     /**
@@ -181,7 +189,47 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      */
     public function getAttributes(): array
     {
-        return this->attributes->toArray();
+        return $this->attributes->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    public function getCookieParams()
+    {
+        return $this->cookieParams;
+    }
+
+    /**
+     * @return array|mixed|object|null
+     */
+    public function getParsedBody()
+    {
+        return $this->parsedBody;
+    }
+
+    /**
+     * @return array
+     */
+    public function getQueryParams()
+    {
+        return $this->queryParams;
+    }
+
+    /**
+     * @return array
+     */
+    public function getServerParams()
+    {
+        return $this->serverParams;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUploadedFiles()
+    {
+        return $this->uploadedFiles;
     }
 
     /**
@@ -199,15 +247,13 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return ServerRequest
      */
-    public function withAttribute(name, value): <ServerRequest>
+    public function withAttribute($name, $value): ServerRequest
     {
-        var attributes;
+        $attributes = clone $this->attributes;
 
-        let attributes = clone this->attributes;
+        $attributes->set($name, $value);
 
-        attributes->set(name, value);
-
-        return this->cloneInstance(attributes, "attributes");
+        return $this->cloneInstance($attributes, "attributes");
     }
 
     /**
@@ -228,9 +274,9 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return ServerRequest
      */
-    public function withCookieParams(array cookies): <ServerRequest>
+    public function withCookieParams(array $cookies): ServerRequest
     {
-        return this->cloneInstance(cookies, "cookieParams");
+        return $this->cloneInstance($cookies, "cookieParams");
     }
 
     /**
@@ -261,9 +307,9 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @throws InvalidArgumentException if an unsupported argument type is provided.
      *
      */
-    public function withParsedBody(data): <ServerRequest>
+    public function withParsedBody($data): ServerRequest
     {
-        return this->cloneInstance(data, "parsedBody");
+        return $this->cloneInstance($data, "parsedBody");
     }
 
     /**
@@ -288,9 +334,9 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return ServerRequest
      */
-    public function withQueryParams(array query): <ServerRequest>
+    public function withQueryParams(array $query): ServerRequest
     {
-        return this->cloneInstance(query, "queryParams");
+        return $this->cloneInstance($query, "queryParams");
     }
 
     /**
@@ -306,11 +352,11 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      * @throws InvalidArgumentException if an invalid structure is provided.
      *
      */
-    public function withUploadedFiles(array uploadedFiles): <ServerRequest>
+    public function withUploadedFiles(array $uploadedFiles): ServerRequest
     {
-        this->checkUploadedFiles(uploadedFiles);
+        $this->checkUploadedFiles($uploadedFiles);
 
-        return this->cloneInstance(uploadedFiles, "uploadedFiles");
+        return $this->cloneInstance($uploadedFiles, "uploadedFiles");
     }
 
     /**
@@ -327,14 +373,12 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @return ServerRequest
      */
-    public function withoutAttribute(name): <ServerRequest>
+    public function withoutAttribute($name): ServerRequest
     {
-        var attributes;
+        $attributes = clone $this->attributes;
+        $attributes->remove($name);
 
-        let attributes = clone this->attributes;
-        attributes->remove(name);
-
-        return this->cloneInstance(attributes, "attributes");
+        return $this->cloneInstance($attributes, "attributes");
     }
 
     /**
@@ -342,16 +386,18 @@ final class ServerRequest extends AbstractRequest implements ServerRequestInterf
      *
      * @param array $files
      */
-    private function checkUploadedFiles(array files): void
+    private function checkUploadedFiles(array $files): void
     {
-        var file;
-
-        for file in files {
-            if unlikely typeof file === "array" {
-                this->checkUploadedFiles(file);
+        foreach ($files as $file) {
+            if (is_array($file)) {
+                $this->checkUploadedFiles($file);
             } else {
-                if unlikely !(typeof file === "object" && file instanceof UploadedFileInterface) {
-                    throw new InvalidArgumentException("Invalid uploaded file");
+                if (
+                    !(is_object($file) && $file instanceof UploadedFileInterface)
+                ) {
+                    throw new InvalidArgumentException(
+                        "Invalid uploaded file"
+                    );
                 }
             }
         }

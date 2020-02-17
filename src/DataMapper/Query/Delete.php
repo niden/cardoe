@@ -20,9 +20,6 @@ namespace Phalcon\DataMapper\Query;
 
 use Phalcon\DataMapper\Pdo\Connection;
 
-use function array_merge;
-use function func_get_args;
-
 class Delete extends AbstractConditions
 {
     /**
@@ -44,7 +41,7 @@ class Delete extends AbstractConditions
      *
      * @param string $table
      *
-     * @return AbstractConditions
+     * @return Delete
      */
     public function from(string $table): Delete
     {
@@ -56,15 +53,15 @@ class Delete extends AbstractConditions
     /**
      * Adds the `RETURNING` clause
      *
-     * @param string ...$columns
+     * @param array $columns
      *
      * @return Delete
      */
-    public function returning(): Delete
+    public function returning(array $columns): Delete
     {
         $this->store["RETURNING"] = array_merge(
             $this->store["RETURNING"],
-            func_get_args()
+            $columns
         );
 
         return $this;
@@ -85,7 +82,7 @@ class Delete extends AbstractConditions
     /**
      * Resets the internal store
      */
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 

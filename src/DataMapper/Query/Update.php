@@ -21,7 +21,7 @@ namespace Phalcon\DataMapper\Query;
 use Phalcon\DataMapper\Pdo\Connection;
 
 use function array_merge;
-use function func_get_args;
+use function is_int;
 
 /**
  * Class Update
@@ -45,17 +45,20 @@ class Update extends AbstractConditions
     /**
      * Sets a column for the `UPDATE` query
      *
-     * @param string $column
-     * @param null   $value
-     * @param int    $type
+     * @param string     $column
+     * @param mixed|null $value
+     * @param int        $type
      *
-     * @return $this
+     * @return Update
      */
-    public function column(string $column, $value = null, int $type = -1)
-    {
+    public function column(
+        string $column,
+        $value = null,
+        int $type = -1
+    ): Update {
         $this->store["COLUMNS"][$column] = ":" . $column;
 
-        if (null !== $type) {
+        if (null !== $value) {
             $this->bind->setValue($column, $value, $type);
         }
 
@@ -67,9 +70,9 @@ class Update extends AbstractConditions
      *
      * @param array $columns
      *
-     * @return $this
+     * @return Update
      */
-    public function columns(array $columns)
+    public function columns(array $columns): Update
     {
         foreach ($columns as $column => $value) {
             if (is_int($column)) {
@@ -78,6 +81,7 @@ class Update extends AbstractConditions
                 $this->column($column, $value);
             }
         }
+
         return $this;
     }
 
@@ -113,7 +117,7 @@ class Update extends AbstractConditions
      *
      * @return bool
      */
-    public function hasColumns()
+    public function hasColumns(): bool
     {
         return count($this->store["COLUMNS"]) > 0;
     }
@@ -121,15 +125,15 @@ class Update extends AbstractConditions
     /**
      * Adds the `RETURNING` clause
      *
-     * @param string ...$columns
+     * @param array $columns
      *
      * @return Update
      */
-    public function returning(): Update
+    public function returning(array $columns): Update
     {
         $this->store["RETURNING"] = array_merge(
             $this->store["RETURNING"],
-            func_get_args()
+            $columns
         );
 
         return $this;
@@ -138,7 +142,7 @@ class Update extends AbstractConditions
     /**
      * Resets the internal store
      */
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 
@@ -161,6 +165,7 @@ class Update extends AbstractConditions
         }
 
         $this->store["COLUMNS"][$column] = $value;
+
         $this->bind->remove($column);
 
         return $this;
@@ -174,6 +179,7 @@ class Update extends AbstractConditions
     private function buildColumns(): string
     {
         $assignments = [];
+
         foreach ($this->store["COLUMNS"] as $column => $value) {
             $assignments[] = $this->quoteIdentifier($column) . " = " . $value;
         }

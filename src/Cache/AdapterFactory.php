@@ -15,18 +15,18 @@ namespace Phalcon\Cache;
 
 use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Factory\AbstractFactory;
-use Phalcon\Factory\Exception as FactoryException;
+use Phalcon\Factory\Exception;
 use Phalcon\Storage\SerializerFactory;
 
 /**
  * Factory to create Cache adapters
  *
- * @property SerializerFactory $serializerFactory
+ * @property SerializerFactory|null $serializerFactory
  */
 class AdapterFactory extends AbstractFactory
 {
     /**
-     * @var SerializerFactory
+     * @var SerializerFactory|null
      */
     private $serializerFactory;
 
@@ -36,10 +36,8 @@ class AdapterFactory extends AbstractFactory
      * @param SerializerFactory|null $factory
      * @param array                  $services
      */
-    public function __construct(
-        SerializerFactory $factory = null,
-        array $services = []
-    ) {
+    public function __construct(SerializerFactory $factory = null, array $services = [])
+    {
         $this->serializerFactory = $factory;
 
         $this->init($services);
@@ -49,33 +47,13 @@ class AdapterFactory extends AbstractFactory
      * Create a new instance of the adapter
      *
      * @param string $name
-     * @param array  $options = [
-     *                        'servers' => [
-     *                        [
-     *                        'host'   => 'localhost',
-     *                        'port'   => 11211,
-     *                        'weight' => 1,
-     *                        ]
-     *                        ],
-     *                        'host'              => '127.0.0.1',
-     *                        'port'              => 6379,
-     *                        'index'             => 0,
-     *                        'persistent'        => false,
-     *                        'auth'              => '',
-     *                        'socket'            => '',
-     *                        'defaultSerializer' => 'Php',
-     *                        'lifetime'          => 3600,
-     *                        'prefix'            => 'phalcon',
-     *                        'storageDir'        => ''
-     *                        ]
+     * @param array  $options
      *
      * @return AdapterInterface
-     * @throws FactoryException
+     * @throws Exception
      */
-    public function newInstance(
-        string $name,
-        array $options = []
-    ): AdapterInterface {
+    public function newInstance(string $name, array $options = []): AdapterInterface
+    {
         $this->checkService($name);
 
         $definition = $this->mapper[$name];
@@ -85,17 +63,15 @@ class AdapterFactory extends AbstractFactory
 
     /**
      * Returns the available adapters
-     *
-     * @return array|string[]
      */
     protected function getAdapters(): array
     {
         return [
-            "apcu"         => "Phalcon\\Cache\\Adapter\\Apcu",
-            "libmemcached" => "Phalcon\\Cache\\Adapter\\Libmemcached",
-            "memory"       => "Phalcon\\Cache\\Adapter\\Memory",
-            "redis"        => "Phalcon\\Cache\\Adapter\\Redis",
-            "stream"       => "Phalcon\\Cache\\Adapter\\Stream",
+            "apcu"         => 'Phalcon\Cache\Adapter\Apcu',
+            "libmemcached" => 'Phalcon\Cache\Adapter\Libmemcached',
+            "memory"       => 'Phalcon\Cache\Adapter\Memory',
+            "redis"        => 'Phalcon\Cache\Adapter\Redis',
+            "stream"       => 'Phalcon\Cache\Adapter\Stream',
         ];
     }
 }

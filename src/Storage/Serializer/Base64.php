@@ -15,6 +15,8 @@ namespace Phalcon\Storage\Serializer;
 
 use InvalidArgumentException;
 
+use function base64_decode;
+use function base64_encode;
 use function is_string;
 
 /**

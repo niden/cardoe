@@ -21,6 +21,12 @@ use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
+use function fopen;
+use function fwrite;
+use function get_resource_type;
+use function is_resource;
+use function rewind;
+
 /**
  * PSR-17 StreamFactory
  */
@@ -35,19 +41,17 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStream(string! content = ""): <StreamInterface>
+    public function createStream(string $content = ""): StreamInterface
     {
-        var handle;
-
-        let handle = fopen("php://temp", "r+b");
-        if unlikely false === handle {
+        $handle = fopen("php://temp", "r+b");
+        if (false === $handle) {
             throw new InvalidArgumentException("Cannot write to file.");
         }
 
-        fwrite(handle, content);
-        rewind(handle);
+        fwrite($handle, $content);
+        rewind($handle);
 
-        return this->createStreamFromResource(handle);
+        return $this->createStreamFromResource($handle);
     }
 
     /**
@@ -65,23 +69,31 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStreamFromFile(string! filename, string! mode = "r+b"): <StreamInterface>
-    {
-        return new Stream(filename, mode);
+    public function createStreamFromFile(
+        string $filename,
+        string $mode = "r+b"
+    ): StreamInterface {
+        return new Stream($filename, $mode);
     }
 
     /**
      * Create a new stream from an existing resource.
      *
      * The stream MUST be readable and may be writable.
+     *
+     * @param resource $phpResource
+     *
+     * @return StreamInterface
      */
-    public function createStreamFromResource(var phpResource): <StreamInterface>
+    public function createStreamFromResource($phpResource): StreamInterface
     {
-        if unlikely (typeof phpResource !== "resource" ||
-           "stream" !== get_resource_type(phpResource)) {
+        if (
+            !is_resource($phpResource) ||
+            "stream" !== get_resource_type($phpResource)
+        ) {
             throw new InvalidArgumentException("Invalid stream provided");
         }
 
-        return new Stream(phpResource);
+        return new Stream($phpResource);
     }
 }

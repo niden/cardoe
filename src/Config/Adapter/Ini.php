@@ -16,6 +16,7 @@ namespace Phalcon\Config\Adapter;
 use Phalcon\Config;
 use Phalcon\Config\Exception;
 
+use function array_key_exists;
 use function basename;
 use function call_user_func_array;
 use function is_array;

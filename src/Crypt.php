@@ -18,7 +18,33 @@ use Phalcon\Crypt\Exception;
 use Phalcon\Crypt\MismatchException;
 use Phalcon\Helper\Str;
 
+use function base64_decode;
+use function base64_encode;
+use function chr;
+use function function_exists;
+use function hash;
+use function hash_algos;
+use function hash_hmac;
+use function hash_hmac_algos;
+use function in_array;
 use function is_array;
+use function openssl_cipher_iv_length;
+use function openssl_decrypt;
+use function openssl_encrypt;
+use function openssl_get_cipher_methods;
+use function openssl_random_pseudo_bytes;
+use function ord;
+use function rand;
+use function range;
+use function rtrim;
+use function sprintf;
+use function str_ireplace;
+use function str_repeat;
+use function strlen;
+use function strrpos;
+use function strtolower;
+use function strtoupper;
+use function substr;
 
 use const OPENSSL_RAW_DATA;
 

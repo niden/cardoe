@@ -17,6 +17,8 @@ use Exception;
 use Phalcon\Helper\Str;
 use Phalcon\Logger\Item;
 
+use function str_replace;
+
 /**
  * Class Line
  *

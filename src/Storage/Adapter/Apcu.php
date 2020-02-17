@@ -14,9 +14,17 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use APCuIterator;
-use Exception;
+use DateInterval;
+use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
 
+use function apcu_dec;
+use function apcu_delete;
+use function apcu_exists;
+use function apcu_fetch;
+use function apcu_inc;
+use function apcu_store;
 use function is_object;
 
 /**
@@ -35,16 +43,13 @@ class Apcu extends AbstractAdapter
      * Apcu constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'defaultSerializer' => 'Php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param array             $options
+     *
+     * @throws Exception
+     * @throws ExceptionAlias
      */
-    public function __construct(
-        SerializerFactory $factory,
-        array $options = []
-    ) {
+    public function __construct(SerializerFactory $factory, array $options = [])
+    {
         /**
          * Lets set some defaults and options here
          */
@@ -100,14 +105,14 @@ class Apcu extends AbstractAdapter
      */
     public function delete(string $key): bool
     {
-        return apcu_delete($this->getPrefixedKey($key));
+        return (bool) apcu_delete($this->getPrefixedKey($key));
     }
 
     /**
      * Reads data from the adapter
      *
-     * @param string $key
-     * @param null   $defaultValue
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
      * @return mixed
      */
@@ -180,12 +185,12 @@ class Apcu extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
-     * @throws Exception
+     * @throws \Exception
      */
     public function set(string $key, $value, $ttl = null): bool
     {

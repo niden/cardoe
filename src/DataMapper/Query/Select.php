@@ -19,14 +19,13 @@ declare(strict_types=1);
 namespace Phalcon\DataMapper\Query;
 
 use BadMethodCallException;
-use PDO;
+use Phalcon\Helper\Arr;
 
 use function array_merge;
 use function array_shift;
 use function call_user_func_array;
-use function end;
 use function func_get_args;
-use function key;
+use function implode;
 use function ltrim;
 use function strtoupper;
 use function substr;
@@ -43,10 +42,8 @@ use function trim;
  * @method array  fetchAssoc()
  * @method array  fetchColumn(int $column = 0)
  * @method array  fetchGroup(int $flags = PDO::FETCH_ASSOC)
- * @method object fetchObject(string $class = 'stdClass', array $arguments =
- *         [])
- * @method array  fetchObjects(string $class = 'stdClass', array $arguments =
- *         [])
+ * @method object fetchObject(string $class = 'stdClass', array $arguments = [])
+ * @method array  fetchObjects(string $class = 'stdClass', array $arguments = [])
  * @method array  fetchOne()
  * @method array  fetchPairs()
  * @method mixed  fetchValue()
@@ -88,19 +85,19 @@ class Select extends AbstractConditions
             "fetchObjects"  => true,
             "fetchOne"      => true,
             "fetchPairs"    => true,
-            "fetchValue"    => true,
+            "fetchValue"    => true
         ];
 
         if (isset($proxied[$method])) {
             return call_user_func_array(
                 [
                     $this->connection,
-                    $method,
+                    $method
                 ],
                 array_merge(
                     [
                         $this->getStatement(),
-                        $this->getBindValues(),
+                        $this->getBindValues()
                     ],
                     $params
                 )
@@ -121,8 +118,11 @@ class Select extends AbstractConditions
      *
      * @return Select
      */
-    public function andHaving(string $condition, $value = null, int $type = -1): Select
-    {
+    public function andHaving(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): Select {
         $this->having($condition, $value, $type);
 
         return $this;
@@ -151,9 +151,12 @@ class Select extends AbstractConditions
      *
      * @return Select
      */
-    public function catHaving(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->catCondition("HAVING", $condition, $value, $type);
+    public function appendHaving(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): Select {
+        $this->appendCondition("HAVING", $condition, $value, $type);
 
         return $this;
     }
@@ -167,19 +170,20 @@ class Select extends AbstractConditions
      *
      * @return Select
      */
-    public function catJoin(string $condition, $value = null, int $type = -1): Select
-    {
+    public function appendJoin(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): Select {
         if (!empty($value)) {
             $condition .= $this->bind->bindInline($value, $type);
         }
 
-        end($this->store["FROM"]);
-        $end = key($this->store["FROM"]);
-        end($this->store["FROM"][$end]);
+        $end = Arr::lastKey($this->store["FROM"]);
+        $key = Arr::lastKey($this->store["FROM"][$end]);
 
-        $key = key($this->store["FROM"][$end]);
-
-        $this->store["FROM"][$end][$key] .= $condition;
+        $this->store["FROM"][$end][$key] = $this->store["FROM"][$end][$key]
+            . $condition;
 
         return $this;
     }
@@ -194,7 +198,7 @@ class Select extends AbstractConditions
      */
     public function columns(): Select
     {
-        $this->store['COLUMNS'] = array_merge(
+        $this->store["COLUMNS"] = array_merge(
             $this->store["COLUMNS"],
             func_get_args()
         );
@@ -249,7 +253,8 @@ class Select extends AbstractConditions
      */
     public function getStatement(): string
     {
-        return implode("", $this->store["UNION"]) . $this->getCurrentStatement();
+        return implode("", $this->store["UNION"])
+            . $this->getCurrentStatement();
     }
 
     /**
@@ -271,7 +276,7 @@ class Select extends AbstractConditions
      *
      * @return bool
      */
-    public function hasColumns()
+    public function hasColumns(): bool
     {
         return count($this->store["COLUMNS"]) > 0;
     }
@@ -285,9 +290,12 @@ class Select extends AbstractConditions
      *
      * @return Select
      */
-    public function having(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->appendCondition("HAVING", "AND ", $condition, $value, $type);
+    public function having(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): Select {
+        $this->addCondition("HAVING", "AND ", $condition, $value, $type);
 
         return $this;
     }
@@ -306,12 +314,12 @@ class Select extends AbstractConditions
     public function join(
         string $join,
         string $table,
-        string $condition = '',
+        string $condition,
         $value = null,
-        $type = -1
+        int $type = -1
     ): Select {
         $join = strtoupper(trim($join));
-        if (substr($join, -4) != "JOIN") {
+        if (substr($join, -4) !== "JOIN") {
             $join .= " JOIN";
         }
 
@@ -329,10 +337,9 @@ class Select extends AbstractConditions
             $condition .= $this->bind->bindInline($value, $type);
         }
 
-        end($this->store["FROM"]);
-        $end = key($this->store["FROM"]);
+        $key = Arr::lastKey($this->store["FROM"]);
 
-        $this->store["FROM"][$end][] = $join . " " . $table . " " . $condition;
+        $this->store["FROM"][$key][] = $join . " " . $table . " " . $condition;
 
         return $this;
     }
@@ -346,9 +353,12 @@ class Select extends AbstractConditions
      *
      * @return Select
      */
-    public function orHaving(string $condition, $value = null, int $type = -1): Select
-    {
-        $this->appendCondition("HAVING", "OR ", $condition, $value, $type);
+    public function orHaving(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): Select {
+        $this->addCondition("HAVING", "OR ", $condition, $value, $type);
 
         return $this;
     }
@@ -362,7 +372,7 @@ class Select extends AbstractConditions
     {
         parent::reset();
 
-        $this->as        = "";
+        $this->asAlias   = "";
         $this->forUpdate = false;
 
         return $this;
@@ -399,9 +409,7 @@ class Select extends AbstractConditions
      */
     public function unionAll(): Select
     {
-        $this->store["UNION"][] = $this->getCurrentStatement(
-            " UNION ALL "
-        );
+        $this->store["UNION"][] = $this->getCurrentStatement(" UNION ALL ");
 
         $this->reset();
 
@@ -415,9 +423,15 @@ class Select extends AbstractConditions
      *
      * @return string
      */
-    protected function getCurrentStatement(string $suffix = ''): string
+    protected function getCurrentStatement(string $suffix = ""): string
     {
-        $stm = 'SELECT'
+        $forUpdate = "";
+
+        if ($this->forUpdate) {
+            $forUpdate = " FOR UPDATE";
+        }
+
+        $statement = "SELECT"
             . $this->buildFlags()
             . $this->buildLimitEarly()
             . $this->buildColumns()
@@ -427,13 +441,13 @@ class Select extends AbstractConditions
             . $this->buildCondition("HAVING")
             . $this->buildBy("ORDER")
             . $this->buildLimit()
-            . ($this->forUpdate ? " FOR UPDATE" : "");
+            . $forUpdate;
 
         if ("" !== $this->asAlias) {
-            $stm = "(" . $stm . ") AS " . $this->asAlias;
+            $statement = "(" . $statement . ") AS " . $this->asAlias;
         }
 
-        return $stm . $suffix;
+        return $statement . $suffix;
     }
 
     /**
@@ -446,7 +460,7 @@ class Select extends AbstractConditions
         if (!$this->hasColumns()) {
             $columns = ["*"];
         } else {
-            $columns = $this->store['COLUMNS'];
+            $columns = $this->store["COLUMNS"];
         }
 
         return $this->indent($columns, ",");
@@ -459,11 +473,12 @@ class Select extends AbstractConditions
      */
     private function buildFrom(): string
     {
+        $from = [];
+
         if (empty($this->store["FROM"])) {
             return "";
         }
 
-        $from = [];
         foreach ($this->store["FROM"] as $table) {
             $from[] = array_shift($table) . $this->indent($table);
         }

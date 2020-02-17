@@ -15,7 +15,6 @@
 
 declare(strict_types=1);
 
-
 namespace Phalcon\Http\Message;
 
 use Psr\Http\Message\RequestInterface;
@@ -35,8 +34,8 @@ final class RequestFactory implements RequestFactoryInterface
      *
      * @return RequestInterface
      */
-    public function createRequest(string! method, var uri): <RequestInterface>
+    public function createRequest(string $method, $uri): RequestInterface
     {
-        return new Request(method, uri);
+        return new Request($method, $uri);
     }
 }

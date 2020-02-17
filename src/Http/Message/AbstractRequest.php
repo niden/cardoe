@@ -15,15 +15,21 @@
 
 declare(strict_types=1);
 
-
 namespace Phalcon\Http\Message;
 
-use Phalcon\Collection;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\UriInterface;
 
+use function is_object;
+use function is_string;
+use function preg_match;
+
 /**
  * Request methods
+ *
+ * @property string       $method
+ * @property null|string  $requestTarget
+ * @property UriInterface $uri
  */
 abstract class AbstractRequest extends AbstractMessage
 {
@@ -32,25 +38,22 @@ abstract class AbstractRequest extends AbstractMessage
      *
      * @var string
      */
-    protected method = "GET" { get };
+    protected $method = "GET";
 
     /**
      * The request-target, if it has been provided or calculated.
      *
      * @var null|string
      */
-    protected requestTarget;
+    protected $requestTarget;
 
     /**
-     * Retrieves the URI instance.
-     *
-     * This method MUST return a UriInterface instance.
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.3
-     *
-     * @var UriInterface
+     * @return string
      */
-    protected uri { get };
+    public function getMethod(): string
+    {
+        return $this->method;
+    }
 
     /**
      * Retrieves the message's request target.
@@ -67,23 +70,21 @@ abstract class AbstractRequest extends AbstractMessage
      */
     public function getRequestTarget(): string
     {
-        var requestTarget;
+        $requestTarget = $this->requestTarget;
 
-        let requestTarget = this->requestTarget;
+        if (null === $requestTarget) {
+            $requestTarget = $this->uri->getPath();
 
-        if unlikely null === requestTarget {
-            let requestTarget = this->uri->getPath();
-
-            if unlikely !empty(this->uri->getQuery()) {
-                let requestTarget .= "?" . this->uri->getQuery();
+            if (!empty($this->uri->getQuery())) {
+                $requestTarget .= "?" . $this->uri->getQuery();
             }
 
-            if unlikely empty(requestTarget) {
-                let requestTarget = "/";
+            if (empty($requestTarget)) {
+                $requestTarget = "/";
             }
         }
 
-        return requestTarget;
+        return $requestTarget;
     }
 
     /**
@@ -103,11 +104,11 @@ abstract class AbstractRequest extends AbstractMessage
      * @throws InvalidArgumentException for invalid HTTP methods.
      *
      */
-    public function withMethod(var method): object
+    public function withMethod($method): object
     {
-        this->processMethod(method);
+        $this->processMethod($method);
 
-        return this->cloneInstance(method, "method");
+        return $this->cloneInstance($method, "method");
     }
 
     /**
@@ -129,15 +130,15 @@ abstract class AbstractRequest extends AbstractMessage
      *
      * @return object
      */
-    public function withRequestTarget(var requestTarget): object
+    public function withRequestTarget($requestTarget): object
     {
-        if unlikely preg_match("/\s/", requestTarget) {
+        if (preg_match("/\s/", $requestTarget)) {
             throw new InvalidArgumentException(
                 "Invalid request target: cannot contain whitespace"
             );
         }
 
-        return this->cloneInstance(requestTarget, "requestTarget");
+        return $this->cloneInstance($requestTarget, "requestTarget");
     }
 
     /**
@@ -173,21 +174,19 @@ abstract class AbstractRequest extends AbstractMessage
      *
      * @return object
      */
-    public function withUri(<UriInterface> uri, var preserveHost = false): object
+    public function withUri(UriInterface $uri, $preserveHost = false): object
     {
-        var headers, newInstance;
+        $preserveHost = (bool) $preserveHost;
+        $headers      = clone $this->headers;
+        $newInstance  = $this->cloneInstance($uri, "uri");
 
-        let preserveHost     = (bool) preserveHost,
-            headers          = clone this->headers,
-            newInstance      = this->cloneInstance(uri, "uri");
+        if (!$preserveHost) {
+            $headers = $this->checkHeaderHost($headers);
 
-        if unlikely !preserveHost {
-            let headers = this->checkHeaderHost(headers);
-
-            let newInstance->headers = headers;
+            $newInstance->headers = $headers;
         }
 
-        return newInstance;
+        return $newInstance;
     }
 
     /**
@@ -197,31 +196,33 @@ abstract class AbstractRequest extends AbstractMessage
      *
      * @return string
      */
-    final protected function processMethod(method = ""): string
+    final protected function processMethod($method = ""): string
     {
-        var methods;
-
-        let methods = [
-            "GET"     : 1,
-            "CONNECT" : 1,
-            "DELETE"  : 1,
-            "HEAD"    : 1,
-            "OPTIONS" : 1,
-            "PATCH"   : 1,
-            "POST"    : 1,
-            "PUT"     : 1,
-            "TRACE"   : 1
+        $methods = [
+            "GET"     => 1,
+            "CONNECT" => 1,
+            "DELETE"  => 1,
+            "HEAD"    => 1,
+            "OPTIONS" => 1,
+            "PATCH"   => 1,
+            "POST"    => 1,
+            "PUT"     => 1,
+            "TRACE"   => 1
         ];
 
-        if unlikely !(!empty(method) &&
-            typeof method === "string"  &&
-            isset methods[method]) {
+        if (
+            !(
+                !empty($method) &&
+                is_string($method) &&
+                isset($methods[$method])
+            )
+        ) {
             throw new InvalidArgumentException(
-                "Invalid or unsupported method " . method
+                "Invalid or unsupported method " . $method
             );
         }
 
-        return method;
+        return $method;
     }
 
     /**
@@ -231,17 +232,17 @@ abstract class AbstractRequest extends AbstractMessage
      *
      * @return UriInterface
      */
-    final protected function processUri(var uri): <UriInterface>
+    final protected function processUri($uri): UriInterface
     {
-        if unlikely (typeof uri === "object" && uri instanceof UriInterface) {
-            return uri;
+        if (is_object($uri) && $uri instanceof UriInterface) {
+            return $uri;
         }
 
-        if likely typeof uri === "string" {
-            return new Uri(uri);
+        if (is_string($uri)) {
+            return new Uri($uri);
         }
 
-        if null === uri {
+        if (null === $uri) {
             return new Uri();
         }
 

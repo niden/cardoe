@@ -20,9 +20,7 @@ namespace Phalcon\DataMapper\Query;
 
 use Phalcon\DataMapper\Pdo\Connection;
 
-use function array_merge;
-use function array_values;
-use function func_get_args;
+use function array_keys;
 use function is_int;
 
 /**
@@ -47,17 +45,17 @@ class Insert extends AbstractQuery
     /**
      * Sets a column for the `INSERT` query
      *
-     * @param string $column
-     * @param null   $value
-     * @param int    $type
+     * @param string     $column
+     * @param mixed|null $value
+     * @param int        $type
      *
-     * @return $this
+     * @return Insert
      */
-    public function column(string $column, $value = null, int $type = -1)
+    public function column(string $column, $value = null, int $type = -1): Insert
     {
         $this->store["COLUMNS"][$column] = ":" . $column;
 
-        if (null !== $type) {
+        if (null !== $value) {
             $this->bind->setValue($column, $value, $type);
         }
 
@@ -65,13 +63,13 @@ class Insert extends AbstractQuery
     }
 
     /**
-     * Mass sets columns and values for the `UPDATE`
+     * Mass sets columns and values for the `INSERT`
      *
      * @param array $columns
      *
-     * @return $this
+     * @return Insert
      */
-    public function columns(array $columns)
+    public function columns(array $columns): Insert
     {
         foreach ($columns as $column => $value) {
             if (is_int($column)) {
@@ -80,6 +78,7 @@ class Insert extends AbstractQuery
                 $this->column($column, $value);
             }
         }
+
         return $this;
     }
 
@@ -104,7 +103,7 @@ class Insert extends AbstractQuery
      *
      * @return string
      */
-    public function getLastInsertId(string $name = null)
+    public function getLastInsertId(string $name = null): string
     {
         return $this->connection->lastInsertId($name);
     }
@@ -124,15 +123,15 @@ class Insert extends AbstractQuery
     /**
      * Adds the `RETURNING` clause
      *
-     * @param string ...$columns
+     * @param array $columns
      *
      * @return Insert
      */
-    public function returning(): Insert
+    public function returning(array $columns): Insert
     {
         $this->store["RETURNING"] = array_merge(
             $this->store["RETURNING"],
-            func_get_args()
+            $columns
         );
 
         return $this;
@@ -141,7 +140,7 @@ class Insert extends AbstractQuery
     /**
      * Resets the internal store
      */
-    public function reset()
+    public function reset(): void
     {
         parent::reset();
 
@@ -164,6 +163,7 @@ class Insert extends AbstractQuery
         }
 
         $this->store["COLUMNS"][$column] = $value;
+
         $this->bind->remove($column);
 
         return $this;
@@ -177,9 +177,11 @@ class Insert extends AbstractQuery
     private function buildColumns(): string
     {
         $columns = [];
-        foreach ($this->store["COLUMNS"] as $column => $value) {
+
+        foreach (array_keys($this->store["COLUMNS"]) as $column) {
             $columns[] = $this->quoteIdentifier($column);
         }
+
         return " ("
             . ltrim($this->indent($columns, ","))
             . ") VALUES ("

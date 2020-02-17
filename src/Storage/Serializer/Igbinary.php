@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Serializer;
 
+use function igbinary_serialize;
 use function igbinary_unserialize;
 use function restore_error_handler;
 use function set_error_handler;
@@ -31,10 +32,10 @@ class Igbinary extends AbstractSerializer
      *
      * @return string
      */
-    public function serialize(): string
+    public function serialize()
     {
         if (true !== $this->isSerializable($this->data)) {
-            return (string) $this->data;
+            return $this->data;
         }
 
         $data = igbinary_serialize($this->data);

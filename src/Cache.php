@@ -17,6 +17,9 @@ use Phalcon\Cache\Exception\InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
 
+use function is_array;
+use function preg_match;
+
 /**
  * This component offers caching capabilities for your application.
  * Phalcon\Cache implements PSR-16.

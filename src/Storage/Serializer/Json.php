@@ -17,6 +17,8 @@ use InvalidArgumentException;
 use JsonSerializable;
 use Phalcon\Helper\Json as JsonHelper;
 
+use function is_object;
+
 /**
  * Class Json
  *
@@ -29,7 +31,7 @@ class Json extends AbstractSerializer
      *
      * @return string
      */
-    public function serialize(): string
+    public function serialize()
     {
         if (is_object($this->data) && !($this->data instanceof JsonSerializable)) {
             throw new InvalidArgumentException(
@@ -39,7 +41,7 @@ class Json extends AbstractSerializer
         }
 
         if (true !== $this->isSerializable($this->data)) {
-            return (string) $this->data;
+            return $this->data;
         }
 
         return JsonHelper::encode($this->data);

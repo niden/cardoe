@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage;
 
+use Throwable;
+
 /**
  * Phalcon\Storage\Exception
  *
  * Exceptions thrown in Phalcon\Storage will use this class
  *
  */
-class Exception extends \Phalcon\Exception
+class Exception extends \Exception implements Throwable
 {
 
 }

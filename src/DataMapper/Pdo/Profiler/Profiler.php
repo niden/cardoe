@@ -23,6 +23,8 @@ use Phalcon\Helper\Json;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
+use function microtime;
+
 /**
  * Sends query profiles to a logger.
  *
@@ -47,7 +49,7 @@ class Profiler implements ProfilerInterface
     /**
      * @var string
      */
-    protected $logFormat = "{method} ({duration} seconds): {statement} {backtrace}";
+    protected $logFormat = "{method} ({duration}s): {statement} {backtrace}";
 
     /**
      * @var string

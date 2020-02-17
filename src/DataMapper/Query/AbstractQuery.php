@@ -21,10 +21,6 @@ namespace Phalcon\DataMapper\Query;
 use PDO;
 use PDOStatement;
 use Phalcon\DataMapper\Pdo\Connection;
-use Phalcon\DataMapper\Pdo\Exception\CannotBindValue;
-
-use function array_keys;
-use function implode;
 
 /**
  * Class AbstractQuery
@@ -132,7 +128,6 @@ abstract class AbstractQuery
      * Performs a statement in the connection
      *
      * @return PDOStatement
-     * @throws CannotBindValue
      */
     public function perform()
     {
@@ -153,7 +148,11 @@ abstract class AbstractQuery
         if ($enable) {
             $this->store["FLAGS"][$flag] = true;
         } else {
-            unset($this->store["FLAGS"][$flag]);
+            $flags = $this->store["FLAGS"];
+
+            unset($flags[$flag]);
+
+            $this->store["FLAGS"] = $flags;
         }
     }
 
@@ -165,8 +164,10 @@ abstract class AbstractQuery
      *
      * @return string
      */
-    public function quoteIdentifier(string $name, int $type = PDO::PARAM_STR): string
-    {
+    public function quoteIdentifier(
+        string $name,
+        int $type = PDO::PARAM_STR
+    ): string {
         return $this->connection->quote($name, $type);
     }
 

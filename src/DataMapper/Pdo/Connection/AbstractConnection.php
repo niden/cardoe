@@ -26,8 +26,14 @@ use Phalcon\DataMapper\Pdo\Profiler\ProfilerInterface;
 
 use function array_merge;
 use function call_user_func_array;
+use function current;
 use function func_get_args;
+use function get_class;
+use function implode;
 use function is_array;
+use function is_bool;
+use function is_int;
+use function method_exists;
 
 /**
  * Provides array quoting, profiling, a new `perform()` method, new `fetch*()`

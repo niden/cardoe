@@ -13,11 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
+use DateInterval;
 use Memcached;
-use Phalcon\Factory\Exception as FactoryException;
+use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+
+use function array_merge;
+use function strtolower;
 
 /**
  * Libmemcached adapter
@@ -35,23 +39,10 @@ class Libmemcached extends AbstractAdapter
      * Libmemcached constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'servers' => [
-     *                                   [
-     *                                   'host'   => '127.0.0.1',
-     *                                   'port'   => 11211,
-     *                                   'weight' => 1
-     *                                   ]
-     *                                   ],
-     *                                   'defaultSerializer' => 'Php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param array             $options
      */
-    public function __construct(
-        SerializerFactory $factory,
-        array $options = []
-    ) {
+    public function __construct(SerializerFactory $factory, array $options = [])
+    {
         if (!isset($options["servers"])) {
             $options["servers"] = [
                 0 => [
@@ -73,7 +64,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function clear(): bool
     {
@@ -88,7 +79,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return bool|false|int
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function decrement(string $key, int $value = 1)
     {
@@ -102,7 +93,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function delete(string $key): bool
     {
@@ -115,9 +106,9 @@ class Libmemcached extends AbstractAdapter
      * @param string $key
      * @param null   $defaultValue
      *
-     * @return mixed|null
+     * @return mixed
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function get(string $key, $defaultValue = null)
     {
@@ -133,7 +124,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return Memcached|mixed
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function getAdapter()
     {
@@ -147,12 +138,10 @@ class Libmemcached extends AbstractAdapter
             $connection->setOption(Memcached::OPT_PREFIX_KEY, $this->prefix);
 
             if (count($serverList) < 1) {
-                $servers = Arr::get($options, "servers", []);
-                $client  = Arr::get($options, "client", []);
-                /** @var string $saslUser */
-                $saslUser = Arr::get($sasl, "user", "", "string");
-                /** @var string $saslPass */
-                $saslPass = Arr::get($sasl, "pass", "", "string");
+                $servers  = Arr::get($options, "servers", []);
+                $client   = Arr::get($options, "client", []);
+                $saslUser = Arr::get($sasl, "user", "");
+                $saslPass = Arr::get($sasl, "pass", "");
                 $failover = [
                     Memcached::OPT_CONNECT_TIMEOUT       => 10,
                     Memcached::OPT_DISTRIBUTION          => Memcached::DISTRIBUTION_CONSISTENT,
@@ -162,21 +151,11 @@ class Libmemcached extends AbstractAdapter
                 ];
                 $client   = array_merge($failover, $client);
 
-                if (!$connection->setOptions($client)) {
-                    throw new Exception(
-                        "Cannot set Memcached client options"
-                    );
-                }
-
-                if (!$connection->addServers($servers)) {
-                    throw new Exception(
-                        "Cannot connect to the Memcached server(s)"
-                    );
-                }
-
-                if (!empty($saslUser)) {
-                    $connection->setSaslAuthData($saslUser, $saslPass);
-                }
+                $this
+                    ->setOptions($connection, $client)
+                    ->setServers($connection, $servers)
+                    ->setSasl($connection, $saslUser, $saslPass)
+                ;
             }
 
             $this->setSerializer($connection);
@@ -194,7 +173,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return array
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function getKeys(string $prefix = ""): array
     {
@@ -211,12 +190,12 @@ class Libmemcached extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function has(string $key): bool
     {
         $connection = $this->getAdapter();
-        $result     = $connection->get($key);
+        $connection->get($key);
 
         return Memcached::RES_NOTFOUND !== $connection->getResultCode();
     }
@@ -229,7 +208,7 @@ class Libmemcached extends AbstractAdapter
      *
      * @return bool|false|int
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function increment(string $key, int $value = 1)
     {
@@ -239,13 +218,14 @@ class Libmemcached extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
+     * @throws \Exception
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function set(string $key, $value, $ttl = null): bool
     {
@@ -258,12 +238,47 @@ class Libmemcached extends AbstractAdapter
     }
 
     /**
+     * @param Memcached $connection
+     * @param array     $client
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setOptions(Memcached $connection, array $client): Libmemcached
+    {
+        if (!$connection->setOptions($client)) {
+            throw new Exception(
+                "Cannot set Memcached client options"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param string    $saslUser
+     * @param string    $saslPass
+     *
+     * @return Libmemcached
+     */
+    private function setSasl(Memcached $connection, string $saslUser, string $saslPass): Libmemcached
+    {
+        if (!empty($saslUser)) {
+            $connection->setSaslAuthData($saslUser, $saslPass);
+        }
+
+        return $this;
+    }
+
+    /**
      * Checks the serializer. If it is a supported one it is set, otherwise
      * the custom one is set.
      *
      * @param Memcached $connection
      *
-     * @throws FactoryException
+     * @throws Exception
+     * @throws ExceptionAlias
      */
     private function setSerializer(Memcached $connection)
     {
@@ -277,12 +292,27 @@ class Libmemcached extends AbstractAdapter
 
         if (isset($map[$serializer])) {
             $this->defaultSerializer = "";
-            $connection->setOption(
-                Memcached::OPT_SERIALIZER,
-                $map[$serializer]
-            );
+            $connection->setOption(Memcached::OPT_SERIALIZER, $map[$serializer]);
         } else {
             $this->initSerializer();
         }
+    }
+
+    /**
+     * @param Memcached $connection
+     * @param array     $servers
+     *
+     * @return Libmemcached
+     * @throws Exception
+     */
+    private function setServers(Memcached $connection, array $servers): Libmemcached
+    {
+        if (!$connection->addServers($servers)) {
+            throw new Exception(
+                "Cannot connect to the Memcached server(s)"
+            );
+        }
+
+        return $this;
     }
 }

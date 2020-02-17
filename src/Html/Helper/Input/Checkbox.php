@@ -13,6 +13,8 @@ namespace Phalcon\Html\Helper\Input;
 
 use Phalcon\Html\Escaper;
 
+use function array_merge;
+
 /**
  * Class Checkbox
  *

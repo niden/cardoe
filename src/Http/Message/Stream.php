@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by Zend Diactoros
+ *
  * @link    https://github.com/zendframework/zend-diactoros
  * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
@@ -22,10 +23,22 @@ use Phalcon\Helper\Arr;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
-use function is_int;
+use function fclose;
+use function feof;
+use function fopen;
+use function fread;
+use function fseek;
+use function fstat;
+use function ftell;
+use function fwrite;
+use function get_resource_type;
 use function is_resource;
 use function is_string;
+use function restore_error_handler;
 use function set_error_handler;
+use function stream_get_contents;
+use function stream_get_meta_data;
+use function strpbrk;
 
 use const E_WARNING;
 
@@ -45,7 +58,7 @@ class Stream implements StreamInterface
     /**
      * @var resource | string
      */
-    protected $stream;
+    private $stream;
 
     /**
      * Stream constructor.
@@ -74,7 +87,7 @@ class Stream implements StreamInterface
      *
      * Warning: This could attempt to load a large amount of data into memory.
      *
-     * This method MUST NOT raise an exception in order to conform with PHP's
+     * This method MUST NOT raise an exception in order to conform with PHP"s
      * string casting operations.
      *
      * @see http://php.net/manual/en/language.oop5.magic.php#object.tostring
@@ -89,9 +102,11 @@ class Stream implements StreamInterface
 
                 return $this->getContents();
             }
-        } finally {
-            return "";
+        } catch (Exception $e) {
+            unset($e);
         }
+
+        return "";
     }
 
     /**
@@ -101,8 +116,9 @@ class Stream implements StreamInterface
     {
         if (null !== $this->handle) {
             $handle = $this->detach();
-
-            fclose($handle);
+            if (null !== $handle) {
+                fclose($handle);
+            }
         }
     }
 
@@ -286,15 +302,15 @@ class Stream implements StreamInterface
      */
     public function setStream($stream, string $mode = "rb"): void
     {
-        $handle  = $stream;
         $warning = false;
-
+        $handle  = $stream;
         if (is_string($stream)) {
             set_error_handler(
-                function ($number, $message, $file, $line, $context) use (&$warning) {
-                    $warning = true;
-                },
-                E_WARNING
+                function ($error) use (&$warning) {
+                    if ($error === E_WARNING) {
+                        $warning = true;
+                    }
+                }
             );
 
             $handle = fopen($stream, $mode);
@@ -303,7 +319,7 @@ class Stream implements StreamInterface
         }
         if (
             $warning ||
-            is_resource($handle) ||
+            !is_resource($handle) ||
             "stream" !== get_resource_type($handle)
         ) {
             throw new RuntimeException(
@@ -328,8 +344,10 @@ class Stream implements StreamInterface
 
         $position = ftell($this->handle);
 
-        if (!is_int($position)) {
-            throw new Exception("Could not retrieve the pointer position");
+        if (false === $position) {
+            throw new RuntimeException(
+                "Could not retrieve the pointer position"
+            );
         }
 
         return $position;

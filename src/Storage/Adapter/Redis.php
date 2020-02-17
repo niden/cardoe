@@ -13,10 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Adapter;
 
-use Phalcon\Factory\Exception as FactoryException;
+use DateInterval;
+use Phalcon\Factory\Exception as ExceptionAlias;
 use Phalcon\Helper\Arr;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+
+use function constant;
+use function defined;
+use function strtolower;
 
 /**
  * Redis adapter
@@ -31,41 +36,13 @@ class Redis extends AbstractAdapter
     protected $options = [];
 
     /**
-     * Constructor
-     *
-     * @param array options = [
-     *     'host' => '127.0.0.1',
-     *     'port' => 6379,
-     *     'index' => 0,
-     *     'persistent' => false,
-     *     'auth' => '',
-     *     'socket' => '',
-     *     'defaultSerializer' => 'Php',
-     *     'lifetime' => 3600,
-     *     'serializer' => null,
-     *     'prefix' => ''
-     *     ]
-     */
-    /**
      * Redis constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options = [
-     *                                   'host'              => '127.0.0.1',
-     *                                   'port'              => 6379,
-     *                                   'index'             => 0,
-     *                                   'persistent'        => false,
-     *                                   'auth'              => '',
-     *                                   'socket'            => '',
-     *                                   'defaultSerializer' => 'Php',
-     *                                   'lifetime'          => 3600,
-     *                                   'prefix'            => ''
-     *                                   ]
+     * @param array             $options
      */
-    public function __construct(
-        SerializerFactory $factory,
-        array $options = []
-    ) {
+    public function __construct(SerializerFactory $factory, array $options = [])
+    {
         /**
          * Lets set some defaults and options here
          */
@@ -86,7 +63,7 @@ class Redis extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function clear(): bool
     {
@@ -99,9 +76,9 @@ class Redis extends AbstractAdapter
      * @param string $key
      * @param int    $value
      *
-     * @return bool|int
+     * @return bool|false|int
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function decrement(string $key, int $value = 1)
     {
@@ -115,7 +92,7 @@ class Redis extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function delete(string $key): bool
     {
@@ -130,7 +107,7 @@ class Redis extends AbstractAdapter
      *
      * @return mixed
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function get(string $key, $defaultValue = null)
     {
@@ -146,7 +123,7 @@ class Redis extends AbstractAdapter
      *
      * @return mixed|\Redis
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function getAdapter()
     {
@@ -166,19 +143,11 @@ class Redis extends AbstractAdapter
                 $result       = $connection->pconnect($host, $port, $this->lifetime, $persistentid);
             }
 
-            if (!$result) {
-                throw new Exception(
-                    "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
-                );
-            }
-
-            if (!empty($auth) && !$connection->auth($auth)) {
-                throw new Exception("Failed to authenticate with the Redis server");
-            }
-
-            if ($index > 0 && !$connection->select($index)) {
-                throw new Exception("Redis server selected database failed");
-            }
+            $this
+                ->checkConnect($result, $host, $port)
+                ->checkAuth($auth, $connection)
+                ->checkIndex($index, $connection)
+            ;
 
             $connection->setOption(\Redis::OPT_PREFIX, $this->prefix);
 
@@ -190,14 +159,13 @@ class Redis extends AbstractAdapter
     }
 
     /**
-     * Gets the keys from the adapter. Accepts an optional prefix which will
-     * filter the keys returned
+     * Stores data in the adapter
      *
      * @param string $prefix
      *
      * @return array
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function getKeys(string $prefix = ""): array
     {
@@ -214,7 +182,7 @@ class Redis extends AbstractAdapter
      *
      * @return bool
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function has(string $key): bool
     {
@@ -227,9 +195,9 @@ class Redis extends AbstractAdapter
      * @param string $key
      * @param int    $value
      *
-     * @return bool|int
+     * @return bool|false|int
      * @throws Exception
-     * @throws FactoryException
+     * @throws ExceptionAlias
      */
     public function increment(string $key, int $value = 1)
     {
@@ -239,13 +207,13 @@ class Redis extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
-     * @param string $key
-     * @param mixed  $value
-     * @param null   $ttl
+     * @param string                $key
+     * @param mixed                 $value
+     * @param DateInterval|int|null $ttl
      *
      * @return bool
+     * @throws \Exception
      * @throws Exception
-     * @throws FactoryException
      */
     public function set(string $key, $value, $ttl = null): bool
     {
@@ -258,12 +226,68 @@ class Redis extends AbstractAdapter
     }
 
     /**
+     * @param string $auth
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkAuth($auth, \Redis $connection): Redis
+    {
+        if (!empty($auth) && !$connection->auth($auth)) {
+            throw new Exception(
+                "Failed to authenticate with the Redis server"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param bool   $result
+     * @param string $host
+     * @param int    $port
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkConnect(bool $result, string $host, int $port): Redis
+    {
+        if (!$result) {
+            throw new Exception(
+                "Could not connect to the Redisd server [" . $host . ":" . $port . "]"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param int    $index
+     * @param \Redis $connection
+     *
+     * @return Redis
+     * @throws Exception
+     */
+    private function checkIndex(int $index, \Redis $connection): Redis
+    {
+        if ($index > 0 && !$connection->select($index)) {
+            throw new Exception(
+                "Redis server selected database failed"
+            );
+        }
+
+        return $this;
+    }
+
+    /**
      * Checks the serializer. If it is a supported one it is set, otherwise
      * the custom one is set.
      *
      * @param \Redis $connection
      *
-     * @throws FactoryException
+     * @throws Exception
+     * @throws ExceptionAlias
      */
     private function setSerializer(\Redis $connection)
     {

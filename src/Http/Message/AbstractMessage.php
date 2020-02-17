@@ -15,17 +15,21 @@
 
 declare(strict_types=1);
 
-
 namespace Phalcon\Http\Message;
 
 use Phalcon\Collection;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
+
+use function array_merge;
+use function implode;
 use function is_array;
+use function is_numeric;
 use function is_object;
 use function is_resource;
 use function is_string;
+use function preg_match;
 
 /**
  * Class AbstractMessage

@@ -16,6 +16,8 @@ namespace Phalcon\Http\Message\Stream;
 use Phalcon\Http\Message\Stream;
 use RuntimeException;
 
+use function stream_get_contents;
+
 /**
  * Describes a data stream from "php://input"
  *

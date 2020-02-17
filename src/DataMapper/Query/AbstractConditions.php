@@ -18,14 +18,10 @@ declare(strict_types=1);
 
 namespace Phalcon\DataMapper\Query;
 
-use function array_merge;
-use function end;
+use Phalcon\Helper\Arr;
+
 use function is_array;
-use function is_numeric;
 use function is_string;
-use function key;
-use function ltrim;
-use function ucfirst;
 
 /**
  * Class AbstractConditions
@@ -69,8 +65,11 @@ abstract class AbstractConditions extends AbstractQuery
      *
      * @return AbstractConditions
      */
-    public function andWhere(string $condition, $value = null, int $type = -1): AbstractConditions
-    {
+    public function andWhere(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): AbstractConditions {
         $this->where($condition, $value, $type);
 
         return $this;
@@ -85,9 +84,12 @@ abstract class AbstractConditions extends AbstractQuery
      *
      * @return AbstractConditions
      */
-    public function catWhere(string $condition, $value = null, int $type = -1): AbstractConditions
-    {
-        $this->catCondition("WHERE", $condition, $value, $type);
+    public function appendWhere(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): AbstractConditions {
+        $this->appendCondition("WHERE", $condition, $value, $type);
 
         return $this;
     }
@@ -115,9 +117,12 @@ abstract class AbstractConditions extends AbstractQuery
      *
      * @return AbstractConditions
      */
-    public function orWhere(string $condition, $value = null, int $type = -1): AbstractConditions
-    {
-        $this->appendCondition("WHERE", "OR ", $condition, $value, $type);
+    public function orWhere(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): AbstractConditions {
+        $this->addCondition("WHERE", "OR ", $condition, $value, $type);
 
         return $this;
     }
@@ -131,9 +136,12 @@ abstract class AbstractConditions extends AbstractQuery
      *
      * @return AbstractConditions
      */
-    public function where(string $condition, $value = null, int $type = -1): AbstractConditions
-    {
-        $this->appendCondition("WHERE", "AND ", $condition, $value, $type);
+    public function where(
+        string $condition,
+        $value = null,
+        int $type = -1
+    ): AbstractConditions {
+        $this->addCondition("WHERE", "AND ", $condition, $value, $type);
 
         return $this;
     }
@@ -145,15 +153,15 @@ abstract class AbstractConditions extends AbstractQuery
      */
     public function whereEquals(array $columnsValues): AbstractConditions
     {
-        foreach ($columnsValues as $key => $val) {
+        foreach ($columnsValues as $key => $value) {
             if (is_numeric($key)) {
-                $this->where($val);
-            } elseif ($val === null) {
+                $this->where($value);
+            } elseif (null === $value) {
                 $this->where($key . " IS NULL");
-            } elseif (is_array($val)) {
-                $this->where($key . " IN ", $val);
+            } elseif (is_array($value)) {
+                $this->where($key . " IN ", $value);
             } else {
-                $this->where($key . " = ", $val);
+                $this->where($key . " = ", $value);
             }
         }
 
@@ -169,12 +177,12 @@ abstract class AbstractConditions extends AbstractQuery
      * @param mixed|null $value
      * @param int        $type
      */
-    protected function appendCondition(
+    protected function addCondition(
         string $store,
         string $andor,
         string $condition,
         $value = null,
-        $type = -1
+        int $type = -1
     ): void {
         if (!empty($value)) {
             $condition .= $this->bindInline($value, $type);
@@ -229,10 +237,13 @@ abstract class AbstractConditions extends AbstractQuery
     protected function buildLimitEarly(): string
     {
         $limit = "";
-        if ("sqlsrv" === $this->connection->getDriverName()) {
-            if ($this->store["LIMIT"] > 0 && 0 === $this->store["OFFSET"]) {
-                $limit = " TOP " . $this->store["LIMIT"];
-            }
+
+        if (
+            "sqlsrv" === $this->connection->getDriverName() &&
+            $this->store["LIMIT"] > 0 &&
+            0 === $this->store["OFFSET"]
+        ) {
+            $limit = " TOP " . $this->store["LIMIT"];
         }
 
         return $limit;
@@ -246,10 +257,14 @@ abstract class AbstractConditions extends AbstractQuery
     protected function buildLimit(): string
     {
         $suffix = $this->connection->getDriverName();
-        $suffix = "sqlsrv" === $suffix ? $suffix : "common";
+
+        if ("sqlsrv" !== $suffix) {
+            $suffix = "common";
+        }
+
         $method = "buildLimit" . ucfirst($suffix);
 
-        return $this->$method();
+        return $this->{$method}();
     }
 
     /**
@@ -261,6 +276,7 @@ abstract class AbstractConditions extends AbstractQuery
     protected function buildLimitCommon(): string
     {
         $limit = "";
+
         if (0 !== $this->store["LIMIT"]) {
             $limit .= "LIMIT " . $this->store["LIMIT"];
         }
@@ -273,7 +289,7 @@ abstract class AbstractConditions extends AbstractQuery
             $limit = " " . ltrim($limit);
         }
 
-        return $limit;
+        return ($limit);
     }
 
     /**
@@ -284,6 +300,7 @@ abstract class AbstractConditions extends AbstractQuery
     protected function buildLimitSqlsrv(): string
     {
         $limit = "";
+
         if ($this->store["LIMIT"] > 0 && $this->store["OFFSET"] > 0) {
             $limit = " OFFSET " . $this->store["OFFSET"] . " ROWS"
                 . " FETCH NEXT " . $this->store["LIMIT"] . " ROWS ONLY";
@@ -300,7 +317,7 @@ abstract class AbstractConditions extends AbstractQuery
      * @param mixed  $value
      * @param int    $type
      */
-    protected function catCondition(
+    protected function appendCondition(
         string $store,
         string $condition,
         $value = null,
@@ -314,10 +331,9 @@ abstract class AbstractConditions extends AbstractQuery
             $this->store[$store][] = "";
         }
 
-        end($this->store[$store]);
-        $key = key($this->store[$store]);
+        $key = Arr::lastKey($this->store[$store]);
 
-        $this->store[$store][$key] .= $condition;
+        $this->store[$store][$key] = $this->store[$store][$key] . $condition;
     }
 
     /**

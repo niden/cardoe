@@ -13,6 +13,8 @@ namespace Phalcon\Html\Helper\Input;
 
 use Phalcon\Html\Helper\AbstractHelper;
 
+use function array_merge;
+
 /**
  * Class AbstractInput
  *

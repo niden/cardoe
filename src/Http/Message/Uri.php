@@ -22,6 +22,16 @@ use Phalcon\Helper\Str;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\UriInterface;
 
+use function array_keys;
+use function explode;
+use function implode;
+use function ltrim;
+use function parse_url;
+use function preg_replace;
+use function rawurlencode;
+use function strpos;
+use function strtolower;
+
 /**
  * PSR-7 Uri
  *
@@ -33,7 +43,7 @@ use Psr\Http\Message\UriInterface;
  * @property string   $query
  * @property string   $scheme
  * @property string   $user
-*/
+ */
 final class Uri extends AbstractCommon implements UriInterface
 {
     /**
@@ -41,7 +51,7 @@ final class Uri extends AbstractCommon implements UriInterface
      *
      * @return string
      */
-    private $fragment = "";
+    protected $fragment = "";
 
     /**
      * Retrieve the host component of the URI.
@@ -55,19 +65,19 @@ final class Uri extends AbstractCommon implements UriInterface
      *
      * @return string
      */
-    private $host = "";
+    protected $host = "";
 
     /**
      * @var string
      */
-    private $pass = "";
+    protected $pass = "";
 
     /**
      * Returns the path of the URL
      *
      * @return string
      */
-    private $path = "";
+    protected $path = "";
 
     /**
      * Retrieve the port component of the URI.
@@ -84,14 +94,14 @@ final class Uri extends AbstractCommon implements UriInterface
      *
      * @return int|null
      */
-    private $port = null;
+    protected $port = null;
 
     /**
      * Returns the query of the URL
      *
      * @return string
      */
-    private $query = "";
+    protected $query = "";
 
     /**
      * Retrieve the scheme component of the URI.
@@ -108,35 +118,51 @@ final class Uri extends AbstractCommon implements UriInterface
      *
      * @return string
      */
-    private $scheme = "https";
+    protected $scheme = "https";
 
     /**
      * @var string
      */
-    private $user = "";
+    protected $user = "";
 
     /**
      * Uri constructor.
      *
      * @param string $uri
      */
-    public function __construct(string $uri = "")
+    public function __construct(string $uri = '')
     {
-        if ("" !== $uri) {
+        if ('' !== $uri) {
             $urlParts = parse_url($uri);
 
             if (false === $urlParts) {
                 $urlParts = [];
             }
 
-            $this->fragment = $this->filterFragment(Arr::get($urlParts, "fragment", ""));
-            $this->host     = strtolower(Arr::get($urlParts, "host", ""));
-            $this->pass     = rawurlencode(Arr::get($urlParts, "pass", ""));
-            $this->path     = $this->filterPath(Arr::get($urlParts, "path", ""));
-            $this->port     = $this->filterPort(Arr::get($urlParts, "port", null));
-            $this->query    = $this->filterQuery(Arr::get($urlParts, "query", ""));
-            $this->scheme   = $this->filterScheme(Arr::get($urlParts, "scheme", ""));
-            $this->user     = rawurlencode(Arr::get($urlParts, "user", ""));
+            $this->fragment = $this->filterFragment(
+                Arr::get($urlParts, 'fragment', '')
+            );
+            $this->host     = strtolower(
+                Arr::get($urlParts, 'host', '')
+            );
+            $this->pass     = rawurlencode(
+                Arr::get($urlParts, 'pass', '')
+            );
+            $this->path     = $this->filterPath(
+                Arr::get($urlParts, 'path', '')
+            );
+            $this->port     = $this->filterPort(
+                Arr::get($urlParts, 'port', null)
+            );
+            $this->query    = $this->filterQuery(
+                Arr::get($urlParts, 'query', '')
+            );
+            $this->scheme   = $this->filterScheme(
+                Arr::get($urlParts, 'scheme', '')
+            );
+            $this->user     = rawurlencode(
+                Arr::get($urlParts, 'user', '')
+            );
         }
     }
 
@@ -581,7 +607,7 @@ final class Uri extends AbstractCommon implements UriInterface
      *
      * @return int|null
      */
-    private function filterPort($port): int
+    private function filterPort($port): ?int
     {
         $ports = [
             80  => 1,
