@@ -249,8 +249,6 @@ class LoadCest
         $I->wantToTest('Http\Message\ServerRequestFactory - load() - server name/port ' . $example[0]);
 
 
-
-
         $server = [
             'REQUEST_URI'  => $example[1],
             'QUERY_STRING' => $example[2],
@@ -569,7 +567,7 @@ class LoadCest
 
         $I->expectThrowable(
             new InvalidArgumentException(
-                'Unsupported protocol HTTX/4.5'
+                'Incorrect protocol value HTTX/4.5'
             ),
             function () {
                 $factory = new ServerRequestFactory();

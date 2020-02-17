@@ -3,7 +3,6 @@
 use Codeception\Actor;
 use Codeception\Lib\Friend;
 
-
 /**
  * Inherited Methods
  * @method void wantToTest($text)
@@ -22,4 +21,8 @@ use Codeception\Lib\Friend;
 class UnitTester extends Actor
 {
     use _generated\UnitTesterActions;
+
+    /**
+     * Define custom actions here
+     */
 }

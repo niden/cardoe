@@ -1,18 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the Phalcon Framework.
- *
- * (c) Phalcon Team <team@phalcon.io>
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Phalcon\Test\Fixtures\Traits;
 
+use DateTime;
 use Phalcon\Logger;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
@@ -29,9 +28,9 @@ trait LoggerTrait
      */
     protected function runLoggerFile(UnitTester $I, string $level)
     {
-        $filePath = logsDir();
         $fileName = $I->getNewFileName('log', 'log');
-        $logger   = $this->getLogger($filePath . $fileName);
+        $fileName = logsDir($fileName);
+        $logger   = $this->getLogger($fileName);
 
         $logString = 'Hello';
         $logTime   = date('c');
@@ -40,18 +39,34 @@ trait LoggerTrait
 
         $logger->getAdapter('one')->close();
 
-        $I->amInPath($filePath);
+        $I->amInPath(logsDir());
         $I->openFile($fileName);
 
-        $I->seeInThisFile(
-            sprintf(
-                '[%s][%s] ' . $logString,
-                $logTime,
-                $level
-            )
-        );
+        // Check if the $logString is in the log file
+        $I->seeInThisFile($logString);
 
-        $I->safeDeleteFile($filePath . $fileName);
+        // Check if the level is in the log file
+        $I->seeInThisFile('[' . $level . ']');
+
+        // Check time content
+        $sContent = file_get_contents($fileName);
+
+        // Get time part
+        $aDate = [];
+        preg_match('/\[(.*)\]\[' . $level . '\]/', $sContent, $aDate);
+        $I->assertEquals(count($aDate), 2);
+
+        // Get Extract time
+        $sDate             = end($aDate);
+        $sLogDateTime      = new DateTime($sDate);
+        $sDateTimeAfterLog = new DateTime($logTime);
+
+        $nInterval        = $sLogDateTime->diff($sDateTimeAfterLog)->format('%s');
+        $nSecondThreshold = 60;
+
+        $I->assertLessThan($nSecondThreshold, $nInterval);
+
+        $I->safeDeleteFile($fileName);
     }
 
     /**

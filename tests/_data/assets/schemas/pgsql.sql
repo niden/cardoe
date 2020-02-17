@@ -1,5 +1,9 @@
 
 
+
+
+
+
 drop table if exists co_invoices;
             
 create table co_invoices
@@ -23,3 +27,11 @@ create index co_invoices_inv_cst_id_index
 create index co_invoices_inv_status_flag_index
     on co_invoices (inv_status_flag);
             
+
+
+
+
+
+
+
+

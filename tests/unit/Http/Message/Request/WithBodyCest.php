@@ -30,10 +30,8 @@ class WithBodyCest
         $I->wantToTest('Http\Message\Request - withBody()');
 
         $fileName = dataDir('/assets/stream/mit.txt');
-
-        $stream = new Stream($fileName, 'rb');
-
-        $request = new Request();
+        $stream   = new Stream($fileName, 'rb');
+        $request  = new Request();
 
         $newInstance = $request->withBody($stream);
 

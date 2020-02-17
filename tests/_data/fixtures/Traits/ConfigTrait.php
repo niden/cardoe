@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the Phalcon Framework.
  *
@@ -8,8 +10,6 @@
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
  */
-
-declare(strict_types=1);
 
 namespace Phalcon\Test\Fixtures\Traits;
 
@@ -22,8 +22,6 @@ use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Exception;
 use UnitTester;
 use function dataDir;
-use function is_array;
-use function sprintf;
 
 trait ConfigTrait
 {
@@ -91,10 +89,6 @@ trait ConfigTrait
 
     /**
      * Returns the message to print out for the test
-     *
-     * @param string $adapter
-     *
-     * @return string
      */
     private function getMessage(string $adapter = ''): string
     {
@@ -110,14 +104,10 @@ trait ConfigTrait
     /**
      * Returns a config object
      *
-     * @param string $adapter
-     *
      * @return Config|Ini|Json|Php|Yaml
-     * @throws Exception
-     * @throws \Phalcon\Factory\Exception
-     * @since  2018-11-13
      *
      * @author Phalcon Team <team@phalcon.io>
+     * @since  2018-11-13
      */
     private function getConfig(string $adapter = '')
     {
