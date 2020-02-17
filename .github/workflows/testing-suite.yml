@@ -73,7 +73,7 @@ jobs:
 
       - name: Generate schemas
         run: |
-          php tests/_ci/generage-db-schemas.php
+          php tests/_ci/generate-db-schemas.php
           vendor/bin/codecept build
 
       - name: Run Unit Tests
