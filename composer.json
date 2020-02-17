@@ -48,6 +48,7 @@
     },
     "require-dev": {
         "codeception/codeception": "^4.0",
+        "codeception/module-apc": "^1.0",
         "codeception/module-asserts": "^1.0.0",
         "codeception/module-db": "^1.0",
         "codeception/module-filesystem": "^1.0.0",

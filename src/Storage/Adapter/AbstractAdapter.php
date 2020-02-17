@@ -15,10 +15,9 @@ namespace Phalcon\Storage\Adapter;
 
 use DateInterval;
 use DateTime;
-use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Factory\Exception;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
-use Phalcon\Storage\Exception;
 use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 
@@ -27,14 +26,12 @@ use function is_object;
 /**
  * Class AbstractAdapter
  *
- * @package Phalcon\Storage\Adapter
- *
  * @property mixed               $adapter
  * @property string              $defaultSerializer
  * @property int                 $lifetime
  * @property string              $prefix
  * @property SerializerInterface $serializer
- * @property SerializerFactory   $serializerFactory
+ * @property SerializerFactory   $serializerFactory;
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
@@ -77,15 +74,20 @@ abstract class AbstractAdapter implements AdapterInterface
     protected $serializerFactory;
 
     /**
-     * Sets parameters based on options
-     *
      * AbstractAdapter constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
+     * @param array             $options = [
+     *                                   'defaultSerializer' => 'Php',
+     *                                   'lifetime' => 3600,
+     *                                   'serializer' => null,
+     *                                   'prefix' => ''
+     *                                   ]
      */
-    protected function __construct(SerializerFactory $factory, array $options = [])
-    {
+    protected function __construct(
+        SerializerFactory $factory,
+        array $options = []
+    ) {
         /**
          * Lets set some defaults and options here
          */
@@ -101,8 +103,6 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Flushes/clears the cache
-     *
-     * @return bool
      */
     abstract public function clear(): bool;
 
@@ -112,7 +112,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param string $key
      * @param int    $value
      *
-     * @return int | bool
+     * @return bool|int
      */
     abstract public function decrement(string $key, int $value = 1);
 
@@ -137,12 +137,12 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Returns the adapter - connects to the storage if not connected
-     *
-     * @return mixed
      */
     abstract public function getAdapter();
 
     /**
+     * Returns the default serializer
+     *
      * @return string
      */
     public function getDefaultSerializer(): string
@@ -160,8 +160,6 @@ abstract class AbstractAdapter implements AdapterInterface
     abstract public function getKeys(string $prefix = ""): array;
 
     /**
-     * Returns the prefix
-     *
      * @return string
      */
     public function getPrefix(): string
@@ -184,7 +182,7 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param string $key
      * @param int    $value
      *
-     * @return int | bool
+     * @return bool|int
      */
     abstract public function increment(string $key, int $value = 1);
 
@@ -200,9 +198,11 @@ abstract class AbstractAdapter implements AdapterInterface
     abstract public function set(string $key, $value, $ttl = null): bool;
 
     /**
+     * Sets the default serializer
+     *
      * @param string $serializer
      */
-    public function setDefaultSerializer(string $serializer): void
+    public function setDefaultSerializer(string $serializer)
     {
         $this->defaultSerializer = $serializer;
     }
@@ -233,7 +233,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Returns the key requested, prefixed
      *
-     * @param string $key
+     * @param mixed $key
      *
      * @return string
      */
@@ -249,11 +249,11 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @param mixed $content
      *
-     * @return mixed
+     * @return string
      */
     protected function getSerializedData($content)
     {
-        if ("" !== $this->defaultSerializer) {
+        if ($this->defaultSerializer !== "") {
             $this->serializer->setData($content);
             $content = $this->serializer->serialize();
         }
@@ -267,11 +267,10 @@ abstract class AbstractAdapter implements AdapterInterface
      * @param DateInterval|int|null $ttl
      *
      * @return int
-     * @throws \Exception
      */
     protected function getTtl($ttl): int
     {
-        if (null === $ttl) {
+        if ($ttl === null) {
             return $this->lifetime;
         }
 
@@ -285,7 +284,8 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
      * Returns unserialized data
-     *
+     */
+    /**
      * @param mixed      $content
      * @param mixed|null $defaultValue
      *
@@ -297,7 +297,7 @@ abstract class AbstractAdapter implements AdapterInterface
             return $defaultValue;
         }
 
-        if ("" !== $this->defaultSerializer) {
+        if ($this->defaultSerializer !== "") {
             $this->serializer->unserialize($content);
             $content = $this->serializer->getData();
         }
@@ -309,11 +309,10 @@ abstract class AbstractAdapter implements AdapterInterface
      * Initializes the serializer
      *
      * @throws Exception
-     * @throws ExceptionAlias
      */
     protected function initSerializer(): void
     {
-        if (!is_object($this->serializer)) {
+        if (!(is_object($this->serializer) && $this->serializer instanceof SerializerInterface)) {
             $className        = strtolower($this->defaultSerializer);
             $this->serializer = $this->serializerFactory->newInstance($className);
         }

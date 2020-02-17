@@ -66,7 +66,7 @@ class NewInstanceCest
      */
     public function filterTagFactoryNewInstanceServices(UnitTester $I, Example $example)
     {
-        $I->wantToTest('Tag\TagLocatorFactory - newInstance() - services ' . $example[0]);
+        $I->wantToTest('Tag\TagFactory - newInstance() - services ' . $example[0]);
         $escaper = new Escaper();
         $factory = new TagFactory($escaper);
         $service = $factory->newInstance($example[0]);

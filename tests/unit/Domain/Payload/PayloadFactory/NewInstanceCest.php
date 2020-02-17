@@ -27,7 +27,7 @@ class NewInstanceCest
      */
     public function httpPayloadPayloadFactoryNewInstance(UnitTester $I)
     {
-        $I->wantToTest('Domain\PayloadFactory - newInstance()');
+        $I->wantToTest('Domain\Payload\PayloadFactory - newInstance()');
 
         $factory = new PayloadFactory();
         $payload = $factory->newInstance();

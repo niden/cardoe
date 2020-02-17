@@ -14,4 +14,22 @@ loadAutoloader($root);
 loadFolders();
 loadDefined();
 
+//
+///**
+// * Setting this in the $_ENV so that DotLoad sets everything up properly
+// */
+//$_ENV['PROJECT_PATH'] = $root;
+//
+//require_once $root . 'tests/shim.php';
+//
+//
+//define('APP_DATA', dataDir());
+//define('APP_PATH', codecept_root_dir());
+//define('APP_PATH_OUTPUT', outputDir());
+//
+//
+//loadEnvironment($root);
+//loadFolders();
+//
+
 unset($root);

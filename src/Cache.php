@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Phalcon;
 
 use DateInterval;
@@ -18,8 +16,6 @@ use Phalcon\Cache\Adapter\AdapterInterface;
 use Phalcon\Cache\Exception\InvalidArgumentException;
 use Psr\SimpleCache\CacheInterface;
 use Traversable;
-
-use function is_array;
 
 /**
  * This component offers caching capabilities for your application.
@@ -37,13 +33,23 @@ class Cache implements CacheInterface
     protected $adapter;
 
     /**
-     * Cache constructor.
+     * Constructor.
      *
-     * @param AdapterInterface $adapter
+     * @param AdapterInterface $adapter The cache adapter
      */
     public function __construct(AdapterInterface $adapter)
     {
         $this->adapter = $adapter;
+    }
+
+    /**
+     * Returns the current cache adapter
+     *
+     * @return AdapterInterface
+     */
+    public function getAdapter(): AdapterInterface
+    {
+        return $this->adapter;
     }
 
     /**
@@ -62,10 +68,10 @@ class Cache implements CacheInterface
      * @param string $key The unique cache key of the item to delete.
      *
      * @return bool True if the item was successfully removed. False if there
-     *              was an error.
+     * was an error.
      *
      * @throws InvalidArgumentException MUST be thrown if the $key string is
-     *                                  not a legal value.
+     * not a legal value.
      */
     public function delete($key): bool
     {
@@ -79,12 +85,11 @@ class Cache implements CacheInterface
      *
      * @param iterable $keys A list of string-based keys to be deleted.
      *
-     * @return bool True if the items were successfully removed. False if there
-     *              was an error.
+     * @return bool True if the items were successfully removed. False if
+     * there was an error.
      *
      * @throws InvalidArgumentException MUST be thrown if $keys is neither an
-     *                                  array nor a Traversable, or if any of
-     *                                  the $keys are not a legal value.
+     * array nor a Traversable, or if any of the $keys are not a legal value.
      */
     public function deleteMultiple($keys): bool
     {
@@ -104,28 +109,20 @@ class Cache implements CacheInterface
      * Fetches a value from the cache.
      *
      * @param string $key          The unique key of this item in the cache.
-     * @param mixed  $defaultValue Default value to return if the key does not
-     *                             exist.
+     * @param mixed  $defaultValue Default value to return if the key does
+     *                             not exist.
      *
      * @return mixed The value of the item from the cache, or $default in case
-     *               of cache miss.
+     * of cache miss.
      *
      * @throws InvalidArgumentException MUST be thrown if the $key string is
-     *                                  not a legal value.
+     * not a legal value.
      */
     public function get($key, $defaultValue = null)
     {
         $this->checkKey($key);
 
         return $this->adapter->get($key, $defaultValue);
-    }
-
-    /**
-     * @return AdapterInterface
-     */
-    public function getAdapter(): AdapterInterface
-    {
-        return $this->adapter;
     }
 
     /**
@@ -137,11 +134,10 @@ class Cache implements CacheInterface
      *                               not exist.
      *
      * @return iterable A list of key => value pairs. Cache keys that do not
-     *                  exist or are stale will have $default as value.
+     * exist or are stale will have $default as value.
      *
      * @throws InvalidArgumentException MUST be thrown if $keys is neither an
-     *                                  array nor a Traversable, or if any of
-     *                                  the $keys are not a legal value.
+     * array nor a Traversable, or if any of the $keys are not a legal value.
      */
     public function getMultiple($keys, $defaultValue = null)
     {
@@ -163,7 +159,7 @@ class Cache implements CacheInterface
      * @return bool
      *
      * @throws InvalidArgumentException MUST be thrown if the $key string is
-     *                                  not a legal value.
+     * not a legal value.
      */
     public function has($key): bool
     {
@@ -182,14 +178,14 @@ class Cache implements CacheInterface
      * @param null|int|DateInterval $ttl    Optional. The TTL value of this
      *                                      item. If no value is sent and the
      *                                      driver supports TTL then the
-     *                                      library may set a default value for
-     *                                      it or let the driver take care of
-     *                                      that.
+     *                                      library may set a default value
+     *                                      for it or let the driver take care
+     *                                      of that.
      *
      * @return bool True on success and false on failure.
      *
      * @throws InvalidArgumentException MUST be thrown if the $key string is
-     *                                  not a legal value.
+     * not a legal value.
      */
     public function set($key, $value, $ttl = null): bool
     {
@@ -201,20 +197,20 @@ class Cache implements CacheInterface
     /**
      * Persists a set of key => value pairs in the cache, with an optional TTL.
      *
-     * @param iterable              $values  A list of key => value pairs for a
-     *                                       multiple-set operation.
+     * @param iterable              $values  A list of key => value pairs for
+     *                                       a multiple-set operation.
      * @param null|int|DateInterval $ttl     Optional. The TTL value of this
      *                                       item. If no value is sent and the
      *                                       driver supports TTL then the
      *                                       library may set a default value
-     *                                       for it or let the driver take care
-     *                                       of that.
+     *                                       for it or let the driver take
+     *                                       care of that.
      *
      * @return bool True on success and false on failure.
      *
-     * @throws InvalidArgumentException MUST be thrown if $values is neither an
-     *                                  array nor a Traversable, or if any of
-     *                                  the $values are not a legal value.
+     * @throws InvalidArgumentException MUST be thrown if $values is neither
+     * an array nor a Traversable, or if any of the $values are not a legal
+     * value.
      */
     public function setMultiple($values, $ttl = null): bool
     {
@@ -251,7 +247,7 @@ class Cache implements CacheInterface
     /**
      * Checks the key. If it contains invalid characters an exception is thrown
      *
-     * @param mixed $keys
+     * @param array|Traversable $keys
      *
      * @throws InvalidArgumentException
      */

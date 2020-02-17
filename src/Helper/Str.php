@@ -241,12 +241,12 @@ class Str
         }
 
         return 0 === substr_compare(
-                $haystack,
-                $needle,
-                -strlen($needle),
-                strlen($needle),
-                $ignoreCase
-            );
+            $haystack,
+            $needle,
+            -strlen($needle),
+            strlen($needle),
+            $ignoreCase
+        );
     }
 
     /**
@@ -520,12 +520,12 @@ class Str
         }
 
         return 0 === substr_compare(
-                $haystack,
-                $needle,
-                0,
-                strlen($needle),
-                $ignoreCase
-            );
+            $haystack,
+            $needle,
+            0,
+            strlen($needle),
+            $ignoreCase
+        );
     }
 
     /**

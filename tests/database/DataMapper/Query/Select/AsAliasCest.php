@@ -19,13 +19,13 @@ use Phalcon\DataMapper\Query\QueryFactory;
 class AsAliasCest
 {
     /**
-     * Database Tests Phalcon\DataMapper\Query\Select :: as()
+     * Database Tests Phalcon\DataMapper\Query\Select :: asAlias()
      *
      * @since  2020-01-20
      */
-    public function dMQuerySelectAs(DatabaseTester $I)
+    public function dMQuerySelectAsAlias(DatabaseTester $I)
     {
-        $I->wantToTest('DataMapper\Query\Select - as()');
+        $I->wantToTest('DataMapper\Query\Select - asAlias()');
 
         $connection = $I->getDataMapperConnection();
         $factory    = new QueryFactory();

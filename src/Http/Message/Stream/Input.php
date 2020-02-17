@@ -22,13 +22,16 @@ use RuntimeException;
  * Typically, an instance will wrap a PHP stream; this interface provides
  * a wrapper around the most common operations, including serialization of
  * the entire stream to a string.
+ *
+ * @property string $data
+ * @property bool   $eof
  */
 class Input extends Stream
 {
     /**
      * @var string
      */
-    private $data = '';
+    private $data = "";
 
     /**
      * @var bool
@@ -40,7 +43,7 @@ class Input extends Stream
      */
     public function __construct()
     {
-        parent::__construct('php://input', 'rb');
+        parent::__construct("php://input", "rb");
     }
 
     /**
@@ -70,12 +73,12 @@ class Input extends Stream
     /**
      * Returns the remaining contents in a string
      *
-     * @param int $length
-     *
-     * @return string
      * @throws RuntimeException if unable to read.
      * @throws RuntimeException if error occurs while reading.
      *
+     * @param int $length
+     *
+     * @return string
      */
     public function getContents(int $length = -1): string
     {
@@ -83,9 +86,7 @@ class Input extends Stream
             return $this->data;
         }
 
-        $data = stream_get_contents($this->handle, $length);
-        $data = false !== $data ? $data : '';
-
+        $data       = stream_get_contents($this->handle, $length);
         $this->data = $data;
 
         if (-1 === $length || $this->eof()) {

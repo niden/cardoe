@@ -26,7 +26,7 @@ class GetSetInputCest
      */
     public function httpPayloadPayloadGetSetInput(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload - getInput()/setInput()');
+        $I->wantToTest('Domain\Payload\Payload - getInput()/setInput()');
 
         $payload = new Payload();
         $payload->setInput('input');

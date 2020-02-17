@@ -29,7 +29,7 @@ class Json extends AbstractSerializer
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         if (is_object($this->data) && !($this->data instanceof JsonSerializable)) {
             throw new InvalidArgumentException(
@@ -39,7 +39,7 @@ class Json extends AbstractSerializer
         }
 
         if (true !== $this->isSerializable($this->data)) {
-            return $this->data;
+            return (string) $this->data;
         }
 
         return JsonHelper::encode($this->data);

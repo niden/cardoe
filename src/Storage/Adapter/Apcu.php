@@ -14,9 +14,7 @@ declare(strict_types=1);
 namespace Phalcon\Storage\Adapter;
 
 use APCuIterator;
-use DateInterval;
-use Phalcon\Factory\Exception as ExceptionAlias;
-use Phalcon\Storage\Exception;
+use Exception;
 use Phalcon\Storage\SerializerFactory;
 
 use function is_object;
@@ -37,13 +35,16 @@ class Apcu extends AbstractAdapter
      * Apcu constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
-     *
-     * @throws Exception
-     * @throws ExceptionAlias
+     * @param array             $options = [
+     *                                   'defaultSerializer' => 'Php',
+     *                                   'lifetime'          => 3600,
+     *                                   'prefix'            => ''
+     *                                   ]
      */
-    public function __construct(SerializerFactory $factory, array $options = [])
-    {
+    public function __construct(
+        SerializerFactory $factory,
+        array $options = []
+    ) {
         /**
          * Lets set some defaults and options here
          */
@@ -99,14 +100,14 @@ class Apcu extends AbstractAdapter
      */
     public function delete(string $key): bool
     {
-        return (bool) apcu_delete($this->getPrefixedKey($key));
+        return apcu_delete($this->getPrefixedKey($key));
     }
 
     /**
      * Reads data from the adapter
      *
-     * @param string     $key
-     * @param mixed|null $defaultValue
+     * @param string $key
+     * @param null   $defaultValue
      *
      * @return mixed
      */
@@ -179,12 +180,12 @@ class Apcu extends AbstractAdapter
     /**
      * Stores data in the adapter
      *
-     * @param string                $key
-     * @param mixed                 $value
-     * @param DateInterval|int|null $ttl
+     * @param string $key
+     * @param mixed  $value
+     * @param null   $ttl
      *
      * @return bool
-     * @throws \Exception
+     * @throws Exception
      */
     public function set(string $key, $value, $ttl = null): bool
     {

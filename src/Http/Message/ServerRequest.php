@@ -7,74 +7,35 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
+
+
 
 namespace Phalcon\Http\Message;
 
 use Phalcon\Collection;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Phalcon\Http\Message\Stream\Input;
-use Phalcon\Http\Message\Traits\CommonTrait;
-use Phalcon\Http\Message\Traits\MessageTrait;
-use Phalcon\Http\Message\Traits\RequestTrait;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use Psr\Http\Message\UriInterface;
 
-use function is_array;
-use function is_object;
-
 /**
- * Representation of an incoming, server-side HTTP request.
- *
- * Per the HTTP specification, this interface includes properties for
- * each of the following:
- *
- * - Protocol version
- * - HTTP method
- * - URI
- * - Headers
- * - Message body
- *
- * Additionally, it encapsulates all data as it has arrived at the
- * application from the CGI and/or PHP environment, including:
- *
- * - The values represented in _SERVER.
- * - Any cookies provided (generally via _COOKIE)
- * - Query string arguments (generally via _GET, or as parsed via parse_str())
- * - Upload files, if any (as represented by _FILES)
- * - Deserialized body parameters (generally from _POST)
- *
- * _SERVER values MUST be treated as immutable, as they represent application
- * state at the time of request; as such, no methods are provided to allow
- * modification of those values. The other values provide such methods, as they
- * can be restored from _SERVER or the request body, and may need treatment
- * during the application (e.g., body parameters may be deserialized based on
- * content type).
- *
- * Additionally, this interface recognizes the utility of introspecting a
- * request to derive and match additional parameters (e.g., via URI path
- * matching, decrypting cookie values, deserializing non-form-encoded body
- * content, matching authorization headers to users, etc). These parameters
- * are stored in an 'attributes' property.
- *
- * Requests are considered immutable; all methods that might change state MUST
- * be implemented such that they retain the internal state of the current
- * message and return an instance that contains the changed state.
+ * PSR-7 ServerRequest
  */
-final class ServerRequest implements ServerRequestInterface
+final class ServerRequest extends AbstractRequest implements ServerRequestInterface
 {
-    use CommonTrait;
-    use MessageTrait;
-    use RequestTrait;
-
     /**
      * @var Collection
      */
-    private $attributes;
+    private attributes;
 
     /**
      * Retrieve cookies.
@@ -86,7 +47,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $cookieParams = [];
+    private cookieParams = [] { get };
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -102,7 +63,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var mixed
      */
-    private $parsedBody;
+    private parsedBody { get };
 
     /**
      * Retrieve query string arguments.
@@ -116,7 +77,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $queryParams = [];
+    private queryParams = [] { get };
 
     /**
      * Retrieve server parameters.
@@ -127,7 +88,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $serverParams = [];
+    private serverParams = [] { get };
 
     /**
      * Retrieve normalized file upload data.
@@ -140,7 +101,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $uploadedFiles = [];
+    private uploadedFiles = [] { get };
 
     /**
      * ServerRequest constructor.
@@ -157,34 +118,34 @@ final class ServerRequest implements ServerRequestInterface
      * @param string                   $protocol
      */
     public function __construct(
-        string $method = 'GET',
-        $uri = null,
-        array $serverParams = [],
-        $body = 'php://input',
-        $headers = [],
-        array $cookies = [],
-        array $queryParams = [],
-        array $uploadFiles = [],
-        $parsedBody = null,
-        string $protocol = '1.1'
+        string method = "GET",
+        var uri = null,
+        array serverParams = [],
+        var body = "php://input",
+        var headers = [],
+        array cookies = [],
+        array queryParams = [],
+        array uploadFiles = [],
+        var parsedBody = null,
+        string protocol = "1.1"
     ) {
-        if ('php://input' === $body) {
-            $body = new Input();
+        if unlikely "php://input" === body {
+            let body = new Input();
         }
 
-        $this->checkUploadedFiles($uploadFiles);
+        this->checkUploadedFiles(uploadFiles);
 
-        $this->protocolVersion = $this->processProtocol($protocol);
-        $this->method          = $this->processMethod($method);
-        $this->headers         = $this->processHeaders($headers);
-        $this->uri             = $this->processUri($uri);
-        $this->body            = $this->processBody($body, 'w+b');
-        $this->uploadedFiles   = $uploadFiles;
-        $this->parsedBody      = $parsedBody;
-        $this->serverParams    = $serverParams;
-        $this->cookieParams    = $cookies;
-        $this->queryParams     = $queryParams;
-        $this->attributes      = new Collection();
+        let this->protocolVersion = this->processProtocol(protocol),
+            this->method          = this->processMethod(method),
+            this->headers         = this->processHeaders(headers),
+            this->uri             = this->processUri(uri),
+            this->body            = this->processBody(body, "w+b"),
+            this->uploadedFiles   = uploadFiles,
+            this->parsedBody      = parsedBody,
+            this->serverParams    = serverParams,
+            this->cookieParams    = cookies,
+            this->queryParams     = queryParams,
+            this->attributes      = new Collection();
     }
 
     /**
@@ -197,14 +158,14 @@ final class ServerRequest implements ServerRequestInterface
      * This method obviates the need for a hasAttribute() method, as it allows
      * specifying a default value to return if the attribute is not found.
      *
-     * @param string     $name
-     * @param mixed|null $defaultValue
+     * @param string        $name
+     * @param mixed|null    $defaultValue
      *
      * @return mixed
      */
-    public function getAttribute($name, $defaultValue = null)
+    public function getAttribute(var name, var defaultValue = null): var
     {
-        return $this->attributes->get($name, $defaultValue);
+        return this->attributes->get(name, defaultValue);
     }
 
     /**
@@ -220,90 +181,7 @@ final class ServerRequest implements ServerRequestInterface
      */
     public function getAttributes(): array
     {
-        return $this->attributes->toArray();
-    }
-
-    /**
-     * Retrieve cookies.
-     *
-     * Retrieves cookies sent by the client to the server.
-     *
-     * The data MUST be compatible with the structure of the $_COOKIE
-     * superglobal.
-     *
-     * @return array
-     */
-    public function getCookieParams()
-    {
-        return $this->cookieParams;
-    }
-
-    /**
-     * Retrieve query string arguments.
-     *
-     * Retrieves the deserialized query string arguments, if any.
-     *
-     * Note: the query params might not be in sync with the URI or server
-     * params. If you need to ensure you are only getting the original
-     * values, you may need to parse the query string from
-     * `getUri()->getQuery()` or from the `QUERY_STRING` server param.
-     *
-     * @return array
-     */
-    public function getQueryParams()
-    {
-        return $this->queryParams;
-    }
-
-    /**
-     * Retrieve any parameters provided in the request body.
-     *
-     * If the request Content-Type is either application/x-www-form-urlencoded
-     * or multipart/form-data, and the request method is POST, this method MUST
-     * return the contents of $_POST.
-     *
-     * Otherwise, this method may return any results of deserializing
-     * the request body content; as parsing returns structured content, the
-     * potential types MUST be arrays or objects only. A null value indicates
-     * the absence of body content.
-     *
-     * @return null|array|object The deserialized body parameters, if any.
-     *     These will typically be an array or object.
-     */
-    public function getParsedBody()
-    {
-        return $this->parsedBody;
-    }
-
-    /**
-     * Retrieve server parameters.
-     *
-     * Retrieves data related to the incoming request environment,
-     * typically derived from PHP's $_SERVER superglobal. The data IS NOT
-     * REQUIRED to originate from $_SERVER.
-     *
-     * @return array
-     */
-    public function getServerParams()
-    {
-        return $this->serverParams;
-    }
-
-    /**
-     * Retrieve normalized file upload data.
-     *
-     * This method returns upload metadata in a normalized tree, with each leaf
-     * an instance of Psr\Http\Message\UploadedFileInterface.
-     *
-     * These values MAY be prepared from $_FILES or the message body during
-     * instantiation, or MAY be injected via withUploadedFiles().
-     *
-     * @return array An array tree of UploadedFileInterface instances; an empty
-     *     array MUST be returned if no data is present.
-     */
-    public function getUploadedFiles()
-    {
-        return $this->uploadedFiles;
+        return this->attributes->toArray();
     }
 
     /**
@@ -321,13 +199,15 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @return ServerRequest
      */
-    public function withAttribute($name, $value): ServerRequest
+    public function withAttribute(name, value): <ServerRequest>
     {
-        $attributes = clone $this->attributes;
+        var attributes;
 
-        $attributes->set($name, $value);
+        let attributes = clone this->attributes;
 
-        return $this->cloneInstance($attributes, 'attributes');
+        attributes->set(name, value);
+
+        return this->cloneInstance(attributes, "attributes");
     }
 
     /**
@@ -348,9 +228,9 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @return ServerRequest
      */
-    public function withCookieParams(array $cookies): ServerRequest
+    public function withCookieParams(array cookies): <ServerRequest>
     {
-        return $this->cloneInstance($cookies, 'cookieParams');
+        return this->cloneInstance(cookies, "cookieParams");
     }
 
     /**
@@ -378,13 +258,12 @@ final class ServerRequest implements ServerRequestInterface
      * @param array|object|null $data
      *
      * @return ServerRequest
-     * @throws InvalidArgumentException if an unsupported argument type is
-     *     provided.
+     * @throws InvalidArgumentException if an unsupported argument type is provided.
      *
      */
-    public function withParsedBody($data): ServerRequest
+    public function withParsedBody(data): <ServerRequest>
     {
-        return $this->cloneInstance($data, 'parsedBody');
+        return this->cloneInstance(data, "parsedBody");
     }
 
     /**
@@ -409,9 +288,9 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @return ServerRequest
      */
-    public function withQueryParams(array $query): ServerRequest
+    public function withQueryParams(array query): <ServerRequest>
     {
-        return $this->cloneInstance($query, 'queryParams');
+        return this->cloneInstance(query, "queryParams");
     }
 
     /**
@@ -427,11 +306,11 @@ final class ServerRequest implements ServerRequestInterface
      * @throws InvalidArgumentException if an invalid structure is provided.
      *
      */
-    public function withUploadedFiles(array $uploadedFiles): ServerRequest
+    public function withUploadedFiles(array uploadedFiles): <ServerRequest>
     {
-        $this->checkUploadedFiles($uploadedFiles);
+        this->checkUploadedFiles(uploadedFiles);
 
-        return $this->cloneInstance($uploadedFiles, 'uploadedFiles');
+        return this->cloneInstance(uploadedFiles, "uploadedFiles");
     }
 
     /**
@@ -448,12 +327,14 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @return ServerRequest
      */
-    public function withoutAttribute($name): ServerRequest
+    public function withoutAttribute(name): <ServerRequest>
     {
-        $attributes = clone $this->attributes;
-        $attributes->remove($name);
+        var attributes;
 
-        return $this->cloneInstance($attributes, 'attributes');
+        let attributes = clone this->attributes;
+        attributes->remove(name);
+
+        return this->cloneInstance(attributes, "attributes");
     }
 
     /**
@@ -461,19 +342,16 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @param array $files
      */
-    private function checkUploadedFiles(array $files): void
+    private function checkUploadedFiles(array files): void
     {
-        foreach ($files as $file) {
-            if (is_array($file)) {
-                $this->checkUploadedFiles($file);
+        var file;
+
+        for file in files {
+            if unlikely typeof file === "array" {
+                this->checkUploadedFiles(file);
             } else {
-                if (
-                    !(is_object($file) &&
-                    $file instanceof UploadedFileInterface)
-                ) {
-                    throw new InvalidArgumentException(
-                        'Invalid uploaded file'
-                    );
+                if unlikely !(typeof file === "object" && file instanceof UploadedFileInterface) {
+                    throw new InvalidArgumentException("Invalid uploaded file");
                 }
             }
         }

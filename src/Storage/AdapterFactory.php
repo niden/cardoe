@@ -46,7 +46,25 @@ class AdapterFactory extends AbstractFactory
      * Create a new instance of the adapter
      *
      * @param string $name
-     * @param array  $options
+     * @param array options = [
+     *             'servers' => [
+     *             [
+     *             'host'   => '127.0.0.1',
+     *             'port'   => 11211,
+     *             'weight' => 1
+     *             ]
+     *             ],
+     *             'defaultSerializer' => 'Php',
+     *             'lifetime'          => 3600,
+     *             'prefix'            => '',
+     *             'host'              => '127.0.0.1',
+     *             'port'              => 6379,
+     *             'index'             => 0,
+     *             'persistent'        => false,
+     *             'auth'              => '',
+     *             'socket'            => '',
+     *             'storageDir'        => '',
+     *             ]
      *
      * @return AdapterInterface
      * @throws ExceptionAlias

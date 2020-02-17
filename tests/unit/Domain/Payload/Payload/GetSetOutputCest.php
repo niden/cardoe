@@ -26,7 +26,7 @@ class GetSetOutputCest
      */
     public function httpPayloadPayloadGetSetOutput(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload - getOutput()/setOutput()');
+        $I->wantToTest('Domain\Payload\Payload - getOutput()/setOutput()');
 
         $payload = new Payload();
         $payload->setOutput('output');

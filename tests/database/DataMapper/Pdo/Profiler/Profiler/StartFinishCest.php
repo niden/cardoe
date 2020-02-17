@@ -42,7 +42,7 @@ class StartFinishCest
         $logger  = $profiler->getLogger();
         $message = $logger->getMessages()[0];
 
-        $I->assertNotFalse(strpos($message, 'my-method (1.'));
+        $I->assertNotFalse(strpos($message, 'my-method ('));
         $I->assertNotFalse(strpos($message, 'select from something #0'));
     }
 }

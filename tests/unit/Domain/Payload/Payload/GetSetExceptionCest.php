@@ -28,7 +28,7 @@ class GetSetExceptionCest
      */
     public function httpPayloadPayloadGetSetException(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload - getException()/setException()');
+        $I->wantToTest('Domain\Payload\Payload - getException()/setException()');
 
         $payload   = new Payload();
         $exception = new RuntimeException('Runtime error');

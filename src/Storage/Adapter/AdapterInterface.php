@@ -55,7 +55,8 @@ interface AdapterInterface
     public function get(string $key, $defaultValue);
 
     /**
-     * Returns the adapter - connects to the storage if not connected
+     * Returns the already connected adapter or connects to the backend
+     * server(s)
      *
      * @return mixed
      */

@@ -7,6 +7,10 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -14,39 +18,15 @@ declare(strict_types=1);
 namespace Phalcon\Http\Message;
 
 use Phalcon\Helper\Number;
+use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use RuntimeException;
 
-use function dirname;
-use function fclose;
-use function fopen;
-use function fwrite;
-use function is_dir;
-use function is_resource;
-use function is_string;
-use function is_writable;
-use function move_uploaded_file;
-
-use const PHP_SAPI;
-use const UPLOAD_ERR_CANT_WRITE;
-use const UPLOAD_ERR_EXTENSION;
-use const UPLOAD_ERR_FORM_SIZE;
-use const UPLOAD_ERR_INI_SIZE;
-use const UPLOAD_ERR_NO_FILE;
-use const UPLOAD_ERR_NO_TMP_DIR;
-use const UPLOAD_ERR_OK;
-use const UPLOAD_ERR_PARTIAL;
-
 /**
- * Value object representing a file uploaded through an HTTP request.
- *
- * Instances of this interface are considered immutable; all methods that
- * might change state MUST be implemented such that they retain the internal
- * state of the current instance and return an instance that contains the
- * changed state.
+ * PSR-7 UploadedFile
  */
 final class UploadedFile implements UploadedFileInterface
 {
@@ -69,7 +49,7 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @var string | null
      */
-    private $clientFilename = null;
+    private $clientFilename = null { get };
 
     /**
      * Retrieve the media type sent by the client.
@@ -83,7 +63,7 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @var string | null
      */
-    private $clientMediaType = null;
+    private $clientMediaType = null { get };
 
     /**
      * Retrieve the error associated with the uploaded file.
@@ -100,14 +80,14 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @var int
      */
-    private $error = 0;
+    private $error = 0 { get };
 
     /**
      * If the stream is a string (file name) we store it here
      *
      * @var string
      */
-    private $fileName = '';
+    private $fileName = "";
 
     /**
      * Retrieve the file size.
@@ -118,7 +98,7 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @var int | null
      */
-    private $size = null;
+    private $size = null { get };
 
     /**
      * Holds the stream/string for the uploaded file
@@ -130,103 +110,33 @@ final class UploadedFile implements UploadedFileInterface
     /**
      * UploadedFile constructor.
      *
-     * @param StreamInterface|resource|string $stream
-     * @param int|null                        $size
-     * @param int                             $error
-     * @param string|null                     $clientFilename
-     * @param string|null                     $clientMediaType
+     * @param StreamInterface|string|null $stream
+     * @param int|null                    $size
+     * @param int                         $error
+     * @param string|null                 $clientFilename
+     * @param string|null                 $clientMediaType
      */
     public function __construct(
-        $stream,
-        int $size = null,
-        int $error = 0,
-        string $clientFilename = null,
-        string $clientMediaType = null
+        var stream,
+        int size = null,
+        int error = 0,
+        string clientFilename = null,
+        string clientMediaType = null
     ) {
         /**
          * Check the stream passed. It can be a string representing a file or
          * a StreamInterface
          */
-        $this->checkStream($stream, $error);
+        this->checkStream(stream, error);
 
         /**
          * Check the error
          */
-        $this->checkError($error);
+        this->checkError(error);
 
-        $this->size            = $size;
-        $this->clientFilename  = $clientFilename;
-        $this->clientMediaType = $clientMediaType;
-    }
-
-
-    /**
-     * Retrieve the filename sent by the client.
-     *
-     * Do not trust the value returned by this method. A client could send
-     * a malicious filename with the intention to corrupt or hack your
-     * application.
-     *
-     * Implementations SHOULD return the value stored in the 'name' key of
-     * the file in the $_FILES array.
-     *
-     * @return string|null The filename sent by the client or null if none
-     *     was provided.
-     */
-    public function getClientFilename()
-    {
-        return $this->clientFilename;
-    }
-
-    /**
-     * Retrieve the media type sent by the client.
-     *
-     * Do not trust the value returned by this method. A client could send
-     * a malicious media type with the intention to corrupt or hack your
-     * application.
-     *
-     * Implementations SHOULD return the value stored in the 'type' key of
-     * the file in the $_FILES array.
-     *
-     * @return string|null The media type sent by the client or null if none
-     *     was provided.
-     */
-    public function getClientMediaType()
-    {
-        return $this->clientMediaType;
-    }
-
-    /**
-     * Retrieve the error associated with the uploaded file.
-     *
-     * The return value MUST be one of PHP's UPLOAD_ERR_XXX constants.
-     *
-     * If the file was uploaded successfully, this method MUST return
-     * UPLOAD_ERR_OK.
-     *
-     * Implementations SHOULD return the value stored in the 'error' key of
-     * the file in the $_FILES array.
-     *
-     * @see http://php.net/manual/en/features.file-upload.errors.php
-     * @return int One of PHP's UPLOAD_ERR_XXX constants.
-     */
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    /**
-     * Retrieve the file size.
-     *
-     * Implementations SHOULD return the value stored in the 'size' key of
-     * the file in the $_FILES array if available, as PHP calculates this based
-     * on the actual size transmitted.
-     *
-     * @return int|null The file size in bytes or null if unknown.
-     */
-    public function getSize()
-    {
-        return $this->size;
+        let this->size            = size,
+            this->clientFilename  = clientFilename,
+            this->clientMediaType = clientMediaType;
     }
 
     /**
@@ -242,28 +152,27 @@ final class UploadedFile implements UploadedFileInterface
      * raise an exception.
      *
      * @return StreamInterface Stream representation of the uploaded file.
-     * @throws RuntimeException in cases when no stream is available or can be
-     *     created.
+     * @throws RuntimeException in cases when no stream is available or can be created.
      */
-    public function getStream()
+    public function getStream(): var
     {
-        if (UPLOAD_ERR_OK !== $this->error) {
+        if unlikely 0 !== this->error {
             throw new InvalidArgumentException(
-                $this->getErrorDescription($this->error)
+                this->getErrorDescription(this->error)
             );
         }
 
-        if ($this->alreadyMoved) {
+        if unlikely this->alreadyMoved {
             throw new InvalidArgumentException(
-                'The file has already been moved to the target location'
+                "The file has already been moved to the target location"
             );
         }
 
-        if (!($this->stream instanceof StreamInterface)) {
-            $this->stream = new Stream($this->fileName);
+        if unlikely !(this->stream instanceof StreamInterface) {
+            let this->stream = new Stream(this->fileName);
         }
 
-        return $this->stream;
+        return this->stream;
     }
 
     /**
@@ -300,29 +209,48 @@ final class UploadedFile implements UploadedFileInterface
      * @throws RuntimeException on any error during the move operation, or on
      *     the second or subsequent call to the method.
      */
-    public function moveTo($targetPath): void
+    public function moveTo(var targetPath): void
     {
-        $this
-            ->checkMoveIfMoved()
-            ->checkMoveError()
-            ->checkMoveDirectory($targetPath)
-        ;
+        var sapi;
 
-        if (
-            empty(PHP_SAPI) ||
-            !empty($this->fileName) ||
-            Str::startsWith(PHP_SAPI, 'cli')
-        ) {
-            $this->storeFile($targetPath);
+        if unlikely this->alreadyMoved {
+            throw new InvalidArgumentException("File has already been moved");
+        }
+
+        if unlikely 0 !== this->error {
+            throw new InvalidArgumentException(
+                this->getErrorDescription(this->error)
+            );
+        }
+
+        /**
+         * All together for early failure
+         */
+        if unlikely !(typeof targetPath === "string" &&
+            !empty(targetPath) &&
+            is_dir(dirname(targetPath)) &&
+            is_writable(dirname(targetPath))) {
+            throw new InvalidArgumentException(
+                "Target folder is empty string, not a folder or not writable"
+            );
+        }
+
+        let sapi = constant("PHP_SAPI");
+
+        if unlikely (empty(sapi) ||
+           !empty(this->fileName) ||
+           starts_with(sapi, "cli") ||
+           starts_with(sapi, "phpdbg")) {
+            this->storeFile(targetPath);
         } else {
-            if (true !== move_uploaded_file($this->fileName, $targetPath)) {
+            if true !== move_uploaded_file(this->fileName, targetPath) {
                 throw new InvalidArgumentException(
-                    'The file cannot be moved to the target folder'
+                    "The file cannot be moved to the target folder"
                 );
             }
         }
 
-        $this->alreadyMoved = true;
+        let this->alreadyMoved = true;
     }
 
     /**
@@ -330,66 +258,15 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @param int $error
      */
-    private function checkError(int $error): void
+    private function checkError(int error): void
     {
-        if (true !== Number::between($error, UPLOAD_ERR_OK, UPLOAD_ERR_EXTENSION)) {
+        if unlikely true !== Number::between(error, 0, 8) {
             throw new InvalidArgumentException(
-                'Invalid error. Must be one of the UPLOAD_ERR_* constants'
+                "Invalid error. Must be one of the UPLOAD_ERR_* constants"
             );
         }
 
-        $this->error = $error;
-    }
-
-    /**
-     * @return UploadedFile
-     */
-    private function checkMoveIfMoved(): UploadedFile
-    {
-        if ($this->alreadyMoved) {
-            throw new InvalidArgumentException('File has already been moved');
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return UploadedFile
-     */
-    private function checkMoveError(): UploadedFile
-    {
-        if (UPLOAD_ERR_OK !== $this->error) {
-            throw new InvalidArgumentException(
-                $this->getErrorDescription($this->error)
-            );
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param mixed $targetPath
-     *
-     * @return UploadedFile
-     */
-    private function checkMoveDirectory($targetPath): UploadedFile
-    {
-        /**
-         * All together for early failure
-         */
-        if (
-            !(is_string($targetPath) &&
-            !empty($targetPath) &&
-            is_dir(dirname($targetPath)) &&
-            is_writable(dirname($targetPath)))
-        ) {
-            throw new InvalidArgumentException(
-                'Target folder is empty string, not a folder or not writable'
-            );
-        }
-
-
-        return $this;
+        let this->error = error;
     }
 
     /**
@@ -398,21 +275,21 @@ final class UploadedFile implements UploadedFileInterface
      * @param StreamInterface|resource|string $stream
      * @param int                             $error
      */
-    private function checkStream($stream, int $error): void
+    private function checkStream(var stream, int error): void
     {
-        if (UPLOAD_ERR_OK === $error) {
+        if unlikely 0 === error {
             switch (true) {
-                case (is_string($stream)):
-                    $this->fileName = $stream;
+                case (typeof stream === "string"):
+                    let this->fileName = stream;
                     break;
-                case (is_resource($stream)):
-                    $this->stream = new Stream($stream);
+                case (typeof stream === "resource"):
+                    let this->stream = new Stream(stream);
                     break;
-                case ($stream instanceof StreamInterface):
-                    $this->stream = $stream;
+                case (stream instanceof StreamInterface):
+                    let this->stream = stream;
                     break;
                 default:
-                    throw new InvalidArgumentException('Invalid stream or file passed');
+                    throw new InvalidArgumentException("Invalid stream or file passed");
             }
         }
     }
@@ -424,22 +301,22 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @return string
      */
-    private function getErrorDescription(int $error): string
+    private function getErrorDescription(int error): string
     {
-        $errors = [
-            UPLOAD_ERR_OK         => 'There is no error, the file uploaded with success.',
-            UPLOAD_ERR_INI_SIZE   => 'The uploaded file exceeds the upload_max_' .
-                'filesize directive in php.ini.',
-            UPLOAD_ERR_FORM_SIZE  => 'The uploaded file exceeds the MAX_FILE_SIZE ' .
-                'directive that was specified in the HTML form.',
-            UPLOAD_ERR_PARTIAL    => 'The uploaded file was only partially uploaded.',
-            UPLOAD_ERR_NO_FILE    => 'No file was uploaded.',
-            UPLOAD_ERR_NO_TMP_DIR => 'Missing a temporary folder.',
-            UPLOAD_ERR_CANT_WRITE => 'Failed to write file to disk.',
-            UPLOAD_ERR_EXTENSION  => 'A PHP extension stopped the file upload.',
+        array errors;
+
+        let errors = [
+            0 : "There is no error, the file uploaded with success.",
+            1 : "The uploaded file exceeds the upload_max_filesize directive in php.ini.",
+            2 : "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.",
+            3 : "The uploaded file was only partially uploaded.",
+            4 : "No file was uploaded.",
+            6 : "Missing a temporary folder.",
+            7 : "Failed to write file to disk.",
+            8 : "A PHP extension stopped the file upload."
         ];
 
-        return $errors[$error] ?? 'Unknown upload error';
+        return Arr::get(errors, error, "Unknown upload error");
     }
 
     /**
@@ -447,24 +324,25 @@ final class UploadedFile implements UploadedFileInterface
      *
      * @param string $targetPath
      */
-    private function storeFile(string $targetPath): void
+    private function storeFile(string targetPath): void
     {
-        $handle = fopen($targetPath, 'w+b');
-        if (false === $handle) {
-            throw new InvalidArgumentException(
-                'Cannot write to file.'
-            );
-        }
-        $stream = $this->getStream();
+        var data, handle, stream;
 
-        $stream->rewind();
-
-        while (true !== $stream->eof()) {
-            $data = $stream->read(2048);
-
-            fwrite($handle, $data);
+        let handle = fopen(targetPath, "w+b");
+        if unlikely false === handle {
+            throw new InvalidArgumentException("Cannot write to file.");
         }
 
-        fclose($handle);
+        let stream = this->getStream();
+
+        stream->rewind();
+
+        while true !== stream->eof() {
+            let data = stream->read(2048);
+
+            fwrite(handle, data);
+        }
+
+        fclose(handle);
     }
 }

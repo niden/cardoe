@@ -43,7 +43,7 @@ class Hmac extends AbstractSigner
             throw new UnsupportedAlgorithmException(
                 "Unsupported HMAC algorithm"
             );
-        };
+        }
 
         $this->algo = $algo;
     }

@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Storage\Serializer;
 
+use function is_bool;
+
 /**
  * Class AbstractSerializer
  *
@@ -36,26 +38,6 @@ abstract class AbstractSerializer implements SerializerInterface
     }
 
     /**
-     * Returns the internal array
-     *
-     * @return mixed|null
-     */
-    public function getData()
-    {
-        return $this->data;
-    }
-
-    /**
-     * Sets the data
-     *
-     * @param mixed $data
-     */
-    public function setData($data): void
-    {
-        $this->data = $data;
-    }
-
-    /**
      * If this returns true, then the data returns back as is
      *
      * @param mixed $data
@@ -65,5 +47,21 @@ abstract class AbstractSerializer implements SerializerInterface
     protected function isSerializable($data): bool
     {
         return !(empty($data) || is_bool($data) || is_numeric($data));
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    /**
+     * @param mixed $data
+     */
+    public function setData($data): void
+    {
+        $this->data = $data;
     }
 }

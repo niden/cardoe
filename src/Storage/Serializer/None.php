@@ -25,9 +25,9 @@ class None extends AbstractSerializer
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
-        return $this->data;
+        return (string) $this->data;
     }
 
     /**

@@ -20,7 +20,6 @@ use Phalcon\Helper\Str;
 
 use function is_array;
 
-use function var_dump;
 use const OPENSSL_RAW_DATA;
 
 /**
@@ -107,7 +106,7 @@ class Crypt implements CryptInterface
     /**
      * @var string
      */
-    protected $key;
+    protected $key = "";
 
     /**
      * @var int
@@ -451,11 +450,11 @@ class Crypt implements CryptInterface
         foreach ($availableCiphers as $cipher) {
             if (
                 !(
-                    Str::endsWith(strtolower($cipher), "des") ||
-                    Str::endsWith(strtolower($cipher), "rc2") ||
-                    Str::endsWith(strtolower($cipher), "rc4") ||
-                    Str::endsWith(strtolower($cipher), "des") ||
-                    Str::endsWith(strtolower($cipher), "ecb")
+                Str::endsWith(strtolower($cipher), "des") ||
+                Str::endsWith(strtolower($cipher), "rc2") ||
+                Str::endsWith(strtolower($cipher), "rc4") ||
+                Str::endsWith(strtolower($cipher), "des") ||
+                Str::endsWith(strtolower($cipher), "ecb")
                 )
             ) {
                 $allowedCiphers[] = $cipher;

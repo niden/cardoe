@@ -9,8 +9,6 @@
  * file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace Phalcon\Logger\Formatter;
 
 use Phalcon\Logger\Item;
@@ -24,10 +22,11 @@ interface FormatterInterface
 {
     /**
      * Applies a format to an item
-     *
+     */
+    /**
      * @param Item $item
      *
      * @return string
      */
-    public function format(Item $item);
+    public function format(Item $item): string;
 }

@@ -29,8 +29,8 @@ class Temp extends Stream
      *
      * @param string $mode
      */
-    public function __construct($mode = 'rb')
+    public function __construct(string $mode = "rb")
     {
-        parent::__construct('php://temp', $mode);
+        parent::__construct("php://temp", $mode);
     }
 }

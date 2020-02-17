@@ -7,6 +7,10 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -17,12 +21,9 @@ use Phalcon\Http\Message\Exception\InvalidArgumentException;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 
-use function fopen;
-use function fwrite;
-use function get_resource_type;
-use function is_resource;
-use function rewind;
-
+/**
+ * PSR-17 StreamFactory
+ */
 final class StreamFactory implements StreamFactoryInterface
 {
     /**
@@ -34,19 +35,19 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStream(string $content = ''): StreamInterface
+    public function createStream(string! content = ""): <StreamInterface>
     {
-        $handle = fopen('php://temp', 'r+b');
-        if (false === $handle) {
-            throw new InvalidArgumentException(
-                'Cannot write to file.'
-            );
+        var handle;
+
+        let handle = fopen("php://temp", "r+b");
+        if unlikely false === handle {
+            throw new InvalidArgumentException("Cannot write to file.");
         }
 
-        fwrite($handle, $content);
-        rewind($handle);
+        fwrite(handle, content);
+        rewind(handle);
 
-        return $this->createStreamFromResource($handle);
+        return this->createStreamFromResource(handle);
     }
 
     /**
@@ -64,9 +65,9 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStreamFromFile(string $filename, string $mode = 'r+b'): StreamInterface
+    public function createStreamFromFile(string! filename, string! mode = "r+b"): <StreamInterface>
     {
-        return new Stream($filename, $mode);
+        return new Stream(filename, mode);
     }
 
     /**
@@ -74,17 +75,13 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * The stream MUST be readable and may be writable.
      */
-    public function createStreamFromResource($phpResource): StreamInterface
+    public function createStreamFromResource(var phpResource): <StreamInterface>
     {
-        if (
-            !is_resource($phpResource) ||
-            'stream' !== get_resource_type($phpResource)
-        ) {
-            throw new InvalidArgumentException(
-                'Invalid stream provided'
-            );
+        if unlikely (typeof phpResource !== "resource" ||
+           "stream" !== get_resource_type(phpResource)) {
+            throw new InvalidArgumentException("Invalid stream provided");
         }
 
-        return new Stream($phpResource);
+        return new Stream(phpResource);
     }
 }

@@ -27,7 +27,7 @@ class GetSetStatusCest
      */
     public function httpPayloadPayloadGetStatus(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload - getStatus()/setStatus()');
+        $I->wantToTest('Domain\Payload\Payload - getStatus()/setStatus()');
 
         $payload = new Payload();
         $payload->setStatus(Status::ACCEPTED);

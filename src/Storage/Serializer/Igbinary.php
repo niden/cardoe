@@ -31,10 +31,10 @@ class Igbinary extends AbstractSerializer
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         if (true !== $this->isSerializable($this->data)) {
-            return $this->data;
+            return (string) $this->data;
         }
 
         $data = igbinary_serialize($this->data);

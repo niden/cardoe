@@ -16,6 +16,7 @@ namespace Phalcon\Test\Unit\Autoload\Loader;
 use Phalcon\Autoload\Loader;
 use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
+
 use function dataDir;
 use function function_exists;
 

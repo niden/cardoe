@@ -18,6 +18,7 @@ use Example\Namespaces\Adapter\Mongo;
 use Phalcon\Autoload\Loader;
 use Phalcon\Test\Fixtures\Traits\LoaderTrait;
 use UnitTester;
+
 use function dataDir;
 
 class AutoloadCest

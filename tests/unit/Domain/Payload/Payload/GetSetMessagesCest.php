@@ -26,7 +26,7 @@ class GetSetMessagesCest
      */
     public function httpPayloadPayloadGetSetMessages(UnitTester $I)
     {
-        $I->wantToTest('Domain\Payload - getMessages()/setMessages()');
+        $I->wantToTest('Domain\Payload\Payload - getMessages()/setMessages()');
 
         $payload = new Payload();
         $payload->setMessages('messages');

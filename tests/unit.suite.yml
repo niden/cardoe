@@ -4,9 +4,9 @@
 
 actor: UnitTester
 modules:
+  config:
   enabled:
+    - Apc
     - Asserts
     - Filesystem
-    - \Helper\Unit
-env:
-  - config/.env.test
+    - Helper\Unit

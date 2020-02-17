@@ -29,8 +29,8 @@ class Memory extends Stream
      *
      * @param string $mode
      */
-    public function __construct($mode = 'rb')
+    public function __construct(string $mode = "rb")
     {
-        parent::__construct('php://memory', $mode);
+        parent::__construct("php://memory", $mode);
     }
 }
