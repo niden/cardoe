@@ -84,9 +84,6 @@ jobs:
       - name: Run unit tests
         run: vendor/bin/codecept run --ext DotReporter unit
 
-      - name: Run cli tests
-        run: vendor/bin/codecept run --ext DotReporter cli
-
       - name: Run integration tests
         env:
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
