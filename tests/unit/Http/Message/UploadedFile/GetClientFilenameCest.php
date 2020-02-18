@@ -21,6 +21,7 @@ class GetClientFilenameCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getClientFilename()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetClientFilename(UnitTester $I)
@@ -30,10 +31,10 @@ class GetClientFilenameCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'Phalcon.txt'
+            'phalcon.txt'
         );
 
-        $expected = 'Phalcon.txt';
+        $expected = 'phalcon.txt';
         $actual   = $file->getClientFilename();
         $I->assertEquals($expected, $actual);
     }

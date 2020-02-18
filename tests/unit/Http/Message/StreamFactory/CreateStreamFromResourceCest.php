@@ -23,13 +23,14 @@ class CreateStreamFromResourceCest
     /**
      * Tests Phalcon\Http\Message\StreamFactory :: createStreamFromResource()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamFactoryCreateStreamFromResource(UnitTester $I)
     {
         $I->wantToTest('Http\Message\StreamFactory - createStreamFromResource()');
 
-        $fileName = dataDir('assets/stream/bill-of-rights.txt');
+        $fileName = dataDir('assets/stream/mit.txt');
         $expected = file_get_contents($fileName);
         $resource = fopen($fileName, 'r+b');
         $factory  = new StreamFactory();
@@ -50,6 +51,7 @@ class CreateStreamFromResourceCest
      * Tests Phalcon\Http\Message\StreamFactory :: createStreamFromResource() -
      * exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamFactoryCreateStreamFromResourceException(UnitTester $I)

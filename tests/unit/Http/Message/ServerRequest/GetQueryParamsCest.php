@@ -21,6 +21,7 @@ class GetQueryParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getQueryParams()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestGetQueryParams(UnitTester $I)
@@ -37,6 +38,7 @@ class GetQueryParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getQueryParams() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-03
      */
     public function httpMessageServerRequestGetQueryParamsEmpty(UnitTester $I)

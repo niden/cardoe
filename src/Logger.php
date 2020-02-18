@@ -19,6 +19,11 @@ use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
 use Psr\Log\LoggerInterface;
 
+use function array_flip;
+use function is_numeric;
+use function is_string;
+use function time;
+
 /**
  * Class Logger
  *

@@ -21,12 +21,13 @@ class GetPortCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getPort()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriGetPort(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getPort()');
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $expected = 8080;
@@ -37,12 +38,13 @@ class GetPortCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getPort() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetPortEmpty(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getPort() - empty');
-        $query = 'https://Phalcon:secret@dev.phalcon.ld/action?param=value';
+        $query = 'https://phalcon:secret@dev.phalcon.ld/action?param=value';
         $uri   = new Uri($query);
 
         $actual = $uri->getPort();

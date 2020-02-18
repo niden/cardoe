@@ -25,6 +25,7 @@ class WriteCest
     /**
      * Tests Phalcon\Http\Message\Stream :: write()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamWrite(UnitTester $I)
@@ -51,6 +52,7 @@ class WriteCest
     /**
      * Tests Phalcon\Http\Message\Stream :: write() - detached
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamWriteDetached(UnitTester $I)
@@ -74,6 +76,7 @@ class WriteCest
     /**
      * Tests Phalcon\Http\Message\Stream :: write() - exception not writable
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageStreamWriteNotWritable(UnitTester $I)

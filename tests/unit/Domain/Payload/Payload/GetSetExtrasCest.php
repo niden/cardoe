@@ -19,7 +19,7 @@ use UnitTester;
 class GetSetExtrasCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getExtras()/setExtras()
+     * Unit Tests Phalcon\Domain\Payload :: getExtras()/setExtras()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24

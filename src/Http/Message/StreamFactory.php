@@ -7,6 +7,10 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -23,6 +27,9 @@ use function get_resource_type;
 use function is_resource;
 use function rewind;
 
+/**
+ * PSR-17 StreamFactory
+ */
 final class StreamFactory implements StreamFactoryInterface
 {
     /**
@@ -34,13 +41,11 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStream(string $content = ''): StreamInterface
+    public function createStream(string $content = ""): StreamInterface
     {
-        $handle = fopen('php://temp', 'r+b');
+        $handle = fopen("php://temp", "r+b");
         if (false === $handle) {
-            throw new InvalidArgumentException(
-                'Cannot write to file.'
-            );
+            throw new InvalidArgumentException("Cannot write to file.");
         }
 
         fwrite($handle, $content);
@@ -64,8 +69,10 @@ final class StreamFactory implements StreamFactoryInterface
      *
      * @return StreamInterface
      */
-    public function createStreamFromFile(string $filename, string $mode = 'r+b'): StreamInterface
-    {
+    public function createStreamFromFile(
+        string $filename,
+        string $mode = "r+b"
+    ): StreamInterface {
         return new Stream($filename, $mode);
     }
 
@@ -73,16 +80,18 @@ final class StreamFactory implements StreamFactoryInterface
      * Create a new stream from an existing resource.
      *
      * The stream MUST be readable and may be writable.
+     *
+     * @param resource $phpResource
+     *
+     * @return StreamInterface
      */
     public function createStreamFromResource($phpResource): StreamInterface
     {
         if (
             !is_resource($phpResource) ||
-            'stream' !== get_resource_type($phpResource)
+            "stream" !== get_resource_type($phpResource)
         ) {
-            throw new InvalidArgumentException(
-                'Invalid stream provided'
-            );
+            throw new InvalidArgumentException("Invalid stream provided");
         }
 
         return new Stream($phpResource);

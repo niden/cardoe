@@ -28,6 +28,7 @@ class GetStreamCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getStream()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetStream(UnitTester $I)
@@ -38,7 +39,7 @@ class GetStreamCest
             $stream,
             0,
             UPLOAD_ERR_OK,
-            'Phalcon.txt'
+            'phalcon.txt'
         );
 
         $expected = $stream;
@@ -49,6 +50,7 @@ class GetStreamCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getStream() - string
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetStreamString(UnitTester $I)
@@ -58,7 +60,7 @@ class GetStreamCest
             'php://memory',
             0,
             UPLOAD_ERR_OK,
-            'Phalcon.txt'
+            'phalcon.txt'
         );
 
         $actual = $file->getStream();
@@ -68,6 +70,7 @@ class GetStreamCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: getStream() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetStreamException(UnitTester $I)
@@ -84,7 +87,7 @@ class GetStreamCest
                     $stream,
                     0,
                     UPLOAD_ERR_CANT_WRITE,
-                    'Phalcon.txt'
+                    'phalcon.txt'
                 );
 
                 $actual = $file->getStream();
@@ -96,6 +99,7 @@ class GetStreamCest
      * Tests Phalcon\Http\Message\UploadedFile :: getStream() - exception
      * already moved
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileGetStreamExceptionAlreadyMoved(UnitTester $I)

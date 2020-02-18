@@ -14,10 +14,12 @@ declare(strict_types=1);
 namespace Phalcon\Cache;
 
 use Phalcon\Cache;
-use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Factory\Exception as FactoryException;
 
 /**
  * Creates a new Cache class
+ *
+ * @property AdapterFactory $adapterFactory
  */
 class CacheFactory
 {
@@ -43,7 +45,7 @@ class CacheFactory
      * @param array  $options
      *
      * @return Cache
-     * @throws ExceptionAlias
+     * @throws FactoryException
      */
     public function newInstance(string $name, array $options = []): Cache
     {

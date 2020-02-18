@@ -17,13 +17,30 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
 
+use function date_default_timezone_get;
+
 /**
  * Class AbstractFormatter
  *
- * @package Phalcon\Logger\Formatter
+ * @property string $dateFormat
  */
 abstract class AbstractFormatter implements FormatterInterface
 {
+    /**
+     * Default date format
+     *
+     * @var string
+     */
+    protected $dateFormat;
+
+    /**
+     * @return string
+     */
+    public function getDateFormat(): string
+    {
+        return $this->dateFormat;
+    }
+
     /**
      * Interpolates context values into the message placeholders
      *
@@ -34,18 +51,26 @@ abstract class AbstractFormatter implements FormatterInterface
      *
      * @return string
      */
-    public function interpolate(string $message, $context = []): string
+    public function interpolate(string $message, array $context = [])
     {
-        if (!empty($context) > 0) {
-            $replace = [];
-            foreach ($context as $key => $value) {
-                $replace["{" . $key . "}"] = $value;
-            }
-
-            return strtr($message, $replace);
+        if (empty($context)) {
+            return $message;
         }
 
-        return $message;
+        $replace = [];
+        foreach ($context as $key => $value) {
+            $replace["{" . $key . "}"] = $value;
+        }
+
+        return strtr($message, $replace);
+    }
+
+    /**
+     * @param string $format
+     */
+    public function setDateFormat(string $format): void
+    {
+        $this->dateFormat = $format;
     }
 
     /**

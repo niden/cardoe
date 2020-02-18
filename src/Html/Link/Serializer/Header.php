@@ -48,7 +48,7 @@ class Header implements SerializerInterface
             $rels       = $link->getRels();
             $parts      = [
                 "",
-                "rel=\"" . implode(" ", $rels) . "\""
+                "rel=\"" . implode(" ", $rels) . "\"",
             ];
 
             foreach ($attributes as $key => $value) {

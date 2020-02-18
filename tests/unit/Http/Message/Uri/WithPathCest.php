@@ -25,6 +25,7 @@ class WithPathCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-09
      */
     public function httpMessageUriWithPath(UnitTester $I, Example $example)
@@ -60,7 +61,8 @@ class WithPathCest
     /**
      * Tests Phalcon\Http\Message\Uri :: withPath() - exception query string
      *
-     * @since        2019-02-07
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-01
      */
     public function httpUriWithPathExceptionQueryString(UnitTester $I)
     {
@@ -71,7 +73,7 @@ class WithPathCest
                 'Path cannot contain a query string or fragment'
             ),
             function () {
-                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+                $query    = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath('/login?param=value');
             }
@@ -81,7 +83,8 @@ class WithPathCest
     /**
      * Tests Phalcon\Http\Message\Uri :: withPath() - exception query fragment
      *
-     * @since        2019-02-07
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-01
      */
     public function httpUriWithPathExceptionQueryFragment(UnitTester $I)
     {
@@ -92,7 +95,7 @@ class WithPathCest
                 'Path cannot contain a query string or fragment'
             ),
             function () {
-                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+                $query    = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath('/login#frag');
             }
@@ -104,6 +107,7 @@ class WithPathCest
      *
      * @dataProvider getExceptions
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-07
      */
     public function httpUriWithPathException(UnitTester $I, Example $example)
@@ -115,12 +119,13 @@ class WithPathCest
                 'Method requires a string argument'
             ),
             function () use ($example) {
-                $query    = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+                $query    = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri      = new Uri($query);
                 $instance = $uri->withPath($example[2]);
             }
         );
     }
+
 
     private function getExamples(): array
     {
@@ -132,6 +137,7 @@ class WithPathCest
             ['garbled', '/l^ogin/si gh', '/l%5Eogin/si%20gh', '/l%5Eogin/si%20gh'],
         ];
     }
+
 
     private function getExceptions(): array
     {

@@ -23,6 +23,11 @@ use Phalcon\Http\JWT\Token\Item;
 use Phalcon\Http\JWT\Token\Signature;
 use Phalcon\Http\JWT\Token\Token;
 
+use function is_array;
+use function is_string;
+use function preg_match;
+use function time;
+
 /**
  * Class Builder
  *

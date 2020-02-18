@@ -20,6 +20,7 @@ class SetStreamCest
     /**
      * Unit Tests Phalcon\Http\Message\Stream :: setStream()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
     public function httpMessageStreamSetStream(UnitTester $I)

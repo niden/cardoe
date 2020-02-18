@@ -23,6 +23,7 @@ class WithUploadedFilesCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withUploadedFiles()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithUploadedFiles(UnitTester $I)
@@ -47,6 +48,7 @@ class WithUploadedFilesCest
      * Tests Phalcon\Http\Message\ServerRequest :: withUploadedFiles() -
      * exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithUploadedFilesException(UnitTester $I)

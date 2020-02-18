@@ -28,9 +28,19 @@ use function strpos;
 use const PHP_EOL;
 
 /**
- * Class Stream
+ * Phalcon\Logger\Adapter\Stream
  *
- * @package Phalcon\Logger\Adapter
+ * Adapter to store logs in plain text files
+ *
+ *```php
+ * $logger = new \Phalcon\Logger\Adapter\Stream("app/logs/test.log");
+ *
+ * $logger->log("This is a message");
+ * $logger->log(\Phalcon\Logger::ERROR, "This is an error");
+ * $logger->error("This is another error");
+ *
+ * $logger->close();
+ *```
  */
 class Stream extends AbstractAdapter
 {

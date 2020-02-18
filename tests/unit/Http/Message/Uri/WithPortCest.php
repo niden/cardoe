@@ -27,13 +27,14 @@ class WithPortCest
      *
      * @dataProvider getExamples
      *
-     * @since        2019-02-09
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-01
      */
     public function httpMessageUriWithPort(UnitTester $I, Example $example)
     {
         $I->wantToTest('Http\Message\Uri - withPort() - ' . $example[0]);
 
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:%s/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:%s/action?param=value#frag';
 
         $uri = new Uri(
             sprintf($query, ':4300')
@@ -62,6 +63,7 @@ class WithPortCest
      *
      * @dataProvider getExceptions
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-07
      */
     public function httpUriWithPortException(UnitTester $I, Example $example)
@@ -73,7 +75,7 @@ class WithPortCest
                 'Method expects ' . $example[2]
             ),
             function () use ($example) {
-                $query = 'https://Phalcon:secret@dev.phalcon.ld%s/action?param=value#frag';
+                $query = 'https://phalcon:secret@dev.phalcon.ld%s/action?param=value#frag';
 
                 $uri = new Uri(
                     sprintf($query, ':4300')
@@ -84,23 +86,44 @@ class WithPortCest
         );
     }
 
-    /**
-     * @return array
-     */
+
     private function getExamples(): array
     {
         return [
-            ['null', null, null, ''],
-            ['int', 8080, 8080, ':8080'],
-            ['string-int', '8080', 8080, ':8080'],
-            ['http', 80, null, ''],
-            ['https', 443, null, ''],
+            [
+                'null',
+                null,
+                null,
+                '',
+            ],
+            [
+                'int',
+                8080,
+                8080,
+                ':8080',
+            ],
+            [
+                'string-int',
+                '8080',
+                8080,
+                ':8080',
+            ],
+            [
+                'http',
+                80,
+                null,
+                '',
+            ],
+            [
+                'https',
+                443,
+                null,
+                '',
+            ],
         ];
     }
 
-    /**
-     * @return array
-     */
+
     private function getExceptions(): array
     {
         return [

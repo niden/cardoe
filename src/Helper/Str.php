@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon.
  *
- * (c) Phalcon Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.com>
  *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -16,17 +16,21 @@ namespace Phalcon\Helper;
 use function array_merge;
 use function count_chars;
 use function explode;
+use function func_get_args;
 use function implode;
-use function ltrim;
+use function is_array;
+use function is_string;
 use function mt_rand;
 use function pathinfo;
 use function preg_match_all;
 use function preg_replace;
 use function range;
 use function rtrim;
+use function str_replace;
 use function str_split;
 use function strlen;
 use function strrev;
+use function strtolower;
 use function substr;
 use function substr_compare;
 use function trim;
@@ -35,55 +39,78 @@ use const DIRECTORY_SEPARATOR;
 use const PATHINFO_FILENAME;
 
 /**
- * Phalcon\Helper\Str
- *
  * This class offers quick string functions throughout the framework
  */
 class Str
 {
-    public const RANDOM_ALNUM    = 0;
-    public const RANDOM_ALPHA    = 1;
+    // Only alpha numeric characters [a-zA-Z0-9]
+    public const RANDOM_ALNUM = 0;
+    // Only alphabetical characters [azAZ]
+    public const RANDOM_ALPHA = 1;
+    // Only alpha numeric uppercase characters exclude similar
+    // characters [2345679ACDEFHJKLMNPRSTUVWXYZ]
     public const RANDOM_DISTINCT = 5;
-    public const RANDOM_HEXDEC   = 2;
-    public const RANDOM_NOZERO   = 4;
-    public const RANDOM_NUMERIC  = 3;
+    // Only hexadecimal characters [0-9a-f]
+    public const RANDOM_HEXDEC = 2;
+    // Only numbers without 0 [1-9]
+    public const RANDOM_NOZERO = 4;
+    // Only numbers [0-9]
+    public const RANDOM_NUMERIC = 3;
 
     /**
      * Concatenates strings using the separator only once without duplication in
      * places concatenation
      *
-     * @param string $separator
-     * @param mixed  ...$arguments
+     * ```php
+     * $str = Phalcon\Helper\Str::concat(
+     *     "/",
+     *     "/tmp/",
+     *     "/folder_1/",
+     *     "/folder_2",
+     *     "folder_3/"
+     * );
+     *
+     * echo $str;   // /tmp/folder_1/folder_2/folder_3/
+     * ```
+     *
+     * @param string separator
+     * @param string a
+     * @param string b
+     * @param string ...N
      *
      * @return string
-     * @throws Exception
      */
-    final public static function concat(string $separator, ...$arguments): string
+    final public static function concat(): string
     {
-        if (count($arguments) < 2) {
-            throw new Exception('concat needs at least three parameters');
+        $arguments = func_get_args();
+
+        if (count($arguments) < 3) {
+            throw new Exception(
+                "concat needs at least three parameters"
+            );
         }
 
-        $first  = Arr::first($arguments);
-        $last   = Arr::last($arguments);
-        $prefix = '';
-        $suffix = '';
-        $data   = [];
+        $delimiter = Arr::first($arguments);
+        $arguments = Arr::sliceRight($arguments);
+        $first     = Arr::first($arguments);
+        $last      = Arr::last($arguments);
+        $prefix    = "";
+        $suffix    = "";
+        $data      = [];
 
-        if (self::startsWith($first, $separator)) {
-            $prefix = $separator;
+        if (self::startsWith($first, $delimiter)) {
+            $prefix = $delimiter;
         }
 
-        if (self::endsWith($last, $separator)) {
-            $suffix = $separator;
+        if (self::endsWith($last, $delimiter)) {
+            $suffix = $delimiter;
         }
-
 
         foreach ($arguments as $argument) {
-            $data[] = rtrim(ltrim($argument, $separator), $separator);
+            $data[] = trim($argument, $delimiter);
         }
 
-        return $prefix . implode($separator, $data) . $suffix;
+        return $prefix . implode($delimiter, $data) . $suffix;
     }
 
     /**
@@ -96,7 +123,7 @@ class Str
      */
     final public static function countVowels(string $text): int
     {
-        preg_match_all('/[aeiou]/i', $text, $matches);
+        preg_match_all("/[aeiou]/i", $text, $matches);
 
         return count($matches[0]);
     }
@@ -115,7 +142,7 @@ class Str
     final public static function decapitalize(
         string $text,
         bool $upperRest = false,
-        string $encoding = 'UTF-8'
+        string $encoding = "UTF-8"
     ): string {
         $substr = mb_substr($text, 1);
 
@@ -129,8 +156,8 @@ class Str
     }
 
     /**
-     * Removes a number from a string or decrements that number if it already
-     * is defined. defined
+     * Removes a number from a string or decrements that number if it is already
+     * defined
      *
      * ```php
      * use Phalcon\Helper\Str;
@@ -144,8 +171,10 @@ class Str
      *
      * @return string
      */
-    final public static function decrement(string $text, string $separator = "_"): string
-    {
+    final public static function decrement(
+        string $text,
+        string $separator = "_"
+    ): string {
         $number = 0;
         $parts  = explode($separator, $text);
 
@@ -313,13 +342,11 @@ class Str
      *
      * @return bool
      */
-    final public static function includes(string $haystack, string $needle): bool
-    {
-        if (function_exists("mb_strpos")) {
-            return false !== mb_strpos($haystack, $needle);
-        } else {
-            return false !== strpos($haystack, $needle);
-        }
+    final public static function includes(
+        string $haystack,
+        string $needle
+    ): bool {
+        return false !== mb_strpos($haystack, $needle);
     }
 
     /**
@@ -331,8 +358,10 @@ class Str
      *
      * @return string
      */
-    final public static function increment(string $text, string $separator = '_'): string
-    {
+    final public static function increment(
+        string $text,
+        string $separator = "_"
+    ): string {
         $parts  = explode($separator, $text);
         $number = 1;
 
@@ -365,8 +394,10 @@ class Str
      *
      * @return bool
      */
-    final public static function isLower(string $text, string $encoding = 'UTF-8'): bool
-    {
+    final public static function isLower(
+        string $text,
+        string $encoding = "UTF-8"
+    ): bool {
         return $text === mb_strtolower($text, $encoding);
     }
 
@@ -390,8 +421,10 @@ class Str
      *
      * @return bool
      */
-    final public static function isUpper(string $text, string $encoding = 'UTF-8'): bool
-    {
+    final public static function isUpper(
+        string $text,
+        string $encoding = "UTF-8"
+    ): bool {
         return $text === mb_strtoupper($text, $encoding);
     }
 
@@ -404,8 +437,10 @@ class Str
      *
      * @return string
      */
-    final public static function lower(string $text, string $encoding = 'UTF-8'): string
-    {
+    final public static function lower(
+        string $text,
+        string $encoding = "UTF-8"
+    ): string {
         return mb_strtolower($text, $encoding);
     }
 
@@ -422,7 +457,7 @@ class Str
         int $type = self::RANDOM_ALNUM,
         int $length = 8
     ): string {
-        $text  = '';
+        $text  = "";
         $type  = ($type < 0 || $type > 5) ? self::RANDOM_ALNUM : $type;
         $pools = [
             self::RANDOM_ALPHA    => array_merge(
@@ -516,8 +551,10 @@ class Str
      *
      * @return string
      */
-    final public static function upper(string $text, string $encoding = 'UTF-8'): string
-    {
+    final public static function upper(
+        string $text,
+        string $encoding = "UTF-8"
+    ): string {
         return mb_strtoupper($text, $encoding);
     }
 }

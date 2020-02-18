@@ -7,6 +7,10 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -16,11 +20,14 @@ namespace Phalcon\Http\Message;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
-use Phalcon\Http\Message\Traits\CommonTrait;
-use Phalcon\Http\Message\Traits\UriTrait;
 use Psr\Http\Message\UriInterface;
 
+use function array_keys;
+use function explode;
+use function implode;
+use function ltrim;
 use function parse_url;
+use function preg_replace;
 use function rawurlencode;
 use function strpos;
 use function strtolower;
@@ -28,58 +35,95 @@ use function strtolower;
 /**
  * PSR-7 Uri
  *
- * @package Phalcon\Http\Message
+ * @property string   $fragment
+ * @property string   $host
+ * @property string   $pass
+ * @property string   $path
+ * @property int|null $port
+ * @property string   $query
+ * @property string   $scheme
+ * @property string   $user
  */
-final class Uri implements UriInterface
+final class Uri extends AbstractCommon implements UriInterface
 {
-    use CommonTrait;
-    use UriTrait;
-
     /**
-     * Retrieve the fragment component of the URI.
+     * Returns the fragment of the URL
      *
-     * @var string
+     * @return string
      */
-    private $fragment = '';
+    protected $fragment = "";
 
     /**
-     * @var string
-     */
-    private $host = '';
-
-    /**
-     * @var string
-     */
-    private $pass = '';
-
-    /**
-     * Retrieve the path component of the URI.
+     * Retrieve the host component of the URI.
      *
-     * @var string
-     */
-    private $path = '';
-
-    /**
-     * @var null | int
-     */
-    private $port = null;
-
-    /**
-     * Retrieve the query string of the URI.
+     * If no host is present, this method MUST return an empty string.
      *
-     * @var string
+     * The value returned MUST be normalized to lowercase, per RFC 3986
+     * Section 3.2.2.
+     *
+     * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
+     *
+     * @return string
      */
-    private $query = '';
+    protected $host = "";
 
     /**
      * @var string
      */
-    private $scheme = 'https';
+    protected $pass = "";
+
+    /**
+     * Returns the path of the URL
+     *
+     * @return string
+     */
+    protected $path = "";
+
+    /**
+     * Retrieve the port component of the URI.
+     *
+     * If a port is present, and it is non-standard for the current scheme,
+     * this method MUST return it as an integer. If the port is the standard
+     * port used with the current scheme, this method SHOULD return null.
+     *
+     * If no port is present, and no scheme is present, this method MUST return
+     * a null value.
+     *
+     * If no port is present, but a scheme is present, this method MAY return
+     * the standard port for that scheme, but SHOULD return null.
+     *
+     * @return int|null
+     */
+    protected $port = null;
+
+    /**
+     * Returns the query of the URL
+     *
+     * @return string
+     */
+    protected $query = "";
+
+    /**
+     * Retrieve the scheme component of the URI.
+     *
+     * If no scheme is present, this method MUST return an empty string.
+     *
+     * The value returned MUST be normalized to lowercase, per RFC 3986
+     * Section 3.1.
+     *
+     * The trailing ":" character is not part of the scheme and MUST NOT be
+     * added.
+     *
+     * @see https://tools.ietf.org/html/rfc3986#section-3.1
+     *
+     * @return string
+     */
+    protected $scheme = "https";
 
     /**
      * @var string
      */
-    private $user = '';
+    protected $user = "";
 
     /**
      * Uri constructor.
@@ -146,17 +190,19 @@ final class Uri implements UriInterface
          *   - If the path is starting with more than one "/" and no authority
          *     is present, the starting slashes MUST be reduced to one.
          */
-        if ('' !== $path && true !== Str::startsWith($path, '/') && '' !== $authority) {
-            $path = '/' . $path;
+        if (
+            "" !== $path &&
+            true !== Str::startsWith($path, "/") &&
+            "" !== $authority
+        ) {
+            $path = "/" . $path;
         }
 
-        $uri = $this->checkValue($this->scheme, '', ':')
-            . $this->checkValue($authority, '//')
+        return $this->checkValue($this->scheme, "", ":")
+            . $this->checkValue($authority, "//")
             . $path
-            . $this->checkValue($this->query, '?')
-            . $this->checkValue($this->fragment, '#');
-
-        return $uri;
+            . $this->checkValue($this->query, "?")
+            . $this->checkValue($this->fragment, "#");
     }
 
     /**
@@ -170,8 +216,8 @@ final class Uri implements UriInterface
          * If no authority information is present, this method MUST return an
          * empty string.
          */
-        if ('' === $this->host) {
-            return '';
+        if ("" === $this->host) {
+            return "";
         }
 
         $authority = $this->host;
@@ -182,8 +228,8 @@ final class Uri implements UriInterface
          *
          * [user-info@]host[:port]
          */
-        if ('' !== $userInfo) {
-            $authority = $userInfo . '@' . $authority;
+        if ("" !== $userInfo) {
+            $authority = $userInfo . "@" . $authority;
         }
 
         /**
@@ -191,97 +237,10 @@ final class Uri implements UriInterface
          * current scheme, it SHOULD NOT be included.
          */
         if (null !== $this->port) {
-            $authority .= ':' . $this->port;
+            $authority .= ":" . $this->port;
         }
 
         return $authority;
-    }
-
-    /**
-     * Returns the fragment of the URL
-     *
-     * @return string
-     */
-    public function getFragment(): string
-    {
-        return $this->fragment;
-    }
-
-    /**
-     * Retrieve the host component of the URI.
-     *
-     * If no host is present, this method MUST return an empty string.
-     *
-     * The value returned MUST be normalized to lowercase, per RFC 3986
-     * Section 3.2.2.
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-3.2.2
-     *
-     * @return string
-     */
-    public function getHost(): string
-    {
-        return $this->host;
-    }
-
-    /**
-     * Returns the path of the URL
-     *
-     * @return string
-     */
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
-    /**
-     * Retrieve the port component of the URI.
-     *
-     * If a port is present, and it is non-standard for the current scheme,
-     * this method MUST return it as an integer. If the port is the standard
-     * port used with the current scheme, this method SHOULD return null.
-     *
-     * If no port is present, and no scheme is present, this method MUST return
-     * a null value.
-     *
-     * If no port is present, but a scheme is present, this method MAY return
-     * the standard port for that scheme, but SHOULD return null.
-     *
-     * @return int|null
-     */
-    public function getPort(): ?int
-    {
-        return $this->port;
-    }
-
-    /**
-     * Returns the query of the URL
-     *
-     * @return string
-     */
-    public function getQuery(): string
-    {
-        return $this->query;
-    }
-
-    /**
-     * Retrieve the scheme component of the URI.
-     *
-     * If no scheme is present, this method MUST return an empty string.
-     *
-     * The value returned MUST be normalized to lowercase, per RFC 3986
-     * Section 3.1.
-     *
-     * The trailing ':' character is not part of the scheme and MUST NOT be
-     * added.
-     *
-     * @see https://tools.ietf.org/html/rfc3986#section-3.1
-     *
-     * @return string
-     */
-    public function getScheme(): string
-    {
-        return $this->scheme;
     }
 
     /**
@@ -302,7 +261,7 @@ final class Uri implements UriInterface
     public function getUserInfo(): string
     {
         if (true !== empty($this->pass)) {
-            return $this->user . ':' . $this->pass;
+            return $this->user . ":" . $this->pass;
         }
 
         return $this->user;
@@ -329,7 +288,7 @@ final class Uri implements UriInterface
 
         $fragment = $this->filterFragment($fragment);
 
-        return $this->cloneInstance($fragment, 'fragment');
+        return $this->cloneInstance($fragment, "fragment");
     }
 
     /**
@@ -360,17 +319,17 @@ final class Uri implements UriInterface
         $this->checkStringParameter($path);
 
         if (
-            false !== strpos($path, '?') ||
-            false !== strpos($path, '#')
+            false !== strpos($path, "?") ||
+            false !== strpos($path, "#")
         ) {
             throw new InvalidArgumentException(
-                'Path cannot contain a query string or fragment'
+                "Path cannot contain a query string or fragment"
             );
         }
 
         $path = $this->filterPath($path);
 
-        return $this->cloneInstance($path, 'path');
+        return $this->cloneInstance($path, "path");
     }
 
     /**
@@ -397,12 +356,12 @@ final class Uri implements UriInterface
 
             if (null !== $port && ($port < 1 || $port > 65535)) {
                 throw new InvalidArgumentException(
-                    'Method expects valid port (1-65535)'
+                    "Method expects valid port (1-65535)"
                 );
             }
         }
 
-        return $this->cloneInstance($port, 'port');
+        return $this->cloneInstance($port, "port");
     }
 
     /**
@@ -425,15 +384,15 @@ final class Uri implements UriInterface
     {
         $this->checkStringParameter($query);
 
-        if (false !== strpos($query, '#')) {
+        if (false !== strpos($query, "#")) {
             throw new InvalidArgumentException(
-                'Query cannot contain a query fragment'
+                "Query cannot contain a query fragment"
             );
         }
 
         $query = $this->filterQuery($query);
 
-        return $this->cloneInstance($query, 'query');
+        return $this->cloneInstance($query, "query");
     }
 
     /**
@@ -459,7 +418,7 @@ final class Uri implements UriInterface
 
         $scheme = $this->filterScheme($scheme);
 
-        return $this->processWith($scheme, 'scheme');
+        return $this->processWith($scheme, "scheme");
     }
 
     /**
@@ -470,7 +429,7 @@ final class Uri implements UriInterface
      *
      * @return Uri
      */
-    public function withUserInfo($user, $password = null): self
+    public function withUserInfo($user, $password = null): Uri
     {
         $this->checkStringParameter($user);
 
@@ -487,7 +446,7 @@ final class Uri implements UriInterface
         /**
          * Immutable - need to send a new object back
          */
-        $newInstance       = $this->cloneInstance($user, 'user');
+        $newInstance       = $this->cloneInstance($user, "user");
         $newInstance->pass = $password;
 
         return $newInstance;
@@ -509,6 +468,247 @@ final class Uri implements UriInterface
      */
     public function withHost($host): Uri
     {
-        return $this->processWith($host, 'host');
+        return $this->processWith($host, "host");
+    }
+
+    /**
+     * @return string
+     */
+    public function getFragment(): string
+    {
+        return $this->fragment;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    public function getQuery()
+    {
+        return $this->query;
+    }
+
+    public function getScheme()
+    {
+        return $this->scheme;
+    }
+
+    /**
+     * If the value passed is empty it returns it prefixed and suffixed with
+     * the passed parameters
+     *
+     * @param string $value
+     * @param string $prefix
+     * @param string $suffix
+     *
+     * @return string
+     */
+    private function checkValue(
+        string $value,
+        string $prefix = "",
+        string $suffix = ""
+    ): string {
+        if ("" !== $value) {
+            $value = $prefix . $value . $suffix;
+        }
+
+        return $value;
+    }
+
+    /**
+     * If no fragment is present, this method MUST return an empty string.
+     *
+     * The leading "#" character is not part of the fragment and MUST NOT be
+     * added.
+     *
+     * The value returned MUST be percent-encoded, but MUST NOT double-encode
+     * any characters. To determine what characters to encode, please refer to
+     * RFC 3986, Sections 2 and 3.5.
+     *
+     * @see https://tools.ietf.org/html/rfc3986#section-2
+     * @see https://tools.ietf.org/html/rfc3986#section-3.5
+     *
+     * @param string $fragment
+     *
+     * @return string
+     */
+    private function filterFragment(string $fragment): string
+    {
+        return rawurlencode($fragment);
+    }
+
+    /**
+     *
+     * The path can either be empty or absolute (starting with a slash) or
+     * rootless (not starting with a slash). Implementations MUST support all
+     * three syntaxes.
+     *
+     * Normally, the empty path "" and absolute path "/" are considered equal as
+     * defined in RFC 7230 Section 2.7.3. But this method MUST NOT automatically
+     * do this normalization because in contexts with a trimmed base path, e.g.
+     * the front controller, this difference becomes significant. It's the task
+     * of the user to handle both "" and "/".
+     *
+     * The value returned MUST be percent-encoded, but MUST NOT double-encode
+     * any characters. To determine what characters to encode, please refer to
+     * RFC 3986, Sections 2 and 3.3.
+     *
+     * As an example, if the value should include a slash ("/") not intended as
+     * delimiter between path segments, that value MUST be passed in encoded
+     * form (e.g., "%2F") to the instance.
+     *
+     * @see https://tools.ietf.org/html/rfc3986#section-2
+     * @see https://tools.ietf.org/html/rfc3986#section-3.3
+     *
+     * @param string $path
+     *
+     * @return string The URI path.
+     */
+    private function filterPath(string $path): string
+    {
+        if ("" === $path || true !== Str::startsWith($path, "/")) {
+            return $path;
+        }
+
+        $parts = explode("/", $path);
+        foreach ($parts as $key => $element) {
+            $parts[$key] = rawurlencode($element);
+        }
+
+        $path = implode("/", $parts);
+
+        return "/" . ltrim($path, "/");
+    }
+
+    /**
+     * Checks the port. If it is a standard one (80,443) then it returns null
+     *
+     * @param int|null $port
+     *
+     * @return int|null
+     */
+    private function filterPort($port): ?int
+    {
+        $ports = [
+            80  => 1,
+            443 => 1
+        ];
+
+        if (null !== $port) {
+            $port = (int) $port;
+            if (isset($ports[$port])) {
+                $port = null;
+            }
+        }
+
+        return $port;
+    }
+
+    /**
+     * If no query string is present, this method MUST return an empty string.
+     *
+     * The leading "?" character is not part of the query and MUST NOT be
+     * added.
+     *
+     * The value returned MUST be percent-encoded, but MUST NOT double-encode
+     * any characters. To determine what characters to encode, please refer to
+     * RFC 3986, Sections 2 and 3.4.
+     *
+     * As an example, if a value in a key/value pair of the query string should
+     * include an ampersand ("&") not intended as a delimiter between values,
+     * that value MUST be passed in encoded form (e.g., "%26") to the instance.
+     *
+     * @see https://tools.ietf.org/html/rfc3986#section-2
+     * @see https://tools.ietf.org/html/rfc3986#section-3.4
+     *
+     * @param string $query
+     *
+     * @return string The URI query string.
+     */
+    private function filterQuery(string $query): string
+    {
+        if ("" === $query) {
+            return "";
+        }
+
+        $query = ltrim($query, "?");
+        $parts = explode("&", $query);
+
+        foreach ($parts as $index => $part) {
+            $split = $this->splitQueryValue($part);
+            if (null === $split[1]) {
+                $parts[$index] = rawurlencode($split[0]);
+                continue;
+            }
+
+            $parts[$index] = rawurlencode($split[0]) . "=" . rawurlencode($split[1]);
+        }
+
+        return implode("&", $parts);
+    }
+
+    /**
+     * Filters the passed scheme - only allowed schemes
+     *
+     * @param string $scheme
+     *
+     * @return string
+     */
+    private function filterScheme(string $scheme): string
+    {
+        $filtered = preg_replace("#:(//)?$#", "", mb_strtolower($scheme));
+        $schemes  = [
+            "http"  => 1,
+            "https" => 1
+        ];
+
+        if ("" === $filtered) {
+            return "";
+        }
+
+        if (!isset($schemes[$filtered])) {
+            throw new InvalidArgumentException(
+                "Unsupported scheme [" . $filtered . "]. " .
+                "Scheme must be one of [" .
+                implode(", ", array_keys($schemes)) . "]"
+            );
+        }
+
+        return $scheme;
+    }
+
+    /**
+     * @param string $element
+     *
+     * @return array
+     */
+    private function splitQueryValue(string $element): array
+    {
+        $data = explode("=", $element, 2);
+        if (!isset($data[1])) {
+            $data[] = null;
+        }
+
+        return $data;
     }
 }

@@ -21,6 +21,7 @@ class IsReadableCest
     /**
      * Tests Phalcon\Http\Message\Stream\Input :: isReadable()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-19
      */
     public function httpMessageStreamInputIsReadable(UnitTester $I)

@@ -23,6 +23,7 @@ use Phalcon\Storage\Serializer\SerializerInterface;
 use Phalcon\Storage\SerializerFactory;
 
 use function is_object;
+use function strtolower;
 
 /**
  * Class AbstractAdapter

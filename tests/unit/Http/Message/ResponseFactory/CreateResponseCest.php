@@ -22,6 +22,7 @@ class CreateResponseCest
     /**
      * Tests Phalcon\Http\Message\ResponseFactory :: createResponse()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageResponseFactoryCreateResponse(UnitTester $I)

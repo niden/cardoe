@@ -1,11 +1,11 @@
 <?php
 
 /**
- * This file is part of the Phalcon Framework.
+ * This file is part of the Phalcon.
  *
- * (c) Phalcon Team <team@phalcon.io>
+ * (c) Phalcon Team <team@phalcon.com>
  *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -13,15 +13,15 @@ declare(strict_types=1);
 
 namespace Phalcon\Helper;
 
+use function preg_match;
+use function preg_quote;
 use function preg_replace;
 use function rtrim;
 
 use const DIRECTORY_SEPARATOR;
 
 /**
- * Phalcon\Helper\Fs
- *
- * This class offers quick file system functions throughout the framework
+ * This class offers file operation helper
  */
 class Fs
 {
@@ -37,8 +37,10 @@ class Fs
      *
      * @return string
      */
-    final public static function basename(string $uri, string $suffix = null): string
-    {
+    final public static function basename(
+        string $uri,
+        string $suffix = null
+    ): string {
         $uri      = rtrim($uri, DIRECTORY_SEPARATOR);
         $filename = preg_match(
             "@[^" . preg_quote(DIRECTORY_SEPARATOR, "@") . "]+$@",

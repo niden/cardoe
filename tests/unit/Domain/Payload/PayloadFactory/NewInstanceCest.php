@@ -20,7 +20,7 @@ use UnitTester;
 class NewInstanceCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\PayloadFactory :: newInstance()
+     * Unit Tests Phalcon\Domain\PayloadFactory :: newInstance()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24

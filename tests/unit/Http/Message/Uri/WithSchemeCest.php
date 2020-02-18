@@ -23,13 +23,14 @@ class WithSchemeCest
     /**
      * Tests Phalcon\Http\Message\Uri :: withScheme()
      *
-     * @since  2019-02-09
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-02-09
      */
     public function httpMessageUriWithScheme(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - withScheme()');
 
-        $query = '%s://Phalcon:secret@dev.phalcon.ld:8000/action?param=value#frag';
+        $query = '%s://phalcon:secret@dev.phalcon.ld:8000/action?param=value#frag';
 
         $uri = new Uri(
             sprintf($query, 'https')
@@ -53,7 +54,8 @@ class WithSchemeCest
     /**
      * Tests Phalcon\Http\Message\Uri :: withScheme() - exception unsupported
      *
-     * @since        2019-02-07
+     * @author       Phalcon Team <team@phalcon.io>
+     * @since        2019-06-01
      */
     public function httpUriWithSchemeExceptionUnsupported(UnitTester $I)
     {
@@ -65,7 +67,7 @@ class WithSchemeCest
             ),
             function () {
                 $uri = new Uri(
-                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
+                    'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withScheme('ftp');
@@ -78,6 +80,7 @@ class WithSchemeCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-07
      */
     public function httpUriWithSchemeException(UnitTester $I, Example $example)
@@ -90,7 +93,7 @@ class WithSchemeCest
             ),
             function () use ($example) {
                 $uri = new Uri(
-                    'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
+                    'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag'
                 );
 
                 $instance = $uri->withScheme($example[2]);
@@ -98,15 +101,40 @@ class WithSchemeCest
         );
     }
 
+
     private function getExamples(): array
     {
         return [
-            ['NULL', 'null', null],
-            ['boolean', 'true', true],
-            ['boolean', 'false', false],
-            ['integer', 'number', 1234],
-            ['array', 'array', ['/action']],
-            ['stdClass', 'object', (object) ['/action']],
+            [
+                'NULL',
+                'null',
+                null,
+            ],
+            [
+                'boolean',
+                'true',
+                true,
+            ],
+            [
+                'boolean',
+                'false',
+                false,
+            ],
+            [
+                'integer',
+                'number',
+                1234,
+            ],
+            [
+                'array',
+                'array',
+                ['/action'],
+            ],
+            [
+                'stdClass',
+                'object',
+                (object) ['/action'],
+            ],
         ];
     }
 }

@@ -1,0 +1,11 @@
+actor: DatabaseTester
+modules:
+  enabled:
+    - Redis:
+        database: '%DATA_REDIS_NAME%'
+        host: '%DATA_REDIS_HOST%'
+        port: '%DATA_REDIS_PORT%'
+    - Asserts
+    - Filesystem
+    - Helper\Database
+    - Helper\Unit

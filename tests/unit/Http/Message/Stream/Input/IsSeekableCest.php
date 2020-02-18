@@ -21,6 +21,7 @@ class IsSeekableCest
     /**
      * Tests Phalcon\Http\Message\Stream\Input :: isSeekable()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-19
      */
     public function httpMessageStreamInputIsSeekable(UnitTester $I)

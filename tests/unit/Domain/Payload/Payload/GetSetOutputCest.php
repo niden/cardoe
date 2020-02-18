@@ -19,7 +19,7 @@ use UnitTester;
 class GetSetOutputCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getOutput()/setOutput()
+     * Unit Tests Phalcon\Domain\Payload :: getOutput()/setOutput()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24

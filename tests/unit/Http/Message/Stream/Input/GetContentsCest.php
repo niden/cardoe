@@ -20,6 +20,7 @@ class GetContentsCest
     /**
      * Unit Tests Phalcon\Http\Message\Stream\Input :: getContents()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-25
      */
     public function httpMessageStreamInputGetContents(UnitTester $I)

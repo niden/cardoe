@@ -53,33 +53,6 @@ class FormatCest
     }
 
     /**
-     * Tests Phalcon\Logger\Formatter\Line :: format() - empty
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2018-11-13
-     */
-    public function loggerFormatterLineFormatEmpty(UnitTester $I)
-    {
-        $I->wantToTest('Logger\Formatter\Line - format() - empty');
-
-        $formatter = new Line();
-        $formatter->setFormat('test');
-
-        $time = time();
-        $item = new Item(
-            'log message',
-            'debug',
-            Logger::DEBUG,
-            $time
-        );
-
-        $I->assertEquals(
-            'test',
-            $formatter->format($item)
-        );
-    }
-
-    /**
      * Tests Phalcon\Logger\Formatter\Line :: format() -custom
      *
      * @author Phalcon Team <team@phalcon.io>
@@ -89,7 +62,7 @@ class FormatCest
     {
         $I->wantToTest('Logger\Formatter\Line - format() - custom');
 
-        $formatter = new Line('{message}-[{type}]-{date}');
+        $formatter = new Line('%message%-[%type%]-%date%');
 
         $time = time();
 
@@ -122,7 +95,7 @@ class FormatCest
         $I->wantToTest('Logger\Formatter\Line - format() - custom - with milliseconds');
 
         $formatter = new Line(
-            '{message}-[{type}]-{date}',
+            '%message%-[%type%]-%date%',
             'U.u'
         );
 

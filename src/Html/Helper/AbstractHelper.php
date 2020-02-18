@@ -14,8 +14,13 @@ namespace Phalcon\Html\Helper;
 use Phalcon\Html\Escaper;
 use Phalcon\Html\Exception;
 
+use function array_intersect_key;
+use function array_merge;
 use function call_user_func_array;
+use function is_string;
+use function rtrim;
 use function str_repeat;
+use function trim;
 
 use const PHP_EOL;
 

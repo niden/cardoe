@@ -4,6 +4,7 @@ namespace Helper;
 
 use Codeception\Module;
 use PHPUnit\Framework\SkippedTestError;
+
 use ReflectionClass;
 use ReflectionException;
 use function array_slice;
@@ -21,6 +22,7 @@ use function sprintf;
 use function substr;
 use function uniqid;
 use function unlink;
+
 use const GLOB_MARK;
 
 // here you can define custom actions
@@ -93,6 +95,7 @@ class Unit extends Module
     public function safeDeleteFile(string $filename)
     {
         if (file_exists($filename) && is_file($filename)) {
+            gc_collect_cycles();
             unlink($filename);
         }
     }
@@ -101,7 +104,7 @@ class Unit extends Module
      * Calls private or protected method.
      *
      * @param string|object $obj
-     * @param string        $method
+     * @param string $method
      *
      * @return mixed
      * @throws ReflectionException

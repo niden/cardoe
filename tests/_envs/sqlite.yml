@@ -2,11 +2,10 @@
 modules:
   enabled:
     - Db:
-        dsn: "sqlite:memory"
-        user: ""
-        password: ""
-        dump: "tests/_data/assets/schemas/sqlite.sql"
+        dsn: 'sqlite:%DATA_SQLITE_NAME%'
+        user: ''
+        password: ''
         populate: true
         cleanup: false
-        reconnect: true
-        waitlock: 10
+        dump:
+          - 'tests/_data/assets/schemas/sqlite.sql'

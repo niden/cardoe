@@ -13,14 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Helper;
 
-use Throwable;
-
 /**
- * Phalcon\Helper\Exception
- *
  * Exceptions thrown in Phalcon\Helper will use this class
  */
-class Exception extends \Exception implements Throwable
+class Exception extends \Phalcon\Exception
 {
 
 }

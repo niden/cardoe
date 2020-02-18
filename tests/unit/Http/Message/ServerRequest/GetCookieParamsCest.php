@@ -21,6 +21,7 @@ class GetCookieParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getCookieParams()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetCookieParams(UnitTester $I)
@@ -37,6 +38,7 @@ class GetCookieParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getCookieParams() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestGetCookieParamsEmpty(UnitTester $I)

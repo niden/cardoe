@@ -28,13 +28,20 @@ use function array_values;
 use function is_object;
 use function mb_strtolower;
 use function method_exists;
+use function serialize;
+use function settype;
 use function strtolower;
+use function unserialize;
 
 /**
- * Phalcon\Collection
- *
- * Phalcon\Collection is a supercharged object oriented array. It implements
- * ArrayAccess, Countable, IteratorAggregate, JsonSerializable, Serializable
+ * `Phalcon\Collection` is a supercharged object oriented array. It implements:
+ * - [ArrayAccess](https://www.php.net/manual/en/class.arrayaccess.php)
+ * - [Countable](https://www.php.net/manual/en/class.countable.php)
+ * -
+ * [IteratorAggregate](https://www.php.net/manual/en/class.iteratoraggregate.php)
+ * -
+ * [JsonSerializable](https://www.php.net/manual/en/class.jsonserializable.php)
+ * - [Serializable](https://www.php.net/manual/en/class.serializable.php)
  *
  * It can be used in any part of the application that needs collection of data
  * Such implementations are for instance accessing globals `$_GET`, `$_POST`
@@ -83,7 +90,7 @@ class Collection implements
      *
      * @param string $element
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function __get(string $element)
     {
@@ -108,7 +115,7 @@ class Collection implements
      * @param string $element
      * @param mixed  $value
      */
-    public function __set(string $element, $value)
+    public function __set(string $element, $value): void
     {
         $this->set($element, $value);
     }
@@ -133,9 +140,9 @@ class Collection implements
     }
 
     /**
-     * Count elements of an object
+     * Count elements of an object.
      *
-     * @link https://php.net/manual/en/countable.count.php
+     * @return int
      */
     public function count(): int
     {
@@ -145,15 +152,6 @@ class Collection implements
     /**
      * Get the element from the collection
      *
-     * @param string     $element
-     * @param mixed|null $defaultValue
-     *
-     * @return mixed
-     */
-    /**
-     * Get the element from the collection
-     */
-    /**
      * @param string      $element
      * @param mixed|null  $defaultValue
      * @param string|null $cast
@@ -183,6 +181,8 @@ class Collection implements
 
     /**
      * Returns the iterator of the class
+     *
+     * @return Traversable
      */
     public function getIterator(): Traversable
     {

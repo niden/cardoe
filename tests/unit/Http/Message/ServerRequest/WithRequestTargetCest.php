@@ -21,6 +21,7 @@ class WithRequestTargetCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withRequestTarget()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithRequestTarget(UnitTester $I)

@@ -17,6 +17,8 @@ use InvalidArgumentException;
 use JsonSerializable;
 use Phalcon\Helper\Json as JsonHelper;
 
+use function is_object;
+
 /**
  * Class Json
  *

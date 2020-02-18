@@ -7,6 +7,10 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -14,38 +18,15 @@ declare(strict_types=1);
 namespace Phalcon\Http\Message;
 
 use Phalcon\Http\Message\Stream\Input;
-use Phalcon\Http\Message\Traits\CommonTrait;
-use Phalcon\Http\Message\Traits\MessageTrait;
-use Phalcon\Http\Message\Traits\RequestTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 
 /**
- * Representation of an outgoing, client-side request.
- *
- * Per the HTTP specification, this interface includes properties for
- * each of the following:
- *
- * - Protocol version
- * - HTTP method
- * - URI
- * - Headers
- * - Message body
- *
- * During construction, implementations MUST attempt to set the Host header from
- * a provided URI if no Host header is provided.
- *
- * Requests are considered immutable; all methods that might change state MUST
- * be implemented such that they retain the internal state of the current
- * message and return an instance that contains the changed state.
+ * PSR-7 Request
  */
-final class Request implements RequestInterface
+final class Request extends AbstractRequest implements RequestInterface
 {
-    use CommonTrait;
-    use MessageTrait;
-    use RequestTrait;
-
     /**
      * Request constructor.
      *
@@ -55,18 +36,18 @@ final class Request implements RequestInterface
      * @param array                           $headers
      */
     public function __construct(
-        string $method = 'GET',
+        string $method = "GET",
         $uri = null,
-        $body = 'php://memory',
+        $body = "php://memory",
         $headers = []
     ) {
-        if ('php://input' === $body) {
+        if ("php://input" === $body) {
             $body = new Input();
         }
 
         $this->uri     = $this->processUri($uri);
         $this->headers = $this->processHeaders($headers);
         $this->method  = $this->processMethod($method);
-        $this->body    = $this->processBody($body, 'w+b');
+        $this->body    = $this->processBody($body, "w+b");
     }
 }

@@ -16,6 +16,8 @@ namespace Phalcon\Config\Adapter;
 use Phalcon\Config;
 use Phalcon\Helper\Json as JsonHelper;
 
+use function file_get_contents;
+
 class Json extends Config
 {
     /**

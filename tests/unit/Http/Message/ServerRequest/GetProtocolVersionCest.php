@@ -21,7 +21,7 @@ class GetProtocolVersionCest
 //    /**
 //     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion()
 //     *
-//     * @author Phalcon Team <team@Phalconphp.com>
+//     * @author Phalcon Team <team@phalcon.io>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersion(UnitTester $I)
@@ -48,6 +48,7 @@ class GetProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-05
      */
     public function httpMessageServerRequestGetProtocolVersionEmpty(UnitTester $I)
@@ -64,7 +65,7 @@ class GetProtocolVersionCest
 //     * Tests Phalcon\Http\Message\ServerRequest :: getProtocolVersion() -
 //     * exception
 //     *
-//     * @author Phalcon Team <team@Phalconphp.com>
+//     * @author Phalcon Team <team@phalcon.io>
 //     * @since  2019-03-05
 //     */
 //    public function httpMessageServerRequestGetProtocolVersionException(UnitTester $I)

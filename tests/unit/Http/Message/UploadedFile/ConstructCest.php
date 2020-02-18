@@ -27,6 +27,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: __construct()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileConstruct(UnitTester $I)
@@ -48,6 +49,7 @@ class ConstructCest
     /**
      * Tests Phalcon\Http\Message\UploadedFile :: __construct() - $resource
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileConstructResource(UnitTester $I)
@@ -57,6 +59,7 @@ class ConstructCest
         $stream = logsDir(
             uniqid('test')
         );
+
         $stream = fopen($stream, 'w+b');
         $file   = new UploadedFile($stream, 100);
 
@@ -72,6 +75,7 @@ class ConstructCest
      *
      * @dataProvider getStreamExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-18
      */
     public function httpMessageUploadedFileConstructStreamException(UnitTester $I, Example $example)
@@ -92,6 +96,7 @@ class ConstructCest
      * Tests Phalcon\Http\Message\UploadedFile :: __construct() - error
      * exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-18
      */
     public function httpMessageUploadedFileConstructErrorException(UnitTester $I)
@@ -101,7 +106,7 @@ class ConstructCest
         );
 
         $I->expectThrowable(
-            new InvalidArgumentException("Invalid error. Must be one of the UPLOAD_ERR_* constants"),
+            new InvalidArgumentException('Invalid error. Must be one of the UPLOAD_ERR_* constants'),
             function () {
                 $stream = logsDir(
                     uniqid('test')
@@ -115,12 +120,30 @@ class ConstructCest
     private function getStreamExamples(): array
     {
         return [
-            ['array', ['array']],
-            ['boolean', true],
-            ['float', 123.45],
-            ['integer', 123],
-            ['null', null],
-            ['object', new stdClass()],
+            [
+                'array',
+                ['array'],
+            ],
+            [
+                'boolean',
+                true,
+            ],
+            [
+                'float',
+                123.45,
+            ],
+            [
+                'integer',
+                123,
+            ],
+            [
+                'null',
+                null,
+            ],
+            [
+                'object',
+                new stdClass(),
+            ],
         ];
     }
 }

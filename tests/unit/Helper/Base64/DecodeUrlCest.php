@@ -27,8 +27,8 @@ class DecodeUrlCest
     {
         $I->wantToTest('Helper\Base64 - decodeUrl()');
 
-        $source   = 'aHR0cHM6Ly9waGFsY29uLmxkP29uZT10d28mZGF0YT1qc29uK3ZkaQ';
-        $expected = 'https://phalcon.ld?one=two&data=json+vdi';
+        $source   = 'aHR0cHM6Ly9jYXJkb2UubGQ_b25lPXR3byZkYXRhPWpzb24rdmRp';
+        $expected = 'https://cardoe.ld?one=two&data=json+vdi';
         $actual   = Base64::decodeUrl($source);
         $I->assertEquals($expected, $actual);
     }

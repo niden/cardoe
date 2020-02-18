@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Factory;
 
+use function array_merge;
+
 /**
  * Class AbstractFactory
  *

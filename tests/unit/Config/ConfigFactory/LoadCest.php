@@ -23,7 +23,7 @@ use UnitTester;
 use function dataDir;
 use function hash;
 
-use const APP_PATH;
+use const PROJECT_PATH;
 
 class LoadCest
 {
@@ -48,6 +48,22 @@ class LoadCest
 
         /** @var Ini $ini */
         $ini = (new ConfigFactory())->load($options);
+
+        $I->assertInstanceOf(
+            Ini::class,
+            $ini
+        );
+
+        //Issue 14756
+        $configFile = dataDir('assets/config/config-with.in-file.name.ini');
+        $ini        = new Ini($configFile, INI_SCANNER_NORMAL);
+        $I->assertInstanceOf(
+            Ini::class,
+            $ini
+        );
+
+        /** @var Ini $ini */
+        $ini = (new ConfigFactory())->load($ini->config->toArray());
 
         $I->assertInstanceOf(
             Ini::class,
@@ -170,7 +186,7 @@ class LoadCest
                     return hash('sha256', $value);
                 },
                 '!approot' => function ($value) {
-                    return APP_PATH . $value;
+                    return PROJECT_PATH . $value;
                 },
             ],
         ];

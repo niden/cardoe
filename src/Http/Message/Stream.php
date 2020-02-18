@@ -7,6 +7,11 @@
  *
  * For the full copyright and license information, please view the LICENSE.txt
  * file that was distributed with this source code.
+ *
+ * Implementation of this file has been influenced by Zend Diactoros
+ *
+ * @link    https://github.com/zendframework/zend-diactoros
+ * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
 
 declare(strict_types=1);
@@ -15,7 +20,6 @@ namespace Phalcon\Http\Message;
 
 use Exception;
 use Phalcon\Helper\Arr;
-use Phalcon\Http\Message\Traits\StreamTrait;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
@@ -39,22 +43,20 @@ use function strpbrk;
 use const E_WARNING;
 
 /**
- * Class Stream
+ * PSR-7 Stream
  *
  * @property resource|null   $handle
  * @property resource|string $stream
  */
 class Stream implements StreamInterface
 {
-    use StreamTrait;
-
     /**
-     * @var resource|null
+     * @var resource | null
      */
     protected $handle = null;
 
     /**
-     * @var resource|string
+     * @var resource | string
      */
     private $stream;
 
@@ -64,7 +66,7 @@ class Stream implements StreamInterface
      * @param mixed  $stream
      * @param string $mode
      */
-    public function __construct($stream, string $mode = 'rb')
+    public function __construct($stream, string $mode = "rb")
     {
         $this->setStream($stream, $mode);
     }
@@ -85,7 +87,7 @@ class Stream implements StreamInterface
      *
      * Warning: This could attempt to load a large amount of data into memory.
      *
-     * This method MUST NOT raise an exception in order to conform with PHP's
+     * This method MUST NOT raise an exception in order to conform with PHP"s
      * string casting operations.
      *
      * @see http://php.net/manual/en/language.oop5.magic.php#object.tostring
@@ -104,7 +106,7 @@ class Stream implements StreamInterface
             unset($e);
         }
 
-        return '';
+        return "";
     }
 
     /**
@@ -127,7 +129,6 @@ class Stream implements StreamInterface
      *
      * @return resource | null
      */
-
     public function detach()
     {
         $handle       = $this->handle;
@@ -159,7 +160,9 @@ class Stream implements StreamInterface
         $data = stream_get_contents($this->handle);
 
         if (false === $data) {
-            throw new RuntimeException('Could not read from the file/stream');
+            throw new RuntimeException(
+                "Could not read from the file/stream"
+            );
         }
 
         return $data;
@@ -199,7 +202,7 @@ class Stream implements StreamInterface
             $stats = fstat($this->handle);
 
             if (false !== $stats) {
-                return Arr::get($stats, 'size', null);
+                return Arr::get($stats, "size", null);
             }
         }
 
@@ -211,9 +214,9 @@ class Stream implements StreamInterface
      */
     public function isReadable(): bool
     {
-        $mode = (string) $this->getMetadata('mode');
+        $mode = (string) $this->getMetadata("mode");
 
-        return (false !== strpbrk($mode, 'r+'));
+        return false !== strpbrk($mode, "r+");
     }
 
     /**
@@ -221,7 +224,7 @@ class Stream implements StreamInterface
      */
     public function isSeekable(): bool
     {
-        return (bool) $this->getMetadata('seekable');
+        return (bool) $this->getMetadata("seekable");
     }
 
     /**
@@ -229,9 +232,9 @@ class Stream implements StreamInterface
      */
     public function isWritable(): bool
     {
-        $mode = (string) $this->getMetadata('mode');
+        $mode = (string) $this->getMetadata("mode");
 
-        return (false !== strpbrk($mode, 'xwca+'));
+        return false !== strpbrk($mode, "xwca+");
     }
 
     /**
@@ -246,11 +249,12 @@ class Stream implements StreamInterface
         $this->checkHandle();
         $this->checkReadable();
 
-        $data = fread($this->handle, $length);
+        $length = (int) $length;
+        $data   = fread($this->handle, $length);
 
         if (false === $data) {
             throw new RuntimeException(
-                'Could not read from the file/stream'
+                "Could not read from the file/stream"
             );
         }
 
@@ -279,11 +283,13 @@ class Stream implements StreamInterface
         $this->checkHandle();
         $this->checkSeekable();
 
+        $offset = (int) $offset;
+        $whence = (int) $whence;
         $seeker = fseek($this->handle, $offset, $whence);
 
         if (0 !== $seeker) {
             throw new RuntimeException(
-                'Could not seek on the file pointer'
+                "Could not seek on the file pointer"
             );
         }
     }
@@ -294,7 +300,7 @@ class Stream implements StreamInterface
      * @param mixed  $stream
      * @param string $mode
      */
-    public function setStream($stream, string $mode = 'rb'): void
+    public function setStream($stream, string $mode = "rb"): void
     {
         $warning = false;
         $handle  = $stream;
@@ -311,15 +317,14 @@ class Stream implements StreamInterface
 
             restore_error_handler();
         }
-
         if (
             $warning ||
             !is_resource($handle) ||
-            'stream' !== get_resource_type($handle)
+            "stream" !== get_resource_type($handle)
         ) {
             throw new RuntimeException(
-                'The stream provided is not valid (string/resource) ' .
-                'or could not be opened.'
+                "The stream provided is not valid " .
+                "(string/resource) or could not be opened."
             );
         }
 
@@ -331,6 +336,7 @@ class Stream implements StreamInterface
      * Returns the current position of the file read/write pointer
      *
      * @return int
+     * @throws Exception
      */
     public function tell(): int
     {
@@ -340,7 +346,7 @@ class Stream implements StreamInterface
 
         if (false === $position) {
             throw new RuntimeException(
-                'Could not retrieve the pointer position'
+                "Could not retrieve the pointer position"
             );
         }
 
@@ -363,10 +369,50 @@ class Stream implements StreamInterface
 
         if (false === $bytes) {
             throw new RuntimeException(
-                'Could not write to the file/stream'
+                "Could not write to the file/stream"
             );
         }
 
         return $bytes;
+    }
+
+    /**
+     * Checks if a handle is available and throws an exception otherwise
+     */
+    private function checkHandle(): void
+    {
+        if (null === $this->handle) {
+            throw new RuntimeException("A valid resource is required.");
+        }
+    }
+
+    /**
+     * Checks if a handle is readable and throws an exception otherwise
+     */
+    private function checkReadable(): void
+    {
+        if (true !== $this->isReadable()) {
+            throw new RuntimeException("The resource is not readable.");
+        }
+    }
+
+    /**
+     * Checks if a handle is seekable and throws an exception otherwise
+     */
+    private function checkSeekable(): void
+    {
+        if (true !== $this->isSeekable()) {
+            throw new RuntimeException("The resource is not seekable.");
+        }
+    }
+
+    /**
+     * Checks if a handle is writeable and throws an exception otherwise
+     */
+    private function checkWritable(): void
+    {
+        if (true !== $this->isWritable()) {
+            throw new RuntimeException("The resource is not writable.");
+        }
     }
 }

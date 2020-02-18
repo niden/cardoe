@@ -21,12 +21,13 @@ class GetSchemeCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getScheme()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-09
      */
     public function httpMessageUriGetScheme(UnitTester $I)
     {
         $I->wantToTest('Http\Message\Uri - getScheme()');
-        $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+        $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
         $uri   = new Uri($query);
 
         $expected = 'https';
@@ -37,12 +38,13 @@ class GetSchemeCest
     /**
      * Tests Phalcon\Http\Message\Uri :: getScheme() - empty
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-07
      */
     public function httpUriGetSchemeEmpty(UnitTester $I)
     {
         $I->wantToTest('Http\Uri - getScheme() - empty');
-        $query = '//Phalcon:secret@dev.phalcon.ld:8080/action?param=value';
+        $query = '//phalcon:secret@dev.phalcon.ld:8080/action?param=value';
         $uri   = new Uri($query);
 
         $actual = $uri->getScheme();

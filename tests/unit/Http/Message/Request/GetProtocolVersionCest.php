@@ -21,6 +21,7 @@ class GetProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\Request :: getProtocolVersion()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-05
      */
     public function httpMessageRequestGetProtocolVersion(UnitTester $I)

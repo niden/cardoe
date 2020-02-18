@@ -11,6 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Html\Helper;
 
+use function array_merge;
+
 /**
  * Class Script
  */

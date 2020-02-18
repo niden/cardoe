@@ -22,6 +22,7 @@ class WithProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\Response :: withProtocolVersion()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithProtocolVersion(UnitTester $I)
@@ -44,6 +45,7 @@ class WithProtocolVersionCest
     /**
      * Tests Phalcon\Http\Message\Response :: withProtocolVersion() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithProtocolVersionException(UnitTester $I)

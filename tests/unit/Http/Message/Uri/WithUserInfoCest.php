@@ -25,6 +25,7 @@ class WithUserInfoCest
      *
      * @dataProvider getExamples
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-09
      */
     public function httpMessageUriWithUserInfo(UnitTester $I, Example $example)
@@ -57,6 +58,7 @@ class WithUserInfoCest
      *
      * @dataProvider getExceptions
      *
+     * @author       Phalcon Team <team@phalcon.io>
      * @since        2019-02-07
      */
     public function httpUriWithUserInfoException(UnitTester $I, Example $example)
@@ -68,7 +70,7 @@ class WithUserInfoCest
                 'Method requires a string argument'
             ),
             function () use ($example) {
-                $query = 'https://Phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
+                $query = 'https://phalcon:secret@dev.phalcon.ld:8080/action?param=value#frag';
                 $uri   = new Uri($query);
 
                 $instance = $uri->withUserInfo($example[2]);
@@ -79,23 +81,72 @@ class WithUserInfoCest
     private function getExamples(): array
     {
         return [
-            ['valid', 'Phalcon', 'secret', 'Phalcon:secret'],
-            ['user only', 'Phalcon', '', 'Phalcon'],
-            ['email', 'Phalcon@secret', 'secret@Phalcon', 'Phalcon%40secret:secret%40Phalcon'],
-            ['email', 'Phalcon:secret', 'secret:Phalcon', 'Phalcon%3Asecret:secret%3APhalcon'],
-            ['percent', 'Phalcon%secret', 'secret%Phalcon', 'Phalcon%25secret:secret%25Phalcon'],
+            [
+                'valid',
+                'phalcon',
+                'secret',
+                'phalcon:secret',
+            ],
+            [
+                'user only',
+                'phalcon',
+                '',
+                'phalcon',
+            ],
+            [
+                'email',
+                'phalcon@secret',
+                'secret@phalcon',
+                'phalcon%40secret:secret%40phalcon',
+            ],
+            [
+                'email',
+                'phalcon:secret',
+                'secret:phalcon',
+                'phalcon%3Asecret:secret%3Aphalcon',
+            ],
+            [
+                'percent',
+                'phalcon%secret',
+                'secret%phalcon',
+                'phalcon%25secret:secret%25phalcon',
+            ],
         ];
     }
 
     private function getExceptions(): array
     {
         return [
-            ['NULL', 'null', null],
-            ['boolean', 'true', true],
-            ['boolean', 'false', false],
-            ['integer', 'number', 1234],
-            ['array', 'array', ['/action']],
-            ['stdClass', 'object', (object) ['/action']],
+            [
+                'NULL',
+                'null',
+                null,
+            ],
+            [
+                'boolean',
+                'true',
+                true,
+            ],
+            [
+                'boolean',
+                'false',
+                false,
+            ],
+            [
+                'integer',
+                'number',
+                1234,
+            ],
+            [
+                'array',
+                'array',
+                ['/action'],
+            ],
+            [
+                'stdClass',
+                'object',
+                (object) ['/action'],
+            ],
         ];
     }
 }

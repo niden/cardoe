@@ -20,7 +20,7 @@ use UnitTester;
 class GetSetStatusCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getStatus()/setStatus()
+     * Unit Tests Phalcon\Domain\Payload :: getStatus()/setStatus()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24

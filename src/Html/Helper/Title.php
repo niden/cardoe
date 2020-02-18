@@ -13,6 +13,9 @@ namespace Phalcon\Html\Helper;
 
 use Phalcon\Html\Exception;
 
+use function array_merge;
+use function implode;
+
 /**
  * Class Title
  *

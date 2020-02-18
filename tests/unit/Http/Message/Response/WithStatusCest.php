@@ -22,6 +22,7 @@ class WithStatusCest
     /**
      * Tests Phalcon\Http\Message\Response :: withStatus()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithStatus(UnitTester $I)
@@ -43,6 +44,7 @@ class WithStatusCest
     /**
      * Tests Phalcon\Http\Message\Response :: withStatus() - other reason
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithStatusOtherReason(UnitTester $I)
@@ -71,6 +73,7 @@ class WithStatusCest
      * Tests Phalcon\Http\Message\Response :: withStatus() - exception invalid
      * code
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithStatusExceptionInvalidCode(UnitTester $I)
@@ -92,6 +95,7 @@ class WithStatusCest
      * Tests Phalcon\Http\Message\Response :: withStatus() - exception invalid
      * phrase
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithStatusExceptionInvalidPhrase(UnitTester $I)

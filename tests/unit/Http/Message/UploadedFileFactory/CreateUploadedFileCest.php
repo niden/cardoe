@@ -23,6 +23,7 @@ class CreateUploadedFileCest
     /**
      * Tests Phalcon\Http\Message\UploadedFileFactory :: createUploadedFile()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageUploadedFileFactoryCreateUploadedFile(UnitTester $I)

@@ -3,9 +3,7 @@
 /**
  * This file is part of the Phalcon Framework.
  *
- * (c) Phalcon Team <team@phalcon.io>
- *
- * For the full copyright and license information, please view the LICENSE.txt
+ * For the full copyright and license information, please view the LICENSE.md
  * file that was distributed with this source code.
  */
 
@@ -13,6 +11,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Http\JWT\Token\Parser;
 
+use InvalidArgumentException;
 use Phalcon\Http\JWT\Signer\None;
 use Phalcon\Http\JWT\Token\Item;
 use Phalcon\Http\JWT\Token\Parser;
@@ -173,7 +172,7 @@ class ParseCest
         $I->wantToTest('Http\JWT\Token\Parser - parse() - exception claims not array');
 
         $I->expectThrowable(
-            new \InvalidArgumentException(
+            new InvalidArgumentException(
                 "Invalid Claims (not an array)"
             ),
             function () {
@@ -199,7 +198,7 @@ class ParseCest
         $I->wantToTest('Http\JWT\Token\Parser - parse() - exception headers not array');
 
         $I->expectThrowable(
-            new \InvalidArgumentException(
+            new InvalidArgumentException(
                 "Invalid Header (not an array)"
             ),
             function () {
@@ -227,7 +226,7 @@ class ParseCest
         $I->wantToTest('Http\JWT\Token\Parser - parse() - exception no typ');
 
         $I->expectThrowable(
-            new \InvalidArgumentException(
+            new InvalidArgumentException(
                 "Invalid Header (missing 'typ' element)"
             ),
             function () {
@@ -256,7 +255,7 @@ class ParseCest
         $I->wantToTest('Http\JWT\Token\Parser - parse() - exception wrong JWT');
 
         $I->expectThrowable(
-            new \InvalidArgumentException(
+            new InvalidArgumentException(
                 "Invalid JWT string (dots misalignment)"
             ),
             function () {

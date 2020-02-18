@@ -21,6 +21,7 @@ class IsWritableCest
     /**
      * Tests Phalcon\Http\Message\Stream\Input :: isWritable()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-19
      */
     public function httpMessageStreamInputIsWritable(UnitTester $I)

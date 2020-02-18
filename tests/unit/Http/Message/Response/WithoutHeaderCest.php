@@ -21,6 +21,7 @@ class WithoutHeaderCest
     /**
      * Tests Phalcon\Http\Message\Response :: withoutHeader()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-03-09
      */
     public function httpMessageResponseWithoutHeader(UnitTester $I)

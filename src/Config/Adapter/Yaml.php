@@ -16,6 +16,10 @@ namespace Phalcon\Config\Adapter;
 use Phalcon\Config;
 use Phalcon\Config\Exception;
 
+use function basename;
+use function extension_loaded;
+use function yaml_parse_file;
+
 class Yaml extends Config
 {
     /**

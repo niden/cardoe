@@ -19,7 +19,7 @@ use UnitTester;
 class GetSetInputCest
 {
     /**
-     * Unit Tests Phalcon\Domain\Payload\Payload :: getInput()/setInput()
+     * Unit Tests Phalcon\Domain\Payload :: getInput()/setInput()
      *
      * @author Phalcon Team <team@phalcon.io>
      * @since  2019-05-24

@@ -22,6 +22,7 @@ class WithRequestTargetCest
     /**
      * Tests Phalcon\Http\Message\Request :: withRequestTarget()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithRequestTarget(UnitTester $I)
@@ -48,6 +49,7 @@ class WithRequestTargetCest
     /**
      * Tests Phalcon\Http\Message\Request :: withRequestTarget() - exception
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageRequestWithRequestTargetException(UnitTester $I)

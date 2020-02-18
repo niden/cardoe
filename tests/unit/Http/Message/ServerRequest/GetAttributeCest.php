@@ -21,6 +21,7 @@ class GetAttributeCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getAttribute()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-11
      */
     public function httpMessageServerRequestGetAttribute(UnitTester $I)
@@ -41,6 +42,7 @@ class GetAttributeCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: getAttribute() - unknown
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-11
      */
     public function httpMessageServerRequestGetAttributeUnknown(UnitTester $I)

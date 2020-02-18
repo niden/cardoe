@@ -21,6 +21,7 @@ class WithQueryParamsCest
     /**
      * Tests Phalcon\Http\Message\ServerRequest :: withQueryParams()
      *
+     * @author Phalcon Team <team@phalcon.io>
      * @since  2019-02-10
      */
     public function httpMessageServerRequestWithQueryParams(UnitTester $I)

@@ -44,7 +44,7 @@ class FriendlyCest
             $example['text'],
             $example['separator'],
             $example['lowercase'],
-            $example['replace'],
+            $example['replace']
         );
 
         $I->assertEquals($example['result'], $actual);

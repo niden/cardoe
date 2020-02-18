@@ -13,6 +13,8 @@ namespace Phalcon\Html\Helper;
 
 use Phalcon\Html\Exception;
 
+use function array_merge;
+
 /**
  * Class Anchor
  */
