@@ -49,10 +49,14 @@ class GetKeysCest
         $key3 = uniqid('one');
         $key4 = uniqid('one');
 
-        $adapter->set($key1, 'test');
-        $adapter->set($key2, 'test');
-        $adapter->set($key3, 'test');
-        $adapter->set($key4, 'test');
+        $result = $adapter->set($key1, 'test');
+        $I->assertNotFalse($result);
+        $result = $adapter->set($key2, 'test');
+        $I->assertNotFalse($result);
+        $result = $adapter->set($key3, 'test');
+        $I->assertNotFalse($result);
+        $result = $adapter->set($key4, 'test');
+        $I->assertNotFalse($result);
 
         $I->assertTrue($adapter->has($key1));
         $I->assertTrue($adapter->has($key2));
@@ -102,8 +106,10 @@ class GetKeysCest
 
         $adapter->clear();
 
-        $adapter->set('key', 'test');
-        $adapter->set('key1', 'test');
+        $result = $adapter->set('key', 'test');
+        $I->assertNotFalse($result);
+        $result = $adapter->set('key1', 'test');
+        $I->assertNotFalse($result);
 
         $expected = [
             'basePrefix-key',
@@ -147,10 +153,14 @@ class GetKeysCest
         $I->assertTrue($adapter->clear());
         $I->assertEmpty($adapter->getKeys());
 
-        $adapter->set('key', 'test');
-        $adapter->set('key1', 'test');
-        $adapter->set('somekey', 'test');
-        $adapter->set('somekey1', 'test');
+        $result = $result = $adapter->set('key', 'test');
+        $I->assertNotFalse($result);
+        $result = $result = $adapter->set('key1', 'test');
+        $I->assertNotFalse($result);
+        $result = $result = $adapter->set('somekey', 'test');
+        $I->assertNotFalse($result);
+        $result = $result = $adapter->set('somekey1', 'test');
+        $I->assertNotFalse($result);
 
         $expected = [
             'pref-key',

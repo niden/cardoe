@@ -16,37 +16,21 @@ namespace Phalcon\Storage\Adapter;
 use DateInterval;
 use FilesystemIterator;
 use Iterator;
-use Phalcon\Factory\Exception as ExceptionAlias;
+use Phalcon\Factory\Exception as FactoryException;
 use Phalcon\Helper\Arr;
 use Phalcon\Helper\Str;
 use Phalcon\Storage\Exception;
 use Phalcon\Storage\SerializerFactory;
+use Phalcon\Storage\Serializer\SerializerInterface;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
-
-use function file_exists;
-use function file_get_contents;
-use function file_put_contents;
 use function is_array;
-use function is_dir;
-use function mkdir;
-use function restore_error_handler;
-use function serialize;
-use function set_error_handler;
-use function str_replace;
-use function strrchr;
-use function time;
-use function unlink;
-use function unserialize;
-
-use const E_NOTICE;
 
 /**
  * Stream adapter
  *
  * @property string $storageDir
  * @property array  $options
- * @property bool   $warning
  */
 class Stream extends AbstractAdapter
 {
@@ -64,14 +48,20 @@ class Stream extends AbstractAdapter
      * Stream constructor.
      *
      * @param SerializerFactory $factory
-     * @param array             $options
+     * @param array             $options = [
+     *     'storageDir'        => '',
+     *     'defaultSerializer' => 'Php',
+     *     'lifetime'          => 3600,
+     *     'prefix'            => ''
+     * ]
      *
      * @throws Exception
-     * @throws ExceptionAlias
+     * @throws FactoryException
      */
-    public function __construct(SerializerFactory $factory, array $options = [])
-    {
-        /** @var string $storageDir */
+    public function __construct(
+        SerializerFactory $factory,
+        array $options = []
+    ) {
         $storageDir = Arr::get($options, "storageDir", "");
         if (empty($storageDir)) {
             throw new Exception(
@@ -116,7 +106,6 @@ class Stream extends AbstractAdapter
      * @param int    $value
      *
      * @return bool|int
-     * @throws \Exception
      */
     public function decrement(string $key, int $value = 1)
     {
@@ -151,10 +140,10 @@ class Stream extends AbstractAdapter
     /**
      * Reads data from the adapter
      *
-     * @param string $key
-     * @param null   $defaultValue
+     * @param string     $key
+     * @param mixed|null $defaultValue
      *
-     * @return mixed
+     * @return mixed|null
      */
     public function get(string $key, $defaultValue = null)
     {
@@ -167,8 +156,8 @@ class Stream extends AbstractAdapter
         $payload = $this->getPayload($filepath);
 
         if (empty($payload)) {
-            return $defaultValue;
-        }
+        return $defaultValue;
+    }
 
         if ($this->isExpired($payload)) {
             return $defaultValue;
@@ -200,15 +189,16 @@ class Stream extends AbstractAdapter
     {
         $files     = [];
         $directory = $this->getDir();
+
+        if (!file_exists($directory)) {
+            return [];
+        }
+
         $iterator  = $this->getIterator($directory);
 
-        /** @var FilesystemIterator $file */
         foreach ($iterator as $file) {
-            if ($file->isFile() && false !== $file->getPathname()) {
-                $key     = str_replace($directory, "", $file->getPathName());
-                $key     = strrchr($key, "/");
-                $key     = $this->prefix . str_replace("/", "", $key);
-                $files[] = $key;
+            if ($file->isFile()) {
+                 $files[] = $this->prefix . $file->getFilename();
             }
         }
 
@@ -233,8 +223,8 @@ class Stream extends AbstractAdapter
         $payload = $this->getPayload($filepath);
 
         if (empty($payload)) {
-            return false;
-        }
+        return false;
+    }
 
         return !$this->isExpired($payload);
     }
@@ -275,7 +265,7 @@ class Stream extends AbstractAdapter
         $payload   = [
             "created" => time(),
             "ttl"     => $this->getTtl($ttl),
-            "content" => $this->getSerializedData($value),
+            "content" => $this->getSerializedData($value)
         ];
         $payload   = serialize($payload);
         $directory = $this->getDir($key);
@@ -284,7 +274,7 @@ class Stream extends AbstractAdapter
             mkdir($directory, 0777, true);
         }
 
-        return false !== file_put_contents($directory . $key, $payload);
+        return false !== file_put_contents($directory . $key, $payload, LOCK_EX);
     }
 
     /**
@@ -345,7 +335,14 @@ class Stream extends AbstractAdapter
     private function getPayload(string $filepath): array
     {
         $warning = false;
-        $payload = file_get_contents($filepath);
+        $payload = false;
+        $pointer = fopen($filepath, 'r');
+
+        if (flock($pointer, LOCK_SH)) {
+            $payload = file_get_contents($filepath);
+        }
+
+        fclose($pointer);
 
         if (false === $payload) {
             return [];
