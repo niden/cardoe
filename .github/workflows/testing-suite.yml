@@ -1,109 +1,119 @@
 name: Testing Suite
-on: [push, pull_request]
 
 jobs:
-  run:
-    runs-on: ${{ matrix.operating-system }}
-    strategy:
-      fail-fast: false
-      max-parallel: 3
-      matrix:
-        operating-system: [ubuntu-latest]
-        # Disabling Windows for now
-        # operating-system: [ubuntu-latest, windows-latest, macOS-latest]
-        php-versions: ['7.3', '7.4']
-    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
+  build-and-test-linux:
     services:
       mysql:
         image: mysql:5.7
-        env:
-          MYSQL_ALLOW_EMPTY_PASSWORD: false
-          MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: gonano
         ports:
           - 3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        env:
+          MYSQL_ROOT_PASSWORD: secret
+          MYSQL_USER: phalcon
+          MYSQL_DATABASE: phalcon
+          MYSQL_PASSWORD: secret
+      postgres:
+        image: postgres:12-alpine
+        ports:
+          - 5432
+        env:
+          POSTGRES_PASSWORD: secret
+          POSTGRES_USER: phalcon
+          POSTGRES_DB: phalcon
+      redis:
+        image: redis:5-alpine
+        ports:
+          - 6379
+      memcached:
+        image: memcached:1.5-alpine
+        ports:
+          - 11211
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        operating-system: [ubuntu-latest]
+        php-versions: ['7.3', '7.4']
+
+    name: PHP ${{ matrix.php-versions }} Test on ${{ matrix.operating-system }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1
 
-      - name: Setup Redis
-        uses: zhulik/redis-action@v1.0.0
+      - name: Git checkout
+        uses: actions/checkout@v2-beta
         with:
-          redis version: '5'
+          fetch-depth: 1
 
-      - name: Setup Memcached
-        uses: niden/actions-memcached@v7
+      - name: Get Composer Cache Directory
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+
+      - name: Setup Cache
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
+      - name: Setup Composer Token
+        run: |
+          # To increase the Composer rate limit we're use GitHub authentication
+          if [ -n "${{ secrets.COMPOSER_TOKEN }}" ]; then
+            composer config github-oauth.github.com "${{ secrets.COMPOSER_TOKEN }}"
+          fi
 
       - name: Setup PHP
-        uses: shivammathur/setup-php@1.5.2
-        with:
-          php-version: '${{ matrix.php-versions }}'
-          extension-csv: apcu, mbstring, xdebug
-          ini-values-csv: apc.enable_cli=1, apc.enabled=1
-          coverage: xdebug
-          pecl: true
-
-      - name: Init MySql Database
-        run: |
-          mysql -uroot -h127.0.0.1 -proot -e 'CREATE DATABASE IF NOT EXISTS `phalcon`;'
-
-      - name: Setup PHP, with composer and extensions
-        uses: shivammathur/setup-php@v1 #https://github.com/shivammathur/setup-php
+        uses: shivammathur/setup-php@v1
         with:
           php-version: ${{ matrix.php-versions }}
-          extensions: mbstring, dom, zip, mysql, sqlite, pgsql
-          coverage: xdebug #optional
+          ini-values: apc.enable_cli=on, session.save_path=/tmp
+          tools: pecl
+          extensions: mbstring, intl, json, imagick
 
-      - name: Show PHP Version
-        run: php -v
+      - name: Install packages
+        run: composer install --prefer-dist
 
-      - name: Get composer cache directory
-        id: composer-cache
-        run: echo "::set-output name=dir::$(composer config cache-files-dir)"
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Setup .env for tests
-        run: cp -v ./config/.env.github ./.env
-
-      - name: Install Composer dependencies
-        run: composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
-
-      - name: Generate schemas
+      - name: Setup tests
         run: |
+          cp tests/_ci/.env.default .env
           php tests/_ci/generate-db-schemas.php
           vendor/bin/codecept build
 
-      - name: Run Unit Tests
-        run: |
-          vendor/bin/codecept run unit --coverage --coverage-xml
+      - name: Run unit tests
+        run: vendor/bin/codecept run --ext DotReporter unit
 
-      - name: Upload Unit Coverage to Scrutinizer
-        run: |
-          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+      - name: Run cli tests
+        run: vendor/bin/codecept run --ext DotReporter cli
 
-      - name: Run Integration Tests
-        run: |
-          vendor/bin/codecept run integration --coverage --coverage-xml
+      - name: Run integration tests
+        env:
+          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
+        run: vendor/bin/codecept run --ext DotReporter integration
 
-      - name: Upload Integration Coverage to Scrutinizer
-        run: |
-          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+      - name: Run database tests MySQL
+        env:
+          DATA_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
+          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
+        run: vendor/bin/codecept run --ext DotReporter database --env mysql
 
-      - name: Run Database Tests - MySQL
-        run: |
-          vendor/bin/codecept run database --env mysql --coverage --coverage-xml
+      - name: Run database tests Sqlite
+        env:
+          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
+        run: vendor/bin/codecept run --ext DotReporter database --env sqlite
 
-      - name: Upload Database MySQL Coverage to Scrutinizer
-        run: |
-          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
-
-      - name: Run Database Tests - Sqlite
-        run: |
-          vendor/bin/codecept run database --env sqlite --coverage --coverage-xml
-
-      - name: Upload Database Sqlite Coverage to Scrutinizer
-        run: |
-          php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
+#      # TODO Enable these one at a time and also for MacOS/Windows
+#      - name: Run database tests Postgres
+#        env:
+#          DATA_POSTGRES_PORT: ${{ job.services.postgres.ports['5432'] }}
+#          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+#          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
+#        run: vendor/bin/codecept run --ext DotReporter database --env pgsql
+#      - name: Run integrations tests SQL Server
+#        env:
+#          DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
+#          DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
+#        run: vendor/bin/codecept run --ext DotReporter database --env sqlsrv
