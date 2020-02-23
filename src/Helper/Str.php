@@ -36,9 +36,9 @@ use function strtoupper;
 use function substr;
 use function substr_compare;
 use function trim;
-
 use function ucwords;
 use function utf8_decode;
+
 use const DIRECTORY_SEPARATOR;
 use const MB_CASE_TITLE;
 use const MB_CASE_UPPER;
