@@ -179,7 +179,7 @@ class Arr
      *
      * @param array       $collection
      * @param mixed       $index
-     * @param null        $defaultValue
+     * @param mixed|null  $defaultValue
      * @param string|null $cast
      *
      * @return mixed|null

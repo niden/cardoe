@@ -16,13 +16,11 @@ namespace Phalcon\Logger\Adapter;
 use LogicException;
 use Phalcon\Helper\Arr;
 use Phalcon\Logger;
-use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
 
 use function closelog;
 use function openlog;
 use function sprintf;
-use function syslog;
 
 use const LOG_ALERT;
 use const LOG_CRIT;
@@ -103,7 +101,7 @@ class Syslog extends AbstractAdapter
      *
      * @param Item $item
      *
-     * @throws Exception
+     * @throws LogicException
      */
     public function process(Item $item): void
     {
@@ -124,7 +122,7 @@ class Syslog extends AbstractAdapter
         $this->opened = true;
         $level        = $this->logLevelToSyslog($item->getType());
 
-        syslog($level, $message);
+        \syslog($level, $message);
     }
 
     /**

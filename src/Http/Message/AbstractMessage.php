@@ -328,11 +328,7 @@ abstract class AbstractMessage extends AbstractCommon
             "" !== $this->uri->getHost()
         ) {
             $host      = $this->getUriHost($this->uri);
-            $hostArray = $host;
-            if (!is_array($host)) {
-                $hostArray = [$host];
-            }
-
+            $hostArray = [$host];
             $collection->remove("host");
 
             $data           = $collection->toArray();
@@ -352,7 +348,7 @@ abstract class AbstractMessage extends AbstractCommon
      *
      * @see http://tools.ietf.org/html/rfc7230#section-3.2
      *
-     * @param string $name
+     * @param mixed $name
      */
     final protected function checkHeaderName($name): void
     {

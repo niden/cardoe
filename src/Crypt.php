@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace Phalcon;
 
 use Phalcon\Crypt\CryptInterface;
-use Phalcon\Crypt\Exception;
+use Phalcon\Crypt\Exception as CryptException;
 use Phalcon\Crypt\MismatchException;
 use Phalcon\Helper\Str;
 
@@ -27,7 +27,6 @@ use function hash_algos;
 use function hash_hmac;
 use function hash_hmac_algos;
 use function in_array;
-use function is_array;
 use function openssl_cipher_iv_length;
 use function openssl_decrypt;
 use function openssl_encrypt;
@@ -108,7 +107,7 @@ class Crypt implements CryptInterface
      *
      * @var array
      */
-    protected $availableCiphers;
+    protected $availableCiphers = [];
 
     /**
      * @var string
@@ -152,7 +151,7 @@ class Crypt implements CryptInterface
      * @param string $cipher
      * @param bool   $useSigning
      *
-     * @throws Exception
+     * @throws CryptException
      */
     public function __construct(
         string $cipher = "aes-256-cfb",
@@ -178,7 +177,7 @@ class Crypt implements CryptInterface
      * @param string|null $key
      *
      * @return string
-     * @throws Exception
+     * @throws CryptException
      */
     public function decrypt(string $text, string $key = null): string
     {
@@ -189,7 +188,7 @@ class Crypt implements CryptInterface
         }
 
         if (empty($decryptKey)) {
-            throw new Exception("Decryption key cannot be empty");
+            throw new CryptException("Decryption key cannot be empty");
         }
 
         $cipher   = $this->cipher;
@@ -217,14 +216,14 @@ class Crypt implements CryptInterface
             $hashAlgo   = $this->getHashAlgo();
             $hashLength = strlen(hash($hashAlgo, "", true));
             $hash       = mb_substr($text, $ivLength, $hashLength, "8bit");
-            $ciphertext = mb_substr($text, $ivLength + $hashLength, null, "8bit");
+            $cipherText = mb_substr($text, $ivLength + $hashLength, null, "8bit");
 
             if (
                 ("-gcm" === $mode || "-ccm" === $mode) &&
                 !empty($this->authData)
             ) {
                 $decrypted = openssl_decrypt(
-                    $ciphertext,
+                    $cipherText,
                     $cipher,
                     $decryptKey,
                     OPENSSL_RAW_DATA,
@@ -234,7 +233,7 @@ class Crypt implements CryptInterface
                 );
             } else {
                 $decrypted = openssl_decrypt(
-                    $ciphertext,
+                    $cipherText,
                     $cipher,
                     $decryptKey,
                     OPENSSL_RAW_DATA,
@@ -261,11 +260,11 @@ class Crypt implements CryptInterface
             return $decrypted;
         }
 
-        $ciphertext = mb_substr($text, $ivLength, null, "8bit");
+        $cipherText = mb_substr($text, $ivLength, null, "8bit");
 
         if (("-gcm" === $mode || "-ccm" === $mode) && !empty($this->authData)) {
             $decrypted = openssl_decrypt(
-                $ciphertext,
+                $cipherText,
                 $cipher,
                 $decryptKey,
                 OPENSSL_RAW_DATA,
@@ -275,7 +274,7 @@ class Crypt implements CryptInterface
             );
         } else {
             $decrypted = openssl_decrypt(
-                $ciphertext,
+                $cipherText,
                 $cipher,
                 $decryptKey,
                 OPENSSL_RAW_DATA,
@@ -298,12 +297,12 @@ class Crypt implements CryptInterface
     /**
      * Decrypt a text that is coded as a base64 string.
      *
-     * @param string $text
-     * @param null   $key
-     * @param bool   $safe
+     * @param string      $text
+     * @param string|null $key
+     * @param bool        $safe
      *
      * @return string
-     * @throws Exception
+     * @throws CryptException
      */
     public function decryptBase64(
         string $text,
@@ -335,7 +334,7 @@ class Crypt implements CryptInterface
      * @param string|null $key
      *
      * @return string
-     * @throws Exception
+     * @throws CryptException
      */
     public function encrypt(string $text, string $key = null): string
     {
@@ -346,7 +345,7 @@ class Crypt implements CryptInterface
         }
 
         if (empty($encryptKey)) {
-            throw new Exception("Encryption key cannot be empty");
+            throw new CryptException("Encryption key cannot be empty");
         }
 
         $cipher = $this->cipher;
@@ -431,14 +430,14 @@ class Crypt implements CryptInterface
      * @param bool       $safe
      *
      * @return string
-     * @throws Exception
+     * @throws CryptException
      */
     public function encryptBase64(
         string $text,
         $key = null,
         bool $safe = false
     ): string {
-        if ($safe == true) {
+        if ($safe === true) {
             return rtrim(
                 strtr(
                     base64_encode(
@@ -460,13 +459,13 @@ class Crypt implements CryptInterface
      * Returns a list of available ciphers.
      *
      * @return array
-     * @throws Exception
+     * @throws CryptException
      */
     public function getAvailableCiphers(): array
     {
         $availableCiphers = $this->availableCiphers;
 
-        if (is_array($availableCiphers)) {
+        if (empty($availableCiphers)) {
             $this->initializeAvailableCiphers();
 
             $availableCiphers = $this->availableCiphers;
@@ -475,13 +474,11 @@ class Crypt implements CryptInterface
         $allowedCiphers = [];
         foreach ($availableCiphers as $cipher) {
             if (
-                !(
-                Str::endsWith(strtolower($cipher), "des") ||
-                Str::endsWith(strtolower($cipher), "rc2") ||
-                Str::endsWith(strtolower($cipher), "rc4") ||
-                Str::endsWith(strtolower($cipher), "des") ||
-                Str::endsWith(strtolower($cipher), "ecb")
-                )
+                !Str::endsWith(strtolower($cipher), "des") &&
+                !Str::endsWith(strtolower($cipher), "rc2") &&
+                !Str::endsWith(strtolower($cipher), "rc4") &&
+                !Str::endsWith(strtolower($cipher), "des") &&
+                !Str::endsWith(strtolower($cipher), "ecb")
             ) {
                 $allowedCiphers[] = $cipher;
             }
@@ -598,7 +595,7 @@ class Crypt implements CryptInterface
      * @param string $cipher
      *
      * @return CryptInterface
-     * @throws Exception
+     * @throws CryptException
      */
     public function setCipher(string $cipher): CryptInterface
     {
@@ -616,7 +613,7 @@ class Crypt implements CryptInterface
      * @param string $hashAlgo
      *
      * @return CryptInterface
-     * @throws Exception
+     * @throws CryptException
      */
     public function setHashAlgo(string $hashAlgo): CryptInterface
     {
@@ -686,14 +683,14 @@ class Crypt implements CryptInterface
      *
      * @param string $cipher
      *
-     * @throws Exception
+     * @throws CryptException
      */
     protected function assertCipherIsAvailable(string $cipher): void
     {
         $availableCiphers = $this->getAvailableCiphers();
 
         if (!in_array(strtoupper($cipher), $availableCiphers)) {
-            throw new Exception(
+            throw new CryptException(
                 sprintf(
                     "The cipher algorithm \"%s\" is not supported on this system.",
                     $cipher
@@ -707,14 +704,14 @@ class Crypt implements CryptInterface
      *
      * @param string $hashAlgo
      *
-     * @throws Exception
+     * @throws CryptException
      */
     protected function assertHashAlgorithmAvailable(string $hashAlgo): void
     {
         $availableAlgorithms = $this->getAvailableHashAlgos();
 
         if (!in_array($hashAlgo, $availableAlgorithms)) {
-            throw new Exception(
+            throw new CryptException(
                 sprintf(
                     "The hash algorithm \"%s\" is not supported on this system.",
                     $hashAlgo
@@ -734,7 +731,7 @@ class Crypt implements CryptInterface
      * @param int    $paddingType
      *
      * @return string
-     * @throws Exception
+     * @throws CryptException
      */
     protected function cryptPadText(
         string $text,
@@ -750,7 +747,7 @@ class Crypt implements CryptInterface
             $paddingSize = $blockSize - (strlen($text) % $blockSize);
 
             if ($paddingSize >= 256) {
-                throw new Exception("Block size is bigger than 256");
+                throw new CryptException("Block size is bigger than 256");
             }
 
             switch ($paddingType) {
@@ -796,7 +793,7 @@ class Crypt implements CryptInterface
         }
 
         if ($paddingSize > $blockSize) {
-            throw new Exception("Invalid padding size");
+            throw new CryptException("Invalid padding size");
         }
 
         return $text . substr($padding, 0, $paddingSize);
@@ -831,74 +828,47 @@ class Crypt implements CryptInterface
         ) {
             switch ($paddingType) {
                 case self::PADDING_ANSI_X_923:
-                    $last = substr($text, $length - 1, 1);
-                    $ord  = (int) ord($last);
-
-                    if ($ord <= $blockSize) {
-                        $paddingSize = $ord;
-                        $padding     = str_repeat(chr(0), $paddingSize - 1) . $last;
-
-                        if (substr($text, $length - $paddingSize) != $padding) {
-                            $paddingSize = 0;
-                        }
-                    }
-
+                    $paddingSize = $this->getPaddingSizeAnsiX923(
+                        $text,
+                        $length,
+                        $blockSize
+                    );
                     break;
 
                 case self::PADDING_PKCS7:
-                    $last = substr($text, $length - 1, 1);
-                    $ord  = (int) ord($last);
-
-                    if ($ord <= $blockSize) {
-                        $paddingSize = $ord;
-                        $padding     = str_repeat(chr($paddingSize), $paddingSize);
-
-                        if (substr($text, $length - $paddingSize) != $padding) {
-                            $paddingSize = 0;
-                        }
-                    }
-
+                    $paddingSize = $this->getPaddingSizePkcs7(
+                        $text,
+                        $length,
+                        $blockSize
+                    );
                     break;
 
                 case self::PADDING_ISO_10126:
-                    $last        = substr($text, $length - 1, 1);
-                    $paddingSize = (int) ord($last);
+                    return $this->getPaddingSizeIso10126($text, $length);
                     break;
 
                 case self::PADDING_ISO_IEC_7816_4:
-                    $i = $length - 1;
-
-                    while ($i > 0 && $text[$i] == 0x00 && $paddingSize < $blockSize) {
-                        $paddingSize++;
-                        $i--;
-                    }
-
-                    if ($text[$i] == 0x80) {
-                        $paddingSize++;
-                    } else {
-                        $paddingSize = 0;
-                    }
-
+                    return $this->getPaddingSizeIsoIec78164(
+                        $text,
+                        $length,
+                        $blockSize
+                    );
                     break;
 
                 case self::PADDING_ZERO:
-                    $i = $length - 1;
-
-                    while ($i >= 0 && $text[$i] == 0x00 && $paddingSize <= $blockSize) {
-                        $paddingSize++;
-                        $i--;
-                    }
-
+                    return $this->getPaddingSizeZero(
+                        $text,
+                        $length,
+                        $blockSize
+                    );
                     break;
 
                 case self::PADDING_SPACE:
-                    $i = $length - 1;
-
-                    while ($i >= 0 && $text[$i] == 0x20 && $paddingSize <= $blockSize) {
-                        $paddingSize++;
-                        $i--;
-                    }
-
+                    return $this->getPaddingSizeSpace(
+                        $text,
+                        $length,
+                        $blockSize
+                    );
                     break;
 
                 default:
@@ -927,12 +897,12 @@ class Crypt implements CryptInterface
      * @param string $cipher
      *
      * @return int
-     * @throws Exception
+     * @throws CryptException
      */
     protected function getIvLength(string $cipher): int
     {
         if (!function_exists("openssl_cipher_iv_length")) {
-            throw new Exception("openssl extension is required");
+            throw new CryptException("openssl extension is required");
         }
 
         return openssl_cipher_iv_length($cipher);
@@ -941,12 +911,12 @@ class Crypt implements CryptInterface
     /**
      * Initialize available cipher algorithms.
      *
-     * @throws Exception
+     * @throws CryptException
      */
     protected function initializeAvailableCiphers(): void
     {
         if (!function_exists("openssl_get_cipher_methods")) {
-            throw new Exception("openssl extension is required");
+            throw new CryptException("openssl extension is required");
         }
 
         $availableCiphers = openssl_get_cipher_methods(true);
@@ -956,5 +926,153 @@ class Crypt implements CryptInterface
         }
 
         $this->availableCiphers = $availableCiphers;
+    }
+
+    /**
+     * @param string $text
+     * @param int    $length
+     * @param int    $blockSize
+     *
+     * @return int
+     */
+    private function getPaddingSizeAnsiX923(
+        string $text,
+        int $length,
+        int $blockSize
+    ): int {
+        $paddingSize = 0;
+        $last        = substr($text, $length - 1, 1);
+        $ord         = (int) ord($last);
+
+        if ($ord <= $blockSize) {
+            $paddingSize = $ord;
+            $padding     = str_repeat(chr(0), $paddingSize - 1) . $last;
+
+            if (substr($text, $length - $paddingSize) != $padding) {
+                $paddingSize = 0;
+            }
+        }
+
+        return $paddingSize;
+    }
+
+    /**
+     * @param string $text
+     * @param int    $length
+     * @param int    $blockSize
+     *
+     * @return int
+     */
+    private function getPaddingSizePkcs7(
+        string $text,
+        int $length,
+        int $blockSize
+    ): int {
+        $paddingSize = 0;
+        $last = substr($text, $length - 1, 1);
+        $ord  = (int) ord($last);
+
+        if ($ord <= $blockSize) {
+            $paddingSize = $ord;
+            $padding     = str_repeat(chr($paddingSize), $paddingSize);
+
+            if (substr($text, $length - $paddingSize) != $padding) {
+                $paddingSize = 0;
+            }
+        }
+
+        return $paddingSize;
+    }
+
+    /**
+     * @param string $text
+     * @param int    $length
+     *
+     * @return int
+     */
+    private function getPaddingSizeIso10126(
+        string $text,
+        int $length
+    ): int {
+        $last = substr($text, $length - 1, 1);
+
+        return (int) ord($last);
+    }
+
+    /**
+     * @param string $text
+     * @param int    $length
+     * @param int    $blockSize
+     *
+     * @return int
+     */
+    private function getPaddingSizeIsoIec78164(
+        string $text,
+        int $length,
+        int $blockSize
+    ): int {
+        $paddingSize = 0;
+        $i = $length - 1;
+
+        while ($i > 0 && $text[$i] == 0x00 && $paddingSize < $blockSize) {
+            $paddingSize++;
+            $i--;
+        }
+
+        if ($text[$i] == 0x80) {
+            $paddingSize++;
+        } else {
+            $paddingSize = 0;
+        }
+
+        return $paddingSize;
+    }
+
+    /**
+     * @param string $text
+     * @param int    $length
+     * @param int    $blockSize
+     *
+     * @return int
+     */
+    private function getPaddingSizeZero(
+        string $text,
+        int $length,
+        int $blockSize
+    ): int {
+        $paddingSize = 0;
+        $i = $length - 1;
+
+        while ($i >= 0 && $text[$i] == 0x00 && $paddingSize <= $blockSize) {
+            $paddingSize++;
+            $i--;
+        }
+
+        return $paddingSize;
+    }
+
+
+
+    /**
+     * @param string $text
+     * @param int    $length
+     * @param int    $blockSize
+     *
+     * @return int
+     */
+    private function getPaddingSizeSpace(
+        string $text,
+        int $length,
+        int $blockSize
+    ): int {
+        $paddingSize = 0;
+        $i = $length - 1;
+
+        while ($i >= 0 && $text[$i] == 0x20 && $paddingSize <= $blockSize) {
+            $paddingSize++;
+            $i--;
+        }
+
+        return $paddingSize;
     }
 }

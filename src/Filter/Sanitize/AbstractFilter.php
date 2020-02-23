@@ -70,7 +70,7 @@ abstract class AbstractFilter
             return mb_substr($input, $start, $length, 'UTF-8');
         }
 
-        $split = preg_split(
+        $split = (array) preg_split(
             "//u",
             $input,
             -1,

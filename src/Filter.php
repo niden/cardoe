@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon;
 
-use Phalcon\Filter\Exception;
+use Phalcon\Filter\Exception as FilterException;
 use Phalcon\Filter\FilterInterface;
 
 use function array_merge;
@@ -82,12 +82,12 @@ class Filter implements FilterInterface
      * @param string $name
      *
      * @return object
-     * @throws Exception
+     * @throws FilterException
      */
     public function get(string $name): object
     {
         if (!isset($this->mapper[$name])) {
-            throw new Exception(
+            throw new FilterException(
                 "The service " . $name
                 . " has not been found in the locator"
             );
@@ -125,7 +125,7 @@ class Filter implements FilterInterface
      * @param bool         $noRecursive
      *
      * @return mixed
-     * @throws Exception
+     * @throws FilterException
      */
     public function sanitize($value, $sanitizers, bool $noRecursive = false)
     {
@@ -223,7 +223,7 @@ class Filter implements FilterInterface
      * @param array  $sanitizerParams
      *
      * @return array
-     * @throws Exception
+     * @throws FilterException
      */
     private function processArrayValues(
         array $values,
@@ -249,7 +249,7 @@ class Filter implements FilterInterface
      * @param bool  $noRecursive
      *
      * @return string|array
-     * @throws Exception
+     * @throws FilterException
      */
     private function processArraySanitizers(
         array $sanitizers,
@@ -303,7 +303,7 @@ class Filter implements FilterInterface
      * @param array  $sanitizerParams
      *
      * @return mixed
-     * @throws Exception
+     * @throws FilterException
      */
     private function sanitizer(
         $value,

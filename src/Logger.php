@@ -15,7 +15,7 @@ namespace Phalcon;
 
 use Phalcon\Helper\Arr;
 use Phalcon\Logger\Adapter\AdapterInterface;
-use Phalcon\Logger\Exception;
+use Phalcon\Logger\Exception as LoggerException;
 use Phalcon\Logger\Item;
 use Psr\Log\LoggerInterface;
 
@@ -108,7 +108,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function alert($message, array $context = []): void
     {
@@ -123,7 +123,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function critical($message, array $context = []): void
     {
@@ -136,7 +136,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function debug($message, array $context = []): void
     {
@@ -150,7 +150,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function error($message, array $context = []): void
     {
@@ -163,7 +163,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function emergency($message, array $context = []): void
     {
@@ -205,12 +205,12 @@ class Logger implements LoggerInterface
      * @param string $name The name of the adapter
      *
      * @return AdapterInterface
-     * @throws Exception
+     * @throws LoggerException
      */
     public function getAdapter(string $name): AdapterInterface
     {
         if (!isset($this->adapters[$name])) {
-            throw new Exception("Adapter does not exist for this logger");
+            throw new LoggerException("Adapter does not exist for this logger");
         }
 
         return $this->adapters[$name];
@@ -250,7 +250,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function info($message, array $context = []): void
     {
@@ -264,7 +264,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function log($level, $message, array $context = []): void
     {
@@ -279,7 +279,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function notice($message, array $context = []): void
     {
@@ -292,12 +292,12 @@ class Logger implements LoggerInterface
      * @param string $name The name of the adapter
      *
      * @return Logger
-     * @throws Exception
+     * @throws LoggerException
      */
     public function removeAdapter(string $name): Logger
     {
         if (!isset($this->adapters[$name])) {
-            throw new Exception("Adapter does not exist for this logger");
+            throw new LoggerException("Adapter does not exist for this logger");
         }
 
         unset($this->adapters[$name]);
@@ -335,7 +335,7 @@ class Logger implements LoggerInterface
     }
 
     /**
-     * Exceptional occurrences that are not errors.
+     * LoggerExceptional occurrences that are not errors.
      *
      * Example: Use of deprecated APIs, poor use of an API, undesirable things
      * that are not necessarily wrong.
@@ -343,7 +343,7 @@ class Logger implements LoggerInterface
      * @param string $message
      * @param array  $context
      *
-     * @throws Exception
+     * @throws LoggerException
      */
     public function warning($message, array $context = []): void
     {
@@ -358,13 +358,13 @@ class Logger implements LoggerInterface
      * @param array  $context
      *
      * @return bool
-     * @throws Exception
+     * @throws LoggerException
      */
     protected function addMessage(int $level, string $message, array $context = []): bool
     {
         if ($this->logLevel >= $level) {
             if (count($this->adapters) === 0) {
-                throw new Exception("No adapters specified");
+                throw new LoggerException("No adapters specified");
             }
 
             $levels    = $this->getLevels();

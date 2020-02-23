@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon;
 
-use Phalcon\Config\Exception;
+use Phalcon\Config\Exception as ConfigException;
 
 use function array_shift;
 use function explode;
@@ -56,7 +56,7 @@ class Config extends Collection
      * @param array|object|Config $toMerge
      *
      * @return Config
-     * @throws Exception
+     * @throws ConfigException
      */
     public function merge($toMerge): Config
     {
@@ -65,7 +65,7 @@ class Config extends Collection
         } elseif (is_object($toMerge) && $toMerge instanceof Config) {
             $config = $toMerge;
         } else {
-            throw new Exception(
+            throw new ConfigException(
                 "Invalid data type for merge."
             );
         }
