@@ -17,6 +17,7 @@ use function array_merge;
 use function count_chars;
 use function explode;
 use function func_get_args;
+use function function_exists;
 use function implode;
 use function is_array;
 use function is_string;
@@ -31,11 +32,16 @@ use function str_split;
 use function strlen;
 use function strrev;
 use function strtolower;
+use function strtoupper;
 use function substr;
 use function substr_compare;
 use function trim;
 
+use function ucwords;
+use function utf8_decode;
 use const DIRECTORY_SEPARATOR;
+use const MB_CASE_TITLE;
+use const MB_CASE_UPPER;
 use const PATHINFO_FILENAME;
 
 /**
@@ -399,7 +405,7 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): bool {
-        return $text === mb_strtolower($text, $encoding);
+        return $text === self::lower($text, $encoding);
     }
 
     /**
@@ -426,7 +432,26 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): bool {
-        return $text === mb_strtoupper($text, $encoding);
+        return $text === self::upper($text, $encoding);
+    }
+
+    /**
+     * Calculates the length of the string. Uses mbstring if present
+     *
+     * @param string $text
+     * @param string $encoding
+     *
+     * @return int
+     */
+    final public static function len(
+        string $text,
+        string $encoding = "UTF-8"
+    ): int {
+        if (function_exists("mb_strlen")) {
+            return mb_strlen($text, $encoding);
+        }
+
+        return strlen(utf8_decode($text));
     }
 
     /**
@@ -442,7 +467,11 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): string {
-        return mb_strtolower($text, $encoding);
+        if (function_exists("mb_convert_case")) {
+            return mb_convert_case($text, MB_CASE_LOWER, $encoding);
+        }
+
+        return strtolower(utf8_decode($text));
     }
 
     /**
@@ -533,6 +562,25 @@ class Str
      * Makes a phrase underscored instead of spaced
      *
      * @param string $text
+     * @param string $encoding
+     *
+     * @return string
+     */
+    final public static function ucwords(
+        string $text,
+        string $encoding = "UTF-8"
+    ): string {
+        if (function_exists("mb_convert_case")) {
+            return mb_convert_case($text, MB_CASE_TITLE, $encoding);
+        }
+
+        return ucwords(utf8_decode($text));
+    }
+
+    /**
+     * Makes a phrase underscored instead of spaced
+     *
+     * @param string $text
      *
      * @return string
      */
@@ -556,6 +604,10 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): string {
-        return mb_strtoupper($text, $encoding);
+        if (function_exists("mb_convert_case")) {
+            return mb_convert_case($text, MB_CASE_UPPER, $encoding);
+        }
+
+        return strtoupper(utf8_decode($text));
     }
 }
