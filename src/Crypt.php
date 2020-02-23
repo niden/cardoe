@@ -181,15 +181,7 @@ class Crypt implements CryptInterface
      */
     public function decrypt(string $text, string $key = null): string
     {
-        if (empty($key)) {
-            $decryptKey = $this->key;
-        } else {
-            $decryptKey = $key;
-        }
-
-        if (empty($decryptKey)) {
-            throw new CryptException("Decryption key cannot be empty");
-        }
+        $decryptKey = $this->checkDecryptKey($key);
 
         $cipher   = $this->cipher;
         $mode     = strtolower(
@@ -213,74 +205,29 @@ class Crypt implements CryptInterface
         $iv = mb_substr($text, 0, $ivLength, "8bit");
 
         if ($this->useSigning) {
-            $hashAlgo   = $this->getHashAlgo();
-            $hashLength = strlen(hash($hashAlgo, "", true));
-            $hash       = mb_substr($text, $ivLength, $hashLength, "8bit");
-            $cipherText = mb_substr($text, $ivLength + $hashLength, null, "8bit");
-
-            if (
-                ("-gcm" === $mode || "-ccm" === $mode) &&
-                !empty($this->authData)
-            ) {
-                $decrypted = openssl_decrypt(
-                    $cipherText,
-                    $cipher,
-                    $decryptKey,
-                    OPENSSL_RAW_DATA,
-                    $iv,
-                    $authTag,
-                    $authData
-                );
-            } else {
-                $decrypted = openssl_decrypt(
-                    $cipherText,
-                    $cipher,
-                    $decryptKey,
-                    OPENSSL_RAW_DATA,
-                    $iv
-                );
-            }
-
-            if ($mode == "-cbc" || $mode == "-ecb") {
-                $decrypted = $this->cryptUnpadText(
-                    $decrypted,
-                    $mode,
-                    $blockSize,
-                    $this->padding
-                );
-            }
-
-            /**
-             * Checks on the decrypted's message digest using the HMAC method.
-             */
-            if (hash_hmac($hashAlgo, $decrypted, $decryptKey, true) !== $hash) {
-                throw new MismatchException("Hash does not match.");
-            }
-
-            return $decrypted;
+            return $this->calculateWithSigning(
+                $text,
+                $ivLength,
+                $mode,
+                $cipher,
+                $decryptKey,
+                $iv,
+                $authTag,
+                $authData,
+                $blockSize
+            );
         }
 
         $cipherText = mb_substr($text, $ivLength, null, "8bit");
-
-        if (("-gcm" === $mode || "-ccm" === $mode) && !empty($this->authData)) {
-            $decrypted = openssl_decrypt(
-                $cipherText,
-                $cipher,
-                $decryptKey,
-                OPENSSL_RAW_DATA,
-                $iv,
-                $authTag,
-                $authData
-            );
-        } else {
-            $decrypted = openssl_decrypt(
-                $cipherText,
-                $cipher,
-                $decryptKey,
-                OPENSSL_RAW_DATA,
-                $iv
-            );
-        }
+        $decrypted  = $this->calculateGcmCcm(
+            $mode,
+            $cipherText,
+            $cipher,
+            $decryptKey,
+            $iv,
+            $authTag,
+            $authData
+        );
 
         if ($mode == "-cbc" || $mode == "-ecb") {
             $decrypted = $this->cryptUnpadText(
@@ -845,7 +792,6 @@ class Crypt implements CryptInterface
 
                 case self::PADDING_ISO_10126:
                     return $this->getPaddingSizeIso10126($text, $length);
-                    break;
 
                 case self::PADDING_ISO_IEC_7816_4:
                     return $this->getPaddingSizeIsoIec78164(
@@ -853,7 +799,6 @@ class Crypt implements CryptInterface
                         $length,
                         $blockSize
                     );
-                    break;
 
                 case self::PADDING_ZERO:
                     return $this->getPaddingSizeZero(
@@ -861,7 +806,6 @@ class Crypt implements CryptInterface
                         $length,
                         $blockSize
                     );
-                    break;
 
                 case self::PADDING_SPACE:
                     return $this->getPaddingSizeSpace(
@@ -869,7 +813,6 @@ class Crypt implements CryptInterface
                         $length,
                         $blockSize
                     );
-                    break;
 
                 default:
                     break;
@@ -926,6 +869,143 @@ class Crypt implements CryptInterface
         }
 
         $this->availableCiphers = $availableCiphers;
+    }
+
+    /**
+     * @param string $mode
+     * @param string $cipherText
+     * @param string $cipher
+     * @param string $decryptKey
+     * @param string $iv
+     * @param string $authTag
+     * @param string $authData
+     *
+     * @return string
+     */
+    private function calculateGcmCcm(
+        string $mode,
+        string $cipherText,
+        string $cipher,
+        string $decryptKey,
+        string $iv,
+        string $authTag,
+        string $authData
+    ): string {
+        if (("-gcm" === $mode || "-ccm" === $mode) && !empty($this->authData)) {
+            $decrypted = openssl_decrypt(
+                $cipherText,
+                $cipher,
+                $decryptKey,
+                OPENSSL_RAW_DATA,
+                $iv,
+                $authTag,
+                $authData
+            );
+        } else {
+            $decrypted = openssl_decrypt(
+                $cipherText,
+                $cipher,
+                $decryptKey,
+                OPENSSL_RAW_DATA,
+                $iv
+            );
+        }
+
+        return $decrypted;
+    }
+
+    /**
+     * @param string $text
+     * @param int    $ivLength
+     * @param string $mode
+     * @param string $cipher
+     * @param string $decryptKey
+     * @param string $iv
+     * @param string $authTag
+     * @param string $authData
+     * @param int    $blockSize
+     *
+     * @return string
+     * @throws MismatchException
+     */
+    private function calculateWithSigning(
+        string $text,
+        int $ivLength,
+        string $mode,
+        string $cipher,
+        string $decryptKey,
+        string $iv,
+        string $authTag,
+        string $authData,
+        int $blockSize
+    ): string {
+        $hashAlgo   = $this->getHashAlgo();
+        $hashLength = strlen(hash($hashAlgo, "", true));
+        $hash       = mb_substr($text, $ivLength, $hashLength, "8bit");
+        $cipherText = mb_substr($text, $ivLength + $hashLength, null, "8bit");
+
+        if (
+            ("-gcm" === $mode || "-ccm" === $mode) &&
+            !empty($this->authData)
+        ) {
+            $decrypted = openssl_decrypt(
+                $cipherText,
+                $cipher,
+                $decryptKey,
+                OPENSSL_RAW_DATA,
+                $iv,
+                $authTag,
+                $authData
+            );
+        } else {
+            $decrypted = openssl_decrypt(
+                $cipherText,
+                $cipher,
+                $decryptKey,
+                OPENSSL_RAW_DATA,
+                $iv
+            );
+        }
+
+        if ($mode == "-cbc" || $mode == "-ecb") {
+            $decrypted = $this->cryptUnpadText(
+                $decrypted,
+                $mode,
+                $blockSize,
+                $this->padding
+            );
+        }
+
+        /**
+         * Checks on the decrypted's message digest using the HMAC method.
+         */
+        if (hash_hmac($hashAlgo, $decrypted, $decryptKey, true) !== $hash) {
+            throw new MismatchException("Hash does not match.");
+        }
+
+        return $decrypted;
+    }
+
+
+    /**
+     * @param string|null $key
+     *
+     * @return string
+     * @throws CryptException
+     */
+    private function checkDecryptKey(string $key = null): string
+    {
+        if (empty($key)) {
+            $decryptKey = $this->key;
+        } else {
+            $decryptKey = $key;
+        }
+
+        if (empty($decryptKey)) {
+            throw new CryptException("Decryption key cannot be empty");
+        }
+
+        return $decryptKey;
     }
 
     /**
