@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Filter\Sanitize;
 
+use Phalcon\Helper\Str;
+
 /**
  * Phalcon\Filter\Sanitize\Lower
  *
  * Sanitizes a value to lowercase
  */
-class Lower extends AbstractFilter
+class Lower
 {
     /**
      * @param string $input The text to sanitize
@@ -27,6 +29,6 @@ class Lower extends AbstractFilter
      */
     public function __invoke(string $input)
     {
-        return $this->lower($input);
+        return Str::lower($input);
     }
 }

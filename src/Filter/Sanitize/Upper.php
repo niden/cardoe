@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace Phalcon\Filter\Sanitize;
 
+use Phalcon\Helper\Str;
+
 /**
  * Phalcon\Filter\Sanitize\Upper
  *
  * Sanitizes a value to uppercase
  */
-class Upper extends AbstractFilter
+class Upper
 {
     /**
      * @param string $input The text to sanitize
@@ -27,6 +29,6 @@ class Upper extends AbstractFilter
      */
     public function __invoke(string $input)
     {
-        return $this->upper($input);
+        return Str::upper($input);
     }
 }

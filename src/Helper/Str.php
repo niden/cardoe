@@ -79,6 +79,7 @@ class Str
      * @param string ...N
      *
      * @return string
+     * @throws Exception
      */
     final public static function concat(): string
     {

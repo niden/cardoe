@@ -13,6 +13,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Filter\Sanitize;
 
+use Phalcon\Helper\Str;
+
 /**
  * Phalcon\Filter\Sanitize\UpperFirst
  *
@@ -36,9 +38,9 @@ class UpperFirst extends AbstractFilter
             $first  = $this->substr($input, 0, 1);
             $suffix = $this->substr($input, 1, $length - 1);
 
-            return $this->upper($first) . $suffix;
+            return Str::upper($first) . $suffix;
         }
 
-        return $this->upper($input);
+        return Str::upper($input);
     }
 }
