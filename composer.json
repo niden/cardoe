@@ -21,7 +21,7 @@
         "ext-apcu": "*",
         "ext-igbinary": "*",
         "ext-json": "*",
-        "ext-mbstring": "^7.4",
+        "ext-mbstring": "7.*",
         "ext-pdo": "*",
         "ext-redis": "*",
         "ext-xml": "^7.2",
