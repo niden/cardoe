@@ -258,7 +258,7 @@ trait RequestTrait
         ];
 
         if (
-        !(!empty($method) &&
+            !(!empty($method) &&
             is_string($method) &&
             isset($methods[$method]))
         ) {
