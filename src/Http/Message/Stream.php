@@ -20,6 +20,7 @@ namespace Phalcon\Http\Message;
 
 use Exception;
 use Phalcon\Helper\Arr;
+use Phalcon\Http\Message\Traits\StreamTrait;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
 
@@ -50,13 +51,15 @@ use const E_WARNING;
  */
 class Stream implements StreamInterface
 {
+    use StreamTrait;
+
     /**
-     * @var resource | null
+     * @var resource|null
      */
     protected $handle = null;
 
     /**
-     * @var resource | string
+     * @var resource|string
      */
     private $stream;
 
@@ -336,7 +339,7 @@ class Stream implements StreamInterface
      * Returns the current position of the file read/write pointer
      *
      * @return int
-     * @throws Exception
+     * @throws RuntimeException
      */
     public function tell(): int
     {
@@ -374,45 +377,5 @@ class Stream implements StreamInterface
         }
 
         return $bytes;
-    }
-
-    /**
-     * Checks if a handle is available and throws an exception otherwise
-     */
-    private function checkHandle(): void
-    {
-        if (null === $this->handle) {
-            throw new RuntimeException("A valid resource is required.");
-        }
-    }
-
-    /**
-     * Checks if a handle is readable and throws an exception otherwise
-     */
-    private function checkReadable(): void
-    {
-        if (true !== $this->isReadable()) {
-            throw new RuntimeException("The resource is not readable.");
-        }
-    }
-
-    /**
-     * Checks if a handle is seekable and throws an exception otherwise
-     */
-    private function checkSeekable(): void
-    {
-        if (true !== $this->isSeekable()) {
-            throw new RuntimeException("The resource is not seekable.");
-        }
-    }
-
-    /**
-     * Checks if a handle is writeable and throws an exception otherwise
-     */
-    private function checkWritable(): void
-    {
-        if (true !== $this->isWritable()) {
-            throw new RuntimeException("The resource is not writable.");
-        }
     }
 }

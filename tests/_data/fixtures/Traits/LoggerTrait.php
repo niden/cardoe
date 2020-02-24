@@ -16,6 +16,7 @@ use Phalcon\Logger;
 use Phalcon\Logger\Adapter\Stream;
 use Phalcon\Logger\Exception;
 use UnitTester;
+
 use function logsDir;
 
 trait LoggerTrait

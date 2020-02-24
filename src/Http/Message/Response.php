@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by Zend Diactoros
+ *
  * @link    https://github.com/zendframework/zend-diactoros
  * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
@@ -19,6 +20,9 @@ namespace Phalcon\Http\Message;
 
 use Phalcon\Helper\Number;
 use Phalcon\Http\Message\Exception\InvalidArgumentException;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\MessageTrait;
+use Phalcon\Http\Message\Traits\ResponseTrait;
 use Psr\Http\Message\ResponseInterface;
 
 use function is_int;
@@ -30,8 +34,12 @@ use function is_string;
  * @property string $reasonPhrase
  * @property int    $statusCode
  */
-final class Response extends AbstractMessage implements ResponseInterface
+final class Response implements ResponseInterface
 {
+    use CommonTrait;
+    use MessageTrait;
+    use ResponseTrait;
+
     /**
      * Gets the response reason phrase associated with the status code.
      *
@@ -47,7 +55,7 @@ final class Response extends AbstractMessage implements ResponseInterface
      *
      * @var string
      */
-    protected $reasonPhrase = "";
+    private $reasonPhrase = '';
 
     /**
      * Gets the response status code.
@@ -57,7 +65,7 @@ final class Response extends AbstractMessage implements ResponseInterface
      *
      * @var int
      */
-    protected $statusCode = 200;
+    private $statusCode = 200;
 
     /**
      * Response constructor.
@@ -78,6 +86,8 @@ final class Response extends AbstractMessage implements ResponseInterface
     }
 
     /**
+     * Returns the reason phrase
+     *
      * @return string
      */
     public function getReasonPhrase(): string
@@ -86,6 +96,8 @@ final class Response extends AbstractMessage implements ResponseInterface
     }
 
     /**
+     * Returns the status code
+     *
      * @return int
      */
     public function getStatusCode()

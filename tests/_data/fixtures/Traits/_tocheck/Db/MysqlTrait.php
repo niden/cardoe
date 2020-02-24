@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 /**
@@ -15,7 +16,6 @@ namespace Phalcon\Test\Fixtures\Traits\Db;
 use Phalcon\Db\Column;
 use Phalcon\Db\Index;
 use Phalcon\Db\Reference;
-use function array_shift;
 
 trait MysqlTrait
 {

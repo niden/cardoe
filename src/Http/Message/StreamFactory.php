@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by Zend Diactoros
+ *
  * @link    https://github.com/zendframework/zend-diactoros
  * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */

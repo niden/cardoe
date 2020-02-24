@@ -36,10 +36,7 @@ class CloseCest
 
         $stream->close();
 
-        $I->assertInternalType(
-            'resource',
-            $handle
-        );
+        $I->assertIsResource($handle);
     }
 
     /**
@@ -60,8 +57,6 @@ class CloseCest
 
         $stream->close();
 
-        $I->assertNull(
-            $stream->detach()
-        );
+        $I->assertNull($stream->detach());
     }
 }

@@ -9,6 +9,7 @@
  * file that was distributed with this source code.
  *
  * Implementation of this file has been influenced by Zend Diactoros
+ *
  * @link    https://github.com/zendframework/zend-diactoros
  * @license https://github.com/zendframework/zend-diactoros/blob/master/LICENSE.md
  */
@@ -18,6 +19,9 @@ declare(strict_types=1);
 namespace Phalcon\Http\Message;
 
 use Phalcon\Http\Message\Stream\Input;
+use Phalcon\Http\Message\Traits\CommonTrait;
+use Phalcon\Http\Message\Traits\MessageTrait;
+use Phalcon\Http\Message\Traits\RequestTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -25,8 +29,12 @@ use Psr\Http\Message\UriInterface;
 /**
  * PSR-7 Request
  */
-final class Request extends AbstractRequest implements RequestInterface
+final class Request implements RequestInterface
 {
+    use CommonTrait;
+    use MessageTrait;
+    use RequestTrait;
+
     /**
      * Request constructor.
      *

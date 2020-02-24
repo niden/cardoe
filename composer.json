@@ -23,6 +23,7 @@
         "ext-json": "*",
         "ext-redis": "*",
         "ext-pdo": "*",
+        "ext-psr": "^0.7|1.0",
         "ext-xml": "^7.2",
         "pds/skeleton": "@dev",
         "psr/container": "^1.0",

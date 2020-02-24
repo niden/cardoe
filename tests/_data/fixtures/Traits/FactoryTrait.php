@@ -15,6 +15,7 @@ namespace Phalcon\Test\Fixtures\Traits;
 
 use Phalcon\Config;
 use Phalcon\Config\Adapter\Ini;
+
 use function dataDir;
 use function outputDir;
 

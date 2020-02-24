@@ -34,13 +34,9 @@ class LoadCest
         $I->wantToTest('Http\Message\ServerRequestFactory - load()');
 
         $factory = new ServerRequestFactory();
-
         $request = $factory->load();
-
-        $I->assertInstanceOf(
-            ServerRequestInterface::class,
-            $request
-        );
+        $class   = ServerRequestInterface::class;
+        $I->assertInstanceOf($class, $request);
     }
 
     /**
@@ -64,8 +60,8 @@ class LoadCest
         ];
 
         $factory = new ServerRequestFactory();
-
         $request = $factory->load($server);
+        $actual  = $request->getCookieParams();
 
         $expected = [
             'TESTSESS' => 'face28e8-daae-10e0-a774-00000abbdf6c:3447789008',
@@ -76,11 +72,7 @@ class LoadCest
             'secure'   => '',
             'httponly' => '',
         ];
-
-        $I->assertEquals(
-            $expected,
-            $request->getCookieParams()
-        );
+        $I->assertEquals($expected, $actual);
     }
 
     /**
@@ -102,30 +94,11 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals(
-            'dev.phalcon.ld',
-            $uri->getHost()
-        );
-
-        $I->assertEquals(
-            8080,
-            $uri->getPort()
-        );
-
-        $I->assertEquals(
-            '/',
-            $uri->getPath()
-        );
-
-        $I->assertEquals(
-            '',
-            $uri->getQuery()
-        );
-
-        $I->assertEquals(
-            '',
-            $uri->getFragment()
-        );
+        $I->assertEquals('dev.phalcon.ld', $uri->getHost());
+        $I->assertEquals(8080, $uri->getPort());
+        $I->assertEquals('/', $uri->getPath());
+        $I->assertEquals('', $uri->getQuery());
+        $I->assertEquals('', $uri->getFragment());
     }
 
     /**
@@ -150,10 +123,7 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals(
-            'dev.phalcon.ld,test.phalcon.ld',
-            $uri->getHost()
-        );
+        $I->assertEquals('dev.phalcon.ld,test.phalcon.ld', $uri->getHost());
     }
 
     /**
@@ -176,10 +146,7 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals(
-            '/action/reaction',
-            $uri->getPath()
-        );
+        $I->assertEquals('/action/reaction', $uri->getPath());
     }
 
     /**
@@ -201,10 +168,7 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals(
-            '/action/reaction',
-            $uri->getPath()
-        );
+        $I->assertEquals('/action/reaction', $uri->getPath());
     }
 
     /**
@@ -223,16 +187,14 @@ class LoadCest
 
         $factory = new ServerRequestFactoryFixture();
         $request = $factory->load($server);
+        $headers = $request->getHeaders();
 
         $expected = [
             'host'          => ['test.phalcon.ld'],
             'authorization' => ['Bearer'],
         ];
 
-        $I->assertEquals(
-            $expected,
-            $request->getHeaders()
-        );
+        $I->assertEquals($expected, $headers);
     }
 
     /**
@@ -260,30 +222,11 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
 
-        $I->assertEquals(
-            $example[5],
-            $uri->getHost()
-        );
-
-        $I->assertEquals(
-            $example[6],
-            $uri->getPort()
-        );
-
-        $I->assertEquals(
-            $example[7],
-            $uri->getPath()
-        );
-
-        $I->assertEquals(
-            $example[8],
-            $uri->getQuery()
-        );
-
-        $I->assertEquals(
-            $example[9],
-            $uri->getFragment()
-        );
+        $I->assertEquals($example[5], $uri->getHost());
+        $I->assertEquals($example[6], $uri->getPort());
+        $I->assertEquals($example[7], $uri->getPath());
+        $I->assertEquals($example[8], $uri->getQuery());
+        $I->assertEquals($example[9], $uri->getFragment());
     }
 
     /**
@@ -441,228 +384,6 @@ class LoadCest
         $request = $factory->load($server);
         $uri     = $request->getUri();
         $I->assertEquals('http', $uri->getScheme());
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - constructor
-     *
-     * @dataProvider getConstructorExamples
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadConstructor(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - constructor ' . $example[0]);
-
-        $factory = new ServerRequestFactory();
-
-        $server = $_SERVER;
-        $get    = $_GET;
-        $post   = $_POST;
-        $cookie = $_COOKIE;
-        $files  = $_FILES;
-
-        unset($_SERVER);
-        unset($_GET);
-        unset($_POST);
-        unset($_COOKIE);
-        unset($_FILES);
-
-        $request = $factory->load($example[1], $example[2], $example[3], $example[4], $example[5]);
-
-        $_SERVER = $server;
-        $_GET    = $get;
-        $_POST   = $post;
-        $_COOKIE = $cookie;
-        $_FILES  = $files;
-
-
-        $I->assertInstanceOf(
-            ServerRequestInterface::class,
-            $request
-        );
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - constructor
-     * - empty superglobals
-     *
-     * @dataProvider getConstructorExamples
-     *
-     * @author       Phalcon Team <team@phalcon.io>
-     * @since        2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadConstructorEmptySuperglobals(UnitTester $I, Example $example)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - constructor - empty superglobals ' . $example[0]);
-
-        $factory = new ServerRequestFactory();
-
-        $request = $factory->load($example[1], $example[2], $example[3], $example[4], $example[5]);
-        $I->assertInstanceOf(
-            ServerRequestInterface::class,
-            $request
-        );
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - protocol
-     * default
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadProtocolDefault(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - protocol default');
-
-        $factory = new ServerRequestFactory();
-
-        $server = $_SERVER;
-        unset($_SERVER);
-
-        $request = $factory->load();
-        $_SERVER = $server;
-
-        $expected = '1.1';
-        $actual   = $request->getProtocolVersion();
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - protocol
-     * defined
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadProtocolDefined(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - protocol defined');
-
-        $factory = new ServerRequestFactory();
-
-        $server = [
-            'SERVER_PROTOCOL' => 'HTTP/2.0',
-        ];
-
-        $request = $factory->load($server);
-
-        $expected = '2.0';
-        $actual   = $request->getProtocolVersion();
-        $I->assertEquals($expected, $actual);
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - protocol
-     * error
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadProtocolError(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - protocol error');
-
-        $I->expectThrowable(
-            new InvalidArgumentException(
-                'Incorrect protocol value HTTX/4.5'
-            ),
-            function () {
-                $factory = new ServerRequestFactory();
-
-                $server = [
-                    'SERVER_PROTOCOL' => 'HTTX/4.5',
-                ];
-
-                $request = $factory->load($server);
-            }
-        );
-    }
-
-    /**
-     * Tests Phalcon\Http\Message\ServerRequestFactory :: load() - protocol
-     * error unsupported
-     *
-     * @author Phalcon Team <team@phalcon.io>
-     * @since  2019-09-29
-     */
-    public function httpMessageServerRequestFactoryLoadProtocolErrorUnsupported(UnitTester $I)
-    {
-        $I->wantToTest('Http\Message\ServerRequestFactory - load() - protocol error unsupported');
-
-        $I->expectThrowable(
-            new InvalidArgumentException(
-                'Unsupported protocol HTTP/4.5'
-            ),
-            function () {
-                $factory = new ServerRequestFactory();
-
-                $server = [
-                    'SERVER_PROTOCOL' => 'HTTP/4.5',
-                ];
-
-                $request = $factory->load($server);
-            }
-        );
-    }
-
-    /**
-     * @return array
-     */
-    private function getConstructorExamples(): array
-    {
-        return [
-            [
-                'empty',
-                null,
-                null,
-                null,
-                null,
-                null,
-            ],
-            [
-                'server',
-                ['one' => 'two'],
-                null,
-                null,
-                null,
-                null,
-            ],
-            [
-                'get',
-                null,
-                ['one' => 'two'],
-                null,
-                null,
-                null,
-            ],
-            [
-                'post',
-                null,
-                null,
-                ['one' => 'two'],
-                null,
-                null,
-            ],
-            [
-                'cookie',
-                null,
-                null,
-                null,
-                ['one' => 'two'],
-                null,
-            ],
-            [
-                'files',
-                null,
-                null,
-                null,
-                null,
-                ['one' => 'two'],
-            ],
-        ];
     }
 
     /**

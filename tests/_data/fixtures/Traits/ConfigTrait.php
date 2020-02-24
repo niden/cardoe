@@ -21,6 +21,7 @@ use Phalcon\Config\Adapter\Php;
 use Phalcon\Config\Adapter\Yaml;
 use Phalcon\Config\Exception;
 use UnitTester;
+
 use function dataDir;
 
 trait ConfigTrait
