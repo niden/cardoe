@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e32a2ffdaf6a882344f249bbfdfc9519",
+    "content-hash": "30ec9d281fcece9f506cfbb186e8b0bb",
     "packages": [
         {
             "name": "pds/skeleton",
@@ -4252,7 +4252,6 @@
         "ext-json": "*",
         "ext-redis": "*",
         "ext-pdo": "*",
-        "ext-psr": "^0.7|1.0",
         "ext-xml": "^7.2"
     },
     "platform-dev": []

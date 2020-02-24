@@ -70,7 +70,7 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           ini-values: apc.enable_cli=on, session.save_path=/tmp
           tools: pecl
-          extensions: mbstring, intl, json, imagick, psr
+          extensions: mbstring, intl, json, imagick
 
       - name: Install packages
         run: composer install --prefer-dist
