@@ -85,7 +85,7 @@ jobs:
         run: vendor/bin/codecept run --ext DotReporter unit --coverage --coverage-xml
 
       - name: Code Coverage unit tests
-        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
+        run: php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
       - name: Run integration tests
         env:
@@ -94,7 +94,7 @@ jobs:
         run: vendor/bin/codecept run --ext DotReporter integration --coverage --coverage-xml
 
       - name: Code Coverage integration tests
-        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
+        run: php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
       - name: Run database tests MySQL
         env:
@@ -104,7 +104,7 @@ jobs:
         run: vendor/bin/codecept run --ext DotReporter database --env mysql --coverage --coverage-xml
 
       - name: Code Coverage database tests MySql
-        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
+        run: php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
       - name: Run database tests Sqlite
         env:
@@ -113,7 +113,7 @@ jobs:
         run: vendor/bin/codecept run --ext DotReporter database --env sqlite --coverage --coverage-xml
 
       - name: Code Coverage database tests Sqlite
-        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
+        run: php ./bin/ocular.phar code-coverage:upload --format=php-clover ./tests/_output/coverage.xml
 
 #      # TODO Enable these one at a time and also for MacOS/Windows
 #      - name: Run database tests Postgres
