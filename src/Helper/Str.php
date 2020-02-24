@@ -447,11 +447,7 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): int {
-        if (function_exists("mb_strlen")) {
-            return mb_strlen($text, $encoding);
-        }
-
-        return strlen(utf8_decode($text));
+        return mb_strlen($text, $encoding);
     }
 
     /**
@@ -467,11 +463,7 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): string {
-        if (function_exists("mb_convert_case")) {
-            return mb_convert_case($text, MB_CASE_LOWER, $encoding);
-        }
-
-        return strtolower(utf8_decode($text));
+        return mb_convert_case($text, MB_CASE_LOWER, $encoding);
     }
 
     /**
@@ -570,11 +562,7 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): string {
-        if (function_exists("mb_convert_case")) {
-            return mb_convert_case($text, MB_CASE_TITLE, $encoding);
-        }
-
-        return ucwords(utf8_decode($text));
+        return mb_convert_case($text, MB_CASE_TITLE, $encoding);
     }
 
     /**
@@ -604,10 +592,6 @@ class Str
         string $text,
         string $encoding = "UTF-8"
     ): string {
-        if (function_exists("mb_convert_case")) {
-            return mb_convert_case($text, MB_CASE_UPPER, $encoding);
-        }
-
-        return strtoupper(utf8_decode($text));
+        return mb_convert_case($text, MB_CASE_UPPER, $encoding);
     }
 }

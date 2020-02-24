@@ -45,6 +45,9 @@ class LowerFirstCest
             ['test', 'test'],
             ['tEsT', 'tEsT'],
             ['TEST', 'tEST'],
+            ['T', 't'],
+            ['t', 't'],
+            ['', ''],
         ];
     }
 }

@@ -43,6 +43,9 @@ class UpperFirstCest
             ['test', 'Test'],
             ['tEsT', 'TEsT'],
             ['TEST', 'TEST'],
+            ['T', 'T'],
+            ['t', 'T'],
+            ['', ''],
         ];
     }
 }

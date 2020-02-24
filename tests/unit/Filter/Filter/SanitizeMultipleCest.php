@@ -29,6 +29,21 @@ class SanitizeMultipleCest
      * @author Phalcon Team <team@phalcon.io>
      * @since  2014-09-30
      */
+    public function filterFilterSanitizeArrayWithNull(UnitTester $I)
+    {
+        $locator = new FilterFactory();
+        $filter  = $locator->newInstance();
+
+        $actual   = $filter->sanitize(null, ['string']);
+        $I->assertNull($actual);
+    }
+
+    /**
+     * Tests sanitizing string with filters
+     *
+     * @author Phalcon Team <team@phalcon.io>
+     * @since  2014-09-30
+     */
     public function filterFilterSanitizeStringWithMultipleFilters(UnitTester $I)
     {
         $locator = new FilterFactory();
