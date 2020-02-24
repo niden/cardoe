@@ -23,8 +23,9 @@ settings:
 bootstrap: _bootstrap.php
 
 coverage:
-    # Disable Code Coverage by default to speed up Travis tests
-    enabled: false
+    enabled: true
+    include:
+        - src/*
 
 extensions:
     enabled:

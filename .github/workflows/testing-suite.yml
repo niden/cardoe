@@ -82,26 +82,38 @@ jobs:
           vendor/bin/codecept build
 
       - name: Run unit tests
-        run: vendor/bin/codecept run --ext DotReporter unit
+        run: vendor/bin/codecept run --ext DotReporter unit --coverage --coverage-xml
+
+      - name: Code Coverage unit tests
+        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
 
       - name: Run integration tests
         env:
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
           DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-        run: vendor/bin/codecept run --ext DotReporter integration
+        run: vendor/bin/codecept run --ext DotReporter integration --coverage --coverage-xml
+
+      - name: Code Coverage integration tests
+        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
 
       - name: Run database tests MySQL
         env:
           DATA_MYSQL_PORT: ${{ job.services.mysql.ports['3306'] }}
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
           DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-        run: vendor/bin/codecept run --ext DotReporter database --env mysql
+        run: vendor/bin/codecept run --ext DotReporter database --env mysql --coverage --coverage-xml
+
+      - name: Code Coverage database tests MySql
+        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
 
       - name: Run database tests Sqlite
         env:
           DATA_REDIS_PORT: ${{ job.services.redis.ports['6379'] }}
           DATA_MEMCACHED_PORT: ${{ job.services.memcached.ports['11211'] }}
-        run: vendor/bin/codecept run --ext DotReporter database --env sqlite
+        run: vendor/bin/codecept run --ext DotReporter database --env sqlite --coverage --coverage-xml
+
+      - name: Code Coverage database tests Sqlite
+        run: php bin/ocular.phar --code-coverage:upload --format=php-clover tests/_output/coverage.xml
 
 #      # TODO Enable these one at a time and also for MacOS/Windows
 #      - name: Run database tests Postgres
