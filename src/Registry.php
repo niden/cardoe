@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon;
 
+use Generator;
 use Traversable;
 
 /**
@@ -159,11 +160,15 @@ final class Registry extends Collection
     }
 
     /**
-     * Returns the iterator of the class
+     * Returns the generator of the class
+     *
+     * @return Generator
      */
-    final public function getIterator(): Traversable
+    final public function getIterator(): Generator
     {
-        return parent::getIterator();
+        foreach ($this->data as $key => $value) {
+            yield $key => $value;
+        }
     }
 
     /**

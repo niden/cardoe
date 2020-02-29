@@ -95,13 +95,4 @@ class Token
     {
         return $this->getPayload() . "." . $this->getSignature()->getEncoded();
     }
-
-
-    /**
-     * {@inheritdoc}
-     */
-    public function signature(): Signature
-    {
-        return $this->signature;
-    }
 }

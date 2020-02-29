@@ -16,6 +16,7 @@ namespace Phalcon;
 use ArrayAccess;
 use ArrayIterator;
 use Countable;
+use Generator;
 use IteratorAggregate;
 use JsonSerializable;
 use Phalcon\Helper\Json;
@@ -180,13 +181,15 @@ class Collection implements
     }
 
     /**
-     * Returns the iterator of the class
+     * Returns the generator of the class
      *
-     * @return Traversable
+     * @return Generator
      */
-    public function getIterator(): Traversable
+    public function getIterator(): Generator
     {
-        return new ArrayIterator($this->data);
+        foreach ($this->data as $key => $value) {
+            yield $key => $value;
+        }
     }
 
     /**
