@@ -51,7 +51,7 @@ class FilterFactory
             Filter::FILTER_UPPER       => "Phalcon\\Filter\\Sanitize\\Upper",
             Filter::FILTER_UPPERFIRST  => "Phalcon\\Filter\\Sanitize\\UpperFirst",
             Filter::FILTER_UPPERWORDS  => "Phalcon\\Filter\\Sanitize\\UpperWords",
-            Filter::FILTER_URL         => "Phalcon\\Filter\\Sanitize\\Url"
+            Filter::FILTER_URL         => "Phalcon\\Filter\\Sanitize\\Url",
         ];
     }
 }

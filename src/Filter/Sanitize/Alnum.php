@@ -21,9 +21,9 @@ namespace Phalcon\Filter\Sanitize;
 class Alnum
 {
     /**
+     * @return string|string[]|null
      * @var mixed input The text to sanitize
      *
-     * @return string|string[]|null
      */
     public function __invoke($input)
     {

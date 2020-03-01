@@ -27,7 +27,7 @@ class Replace
      * @param mixed           $input
      * @param string|string[] $from
      * @param string|string[] $to
-
+     *
      * @return string|string[]
      */
     public function __invoke($input, $from, $to)

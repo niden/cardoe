@@ -21,9 +21,9 @@ namespace Phalcon\Filter\Sanitize;
 class IntVal
 {
     /**
+     * @return int
      * @var mixed input The text to sanitize
      *
-     * @return int
      */
     public function __invoke($input)
     {

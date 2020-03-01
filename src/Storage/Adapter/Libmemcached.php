@@ -132,17 +132,17 @@ class Libmemcached extends AbstractAdapter
             $options      = $this->options;
             $persistentId = Arr::get($options, "persistentId", "ph-mcid-");
             /** @var array $sasl */
-            $sasl         = Arr::get($options, "saslAuthData", [], "array");
-            $connection   = new Memcached($persistentId);
-            $serverList   = $connection->getServerList();
+            $sasl       = Arr::get($options, "saslAuthData", [], "array");
+            $connection = new Memcached($persistentId);
+            $serverList = $connection->getServerList();
 
             $connection->setOption(Memcached::OPT_PREFIX_KEY, $this->prefix);
 
             if (count($serverList) < 1) {
                 /** @var array $servers */
-                $servers  = Arr::get($options, "servers", [], "array");
+                $servers = Arr::get($options, "servers", [], "array");
                 /** @var array $client */
-                $client   = Arr::get($options, "client", [], "array");
+                $client = Arr::get($options, "client", [], "array");
                 /** @var string $saslUser */
                 $saslUser = Arr::get($sasl, "user", "", "string");
                 /** @var string $saslPass */

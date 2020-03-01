@@ -21,10 +21,10 @@ namespace Phalcon\Filter\Sanitize;
 class BoolVal
 {
     /**
+     * @return bool
      * @var mixed input The text to sanitize
      *
      *
-     * @return bool
      */
     public function __invoke($input)
     {

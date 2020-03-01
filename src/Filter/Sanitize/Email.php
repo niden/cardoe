@@ -21,9 +21,9 @@ namespace Phalcon\Filter\Sanitize;
 class Email
 {
     /**
+     * @return mixed
      * @var mixed input The text to sanitize
      *
-     * @return mixed
      */
     public function __invoke($input)
     {

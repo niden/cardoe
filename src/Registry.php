@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace Phalcon;
 
 use Generator;
-use Traversable;
 
 /**
  * Phalcon\Registry
