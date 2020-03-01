@@ -385,7 +385,7 @@ final class UploadedFile implements UploadedFileInterface
          * All together for early failure
          */
         if (
-        !(is_string($targetPath) &&
+            !(is_string($targetPath) &&
             !empty($targetPath) &&
             is_dir(dirname($targetPath)) &&
             is_writable(dirname($targetPath)))
