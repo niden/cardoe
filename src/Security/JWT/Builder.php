@@ -114,7 +114,14 @@ class Builder
      */
     public function getContentType(): ?string
     {
-        return $this->jose->get(Enum::CONTENT_TYPE, null, "string");
+        /** @var string $result */
+        $result = $this->jose->get(
+            Enum::CONTENT_TYPE,
+            null,
+            "string"
+        );
+
+        return $result;
     }
 
     /**
@@ -122,7 +129,14 @@ class Builder
      */
     public function getExpirationTime(): ?int
     {
-        return $this->claims->get(Enum::EXPIRATION_TIME, null, "int");
+        /** @var int|null $result */
+        $result = $this->claims->get(
+            Enum::EXPIRATION_TIME,
+            null,
+            "int"
+        );
+
+        return $result;
     }
 
     /**
@@ -138,7 +152,14 @@ class Builder
      */
     public function getId(): ?string
     {
-        return $this->claims->get(Enum::ID, null, "string");
+        /** @var string $result */
+        $result = $this->claims->get(
+            Enum::ID,
+            null,
+            "string"
+        );
+
+        return $result;
     }
 
     /**
@@ -146,7 +167,14 @@ class Builder
      */
     public function getIssuedAt(): ?int
     {
-        return $this->claims->get(Enum::ISSUED_AT, null, "int");
+        /** @var int|null $result */
+        $result = $this->claims->get(
+            Enum::ISSUED_AT,
+            null,
+            "int"
+        );
+
+        return $result;
     }
 
     /**
@@ -154,7 +182,14 @@ class Builder
      */
     public function getIssuer(): ?string
     {
-        return $this->claims->get(Enum::ISSUER, null, "string");
+        /** @var string|null $result */
+        $result = $this->claims->get(
+            Enum::ISSUER,
+            null,
+            "string"
+        );
+
+        return $result;
     }
 
     /**
@@ -162,7 +197,14 @@ class Builder
      */
     public function getNotBefore(): ?int
     {
-        return $this->claims->get(Enum::NOT_BEFORE, null, "int");
+        /** @var int|null $result */
+        $result = $this->claims->get(
+            Enum::NOT_BEFORE,
+            null,
+            "int"
+        );
+
+        return $result;
     }
 
     /**
@@ -170,7 +212,14 @@ class Builder
      */
     public function getSubject(): ?string
     {
-        return $this->claims->get(Enum::SUBJECT, null, "string");
+        /** @var string|null $result */
+        $result = $this->claims->get(
+            Enum::SUBJECT,
+            null,
+            "string"
+        );
+
+        return $result;
     }
 
     /**

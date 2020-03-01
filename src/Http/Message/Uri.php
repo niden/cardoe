@@ -108,28 +108,28 @@ final class Uri implements UriInterface
             }
 
             $this->fragment = $this->filterFragment(
-                Arr::get($urlParts, 'fragment', '')
+                (string) Arr::get($urlParts, 'fragment', '')
             );
             $this->host     = strtolower(
-                Arr::get($urlParts, 'host', '')
+                (string) Arr::get($urlParts, 'host', '')
             );
             $this->pass     = rawurlencode(
-                Arr::get($urlParts, 'pass', '')
+                (string) Arr::get($urlParts, 'pass', '')
             );
             $this->path     = $this->filterPath(
-                Arr::get($urlParts, 'path', '')
+                (string) Arr::get($urlParts, 'path', '')
             );
             $this->port     = $this->filterPort(
                 Arr::get($urlParts, 'port', null)
             );
             $this->query    = $this->filterQuery(
-                Arr::get($urlParts, 'query', '')
+                (string) Arr::get($urlParts, 'query', '')
             );
             $this->scheme   = $this->filterScheme(
-                Arr::get($urlParts, 'scheme', '')
+                (string) Arr::get($urlParts, 'scheme', '')
             );
             $this->user     = rawurlencode(
-                Arr::get($urlParts, 'user', '')
+                (string) Arr::get($urlParts, 'user', '')
             );
         }
     }

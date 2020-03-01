@@ -41,7 +41,12 @@ use const PHP_EOL;
  *
  * $logger->close();
  *```
- */
+ *
+ * @property resource|null $handler
+ * @property string        $mode
+ * @property string        $name
+ * @property array         $options
+*/
 class Stream extends AbstractAdapter
 {
     /**
