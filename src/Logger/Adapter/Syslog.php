@@ -17,11 +17,9 @@ use LogicException;
 use Phalcon\Helper\Arr;
 use Phalcon\Logger;
 use Phalcon\Logger\Item;
-
 use function closelog;
 use function openlog;
 use function sprintf;
-
 use const LOG_ALERT;
 use const LOG_CRIT;
 use const LOG_DEBUG;
@@ -107,7 +105,7 @@ class Syslog extends AbstractAdapter
     {
         $formatter = $this->getFormatter();
         $message   = $formatter->format($item);
-        $result    = openlog($this->name, $this->option, $this->facility);
+        $result    = $this->openlog($this->name, $this->option, $this->facility);
 
         if (!$result) {
             throw new LogicException(
@@ -123,6 +121,22 @@ class Syslog extends AbstractAdapter
         $level        = $this->logLevelToSyslog($item->getType());
 
         \syslog($level, $message);
+    }
+
+    /**
+     * Open connection to system logger
+     *
+     * @link https://php.net/manual/en/function.openlog.php
+     *
+     * @param string $ident
+     * @param int    $option
+     * @param int    $facility
+     *
+     * @return bool
+     */
+    protected function openlog($ident, $option, $facility)
+    {
+        return openlog($ident, $option, $facility);
     }
 
     /**

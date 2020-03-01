@@ -141,7 +141,6 @@ class Loader
         $directories,
         bool $prepend = false
     ): Loader {
-
         $ns          = '\\';
         $ds          = DIRECTORY_SEPARATOR;
         $namespace   = trim($namespace, $ns) . $ns;
@@ -172,8 +171,6 @@ class Loader
      */
     public function autoload(string $name)
     {
-        $ns = '\\';
-
         /**
          * Debug information
          */
@@ -193,35 +190,7 @@ class Loader
 
         $this->debug[] = 'Class: 404 : ' . $name;
 
-        /**
-         * Files
-         */
-
-        /**
-         * Namespaces
-         *
-         * Matching in reverse the namespace names in relation to class names
-         */
-        $namespace = $name;
-        while (false !== $pos = strrpos($namespace, $ns)) {
-            // retain the trailing namespace separator in the prefix
-            $namespace = substr($name, 0, $pos + 1);
-            $remainder = substr($name, $pos + 1);
-
-            $file = $this->loadFile($namespace, $remainder);
-            if (false !== $file) {
-                $this->debug[] = "Namespace: " . $namespace . " - " . $file;
-
-                return $file;
-            }
-
-            $namespace = rtrim($namespace, $ns);
-        }
-
-        // 404
-        $this->debug[] = "Namespace: 404 : " . $name;
-
-        return false;
+        return $this->processLoadNameSpaces($name);
     }
 
     /**
@@ -401,28 +370,13 @@ class Loader
      */
     protected function loadFile(string $namespace, string $class)
     {
-        $ns = '\\';
-        $ds = DIRECTORY_SEPARATOR;
-
         if (!isset($this->namespaces[$namespace])) {
             $this->debug[] = 'Load: No folders registered: ' . $namespace;
 
             return false;
         }
 
-        foreach ($this->namespaces[$namespace] as $directory) {
-            foreach ($this->extensions as $extension) {
-                $file = $directory . str_replace($ns, $ds, $class) . '.' . $extension;
-
-                if ($this->requireFile($file)) {
-                    return $file;
-                }
-
-                $this->debug[] = "Load: 404 : " . $namespace . " - " . $file;
-            }
-        }
-
-        return false;
+        return $this->processFileNameSpaces($namespace, $class);
     }
 
     /**
@@ -477,5 +431,67 @@ class Loader
         }
 
         return $directories;
+    }
+
+    /**
+     * @param string $namespace
+     * @param string $class
+     *
+     * @return bool|string
+     */
+    private function processFileNameSpaces(string $namespace, string $class)
+    {
+        $ns = '\\';
+        $ds = DIRECTORY_SEPARATOR;
+
+        foreach ($this->namespaces[$namespace] as $directory) {
+            foreach ($this->extensions as $extension) {
+                $file = $directory . str_replace($ns, $ds, $class) . '.' . $extension;
+
+                if ($this->requireFile($file)) {
+                    return $file;
+                }
+
+                $this->debug[] = "Load: 404 : " . $namespace . " - " . $file;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool|string
+     */
+    private function processLoadNameSpaces(string $name)
+    {
+        $ns = '\\';
+
+        /**
+         * Namespaces
+         *
+         * Matching in reverse the namespace names in relation to class names
+         */
+        $namespace = $name;
+        while (false !== $pos = strrpos($namespace, $ns)) {
+            // retain the trailing namespace separator in the prefix
+            $namespace = substr($name, 0, $pos + 1);
+            $remainder = substr($name, $pos + 1);
+
+            $file = $this->loadFile($namespace, $remainder);
+            if (false !== $file) {
+                $this->debug[] = "Namespace: " . $namespace . " - " . $file;
+
+                return $file;
+            }
+
+            $namespace = rtrim($namespace, $ns);
+        }
+
+        // 404
+        $this->debug[] = "Namespace: 404 : " . $name;
+
+        return false;
     }
 }

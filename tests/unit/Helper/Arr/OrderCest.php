@@ -43,7 +43,6 @@ class OrderCest
             ],
         ];
 
-
         $expected = [
             [
                 'id'   => 1,
@@ -64,7 +63,6 @@ class OrderCest
             Arr::order($collection, 'id')
         );
 
-
         $expected = [
             [
                 'id'   => 3,
@@ -83,6 +81,41 @@ class OrderCest
         $I->assertEquals(
             $expected,
             Arr::order($collection, 'id', 'desc')
+        );
+
+        $collection = [
+            (object) [
+                'id'   => 2,
+                'name' => 'Paul',
+            ],
+            (object) [
+                'id'   => 3,
+                'name' => 'Peter',
+            ],
+            (object) [
+                'id'   => 1,
+                'name' => 'John',
+            ],
+        ];
+
+        $expected = [
+            (object) [
+                'id'   => 1,
+                'name' => 'John',
+            ],
+            (object) [
+                'id'   => 2,
+                'name' => 'Paul',
+            ],
+            (object) [
+                'id'   => 3,
+                'name' => 'Peter',
+            ],
+        ];
+
+        $I->assertEquals(
+            $expected,
+            Arr::order($collection, 'id')
         );
     }
 }

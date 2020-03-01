@@ -20,7 +20,10 @@ use Phalcon\Logger\Item;
 /**
  * Class AbstractAdapter
  *
- * @package Phalcon\Logger\Adapter
+ * @property string             $defaultFormatter
+ * @property FormatterInterface $formatter
+ * @property bool               $inTransaction
+ * @property array              $queue
  */
 abstract class AbstractAdapter implements AdapterInterface
 {

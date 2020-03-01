@@ -25,8 +25,25 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 use RuntimeException;
 
+use function dirname;
+use function fclose;
+use function fopen;
+use function fwrite;
+use function is_dir;
 use function is_resource;
 use function is_string;
+use function is_writable;
+use function move_uploaded_file;
+
+use const PHP_SAPI;
+use const UPLOAD_ERR_CANT_WRITE;
+use const UPLOAD_ERR_EXTENSION;
+use const UPLOAD_ERR_FORM_SIZE;
+use const UPLOAD_ERR_INI_SIZE;
+use const UPLOAD_ERR_NO_FILE;
+use const UPLOAD_ERR_NO_TMP_DIR;
+use const UPLOAD_ERR_OK;
+use const UPLOAD_ERR_PARTIAL;
 
 /**
  * PSR-7 UploadedFile
@@ -368,7 +385,7 @@ final class UploadedFile implements UploadedFileInterface
          * All together for early failure
          */
         if (
-            !(is_string($targetPath) &&
+        !(is_string($targetPath) &&
             !empty($targetPath) &&
             is_dir(dirname($targetPath)) &&
             is_writable(dirname($targetPath)))

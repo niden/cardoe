@@ -13,10 +13,10 @@ declare(strict_types=1);
 
 namespace Phalcon\Logger\Adapter;
 
+use LogicException;
 use Phalcon\Helper\Arr;
 use Phalcon\Logger\Exception;
 use Phalcon\Logger\Item;
-use UnexpectedValueException;
 
 use function fclose;
 use function fopen;
@@ -104,7 +104,7 @@ class Stream extends AbstractAdapter
         $result = true;
 
         if (is_resource($this->handler)) {
-            $result = fclose($this->handler);
+            $result = $this->fclose($this->handler);
         }
 
         $this->handler = null;
@@ -128,12 +128,12 @@ class Stream extends AbstractAdapter
     public function process(Item $item): void
     {
         if (!is_resource($this->handler)) {
-            $handler = fopen($this->name, $this->mode);
+            $handler = $this->fopen($this->name, $this->mode);
 
             if (!is_resource($handler)) {
                 $this->handler = null;
 
-                throw new UnexpectedValueException(
+                throw new LogicException(
                     sprintf(
                         "The file '%s' cannot be opened with mode '%s'",
                         $this->name,
@@ -148,6 +148,50 @@ class Stream extends AbstractAdapter
         $formatter        = $this->getFormatter();
         $formattedMessage = (string) $formatter->format($item) . PHP_EOL;
 
-        fwrite($this->handler, $formattedMessage);
+        $this->fwrite($this->handler, $formattedMessage);
+    }
+
+    /**
+     * Closes an open file pointer
+     *
+     * @link https://php.net/manual/en/function.fclose.php
+     *
+     * @param resource $handle
+     *
+     * @return bool
+     */
+    public function fclose($handle)
+    {
+        return fclose($handle);
+    }
+
+    /**
+     * Opens file or URL
+     *
+     * @link https://php.net/manual/en/function.fopen.php
+     *
+     * @param string        $filename
+     * @param string        $mode
+     *
+     * @return false|resource
+     */
+    protected function fopen($filename, $mode)
+    {
+        return fopen($filename, $mode);
+    }
+
+    /**
+     * Binary-safe file write
+     *
+     * @link https://php.net/manual/en/function.fwrite.php
+     *
+     * @param resource $handle
+     * @param string   $string
+     *
+     * @return int|false
+     */
+    protected function fwrite($handle, $string)
+    {
+        return fwrite($handle, $string);
     }
 }

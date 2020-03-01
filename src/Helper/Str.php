@@ -148,14 +148,9 @@ class Str
         string $encoding = "UTF-8"
     ): string {
         $substr = mb_substr($text, 1);
+        $suffix = ($upperRest) ? self::upper($substr, $encoding) : $substr;
 
-        if ($upperRest) {
-            $suffix = mb_strtoupper($substr, $encoding);
-        } else {
-            $suffix = $substr;
-        }
-
-        return mb_strtolower(mb_substr($text, 0, 1), $encoding) . $suffix;
+        return self::lower(mb_substr($text, 0, 1), $encoding) . $suffix;
     }
 
     /**
@@ -246,8 +241,8 @@ class Str
         return 0 === substr_compare(
             $haystack,
             $needle,
-            -strlen($needle),
-            strlen($needle),
+            -mb_strlen($needle),
+            mb_strlen($needle),
             $ignoreCase
         );
     }
@@ -533,7 +528,7 @@ class Str
         string $needle,
         bool $ignoreCase = true
     ): bool {
-        if ('' === $haystack) {
+        if ("" === $haystack) {
             return false;
         }
 
@@ -572,7 +567,7 @@ class Str
     {
         $result = preg_replace('#\s+#', '_', trim($text));
 
-        return (null === $result) ? '' : $result;
+        return (null === $result) ? "" : $result;
     }
 
     /**

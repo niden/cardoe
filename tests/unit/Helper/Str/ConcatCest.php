@@ -29,12 +29,24 @@ class ConcatCest
     {
         $I->wantToTest('Helper\Str - concat()');
         // Test 1
-        $actual   = Str::concat('/', '/tmp/', '/folder_1/', '/folder_2', 'folder_3/');
+        $actual   = Str::concat(
+            '/',
+            '/tmp/',
+            '/folder_1/',
+            '/folder_2',
+            'folder_3/'
+        );
         $expected = '/tmp/folder_1/folder_2/folder_3/';
         $I->assertEquals($expected, $actual);
 
         // Test 2
-        $actual   = Str::concat('.', '@test.', '.test2.', '.test', '.34');
+        $actual   = Str::concat(
+            '.',
+            '@test.',
+            '.test2.',
+            '.test',
+            '.34'
+        );
         $expected = '@test.test2.test.34';
         $I->assertEquals($expected, $actual);
     }

@@ -17,26 +17,9 @@ use Phalcon\Logger;
 
 /**
  * PhalconNG\Logger\LoggerFactory
- *
- * @property AdapterFactory $adapterFactory
  */
 class LoggerFactory
 {
-    /**
-     * @var AdapterFactory
-     */
-    private $adapterFactory;
-
-    /**
-     * LoggerFactory constructor.
-     *
-     * @param AdapterFactory $factory
-     */
-    public function __construct(AdapterFactory $factory)
-    {
-        $this->adapterFactory = $factory;
-    }
-
     /**
      * Returns a Logger object
      *
