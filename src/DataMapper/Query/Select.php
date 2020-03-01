@@ -43,8 +43,10 @@ use function trim;
  * @method array  fetchAssoc()
  * @method array  fetchColumn(int $column = 0)
  * @method array  fetchGroup(int $flags = PDO::FETCH_ASSOC)
- * @method object fetchObject(string $class = 'stdClass', array $arguments = [])
- * @method array  fetchObjects(string $class = 'stdClass', array $arguments = [])
+ * @method object fetchObject(string $class = 'stdClass', array $arguments =
+ *         [])
+ * @method array  fetchObjects(string $class = 'stdClass', array $arguments =
+ *         [])
  * @method array  fetchOne()
  * @method array  fetchPairs()
  * @method mixed  fetchValue()
@@ -86,19 +88,19 @@ class Select extends AbstractConditions
             "fetchObjects"  => true,
             "fetchOne"      => true,
             "fetchPairs"    => true,
-            "fetchValue"    => true
+            "fetchValue"    => true,
         ];
 
         if (isset($proxied[$method])) {
             return call_user_func_array(
                 [
                     $this->connection,
-                    $method
+                    $method,
                 ],
                 array_merge(
                     [
                         $this->getStatement(),
-                        $this->getBindValues()
+                        $this->getBindValues(),
                     ],
                     $params
                 )

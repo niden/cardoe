@@ -13,12 +13,13 @@ declare(strict_types=1);
 
 namespace Phalcon\Cache\Exception;
 
+use Psr\SimpleCache\CacheException;
 use Throwable;
 
 /**
  * Exceptions thrown in Phalcon\Cache will use this class
  */
-class Exception extends \Exception implements \Psr\SimpleCache\CacheException, Throwable
+class Exception extends \Exception implements CacheException, Throwable
 {
 
 }
