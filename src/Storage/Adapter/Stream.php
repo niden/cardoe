@@ -357,18 +357,28 @@ class Stream extends AbstractAdapter
         $payload = false;
         $pointer = fopen($filepath, 'r');
 
+        /**
+         * Cannot open file
+         */
+        if (false === $pointer) {
+            return [];
+        }
+
         if (flock($pointer, LOCK_SH)) {
             $payload = file_get_contents($filepath);
         }
 
         fclose($pointer);
 
+        /**
+         * No results
+         */
         if (false === $payload) {
             return [];
         }
 
         set_error_handler(
-            function ($number, $message, $file, $line, $context) use (&$warning) {
+            function () use (&$warning) {
                 $warning = true;
             },
             E_NOTICE
