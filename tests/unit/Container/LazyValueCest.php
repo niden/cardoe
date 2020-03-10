@@ -36,7 +36,8 @@ class LazyValueCest
                 [
                     'store' => $container->lazyValue('store'),
                 ]
-            );
+            )
+        ;
         $container
             ->values()
             ->set('store', 'neelix')
@@ -64,7 +65,8 @@ class LazyValueCest
                 [
                     'store' => $container->lazyValue('store'),
                 ]
-            );
+            )
+        ;
         $container
             ->values()
             ->set('store', $container->lazyValue('two'))

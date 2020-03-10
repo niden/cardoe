@@ -40,7 +40,7 @@ class LazyArrayCest
         $I->assertInstanceOf(LazyArray::class, $lazyArray);
         $actual = $lazyArray();
 
-        $I->assertInternalType('array', $actual);
+        $I->assertIsArray($actual);
         $I->assertArrayHasKey(0, $actual);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual[0]);
     }
@@ -65,7 +65,7 @@ class LazyArrayCest
         $I->assertInstanceOf(LazyArray::class, $lazyArray);
         $actual = $lazyArray();
 
-        $I->assertInternalType('array', $actual);
+        $I->assertIsArray($actual);
         $I->assertArrayHasKey(0, $actual);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual[0]);
     }
@@ -88,7 +88,7 @@ class LazyArrayCest
         $I->assertInstanceOf(LazyArray::class, $lazyArray);
         $actual = $lazyArray();
 
-        $I->assertInternalType('array', $actual);
+        $I->assertIsArray($actual);
         $I->assertArrayHasKey('other', $actual);
         $I->assertInstanceOf(OtherFixtureClass::class, $actual['other']);
     }
@@ -112,7 +112,7 @@ class LazyArrayCest
 
         $actual = $lazyArray->getArrayCopy();
 
-        $I->assertInternalType('array', $actual);
+        $I->assertIsArray($actual);
         $I->assertArrayHasKey('other', $actual);
         $I->assertInstanceOf(LazyNew::class, $actual['other']);
     }

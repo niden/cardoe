@@ -30,7 +30,7 @@ class NewFactoryCest
         $builder   = new Builder();
         $container = $builder->newInstance();
 
-        $other = $container->newInstance(OtherFixtureClass::class);
+        $other   = $container->newInstance(OtherFixtureClass::class);
         $factory = $container->newFactory(
             ChildFixtureClass::class,
             [

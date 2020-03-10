@@ -36,7 +36,7 @@ class NewConfiguredInstanceCest
             ConfigProjectFixtureClass::class,
         ];
 
-        $builder = new Builder();
+        $builder   = new Builder();
         $container = $builder->newConfiguredInstance($classes);
         $I->assertInstanceOf(ContainerInterface::class, $container);
         $I->assertInstanceOf(Container::class, $container);
@@ -64,7 +64,7 @@ class NewConfiguredInstanceCest
             new ConfigProjectFixtureClass(),
         ];
 
-        $builder = new Builder();
+        $builder   = new Builder();
         $container = $builder->newConfiguredInstance($classes);
         $I->assertInstanceOf(ContainerInterface::class, $container);
         $I->assertInstanceOf(Container::class, $container);
@@ -80,7 +80,8 @@ class NewConfiguredInstanceCest
     }
 
     /**
-     * Unit Tests Phalcon\Container\Builder :: newConfiguredInstance() - exception
+     * Unit Tests Phalcon\Container\Builder :: newConfiguredInstance() -
+     * exception
      *
      * @since  2019-12-30
      */

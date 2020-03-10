@@ -58,14 +58,14 @@ class LazyGetCest
     {
         $I->wantToTest('Container - lazyGet() - delegate');
 
-        $delegate = new ContainerFixture(
+        $delegate  = new ContainerFixture(
             [
                 "person" => function () {
-                    $obj = new stdClass();
+                    $obj       = new stdClass();
                     $obj->name = "seven";
 
                     return $obj;
-                }
+                },
             ]
         );
         $container = new Container(

@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Test\Unit\Container;
 
+use Exception;
 use Phalcon\Container\Builder;
-use Phalcon\Container\Resolver\ValueObject;
 use Phalcon\Test\Fixtures\Container\ParametersFixtureClass;
 use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use Phalcon\Test\Fixtures\Container\ResolveFixtureClass;
@@ -37,7 +37,7 @@ class SerializeUnserializeCest
                 ParametersFixtureClass::class,
                 [
                     'data'  => [],
-                    'empty' => 'abc'
+                    'empty' => 'abc',
                 ]
             )
         ;
@@ -52,7 +52,7 @@ class SerializeUnserializeCest
         $instance = $unserialized->newInstance(
             ParametersFixtureClass::class,
             [
-                'data' => ['one' => 1]
+                'data' => ['one' => 1],
             ]
         );
         $I->assertInstanceOf(ParametersFixtureClass::class, $instance);
@@ -75,7 +75,7 @@ class SerializeUnserializeCest
             ->set(
                 ResolveFixtureClass::class,
                 [
-                    'class' => $container->lazyNew(ParentFixtureClass::class)
+                    'class' => $container->lazyNew(ParentFixtureClass::class),
                 ]
             )
         ;
@@ -110,7 +110,7 @@ class SerializeUnserializeCest
             ->set(
                 ResolveFixtureClass::class,
                 [
-                    'class' => $container->lazyNew(ParentFixtureClass::class)
+                    'class' => $container->lazyNew(ParentFixtureClass::class),
                 ]
             )
         ;
@@ -140,7 +140,7 @@ class SerializeUnserializeCest
         $I->wantToTest('Container - serialize()/unserialize() callable');
 
         $I->expectThrowable(
-            new \Exception(
+            new Exception(
                 "Serialization of 'Closure' is not allowed"
             ),
             function () {

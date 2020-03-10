@@ -13,6 +13,7 @@ namespace Phalcon\Test\Unit\Container\ResolutionHelper;
 
 use Codeception\Stub;
 use Codeception\Stub\Expected;
+use Exception;
 use Phalcon\Container;
 use Phalcon\Container\ResolutionHelper;
 use stdClass;
@@ -115,7 +116,7 @@ class ConstructCest
      * @param mixed $instance
      *
      * @return object
-     * @throws \Exception
+     * @throws Exception
      */
     private function getHasContainer($source, $instance)
     {
@@ -142,7 +143,7 @@ class ConstructCest
      * @param mixed $instance
      *
      * @return object
-     * @throws \Exception
+     * @throws Exception
      */
     private function getHasNotContainer($source, $instance)
     {

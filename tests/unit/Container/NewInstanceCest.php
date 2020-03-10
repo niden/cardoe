@@ -141,7 +141,7 @@ class NewInstanceCest
             }
         );
 
-        $class = ParentFixtureClass::class;
+        $class  = ParentFixtureClass::class;
         $actual = $container->newInstance(
             $class,
             [
@@ -203,7 +203,8 @@ class NewInstanceCest
     }
 
     /**
-     * Unit Tests Phalcon\Container :: newInstance() - with lazy mutation injection container
+     * Unit Tests Phalcon\Container :: newInstance() - with lazy mutation
+     * injection container
      *
      * @since  2020-01-01
      */
@@ -229,7 +230,7 @@ class NewInstanceCest
                 [
                     $container->lazyNew(
                         MutationWithDependencyFixtureClass::class
-                    )
+                    ),
                 ]
             )
         ;
@@ -243,7 +244,8 @@ class NewInstanceCest
     }
 
     /**
-     * Unit Tests Phalcon\Container :: newInstance() - setter interfaces overrides
+     * Unit Tests Phalcon\Container :: newInstance() - setter interfaces
+     * overrides
      *
      * @since  2020-01-01
      */
@@ -268,7 +270,7 @@ class NewInstanceCest
                 ]
             )
         ;
-        
+
         // "inherits" initial value from interface
         $actual = $container->newInstance(InterfaceFixtureClass::class);
         $I->assertSame('voyager', $actual->getShip());
@@ -469,7 +471,8 @@ class NewInstanceCest
                 [
                     'class' => $container->lazyNew(ParentFixtureClass::class),
                 ]
-            );
+            )
+        ;
 
         $actual = $container->newInstance(ResolveFixtureClass::class);
         $I->assertInstanceOf(ResolveFixtureClass::class, $actual);

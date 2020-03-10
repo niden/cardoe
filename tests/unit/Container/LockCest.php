@@ -14,7 +14,6 @@ namespace Phalcon\Test\Unit\Container;
 use Phalcon\Container\Builder;
 use Phalcon\Container\Exception\ContainerLocked;
 use Phalcon\Test\Fixtures\Container\OtherFixtureClass;
-use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use stdClass;
 use UnitTester;
 

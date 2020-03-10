@@ -13,7 +13,6 @@ namespace Phalcon\Test\Unit\Container\Resolver\AutoResolver;
 
 use Phalcon\Container\Resolver\AutoResolver;
 use Phalcon\Container\Resolver\Reflector;
-use Phalcon\Container\Resolver\Resolver;
 use Phalcon\Test\Fixtures\Container\ParentFixtureClass;
 use UnitTester;
 

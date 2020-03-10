@@ -92,19 +92,19 @@ class LazyNewCest
             ->set(
                 ContextParentClass::class,
                 [
-                    'store' => $container->lazyNew(ContextChildClass::class)
+                    'store' => $container->lazyNew(ContextChildClass::class),
                 ]
             )
             ->set(
                 ContextChildClass::class,
                 [
-                    'store' => $container->lazyNew(ContextGrandChildClass::class)
+                    'store' => $container->lazyNew(ContextGrandChildClass::class),
                 ]
             )
             ->set(
                 ContextGrandChildClass::class,
                 [
-                    'store' => 'voyager'
+                    'store' => 'voyager',
                 ]
             )
         ;
@@ -120,7 +120,7 @@ class LazyNewCest
                 new Blueprint(
                     ContextGrandChildClass::class,
                     [
-                        'store' => 'enterprise'
+                        'store' => 'enterprise',
                     ]
                 )
             )

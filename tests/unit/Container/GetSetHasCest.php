@@ -13,7 +13,6 @@ namespace Phalcon\Test\Unit\Container;
 
 use Phalcon\Container\Builder;
 use Phalcon\Container\Exception\ServiceNotFound;
-use Phalcon\Container\Exception\ServiceNotObject;
 use Phalcon\Test\Fixtures\Container\NullChildConstructClass;
 use Phalcon\Test\Fixtures\Container\NullParentConstructClass;
 use UnitTester;
@@ -120,7 +119,7 @@ class GetSetHasCest
             'parentService',
             $container->lazyNew(NullParentConstructClass::class)
         );
-        
+
         $service = $container->get('parentService');
         $I->assertInstanceOf(NullParentConstructClass::class, $service);
     }
