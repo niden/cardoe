@@ -45,7 +45,7 @@ class Base64 extends AbstractSerializer
     /**
      * Unserializes data
      *
-     * @param mixed $data
+     * @param string $data
      */
     public function unserialize($data): void
     {

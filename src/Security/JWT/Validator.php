@@ -70,9 +70,7 @@ class Validator
      */
     public function validateAudience(string $audience): Validator
     {
-        /** @var array $claims */
-        $claims = $this->token->getClaims()->get(Enum::AUDIENCE, []);
-        if (!in_array($audience, $claims)) {
+        if (!in_array($audience, $this->token->getClaims()->get(Enum::AUDIENCE, []))) {
             throw new ValidatorException(
                 "Validation: audience not allowed"
             );

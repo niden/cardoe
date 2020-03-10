@@ -102,8 +102,8 @@ class Redis extends AbstractAdapter
     /**
      * Reads data from the adapter
      *
-     * @param string     $key
-     * @param mixed|null $defaultValue
+     * @param string $key
+     * @param null   $defaultValue
      *
      * @return mixed
      * @throws Exception

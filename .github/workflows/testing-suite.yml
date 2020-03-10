@@ -48,6 +48,7 @@ jobs:
         id: composer-cache
         run: |
           echo "::set-output name=dir::$(composer config cache-files-dir)"
+
       - name: Setup Cache
         uses: actions/cache@v1
         with:
@@ -55,12 +56,14 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
             ${{ runner.os }}-composer-
+
       - name: Setup Composer Token
         run: |
           # To increase the Composer rate limit we're use GitHub authentication
           if [ -n "${{ secrets.COMPOSER_TOKEN }}" ]; then
             composer config github-oauth.github.com "${{ secrets.COMPOSER_TOKEN }}"
           fi
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v1
         with:
@@ -77,6 +80,7 @@ jobs:
           cp tests/_ci/.env.default .env
           php tests/_ci/generate-db-schemas.php
           vendor/bin/codecept build
+
       - name: Run unit tests
         run: vendor/bin/codecept run --ext DotReporter unit --coverage --coverage-xml
 
