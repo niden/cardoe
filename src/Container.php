@@ -105,8 +105,8 @@ class Container implements ContainerInterface
      * @param InjectionFactory   $factory           A factory to create objects
      *                                              and values for injection.
      *
-     * @param ContainerInterface $delegate          An optional container that will be
-     *                                              used to fetch
+     * @param ContainerInterface $delegate          An optional container that
+     *                                              will be used to fetch
      *                                              dependencies (i.e. lazy
      *                                              gets)
      */
@@ -347,6 +347,7 @@ class Container implements ContainerInterface
     public function mutations(): ValueObject
     {
         $this->checkLocked();
+
         return $this->resolver->mutations();
     }
 
@@ -430,6 +431,7 @@ class Container implements ContainerInterface
     public function parameters(): ValueObject
     {
         $this->checkLocked();
+
         return $this->resolver->parameters();
     }
 
@@ -492,6 +494,7 @@ class Container implements ContainerInterface
     public function values(): ValueObject
     {
         $this->checkLocked();
+
         return $this->resolver->values();
     }
 
