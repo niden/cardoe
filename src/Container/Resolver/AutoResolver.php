@@ -28,7 +28,7 @@ use ReflectionParameter;
  * constructor params according to their typehints; use with caution as it can
  * be very difficult to debug.
  *
- * @property ValueObject    $types
+ * @property ValueObject $types
  */
 class AutoResolver extends Resolver
 {

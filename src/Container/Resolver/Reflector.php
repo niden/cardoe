@@ -134,7 +134,7 @@ class Reflector
                 $newTraits      = class_uses(array_pop($traitsToSearch));
                 $traits         += $newTraits;
                 $traitsToSearch += $newTraits;
-            };
+            }
 
             foreach ($traits as $trait) {
                 $traits += class_uses($trait);

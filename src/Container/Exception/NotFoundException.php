@@ -18,8 +18,8 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Exception;
 
-use Psr\Container\NotFoundExceptionInterface;
 use InvalidArgumentException;
+use Psr\Container\NotFoundExceptionInterface;
 
 class NotFoundException extends InvalidArgumentException implements NotFoundExceptionInterface
 {

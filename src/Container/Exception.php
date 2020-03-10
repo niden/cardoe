@@ -24,7 +24,6 @@ use Phalcon\Container\Exception\MissingParameter;
 use Phalcon\Container\Exception\MutationDoesNotImplementInterface;
 use Phalcon\Container\Exception\NoSuchProperty;
 use Phalcon\Container\Exception\ServiceNotFound;
-use Phalcon\Container\Exception\ServiceNotObject;
 use Phalcon\Container\Exception\SetterMethodNotFound;
 use Psr\Container\ContainerExceptionInterface;
 
@@ -54,7 +53,7 @@ class Exception extends BaseException implements ContainerExceptionInterface
     /**
      * A class constructor param was not defined.
      *
-     * @param string $class The class name.
+     * @param string $class     The class name.
      * @param string $parameter The constructor param name.
      *
      * @return MissingParameter

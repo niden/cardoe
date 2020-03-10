@@ -43,8 +43,8 @@ class Lazy implements LazyInterface
     /**
      * Constructor.
      *
-     * @param callable $callable The callable to invoke.
-     * @param array    $parameters   Arguments for the callable.
+     * @param callable $callable   The callable to invoke.
+     * @param array    $parameters Arguments for the callable.
      */
     public function __construct($callable, array $parameters = [])
     {

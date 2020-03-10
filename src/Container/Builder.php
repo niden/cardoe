@@ -73,8 +73,9 @@ class Builder
      * to modify() services.
      *
      * @param array $configClasses A list of ContainerConfig classes to
-     * instantiate and invoke for configuring the Container.
-     * @param bool $autoResolve Use the auto-resolver?
+     *                             instantiate and invoke for configuring the
+     *                             Container.
+     * @param bool  $autoResolve   Use the auto-resolver?
      *
      * @return Container
      *
@@ -85,7 +86,7 @@ class Builder
         array $configClasses = [],
         bool $autoResolve = false
     ): Container {
-        $container = $this->newInstance($autoResolve);
+        $container  = $this->newInstance($autoResolve);
         $collection = $this->newConfigCollection($configClasses);
 
         $collection->define($container);

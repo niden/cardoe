@@ -24,7 +24,7 @@ use Phalcon\Container\Exception\NoSuchProperty;
 use function array_key_exists;
 
 /**
- * Class ArrayObject
+ * Class ValueObject
  *
  * @property array $store
  */

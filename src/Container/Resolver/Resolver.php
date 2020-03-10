@@ -18,7 +18,6 @@ declare(strict_types=1);
 
 namespace Phalcon\Container\Resolver;
 
-use Phalcon\Container\Exception;
 use Phalcon\Container\Exception\NoSuchProperty;
 use ReflectionException;
 use ReflectionParameter;
@@ -30,12 +29,12 @@ use function array_merge;
  * definitions, unified across class defaults, inheritance hierarchies, and
  * configuration.
  *
- * @property ValueObject    $mutations
- * @property ValueObject    $parameters
- * @property Reflector      $reflector
- * @property ValueObject    $setters
- * @property ValueObject    $values
- * @property ValueObject    $unified
+ * @property ValueObject $mutations
+ * @property ValueObject $parameters
+ * @property Reflector   $reflector
+ * @property ValueObject $setters
+ * @property ValueObject $values
+ * @property ValueObject $unified
  */
 class Resolver
 {

@@ -19,8 +19,8 @@ declare(strict_types=1);
 namespace Phalcon\Container\Config;
 
 use InvalidArgumentException;
-use Phalcon\Container\Config;
 use Phalcon\Container;
+use Phalcon\Container\Config;
 
 /**
  * A collection of Container config instructions
@@ -40,12 +40,13 @@ class Collection extends Config
      * __construct
      *
      * @param array $configs A list of ContainerConfig classes to
-     * instantiate and invoke for configuring the Container.
+     *                       instantiate and invoke for configuring the
+     *                       Container.
      */
     public function __construct(array $configs)
     {
         foreach ($configs as $config) {
-            $config = $this->getConfig($config);
+            $config          = $this->getConfig($config);
             $this->configs[] = $config;
         }
     }
