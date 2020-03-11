@@ -66,9 +66,9 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * Serializer
      *
-     * @var SerializerInterface
+     * @var SerializerInterface|null
      */
-    protected SerializerInterface $serializer;
+    protected ?SerializerInterface $serializer;
 
     /**
      * Serializer Factory

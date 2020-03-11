@@ -45,9 +45,9 @@ use function method_exists;
 abstract class AbstractConnection implements ConnectionInterface
 {
     /**
-     * @var PDO
+     * @var PDO|null
      */
-    protected PDO $pdo;
+    protected $pdo;
 
     /**
      * @var ProfilerInterface
