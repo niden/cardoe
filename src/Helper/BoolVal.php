@@ -35,7 +35,7 @@ class BoolVal
             'no'    => 1,
         ];
 
-        return isset($false[(string) Str::lower($input)]);
+        return isset($false[Str::lower((string) $input)]);
     }
 
     /**
