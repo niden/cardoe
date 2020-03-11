@@ -64,7 +64,7 @@ trait RequestTrait
      *
      * @var null|string
      */
-    private ?string $requestTarget;
+    private ?string $requestTarget = null;
 
     /**
      * Return the current method

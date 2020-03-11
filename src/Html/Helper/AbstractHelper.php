@@ -45,9 +45,9 @@ abstract class AbstractHelper
     protected Escaper $escaper;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $indent = "    ";
+    protected ?string $indent = "    ";
 
     /**
      * @var int
