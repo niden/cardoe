@@ -31,22 +31,22 @@ class Title extends AbstractHelper
     /**
      * @var array
      */
-    protected $append = [];
+    protected array $append = [];
 
     /**
      * @var array
      */
-    protected $prepend = [];
+    protected array $prepend = [];
 
     /**
      * @var string
      */
-    protected $title = '';
+    protected string $title = '';
 
     /**
      * @var string
      */
-    protected $separator = '';
+    protected string $separator = '';
 
     /**
      * Sets the separator and returns the object back

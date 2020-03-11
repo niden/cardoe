@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace Phalcon\Helper;
 
-use const MB_CASE_UPPER;
-
-/**
+ /**
  * This class offers quick boolean functions throughout the framework
  */
 class BoolVal

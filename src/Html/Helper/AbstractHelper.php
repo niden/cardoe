@@ -35,9 +35,9 @@ use const PHP_EOL;
 abstract class AbstractHelper
 {
     /**
-     * @var string
+     * @var string|null
      */
-    protected string $delimiter = PHP_EOL;
+    protected ?string $delimiter = PHP_EOL;
 
     /**
      * @var Escaper
