@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Email extends AbstractInput
 {
-    protected $type = "email";
+    protected string $type = "email";
 }

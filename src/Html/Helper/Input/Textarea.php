@@ -21,7 +21,7 @@ class Textarea extends AbstractInput
     /**
      * @var string
      */
-    protected $type = 'textarea';
+    protected string $type = 'textarea';
 
     /**
      * Returns the HTML for the input.

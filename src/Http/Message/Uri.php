@@ -52,46 +52,46 @@ final class Uri implements UriInterface
      *
      * @var string
      */
-    private $fragment = '';
+    private string $fragment = '';
 
     /**
      * @var string
      */
-    private $host = '';
+    private string $host = '';
 
     /**
      * @var string
      */
-    private $pass = '';
+    private string $pass = '';
 
     /**
      * Retrieve the path component of the URI.
      *
      * @var string
      */
-    private $path = '';
+    private string $path = '';
 
     /**
      * @var null | int
      */
-    private $port = null;
+    private ?int $port = null;
 
     /**
      * Retrieve the query string of the URI.
      *
      * @var string
      */
-    private $query = '';
+    private string $query = '';
 
     /**
      * @var string
      */
-    private $scheme = 'https';
+    private string $scheme = 'https';
 
     /**
      * @var string
      */
-    private $user = '';
+    private string $user = '';
 
     /**
      * Uri constructor.

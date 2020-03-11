@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Password extends AbstractInput
 {
-    protected $type = "password";
+    protected string $type = "password";
 }

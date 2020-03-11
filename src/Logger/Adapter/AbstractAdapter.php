@@ -32,28 +32,28 @@ abstract class AbstractAdapter implements AdapterInterface
      *
      * @var string
      */
-    protected $defaultFormatter = "Line";
+    protected string $defaultFormatter = "Line";
 
     /**
      * Formatter
      *
      * @var FormatterInterface
      */
-    protected $formatter = null;
+    protected ?FormatterInterface $formatter = null;
 
     /**
      * Tells if there is an active transaction or not
      *
      * @var bool
      */
-    protected $inTransaction = false;
+    protected bool $inTransaction = false;
 
     /**
      * Array with messages queued in the transaction
      *
      * @var array
      */
-    protected $queue = [];
+    protected array $queue = [];
 
     /**
      * Destructor cleanup

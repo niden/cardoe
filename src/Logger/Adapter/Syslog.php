@@ -49,27 +49,27 @@ class Syslog extends AbstractAdapter
      *
      * @var string
      */
-    protected $defaultFormatter = "Line";
+    protected string $defaultFormatter = "Line";
 
     /**
      * @var int
      */
-    protected $facility = 0;
+    protected int $facility = 0;
 
     /**
      * @var string
      */
-    protected $name = "";
+    protected string $name = "";
 
     /**
      * @var bool
      */
-    protected $opened = false;
+    protected bool $opened = false;
 
     /**
      * @var int
      */
-    protected $option = 0;
+    protected int $option = 0;
 
     /**
      * Syslog constructor.

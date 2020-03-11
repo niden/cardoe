@@ -34,17 +34,17 @@ abstract class AbstractQuery
     /**
      * @var Bind
      */
-    protected $bind;
+    protected Bind $bind;
 
     /**
      * @var Connection
      */
-    protected $connection;
+    protected Connection $connection;
 
     /**
      * @var array
      */
-    protected $store = [];
+    protected array $store = [];
 
     /**
      * AbstractQuery constructor.

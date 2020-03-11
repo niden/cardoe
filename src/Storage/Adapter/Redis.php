@@ -33,7 +33,7 @@ class Redis extends AbstractAdapter
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Redis constructor.

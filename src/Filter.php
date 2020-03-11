@@ -57,12 +57,12 @@ class Filter implements FilterInterface
     /**
      * @var array
      */
-    protected $mapper = [];
+    protected array $mapper = [];
 
     /**
      * @var array
      */
-    protected $services = [];
+    protected array $services = [];
 
     /**
      * Key value pairs with name as the key and a callable as the value for

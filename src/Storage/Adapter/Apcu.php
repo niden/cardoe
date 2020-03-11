@@ -37,7 +37,7 @@ class Apcu extends AbstractAdapter
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Apcu constructor.

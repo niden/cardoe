@@ -40,7 +40,7 @@ class LazyCallable implements LazyInterface
      *
      * @var bool
      */
-    protected $callableChecked = false;
+    protected bool $callableChecked = false;
 
     /**
      * Constructor.

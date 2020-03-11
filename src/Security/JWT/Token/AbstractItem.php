@@ -23,7 +23,7 @@ abstract class AbstractItem
     /**
      * @var array
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * @return string

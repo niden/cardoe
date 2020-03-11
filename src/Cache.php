@@ -33,7 +33,7 @@ class Cache implements CacheInterface
      *
      * @var AdapterInterface
      */
-    protected $adapter;
+    protected AdapterInterface $adapter;
 
     /**
      * Constructor.

@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Date extends AbstractInput
 {
-    protected $type = "date";
+    protected string $type = "date";
 }

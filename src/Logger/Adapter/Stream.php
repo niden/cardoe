@@ -61,21 +61,21 @@ class Stream extends AbstractAdapter
      *
      * @var string
      */
-    protected $mode = "ab";
+    protected string $mode = "ab";
 
     /**
      * Stream name
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Path options
      *
      * @var array
      */
-    protected $options;
+    protected array $options;
 
     /**
      * Stream constructor.

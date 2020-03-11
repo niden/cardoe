@@ -27,12 +27,12 @@ abstract class AbstractInput extends AbstractHelper
     /**
      * @var string
      */
-    protected $type = "text";
+    protected string $type = "text";
 
     /**
      * @var array
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * @param string      $name

@@ -33,12 +33,12 @@ class Input extends Stream
     /**
      * @var string
      */
-    private $data = "";
+    private string $data = "";
 
     /**
      * @var bool
      */
-    private $eof = false;
+    private bool $eof = false;
 
     /**
      * Input constructor.

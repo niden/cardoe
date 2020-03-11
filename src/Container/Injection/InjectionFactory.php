@@ -36,7 +36,7 @@ class InjectionFactory
      *
      * @var Resolver
      */
-    protected $resolver;
+    protected Resolver $resolver;
 
     /**
      * Constructor.

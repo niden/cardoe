@@ -42,12 +42,12 @@ trait MessageTrait
      *
      * @var StreamInterface
      */
-    private $body;
+    private StreamInterface $body;
 
     /**
      * @var Collection
      */
-    private $headers;
+    private Collection $headers;
 
     /**
      * Retrieves the HTTP protocol version as a string.
@@ -57,7 +57,7 @@ trait MessageTrait
      *
      * @var string HTTP protocol version.
      */
-    private $protocolVersion = '1.1';
+    private string $protocolVersion = '1.1';
 
     /**
      * Retrieves the URI instance.
@@ -68,7 +68,7 @@ trait MessageTrait
      *
      * @var UriInterface
      */
-    private $uri;
+    private UriInterface $uri;
 
     /**
      * Return the body of the request

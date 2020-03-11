@@ -33,7 +33,7 @@ class ResolutionHelper
      *
      * @var Container
      */
-    protected $container;
+    protected Container $container;
 
     /**
      * Constructor.

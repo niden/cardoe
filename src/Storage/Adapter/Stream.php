@@ -56,12 +56,12 @@ class Stream extends AbstractAdapter
     /**
      * @var string
      */
-    protected $storageDir = "";
+    protected string $storageDir = "";
 
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Stream constructor.

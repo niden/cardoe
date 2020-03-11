@@ -36,7 +36,7 @@ class EvolvableLink extends Link implements EvolvableLinkInterface
      * @param string $attribute The attribute to include.
      * @param string $value     The value of the attribute to set.
      *
-     * @return static
+     * @return EvolvableLink
      */
     public function withAttribute($attribute, $value)
     {
@@ -62,7 +62,7 @@ class EvolvableLink extends Link implements EvolvableLinkInterface
      * An implementing library SHOULD evaluate a passed object to a string
      * immediately rather than waiting for it to be returned later.
      *
-     * @return static
+     * @return EvolvableLink
      */
     public function withHref($href)
     {
@@ -83,7 +83,7 @@ class EvolvableLink extends Link implements EvolvableLinkInterface
      * @param string $rel
      *   The relationship value to add.
      *
-     * @return static
+     * @return EvolvableLink
      */
     public function withRel($rel)
     {
@@ -103,7 +103,7 @@ class EvolvableLink extends Link implements EvolvableLinkInterface
      * @param string $attribute
      *   The attribute to remove.
      *
-     * @return static
+     * @return EvolvableLink
      */
     public function withoutAttribute($attribute)
     {
@@ -123,7 +123,7 @@ class EvolvableLink extends Link implements EvolvableLinkInterface
      * @param string $rel
      *   The relationship value to exclude.
      *
-     * @return static
+     * @return EvolvableLink
      */
     public function withoutRel($rel)
     {

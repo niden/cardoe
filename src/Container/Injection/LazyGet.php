@@ -33,14 +33,14 @@ class LazyGet implements LazyInterface
      *
      * @var ContainerInterface
      */
-    protected $container;
+    protected ContainerInterface $container;
 
     /**
      * The service name to retrieve.
      *
      * @var string
      */
-    protected $service;
+    protected string $service;
 
     /**
      * Constructor.

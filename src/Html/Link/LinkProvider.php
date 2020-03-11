@@ -32,7 +32,7 @@ class LinkProvider implements LinkProviderInterface
     /**
      * @var LinkInterface[]
      */
-    protected $links = [];
+    protected array $links = [];
 
     /**
      * LinkProvider constructor.

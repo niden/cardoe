@@ -39,28 +39,28 @@ class ConnectionLocator implements ConnectionLocatorInterface
      *
      * @var ConnectionInterface
      */
-    protected $master;
+    protected ConnectionInterface $master;
 
     /**
      * A registry of Connection "read" factories/instances.
      *
      * @var array
      */
-    protected $read = [];
+    protected array $read = [];
 
     /**
      * A registry of Connection "write" factories/instances.
      *
      * @var array
      */
-    protected $write = [];
+    protected array $write = [];
 
     /**
      * A collection of resolved instances
      *
      * @var array
      */
-    private $instances = [];
+    private array $instances = [];
 
     /**
      * Constructor.

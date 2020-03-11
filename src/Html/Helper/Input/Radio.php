@@ -19,5 +19,5 @@ class Radio extends Checkbox
     /**
      * @var string
      */
-    protected $type = "radio";
+    protected string $type = "radio";
 }

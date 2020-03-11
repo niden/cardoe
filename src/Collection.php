@@ -60,17 +60,17 @@ class Collection implements
     /**
      * @var array
      */
-    protected $data = [];
+    protected array $data = [];
 
     /**
      * @var bool
      */
-    protected $insensitive = true;
+    protected bool $insensitive = true;
 
     /**
      * @var array
      */
-    protected $lowerKeys = [];
+    protected array $lowerKeys = [];
 
     /**
      * Collection constructor.

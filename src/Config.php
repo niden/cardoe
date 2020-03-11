@@ -34,7 +34,7 @@ class Config extends Collection
     /**
      * @var string|null
      */
-    protected $pathDelimiter = null;
+    protected ?string $pathDelimiter = null;
 
     /**
      * Gets the default path delimiter

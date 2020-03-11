@@ -50,21 +50,21 @@ trait RequestTrait
     /**
      * @var Collection
      */
-    private $headers;
+    private Collection $headers;
 
     /**
      * Retrieves the HTTP method of the request.
      *
      * @var string
      */
-    private $method = 'GET';
+    private string $method = 'GET';
 
     /**
      * The request-target, if it has been provided or calculated.
      *
      * @var null|string
      */
-    private $requestTarget;
+    private ?string $requestTarget;
 
     /**
      * Retrieves the URI instance.

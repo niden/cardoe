@@ -22,12 +22,12 @@ abstract class AbstractSeries extends AbstractHelper
     /**
      * @var array
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * @var array
      */
-    protected $store = [];
+    protected array $store = [];
 
     /**
      * @param string $indent

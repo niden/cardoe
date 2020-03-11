@@ -32,7 +32,7 @@ class DefaultValueParameter
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * The default value of the param.

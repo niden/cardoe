@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Range extends AbstractInput
 {
-    protected $type = "range";
+    protected string $type = "range";
 }

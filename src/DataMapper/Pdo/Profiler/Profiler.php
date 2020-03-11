@@ -39,27 +39,27 @@ class Profiler implements ProfilerInterface
     /**
      * @var bool
      */
-    protected $active = false;
+    protected bool $active = false;
 
     /**
      * @var array
      */
-    protected $context = [];
+    protected array $context = [];
 
     /**
      * @var string
      */
-    protected $logFormat = "{method} ({duration}s): {statement} {backtrace}";
+    protected string $logFormat = "{method} ({duration}s): {statement} {backtrace}";
 
     /**
      * @var string
      */
-    protected $logLevel = LogLevel::DEBUG;
+    protected string $logLevel = LogLevel::DEBUG;
 
     /**
      * @var LoggerInterface
      */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /**
      * Constructor.

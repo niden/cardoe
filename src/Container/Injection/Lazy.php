@@ -38,7 +38,7 @@ class Lazy implements LazyInterface
      *
      * @var array
      */
-    protected $parameters;
+    protected array $parameters;
 
     /**
      * Constructor.

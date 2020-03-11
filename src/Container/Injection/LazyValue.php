@@ -35,14 +35,14 @@ class LazyValue implements LazyInterface
      *
      * @var string
      */
-    protected $key;
+    protected string $key;
 
     /**
      * The Resolver that holds the values.
      *
      * @var Resolver
      */
-    protected $resolver;
+    protected Resolver $resolver;
 
     /**
      * Constructor.

@@ -43,28 +43,28 @@ class Resolver
      *
      * @var ValueObject
      */
-    private $mutations;
+    private ValueObject $mutations;
 
     /**
      * Constructor params in the form `$params[$class][$name] = $value`.
      *
      * @var ValueObject
      */
-    private $parameters;
+    private ValueObject $parameters;
 
     /**
      * A Reflector.
      *
      * @var Reflector
      */
-    private $reflector;
+    private Reflector $reflector;
 
     /**
      * Setter definitions in the form of `$setters[$class][$method] = $value`.
      *
      * @var ValueObject
      */
-    private $setters;
+    private ValueObject $setters;
 
     /**
      * Constructor params and setter definitions, unified across class
@@ -72,14 +72,14 @@ class Resolver
      *
      * @var ValueObject
      */
-    private $unified;
+    private ValueObject $unified;
 
     /**
      * Arbitrary values in the form of `$values[$key] = $value`.
      *
      * @var ValueObject
      */
-    private $values;
+    private ValueObject $values;
 
     /**
      *

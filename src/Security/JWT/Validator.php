@@ -31,12 +31,12 @@ class Validator
     /**
      * @var int
      */
-    private $timeShift = 0;
+    private int $timeShift = 0;
 
     /**
      * @var Token
      */
-    private $token;
+    private Token $token;
 
     /**
      * Validator constructor.

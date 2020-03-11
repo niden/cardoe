@@ -41,22 +41,22 @@ final class Blueprint
     /**
      * @var string
      */
-    private $className;
+    private string $className;
 
     /**
      * @var array
      */
-    private $mutations;
+    private array $mutations;
 
     /**
      * @var array
      */
-    private $parameters;
+    private array $parameters;
 
     /**
      * @var array
      */
-    private $setters;
+    private array $setters;
 
     /**
      * @param string $className

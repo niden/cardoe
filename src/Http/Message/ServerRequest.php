@@ -86,7 +86,7 @@ final class ServerRequest implements ServerRequestInterface
     /**
      * @var Collection
      */
-    private $attributes;
+    private Collection $attributes;
 
     /**
      * Retrieve cookies.
@@ -98,7 +98,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $cookieParams = [];
+    private array $cookieParams = [];
 
     /**
      * Retrieve any parameters provided in the request body.
@@ -128,7 +128,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $queryParams = [];
+    private array $queryParams = [];
 
     /**
      * Retrieve server parameters.
@@ -139,7 +139,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $serverParams = [];
+    private array $serverParams = [];
 
     /**
      * Retrieve normalized file upload data.
@@ -152,7 +152,7 @@ final class ServerRequest implements ServerRequestInterface
      *
      * @var array
      */
-    private $uploadedFiles = [];
+    private array $uploadedFiles = [];
 
     /**
      * ServerRequest constructor.

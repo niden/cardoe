@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Time extends AbstractInput
 {
-    protected $type = "time";
+    protected string $type = "time";
 }

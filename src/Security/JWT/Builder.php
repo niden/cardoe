@@ -43,22 +43,22 @@ class Builder
     /**
      * @var Collection
      */
-    private $claims;
+    private Collection $claims;
 
     /**
      * @var Collection
      */
-    private $jose;
+    private Collection $jose;
 
     /**
      * @var string
      */
-    private $passphrase;
+    private string $passphrase;
 
     /**
      * @var SignerInterface
      */
-    private $signer;
+    private SignerInterface $signer;
 
     /**
      * Builder constructor.

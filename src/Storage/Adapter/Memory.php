@@ -30,12 +30,12 @@ class Memory extends AbstractAdapter
     /**
      * @var Collection
      */
-    protected $data;
+    protected Collection $data;
 
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Memory constructor.

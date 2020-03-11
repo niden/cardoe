@@ -39,21 +39,21 @@ class Factory
      *
      * @var Blueprint
      */
-    protected $blueprint;
+    protected Blueprint $blueprint;
 
     /**
      * Blueprints that are only used within the context of this factory.
      *
      * @var array|Blueprint[]
      */
-    protected $contextualBlueprints = [];
+    protected array $contextualBlueprints = [];
 
     /**
      * The Resolver.
      *
      * @var Resolver
      */
-    protected $resolver;
+    protected Resolver $resolver;
 
     /**
      *

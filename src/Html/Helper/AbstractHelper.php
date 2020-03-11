@@ -37,22 +37,22 @@ abstract class AbstractHelper
     /**
      * @var string
      */
-    protected $delimiter = PHP_EOL;
+    protected string $delimiter = PHP_EOL;
 
     /**
      * @var Escaper
      */
-    protected $escaper;
+    protected Escaper $escaper;
 
     /**
      * @var string
      */
-    protected $indent = "    ";
+    protected string $indent = "    ";
 
     /**
      * @var int
      */
-    protected $indentLevel = 1;
+    protected int $indentLevel = 1;
 
     /**
      * AbstractHelper constructor.

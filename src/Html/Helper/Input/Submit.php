@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Submit extends AbstractInput
 {
-    protected $type = "submit";
+    protected string $type = "submit";
 }

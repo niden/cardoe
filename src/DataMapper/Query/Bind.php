@@ -34,12 +34,12 @@ class Bind
     /**
      * @var int
      */
-    protected $inlineCount = 0;
+    protected int $inlineCount = 0;
 
     /**
      * @var array
      */
-    protected $store = [];
+    protected array $store = [];
 
     /**
      * @param mixed $value

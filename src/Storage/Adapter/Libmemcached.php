@@ -33,7 +33,7 @@ class Libmemcached extends AbstractAdapter
     /**
      * @var array
      */
-    protected $options = [];
+    protected array $options = [];
 
     /**
      * Libmemcached constructor.

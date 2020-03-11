@@ -29,27 +29,27 @@ class Item
     /**
      * @var array
      */
-    protected $context;
+    protected array $context;
 
     /**
      * @var string
      */
-    protected $message;
+    protected string $message;
 
     /**
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * @var int
      */
-    protected $time;
+    protected int $time;
 
     /**
      * @var int
      */
-    protected $type;
+    protected int $type;
 
     /**
      * Item constructor.

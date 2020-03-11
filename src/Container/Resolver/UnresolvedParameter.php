@@ -30,7 +30,7 @@ class UnresolvedParameter
      *
      * @var string
      */
-    protected $name;
+    protected string $name;
 
     /**
      * Constructor.

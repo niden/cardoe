@@ -31,7 +31,7 @@ abstract class AbstractFormatter implements FormatterInterface
      *
      * @var string
      */
-    protected $dateFormat;
+    protected string $dateFormat;
 
     /**
      * @return string

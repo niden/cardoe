@@ -35,7 +35,7 @@ class EvolvableLinkProvider extends LinkProvider implements EvolvableLinkProvide
      * @param LinkInterface $link
      *   A link object that should be included in this collection.
      *
-     * @return static
+     * @return EvolvableLinkProvider
      */
     public function withLink(LinkInterface $link)
     {
@@ -57,7 +57,7 @@ class EvolvableLinkProvider extends LinkProvider implements EvolvableLinkProvide
      * @param LinkInterface $link
      *   The link to remove.
      *
-     * @return static
+     * @return EvolvableLinkProvider
      */
     public function withoutLink(LinkInterface $link)
     {

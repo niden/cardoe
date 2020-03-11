@@ -47,12 +47,12 @@ abstract class AbstractConnection implements ConnectionInterface
     /**
      * @var PDO
      */
-    protected $pdo;
+    protected PDO $pdo;
 
     /**
      * @var ProfilerInterface
      */
-    protected $profiler;
+    protected ProfilerInterface $profiler;
 
     /**
      * Proxies to PDO methods created for specific drivers; in particular,

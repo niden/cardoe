@@ -25,16 +25,13 @@ class TagFactory extends AbstractFactory
     /**
      * @var Escaper
      */
-    private $escaper;
+    private Escaper $escaper;
 
     /**
      * @var array
      */
-    protected $services = [];
+    protected array $services = [];
 
-    /**
-     * TagFactory constructor.
-     */
     /**
      * TagFactory constructor.
      *

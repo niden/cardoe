@@ -31,7 +31,7 @@ class Line extends AbstractFormatter
      *
      * @var string
      */
-    protected $format;
+    protected string $format;
 
     /**
      * Line constructor.

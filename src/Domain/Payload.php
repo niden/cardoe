@@ -44,7 +44,7 @@ class Payload implements PayloadInterface
      *
      * @var Throwable|null
      */
-    protected $exception;
+    protected ?Throwable $exception;
 
     /**
      * Extra information

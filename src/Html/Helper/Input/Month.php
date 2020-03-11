@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Month extends AbstractInput
 {
-    protected $type = "month";
+    protected string $type = "month";
 }

@@ -27,7 +27,7 @@ class AdapterFactory extends AbstractFactory
     /**
      * @var SerializerFactory|null
      */
-    private $serializerFactory;
+    private ?SerializerFactory $serializerFactory;
 
     /**
      * AdapterFactory constructor.

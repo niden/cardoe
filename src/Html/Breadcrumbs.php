@@ -36,21 +36,21 @@ class Breadcrumbs
      *
      * @var array
      */
-    private $elements = [];
+    private array $elements = [];
 
     /**
      * Crumb separator
      *
      * @var string
      */
-    private $separator = " / ";
+    private string $separator = " / ";
 
     /**
      * The HTML template to use to render the breadcrumbs.
      *
      * @var string
      */
-    private $template = "<dt><a href=\"{link}\">{label}</a></dt>";
+    private string $template = "<dt><a href=\"{link}\">{label}</a></dt>";
 
     /**
      * Adds a new crumb.

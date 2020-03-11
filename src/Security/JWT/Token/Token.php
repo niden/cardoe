@@ -27,17 +27,17 @@ class Token
     /**
      * @var Item
      */
-    private $claims;
+    private Item $claims;
 
     /**
      * @var Item
      */
-    private $jose;
+    private Item $jose;
 
     /**
      * @var Signature
      */
-    private $signature;
+    private Signature $signature;
 
     /**
      * Token constructor.

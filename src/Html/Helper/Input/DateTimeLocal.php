@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class DateTimeLocal extends AbstractInput
 {
-    protected $type = "datetime-local";
+    protected string $type = "datetime-local";
 }

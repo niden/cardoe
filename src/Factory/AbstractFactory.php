@@ -25,7 +25,7 @@ abstract class AbstractFactory
     /**
      * @var array
      */
-    protected $mapper = [];
+    protected array $mapper = [];
 
     /**
      * Checks if a service exists and throws an exception

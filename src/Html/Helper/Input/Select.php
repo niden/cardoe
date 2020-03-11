@@ -25,17 +25,17 @@ class Select extends AbstractList
     /**
      * @var string
      */
-    protected $elementTag = "option";
+    protected string $elementTag = "option";
 
     /**
      * @var bool
      */
-    protected $inOptGroup = false;
+    protected bool $inOptGroup = false;
 
     /**
      * @var string
      */
-    protected $selected = "";
+    protected string $selected = "";
 
     /**
      * Add an element to the list

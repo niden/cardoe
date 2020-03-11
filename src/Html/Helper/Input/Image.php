@@ -16,5 +16,5 @@ namespace Phalcon\Html\Helper\Input;
  */
 class Image extends AbstractInput
 {
-    protected $type = "image";
+    protected string $type = "image";
 }

@@ -23,19 +23,19 @@ class Escaper
     /**
      * @var bool
      */
-    protected $doubleEncode = true;
+    protected bool $doubleEncode = true;
 
     /**
      * @var string
      */
-    protected $encoding = "utf-8";
+    protected string $encoding = "utf-8";
 
     /**
      * ENT_QUOTES | ENT_SUBSTITUTE
      *
      * @var int
      */
-    protected $flags = 11;
+    protected int $flags = 11;
 
     /**
      * Escape HTML attributes

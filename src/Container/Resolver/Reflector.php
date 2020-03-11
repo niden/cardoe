@@ -36,21 +36,21 @@ class Reflector
      *
      * @var array
      */
-    protected $classes = [];
+    protected array $classes = [];
 
     /**
      * Collected arrays of ReflectionParameter instances for class constructors.
      *
      * @var array
      */
-    protected $parameters = [];
+    protected array $parameters = [];
 
     /**
      * Collected traits in classes.
      *
      * @var array
      */
-    protected $traits = [];
+    protected array $traits = [];
 
     /**
      * When serializing, ignore the Reflection-based properties.

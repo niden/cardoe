@@ -33,7 +33,7 @@ class ValueObject
     /**
      * @var array
      */
-    protected $store = [];
+    protected array $store = [];
 
     /**
      * Clears the internal collection

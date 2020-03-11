@@ -39,7 +39,7 @@ class Connection extends AbstractConnection
     /**
      * @var array
      */
-    protected $arguments = [];
+    protected array $arguments = [];
 
     /**
      * Constructor.

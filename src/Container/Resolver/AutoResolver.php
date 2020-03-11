@@ -37,7 +37,7 @@ class AutoResolver extends Resolver
      *
      * @var ValueObject
      */
-    protected $types;
+    protected ValueObject $types;
 
     /**
      * AutoResolver constructor.

@@ -61,21 +61,21 @@ class Container implements ContainerInterface
      *
      * @var ContainerInterface
      */
-    protected $delegate;
+    protected ?ContainerInterface $delegate;
 
     /**
      * A factory to create objects and values for injection.
      *
      * @var InjectionFactory
      */
-    protected $factory;
+    protected InjectionFactory $factory;
 
     /**
      * Retains the actual service object instances.
      *
      * @var array
      */
-    protected $instances = [];
+    protected array $instances = [];
 
     /**
      * Is the Container locked?  (When locked, you cannot access configuration
@@ -83,28 +83,27 @@ class Container implements ContainerInterface
      *
      * @var bool
      */
-    protected $locked = false;
+    protected bool $locked = false;
 
     /**
      * A Resolver obtained from the InjectionFactory.
      *
      * @var Resolver
      */
-    protected $resolver;
+    protected Resolver $resolver;
 
     /**
      * Retains named service definitions.
      *
      * @var array
      */
-    protected $services = [];
+    protected array $services = [];
 
     /**
      * Constructor.
      *
      * @param InjectionFactory   $factory           A factory to create objects
      *                                              and values for injection.
-     *
      * @param ContainerInterface $delegate          An optional container that
      *                                              will be used to fetch
      *                                              dependencies (i.e. lazy

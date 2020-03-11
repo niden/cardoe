@@ -55,7 +55,7 @@ final class Response implements ResponseInterface
      *
      * @var string
      */
-    private $reasonPhrase = '';
+    private string $reasonPhrase = '';
 
     /**
      * Gets the response status code.
@@ -65,7 +65,7 @@ final class Response implements ResponseInterface
      *
      * @var int
      */
-    private $statusCode = 200;
+    private int $statusCode = 200;
 
     /**
      * Response constructor.

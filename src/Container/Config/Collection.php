@@ -34,7 +34,7 @@ class Collection extends Config
      *
      * @var ConfigInterface[]
      */
-    protected $configs = [];
+    protected array $configs = [];
 
     /**
      * __construct

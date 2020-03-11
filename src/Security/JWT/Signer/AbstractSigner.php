@@ -23,7 +23,7 @@ abstract class AbstractSigner implements SignerInterface
     /**
      * @var string
      */
-    protected $algo;
+    protected string $algo;
 
     /**
      * Return the algorithm used

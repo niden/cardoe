@@ -25,12 +25,12 @@ class Checkbox extends AbstractInput
     /**
      * @var array
      */
-    protected $label = [];
+    protected array $label = [];
 
     /**
      * @var string
      */
-    protected $type = "checkbox";
+    protected string $type = "checkbox";
 
     /**
      * AbstractHelper constructor.
