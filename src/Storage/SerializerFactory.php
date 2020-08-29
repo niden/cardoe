@@ -15,6 +15,7 @@ namespace Phalcon\Storage;
 
 use Phalcon\Factory\AbstractFactory;
 use Phalcon\Factory\Exception;
+use Phalcon\Factory\FactoryTrait;
 use Phalcon\Storage\Serializer\SerializerInterface;
 
 /**
@@ -22,8 +23,10 @@ use Phalcon\Storage\Serializer\SerializerInterface;
  *
  * @package Phalcon\Storage
  */
-class SerializerFactory extends AbstractFactory
+class SerializerFactory
 {
+    use FactoryTrait;
+
     /**
      * SerializerFactory constructor.
      *
@@ -42,9 +45,7 @@ class SerializerFactory extends AbstractFactory
      */
     public function newInstance(string $name): SerializerInterface
     {
-        $this->checkService($name);
-
-        $definition = $this->mapper[$name];
+        $definition = $this->getService($name);
 
         return new $definition();
     }

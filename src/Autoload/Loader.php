@@ -47,32 +47,32 @@ class Loader
     /**
      * @var array
      */
-    protected $classes = [];
+    protected array $classes = [];
 
     /**
      * @var array
      */
-    protected $debug = [];
+    protected array $debug = [];
 
     /**
      * @var array
      */
-    protected $extensions = [];
+    protected array $extensions = [];
 
     /**
      * @var array
      */
-    protected $files = [];
+    protected array $files = [];
 
     /**
      * @var bool
      */
-    protected $isRegistered = false;
+    protected bool $isRegistered = false;
 
     /**
      * @var array
      */
-    protected $namespaces = [];
+    protected array $namespaces = [];
 
     /**
      * Loader constructor.

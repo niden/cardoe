@@ -26,7 +26,7 @@ class CacheFactory
     /**
      * @var AdapterFactory
      */
-    protected $adapterFactory;
+    protected AdapterFactory $adapterFactory;
 
     /**
      * CacheFactory constructor.

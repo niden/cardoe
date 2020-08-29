@@ -49,26 +49,26 @@ class Logger implements LoggerInterface
      *
      * @var AdapterInterface[]
      */
-    protected $adapters = [];
+    protected array $adapters = [];
 
     /**
      * Minimum log level for the logger
      *
      * @var int
      */
-    protected $logLevel = 8;
+    protected int $logLevel = 8;
 
     /**
      * @var string
      */
-    protected $name = "";
+    protected string $name = "";
 
     /**
      * The excluded adapters for this log process
      *
      * @var array
      */
-    protected $excluded = [];
+    protected array $excluded = [];
 
     /**
      * Constructor.
